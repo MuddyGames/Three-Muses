@@ -1,5 +1,6 @@
 import PhaserLogo from '../objects/phaserLogo'
 import FpsText from '../objects/fpsText'
+import FrameText from '../objects/frameText'
 
 
 const SPINEBOY_KEY = 'spineboy'
@@ -7,10 +8,10 @@ const SPINEBOY_KEY = 'spineboy'
 export default class GameScene extends Phaser.Scene {
 
 	fpsText
+	frameText
 
 	private spineBoy!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-	private animNameLabel!: Phaser.GameObjects.Text
 
 	private animationNames: string[] = []
 	private animationIndex = 0
@@ -24,11 +25,13 @@ export default class GameScene extends Phaser.Scene {
 	preload() {
 		this.load.setPath('assets/spine/')
 		this.load.spine(SPINEBOY_KEY, 'spineboy-pro.json', 'spineboy-pro.atlas')
+		//this.load.spine(SPINEBOY_KEY, 'truffles_front.json', 'truffles_front.atlas')
 	}
 
 	create() {
 		new PhaserLogo(this, this.cameras.main.width / 2, 0)
 		this.fpsText = new FpsText(this)
+		this.frameText = new FrameText(this)
 
 		// display the Phaser.VERSION
 		this.add
@@ -41,16 +44,17 @@ export default class GameScene extends Phaser.Scene {
 		const startAnim = 'idle'
 
 		this.spineBoy = this.createSpineBoy(startAnim)
+		this.frameText.setText(startAnim)
+		
 		this.cursors = this.input.keyboard.createCursorKeys()
-		this.animNameLabel = this.add.text(400, 100, startAnim, {
-			color: '#fff'
-		})
 
 		this.initializeAnimationsState(this.spineBoy)
 	}
 
 	update() {
 		this.fpsText.update()
+		this.frameText.update()
+
 		const size = this.animationNames.length
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
 			if (this.animationIndex >= size - 1) {
@@ -93,6 +97,6 @@ export default class GameScene extends Phaser.Scene {
 	private changeAnimation(index: number) {
 		const name = this.animationNames[index]
 		this.spineBoy.play(name, true)
-		this.animNameLabel.text = name
+		this.frameText.setText(name)
 	}
 }
