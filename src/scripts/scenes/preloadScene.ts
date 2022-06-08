@@ -5,7 +5,11 @@ export default class PreloadScene extends Phaser.Scene {
 
   preload() {
     this.load.image('cannon-ball', 'assets/img/cannon-ball.png')
-    this.load.audio('backing-track', ['assets/audio/level01.mp3', 'level01.ogg']);
+    this.load.audio('backing-track', ['assets/audio/level01.mp3', 'assets/audio/level01.ogg']);
+
+    // Idioms
+    this.load.audio('a_boy_the_kid', ['assets/audio/idioms/a_boy_the_kid.mp3', 'assets/audio/idioms/a_boy_the_kid.ogg']);
+    this.load.audio('head_like_a_chewed_toffee', ['assets/audio/idioms/head_like_a_chewed_toffee.mp3', 'assets/audio/idioms/head_like_a_chewed_toffee.ogg']);
   }
 
   create() {

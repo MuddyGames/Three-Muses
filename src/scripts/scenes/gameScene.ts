@@ -9,7 +9,8 @@ export default class GameScene extends Phaser.Scene {
 
 	fpsText
 	frameText
-	music
+	backingMusic
+	idiomCue
 
 	private spineBoy!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -63,9 +64,8 @@ export default class GameScene extends Phaser.Scene {
 
 		new CannonBall(this, this.cameras.main.width / 2, 0, )
 
-		this.music = this.sound.add('backing-track',{ loop: true })
-
-		this.music.play()
+		this.backingMusic = this.sound.add('backing-track',{ loop: true })
+		this.backingMusic.play()
 
 		// display the Phaser.VERSION
 		this.add
@@ -92,6 +92,10 @@ export default class GameScene extends Phaser.Scene {
 
 		const size = this.animationNames.length
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
+
+			this.idiomCue = this.sound.add('a_boy_the_kid')
+			this.idiomCue.play()
+			
 			if (this.animationIndex >= size - 1) {
 				this.animationIndex = 0
 			} else {
@@ -100,6 +104,10 @@ export default class GameScene extends Phaser.Scene {
 
 			this.changeAnimation(this.animationIndex)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
+			
+			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
+			this.idiomCue.play()
+
 			if (this.animationIndex <= 0) {
 				this.animationIndex = size - 1
 			} else {
