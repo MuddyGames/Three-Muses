@@ -9,7 +9,7 @@ const DEFAULT_WIDTH = 1280
 const DEFAULT_HEIGHT = 720
 
 const config = {
-  type: Phaser.AUTO,
+  type: Phaser.WEBGL,
   backgroundColor: '#ffffff',
   scale: {
     parent: 'phaser-game',
