@@ -1,10 +1,10 @@
 import FpsText from '../objects/fpsText'
 
-export default class MainScene extends Phaser.Scene {
+export default class SplashScene extends Phaser.Scene {
   fpsText
 
   constructor() {
-    super({ key: 'MainScene' })
+    super({ key: 'SplashScene' })
   }
 
   create() {
@@ -21,5 +21,6 @@ export default class MainScene extends Phaser.Scene {
 
   update() {
     this.fpsText.update()
+    this.scene.start('GameScene')
   }
 }

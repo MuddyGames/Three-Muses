@@ -1,7 +1,7 @@
 import 'phaser'
 import 'phaser/plugins/spine/dist/SpinePlugin'
 
-import MainScene from './scenes/mainScene'
+import SplashScene from './scenes/splashScene'
 import GameScene from './scenes/gameScene'
 import PreloadScene from './scenes/preloadScene'
 
@@ -18,7 +18,7 @@ const config = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, GameScene, MainScene],
+  scene: [PreloadScene, GameScene, SplashScene],
   plugins: {
 		scene: [
 			{ key: 'SpinePlugin', plugin: window.SpinePlugin, mapping: 'spine' }
