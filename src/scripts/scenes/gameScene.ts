@@ -58,7 +58,6 @@ export default class GameScene extends Phaser.Scene {
 				})
 				.setOrigin(1, 0)
 
-<<<<<<< HEAD
 		const animation = 'idle'
 
 		this.spineBoy = this.createSpineBoy(animation)
@@ -66,14 +65,6 @@ export default class GameScene extends Phaser.Scene {
 		this.frameText.setText(animation + "[ " + this.animationIndex + " ]")
 
 		this.cursors = this.input.keyboard.createCursorKeys()
-=======
-			const startAnim = 'idle'
-
-			this.spineBoy = this.createSpineBoy(startAnim)
-			this.frameText.setText(startAnim)
-			
-			this.cursors = this.input.keyboard.createCursorKeys()
->>>>>>> 2eebd9dc0e7013d632c9706a86c33dfe95b15eac
 
 			this.initializeAnimationsState(this.spineBoy)
 	}
