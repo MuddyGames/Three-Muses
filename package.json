@@ -8,7 +8,8 @@
     "bundle": "npm run build",
     "serve": "serve dist",
     "format": "prettier --check src/scripts/**",
-    "format:write": "prettier --write src/scripts/**"
+    "format:write": "prettier --write src/scripts/**",
+    "rimraf": "./node_modules/rimraf/bin.js"
   },
   "engines": {
     "node": ">=12"
