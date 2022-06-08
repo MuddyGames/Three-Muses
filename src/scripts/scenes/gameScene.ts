@@ -28,7 +28,7 @@ export default class GameScene extends Phaser.Scene {
 		this.load.image('hudTiles', 'assets/img/hud.png');
 		this.load.tilemapTiledJSON('level', 'assets/img/map_1.json');
 		this.load.setPath('assets/spine/')
-		this.load.spine(SPINEBOY_KEY, 'spineboy-pro.json', 'spineboy-pro.atlas')
+		this.load.spine(SPINEBOY_KEY, 'truffles_all.json', 'truffles_all.atlas')
 		//this.load.spine(SPINEBOY_KEY, 'goblins.json', 'goblins.atlas')
 		//this.load.spine(SPINEBOY_KEY, 'truffles_side.json', 'truffles_all_2.atlas')
 	}
