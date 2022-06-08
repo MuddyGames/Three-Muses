@@ -1,5 +1,6 @@
 import FpsText from '../objects/fpsText'
 import FrameText from '../objects/frameText'
+import CannonBall from '../objects/cannonBall'
 
 
 const SPINEBOY_KEY = 'spineboy'
@@ -8,6 +9,7 @@ export default class GameScene extends Phaser.Scene {
 
 	fpsText
 	frameText
+	music
 
 	private spineBoy!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -21,14 +23,14 @@ export default class GameScene extends Phaser.Scene {
 		})
 	}
 
-	preload(){
+	preload() {
 		this.load.image('tiles', 'assets/img/map_1.png');
 		this.load.image('hudTiles', 'assets/img/hud.png');
 		this.load.tilemapTiledJSON('level', 'assets/img/map_1.json');
 		this.load.setPath('assets/spine/')
 		this.load.spine(SPINEBOY_KEY, 'spineboy-pro.json', 'spineboy-pro.atlas')
 		//this.load.spine(SPINEBOY_KEY, 'goblins.json', 'goblins.atlas')
-		//this.load.spine(SPINEBOY_KEY, 'truffles_front.json', 'truffles_front.atlas')
+		//this.load.spine(SPINEBOY_KEY, 'truffles_side.json', 'truffles_all_2.atlas')
 	}
 
 	create() {
@@ -60,13 +62,19 @@ export default class GameScene extends Phaser.Scene {
 		this.fpsText = new FpsText(this)
 		this.frameText = new FrameText(this)
 
-			// display the Phaser.VERSION
-			this.add
-				.text(this.cameras.main.width - 15, 15, `Game Scene Phaser v${Phaser.VERSION}`, {
-					color: '#000000',
-					fontSize: '24px'
-				})
-				.setOrigin(1, 0)
+		new CannonBall(this, this.cameras.main.width / 2, 0)
+
+		this.music = this.sound.add('backing-track',{ loop: true })
+
+		this.music.play()
+
+		// display the Phaser.VERSION
+		this.add
+			.text(this.cameras.main.width - 15, 15, `Game Scene Phaser v${Phaser.VERSION}`, {
+				color: '#000000',
+				fontSize: '24px'
+			})
+			.setOrigin(1, 0)
 
 		const animation = 'idle'
 
@@ -76,7 +84,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.cursors = this.input.keyboard.createCursorKeys()
 
-			this.initializeAnimationsState(this.spineBoy)
+		this.initializeAnimationsState(this.spineBoy)
 	}
 
 	update() {

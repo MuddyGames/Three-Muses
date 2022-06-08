@@ -4,7 +4,8 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('phaser-logo', 'assets/img/phaser-logo.png')
+    this.load.image('cannon-ball', 'assets/img/cannon-ball.png')
+    this.load.audio('backing-track', ['assets/audio/level01.mp3', 'level01.ogg']);
   }
 
   create() {
