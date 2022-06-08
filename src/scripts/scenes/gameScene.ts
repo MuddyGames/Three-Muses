@@ -25,6 +25,7 @@ export default class GameScene extends Phaser.Scene {
 	preload() {
 		this.load.setPath('assets/spine/')
 		this.load.spine(SPINEBOY_KEY, 'spineboy-pro.json', 'spineboy-pro.atlas')
+		//this.load.spine(SPINEBOY_KEY, 'goblins.json', 'goblins.atlas')
 		//this.load.spine(SPINEBOY_KEY, 'truffles_front.json', 'truffles_front.atlas')
 	}
 
