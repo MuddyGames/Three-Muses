@@ -23,7 +23,7 @@ export default class GameScene extends Phaser.Scene {
 
 	preload(){
 		this.load.image('tiles', 'assets/img/map_1.png');
-		this.load.image('tilesTown', 'assets/img/town_map_1.png');
+		this.load.image('hudTiles', 'assets/img/hud.png');
 		this.load.tilemapTiledJSON('level', 'assets/img/map_1.json');
 		this.load.setPath('assets/spine/')
 		this.load.spine(SPINEBOY_KEY, 'spineboy-pro.json', 'spineboy-pro.atlas')
@@ -33,19 +33,29 @@ export default class GameScene extends Phaser.Scene {
 
 	create() {
 		const map = this.make.tilemap({ key: 'level', tileWidth: 32, tileHeight: 32});
-		const tileset = map.addTilesetImage("map", 'tiles');
-		const townTiles = map.addTilesetImage("town", 'tilesTown');
-		const waterLayer = map.createLayer('ground/water', tileset, 0, 0);
-		const groundLayer = map.createLayer('ground/ground', tileset, 0, 0);
-		const ground2Layer = map.createLayer('ground/ground 2', tileset, 0, 0);
+		const tileset = map.addTilesetImage("level1_tileset", 'tiles');
+		const hudTileset = map.addTilesetImage("hud", 'hudTiles');
+		const waterLayer = map.createLayer('map/ground/water', tileset, 0, 0);
+		const groundLayer = map.createLayer('map/ground/ground', tileset, 0, 0);
+		const ground2Layer = map.createLayer('map/shadow 1', tileset, 0, 0);
 		
-		const houseLayer = map.createLayer('houses', townTiles, 0, 0);
-		const wallLayer = map.createLayer('walls', tileset, 0, 0);
-		const miscLayer = map.createLayer('miselanious', townTiles, 0, 0);
+		const houseLayer = map.createLayer('map/buildings/houses/house 1', tileset, 0, 0);
+		const house2Layer = map.createLayer('map/buildings/houses/house 2', tileset, 0, 0);
+		const wallLayer = map.createLayer('map/buildings/walls', tileset, 0, 0);
+		const churchLayer = map.createLayer('map/buildings/church', tileset, 0, 0);
+		const castleLayer = map.createLayer('map/buildings/castle', tileset, 0, 0);
+		const miscLayer = map.createLayer('map/buildings/miselanious', tileset, 0, 0);
 		
-		const roofLayer = map.createLayer('roof', tileset, 0, 0);
-		const houseRoofLayer = map.createLayer('house roof', townTiles, 0, 0);
-		const miscRoofLayer = map.createLayer('roof miselanious', townTiles, 0, 0);
+		const wallTopLayer = map.createLayer('map/move behind /wall top', tileset, 0, 0);
+		const shad2Layer = map.createLayer('map/move behind /Shadow 2', tileset, 0, 0);
+		const houseRoofLayer = map.createLayer('map/move behind /house roof/house roof 1', tileset, 0, 0);
+		const house2RoofLayer = map.createLayer('map/move behind /house roof/house roof 2', tileset, 0, 0);
+		const towerTopLayer = map.createLayer('map/move behind /tower top', tileset, 0, 0);
+		const churchRoofLayer = map.createLayer('map/move behind /church roof', tileset, 0, 0);
+		const castleRoofLayer = map.createLayer('map/move behind /castle roof', tileset, 0, 0);
+		const miscTopLayer = map.createLayer('map/move behind /miselanious top', tileset, 0, 0);
+		
+		const hudLayer = map.createLayer('hud', hudTileset, 0, 0);
 
 		this.fpsText = new FpsText(this)
 		this.frameText = new FrameText(this)
