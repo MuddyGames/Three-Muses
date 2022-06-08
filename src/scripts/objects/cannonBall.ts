@@ -1,6 +1,6 @@
-export default class PhaserLogo extends Phaser.Physics.Arcade.Sprite {
+export default class CannonBall extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-    super(scene, x, y, 'phaser-logo')
+    super(scene, x, y, 'cannon-ball')
     scene.add.existing(this)
     scene.physics.add.existing(this)
 
