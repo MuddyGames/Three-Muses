@@ -3,7 +3,7 @@ import FrameText from '../objects/frameText'
 import CannonBall from '../objects/cannonBall'
 
 
-const SPINEBOY_KEY = 'spineboy'
+const TRUFFLES_KEY = 'truffles'
 
 export default class GameScene extends Phaser.Scene {
 
@@ -12,7 +12,7 @@ export default class GameScene extends Phaser.Scene {
 	backingMusic
 	idiomCue
 
-	private spineBoy!: SpineGameObject
+	private truffles!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 
 	private animationNames: string[] = []
@@ -30,7 +30,7 @@ export default class GameScene extends Phaser.Scene {
 		this.load.tilemapTiledJSON('level', 'assets/img/map_1.json');
 
 		this.load.setPath('assets/spine/')
-		this.load.spine(SPINEBOY_KEY, 'truffles_all.json', 'truffles_all.atlas')
+		this.load.spine(TRUFFLES_KEY, 'truffles_all.json', 'truffles_all.atlas')
 	}
 
 	create() {
@@ -64,7 +64,7 @@ export default class GameScene extends Phaser.Scene {
 
 		new CannonBall(this, this.cameras.main.width / 2, 0, )
 
-		this.backingMusic = this.sound.add('backing-track',{ loop: true })
+		this.backingMusic = this.sound.add('level_backing-track',{ loop: true })
 		this.backingMusic.play()
 
 		// display the Phaser.VERSION
@@ -77,13 +77,13 @@ export default class GameScene extends Phaser.Scene {
 
 		const animation = 'idle'
 
-		this.spineBoy = this.createSpineBoy(animation)
+		this.truffles = this.createTruffles(animation)
 		this.frameText.setText(animation)
 		this.frameText.setText(animation + "[ " + this.animationIndex + " ]")
 
 		this.cursors = this.input.keyboard.createCursorKeys()
 
-		this.initializeAnimationsState(this.spineBoy)
+		this.initializeAnimationsState(this.truffles)
 	}
 
 	update() {
@@ -118,13 +118,13 @@ export default class GameScene extends Phaser.Scene {
 		}
 	}
 
-	private createSpineBoy(startAnim = 'idle') {
-		const spineBoy = this.add.spine(400, 600, SPINEBOY_KEY, startAnim, true)
+	private createTruffles(startAnim = 'idle') {
+		const truffles = this.add.spine(400, 600, TRUFFLES_KEY, startAnim, true)
 
-		spineBoy.scaleX = 0.5
-		spineBoy.scaleY = 0.5
+		truffles.scaleX = 0.5
+		truffles.scaleY = 0.5
 
-		return spineBoy
+		return truffles
 	}
 	private initializeAnimationsState(spineGO: SpineGameObject) {
 		const startAnim = spineGO.getCurrentAnimation().name
@@ -139,7 +139,7 @@ export default class GameScene extends Phaser.Scene {
 
 	private changeAnimation(index: number) {
 		const animation = this.animationNames[index]
-		this.spineBoy.play(animation, true)
+		this.truffles.play(animation, true)
 		this.frameText.setText(animation + "[ " + this.animationIndex + " ]")
 	}
 }
