@@ -27,10 +27,9 @@ export default class GameScene extends Phaser.Scene {
 		this.load.image('tiles', 'assets/img/map_1.png');
 		this.load.image('hudTiles', 'assets/img/hud.png');
 		this.load.tilemapTiledJSON('level', 'assets/img/map_1.json');
+
 		this.load.setPath('assets/spine/')
 		this.load.spine(SPINEBOY_KEY, 'truffles_all.json', 'truffles_all.atlas')
-		//this.load.spine(SPINEBOY_KEY, 'goblins.json', 'goblins.atlas')
-		//this.load.spine(SPINEBOY_KEY, 'truffles_side.json', 'truffles_all_2.atlas')
 	}
 
 	create() {
@@ -62,7 +61,7 @@ export default class GameScene extends Phaser.Scene {
 		this.fpsText = new FpsText(this)
 		this.frameText = new FrameText(this)
 
-		new CannonBall(this, this.cameras.main.width / 2, 0)
+		new CannonBall(this, this.cameras.main.width / 2, 0, )
 
 		this.music = this.sound.add('backing-track',{ loop: true })
 
