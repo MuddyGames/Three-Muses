@@ -1,0 +1,97 @@
+
+truffles_all.png
+size: 551,205
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm
+  rotate: false
+  xy: 243, 2
+  size: 74, 45
+  orig: 75, 45
+  offset: 1, 0
+  index: -1
+back_arm
+  rotate: false
+  xy: 166, 2
+  size: 75, 45
+  orig: 75, 45
+  offset: 0, 0
+  index: -1
+birthmark
+  rotate: false
+  xy: 379, 9
+  size: 70, 74
+  orig: 72, 76
+  offset: 1, 1
+  index: -1
+body
+  rotate: false
+  xy: 166, 49
+  size: 124, 154
+  orig: 124, 154
+  offset: 0, 0
+  index: -1
+ear_back
+  rotate: true
+  xy: 396, 89
+  size: 114, 87
+  orig: 116, 89
+  offset: 1, 1
+  index: -1
+eye
+  rotate: true
+  xy: 485, 152
+  size: 51, 58
+  orig: 54, 60
+  offset: 1, 1
+  index: -1
+eyebrow
+  rotate: true
+  xy: 451, 6
+  size: 17, 12
+  orig: 19, 14
+  offset: 1, 1
+  index: -1
+front_ear
+  rotate: true
+  xy: 292, 85
+  size: 118, 102
+  orig: 120, 104
+  offset: 1, 1
+  index: -1
+head
+  rotate: true
+  xy: 2, 8
+  size: 195, 162
+  orig: 195, 162
+  offset: 0, 0
+  index: -1
+leg
+  rotate: true
+  xy: 451, 25
+  size: 62, 98
+  orig: 64, 98
+  offset: 1, 0
+  index: -1
+leg_back
+  rotate: false
+  xy: 326, 6
+  size: 51, 77
+  orig: 51, 77
+  offset: 0, 0
+  index: -1
+pupil
+  rotate: true
+  xy: 292, 50
+  size: 33, 32
+  orig: 35, 34
+  offset: 1, 1
+  index: -1
+tail
+  rotate: false
+  xy: 485, 97
+  size: 47, 53
+  orig: 47, 56
+  offset: 0, 0
+  index: -1
