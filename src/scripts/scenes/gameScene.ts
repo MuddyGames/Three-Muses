@@ -1,4 +1,3 @@
-import PhaserLogo from '../objects/phaserLogo'
 import FpsText from '../objects/fpsText'
 
 
@@ -20,12 +19,29 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload(){
+	this.load.image('tiles', 'assets/img/map_1.png');
+	this.load.image('tilesTown', 'assets/img/town_map_1.png');
+	this.load.tilemapTiledJSON('level', 'assets/img/map_1.json');
     this.load.setPath('assets/spine/')
 		this.load.spine(SPINEBOY_KEY, 'spineboy-pro.json', 'spineboy-pro.atlas')
 	}
 
   create() {
-    new PhaserLogo(this, this.cameras.main.width / 2, 0)
+	const map = this.make.tilemap({ key: 'level', tileWidth: 32, tileHeight: 32});
+	const tileset = map.addTilesetImage("map", 'tiles');
+	const townTiles = map.addTilesetImage("town", 'tilesTown');
+	const waterLayer = map.createLayer('ground/water', tileset, 0, 0);
+	const groundLayer = map.createLayer('ground/ground', tileset, 0, 0);
+	const ground2Layer = map.createLayer('ground/ground 2', tileset, 0, 0);
+	
+	const houseLayer = map.createLayer('houses', townTiles, 0, 0);
+	const wallLayer = map.createLayer('walls', tileset, 0, 0);
+	const miscLayer = map.createLayer('miselanious', townTiles, 0, 0);
+	
+	const roofLayer = map.createLayer('roof', tileset, 0, 0);
+	const houseRoofLayer = map.createLayer('house roof', townTiles, 0, 0);
+	const miscRoofLayer = map.createLayer('roof miselanious', townTiles, 0, 0);
+
     this.fpsText = new FpsText(this)
 
     // display the Phaser.VERSION
