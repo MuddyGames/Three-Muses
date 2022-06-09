@@ -1,12 +1,17 @@
 import FpsText from '../objects/fpsText'
+import FrameText from '../objects/frameText'
 import Logo from '../objects/logo'
 
 export default class SplashScene extends Phaser.Scene {
   fpsText
-  timedEvent
+  timedEvents : Phaser.Time.TimerEvent[] = []
   backingMusic
 
+  output
+
   logo
+
+  text
 
   constructor() {
     super({
@@ -20,10 +25,17 @@ export default class SplashScene extends Phaser.Scene {
 
   create() {
 
+    this.text = new FrameText(this)
+
     this.backingMusic = this.sound.add('splash_screen_track',{ loop: true })
 		this.backingMusic.play()
 
-    this.timedEvent = this.time.delayedCall(10, this.onEventLogo, [], this);
+    // Drop Logos
+    this.logo = new Logo(this, this.cameras.main.width / 2, 0, 'the_hunt_museum')
+    this.timedEvents.push(this.time.delayedCall(2000, this.onEventLogo, ['limerick_museum'], this))
+    this.timedEvents.push(this.time.delayedCall(4000, this.onEventLogo, ['limerick_gallery_of_art'], this))
+    this.timedEvents.push(this.time.delayedCall(6000, this.onEventLogo, ['SETU_Ireland_logo'], this))
+    this.timedEvents.push(this.time.delayedCall(8000, this.onEventGame, [], this))
 
     this.fpsText = new FpsText(this)
 
@@ -37,30 +49,21 @@ export default class SplashScene extends Phaser.Scene {
   }
 
   update() {
+
+    this.output = [];
+
     this.fpsText.update()
+
+    for (var i = 0; i < this.timedEvents.length; i++)
+    {
+        this.output.push('Event.progress: ' + this.timedEvents[i].getProgress().toString().substr(0, 4));
+    }
+    this.text.setText(this.output)
   }
 
-  private onEventLogo() {
-    this.timedEvent = this.time.delayedCall(2000, this.onEventTHM, [], this);
-    this.logo = new Logo(this, this.cameras.main.width / 2, 0, 'the_hunt_museum')
-  }
-
-  private onEventTHM() {
+  private onEventLogo(logo) {
     this.logo.destroy();
-    this.timedEvent = this.time.delayedCall(2000, this.onEventLM, [], this);
-    this.logo = new Logo(this, this.cameras.main.width / 2, 0, 'limerick_museum')
-  }
-
-  private onEventLM() {
-    this.logo.destroy();
-    this.timedEvent = this.time.delayedCall(2000, this.onEventLG, [], this);
-    this.logo = new Logo(this, this.cameras.main.width / 2, 0, 'limerick_gallery_of_art')
-  }
-
-  private onEventLG() {
-    this.logo.destroy();
-    this.timedEvent = this.time.delayedCall(2000, this.onEventGame, [], this)
-    this.logo = new Logo(this, this.cameras.main.width / 2, 0, 'SETU_Ireland_logo')
+    this.logo = new Logo(this, this.cameras.main.width / 2, 0, logo)
   }
 
   private onEventGame() {
