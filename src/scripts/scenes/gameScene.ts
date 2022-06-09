@@ -12,6 +12,8 @@ export default class GameScene extends Phaser.Scene {
 	backingMusic
 	idiomCue
 
+	ball
+
 	private truffles!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 
@@ -21,8 +23,6 @@ export default class GameScene extends Phaser.Scene {
 	private trufflesPosX = 100
 	private trufflesPosY = 360
 	private trufflesSpeed = 5
-
-
 
 	constructor() {
 		super({
@@ -68,7 +68,7 @@ export default class GameScene extends Phaser.Scene {
 		this.fpsText = new FpsText(this)
 		this.frameText = new FrameText(this)
 
-		new CannonBall(this, this.cameras.main.width / 2, 0, )
+		this.ball = new CannonBall(this, this.cameras.main.width / 2, 0, )
 
 		this.backingMusic = this.sound.add('level_backing-track',{ loop: true })
 		this.backingMusic.play()
@@ -95,6 +95,7 @@ export default class GameScene extends Phaser.Scene {
 	update() {
 		this.fpsText.update()
 		this.frameText.update()
+		this.ball.update()
 
 		const size = this.animationNames.length
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
@@ -102,13 +103,7 @@ export default class GameScene extends Phaser.Scene {
 			this.idiomCue = this.sound.add('a_boy_the_kid')
 			this.idiomCue.play()
 			
-			if (this.animationIndex >= size - 1) {
-				this.animationIndex = 0
-			} else {
-				++this.animationIndex
-			}
-
-			this.changeAnimation(this.animationIndex)
+			this.changeAnimation(2)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
 			
 			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
@@ -139,8 +134,6 @@ export default class GameScene extends Phaser.Scene {
 		this.trufflesPosY+= this.trufflesSpeed
 		this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
    }
-   
-   
 	   
 	}
 
