@@ -68,7 +68,7 @@ export default class SplashScene extends Phaser.Scene {
 
   private onEventGame() {
     this.logo.destroy();
-    this.scene.start('GameScene')
+    this.scene.start('ArtiFactScene')
     this.backingMusic.stop()
   }
 

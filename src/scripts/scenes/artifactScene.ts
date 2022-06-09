@@ -14,12 +14,13 @@ export default class ArtiFactScene extends Phaser.Scene {
   }
 
   preload() {
+    this.load.script('fractals', 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.0.js');
     this.load.html('test1', 'assets/html/test.html');
   }
 
   create() {
 
-    this.element = this.add.dom(400, 600).createFromCache('test1');
+    this.element = this.add.dom(this.cameras.main.width / 2, 100).createFromCache('test1');
 
     this.element.setPerspective(800);
 
@@ -27,14 +28,7 @@ export default class ArtiFactScene extends Phaser.Scene {
 		this.backingMusic.play()
 
     // Drop Logos
-    this.timedEvents.push(this.time.delayedCall(2000, this.onEventGame, [], this))
-
-    this.tweens.add({
-      targets: this.element,
-      y: 300,
-      duration: 3000,
-      ease: 'Power3'
-  });
+    this.timedEvents.push(this.time.delayedCall(30000, this.onEventGame, [], this))
 
   }
 
