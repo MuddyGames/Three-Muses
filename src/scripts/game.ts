@@ -11,10 +11,15 @@ const DEFAULT_HEIGHT = 720
 
 const config = {
   type: Phaser.WEBGL,
+  dom: {
+    createContainer: true
+  },
   backgroundColor: '#ffffff',
   scale: {
     parent: 'phaser-game',
-    dom: {createContainer:true},
+    dom: {
+      createContainer: true
+    },
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
     width: DEFAULT_WIDTH,
@@ -22,15 +27,19 @@ const config = {
   },
   scene: [PreloadScene, GameScene, SplashScene, ArtiFactScene],
   plugins: {
-		scene: [
-			{ key: 'SpinePlugin', plugin: window.SpinePlugin, mapping: 'spine' }
-		]
-	},
+    scene: [{
+      key: 'SpinePlugin',
+      plugin: window.SpinePlugin,
+      mapping: 'spine'
+    }]
+  },
   physics: {
     default: 'arcade',
     arcade: {
       debug: false,
-      gravity: { y: 400 }
+      gravity: {
+        y: 400
+      }
     }
   }
 }
