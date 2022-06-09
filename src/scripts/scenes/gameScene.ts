@@ -10,7 +10,7 @@ const GRAPE_KEY = 'grape'
 
 export default class GameScene extends Phaser.Scene {
 
-	fpsText
+	// fpsText
 	frameText
 	backingMusic
 	idiomCue
@@ -52,47 +52,83 @@ export default class GameScene extends Phaser.Scene {
 		const map = this.make.tilemap({ key: 'level', tileWidth: 32, tileHeight: 32});
 		const tileset = map.addTilesetImage("map_1", 'tiles');
 		const hudTileset = map.addTilesetImage("hud", 'hudTiles');
+
 		const waterLayer = map.createLayer('map/ground/water', tileset, 0, 0);
+		waterLayer.setDepth(0);
+
 		const groundLayer = map.createLayer('map/ground/ground', tileset, 0, 0);
+		groundLayer.setDepth(0);
+
 		const ground2Layer = map.createLayer('map/shadow 1', tileset, 0, 0);
+		ground2Layer.setDepth(1);
 		
 		const house2Layer = map.createLayer('map/buildings/houses/house 2', tileset, 0, 0);
+		house2Layer.setDepth(1);
+
 		const houseLayer = map.createLayer('map/buildings/houses/house 1', tileset, 0, 0);
+		houseLayer.setDepth(1);
+
 		const wallLayer = map.createLayer('map/buildings/walls', tileset, 0, 0);
+		wallLayer.setDepth(3);
+
 		const churchLayer = map.createLayer('map/buildings/church', tileset, 0, 0);
+		churchLayer.setDepth(1);
+
 		const castleLayer = map.createLayer('map/buildings/castle', tileset, 0, 0);
+		castleLayer.setDepth(3);
+
 		const miscLayer = map.createLayer('map/buildings/miselanious', tileset, 0, 0);
+		miscLayer.setDepth(2);
 		
 		const wallTopLayer = map.createLayer('map/move behind /wall top', tileset, 0, 0);
-		const shad2Layer = map.createLayer('map/move behind /Shadow 2', tileset, 0, 0);
-		const house2RoofLayer = map.createLayer('map/move behind /house roof/house roof 2', tileset, 0, 0);
-		const houseRoofLayer = map.createLayer('map/move behind /house roof/house roof 1', tileset, 0, 0);
-		const towerTopLayer = map.createLayer('map/move behind /tower top', tileset, 0, 0);
-		const churchRoofLayer = map.createLayer('map/move behind /church roof', tileset, 0, 0);
-		const castleRoofLayer = map.createLayer('map/move behind /castle roof', tileset, 0, 0);
-		const miscTopLayer = map.createLayer('map/move behind /miselanious top', tileset, 0, 0);
-		
-		const hudLayer = map.createLayer('hud', hudTileset, 0, 0);
+		wallTopLayer.setDepth(2);
 
-		this.fpsText = new FpsText(this)
+		const shad2Layer = map.createLayer('map/move behind /Shadow 2', tileset, 0, 0);
+		shad2Layer.setDepth(2);
+
+		const house2RoofLayer = map.createLayer('map/move behind /house roof/house roof 2', tileset, 0, 0);
+		house2RoofLayer.setDepth(2);
+
+		const houseRoofLayer = map.createLayer('map/move behind /house roof/house roof 1', tileset, 0, 0);
+		houseRoofLayer.setDepth(2);
+
+		const towerTopLayer = map.createLayer('map/move behind /tower top', tileset, 0, 0);
+		towerTopLayer.setDepth(2);
+
+		const churchRoofLayer = map.createLayer('map/move behind /church roof', tileset, 0, 0);
+		churchRoofLayer.setDepth(2);
+
+		const castleRoofLayer = map.createLayer('map/move behind /castle roof', tileset, 0, 0);
+		castleRoofLayer.setDepth(2);
+
+		const miscTopLayer = map.createLayer('map/move behind /miselanious top', tileset, 0, 0);
+		miscTopLayer.setDepth(2);
+
+		const hudLayer = map.createLayer('hud', hudTileset, 0, 0);
+		hudLayer.setDepth(2);
+
+		//this.fpsText = new FpsText(this)
 		this.frameText = new FrameText(this)
 
 		this.ball = new CannonBall(this, this.cameras.main.width / 2, 0, )
+		this.ball.setDepth(2)
 
 		this.backingMusic = this.sound.add('level_backing-track',{ loop: true })
 		this.backingMusic.play()
 
 		// display the Phaser.VERSION
-		this.add
-			.text(this.cameras.main.width - 15, 15, `Game Scene Phaser v${Phaser.VERSION}`, {
-				color: '#000000',
-				fontSize: '24px'
-			})
-			.setOrigin(1, 0)
+		//this.add
+		//	.text(this.cameras.main.width - 15, 15, `Game Scene Phaser v${Phaser.VERSION}`, {
+		//		color: '#000000',
+		//		fontSize: '24px'
+		//	})
+		//	.setOrigin(1, 0)
 
 		const animation = 'idle'
 
 		this.truffles = this.createTruffles(animation)
+		this.truffles.setDepth(1)
+
 		this.orange = this.createOrange(animation)
 		this.lemon = this.createLemon(animation)
 		this.grape = this.createGrape(animation)
@@ -106,7 +142,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	update() {
-		this.fpsText.update()
+		//this.fpsText.update()
 		this.frameText.update()
 		this.ball.update()
 
