@@ -4,6 +4,7 @@ import 'phaser/plugins/spine/dist/SpinePlugin'
 import SplashScene from './scenes/splashScene'
 import GameScene from './scenes/gameScene'
 import PreloadScene from './scenes/preloadScene'
+import ArtiFactScene from './scenes/artifactScene'
 
 const DEFAULT_WIDTH = 1280
 const DEFAULT_HEIGHT = 720
@@ -13,12 +14,13 @@ const config = {
   backgroundColor: '#ffffff',
   scale: {
     parent: 'phaser-game',
+    dom: {createContainer:true},
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, GameScene, SplashScene],
+  scene: [PreloadScene, GameScene, SplashScene, ArtiFactScene],
   plugins: {
 		scene: [
 			{ key: 'SpinePlugin', plugin: window.SpinePlugin, mapping: 'spine' }
