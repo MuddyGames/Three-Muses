@@ -1,4 +1,4 @@
-import FpsText from '../objects/fpsText'
+//import FpsText from '../objects/fpsText'
 import FrameText from '../objects/frameText'
 import CannonBall from '../objects/cannonBall'
 
@@ -49,7 +49,11 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		const map = this.make.tilemap({ key: 'level', tileWidth: 32, tileHeight: 32});
+		const map = this.make.tilemap({
+			key: 'level',
+			tileWidth: 32,
+			tileHeight: 32
+		});
 		const tileset = map.addTilesetImage("map_1", 'tiles');
 		const hudTileset = map.addTilesetImage("hud", 'hudTiles');
 
@@ -61,7 +65,7 @@ export default class GameScene extends Phaser.Scene {
 
 		const ground2Layer = map.createLayer('map/shadow 1', tileset, 0, 0);
 		ground2Layer.setDepth(1);
-		
+
 		const house2Layer = map.createLayer('map/buildings/houses/house 2', tileset, 0, 0);
 		house2Layer.setDepth(1);
 
@@ -79,7 +83,7 @@ export default class GameScene extends Phaser.Scene {
 
 		const miscLayer = map.createLayer('map/buildings/miselanious', tileset, 0, 0);
 		miscLayer.setDepth(2);
-		
+
 		const wallTopLayer = map.createLayer('map/move behind /wall top', tileset, 0, 0);
 		wallTopLayer.setDepth(2);
 
@@ -109,11 +113,14 @@ export default class GameScene extends Phaser.Scene {
 
 		//this.fpsText = new FpsText(this)
 		this.frameText = new FrameText(this)
+		this.frameText.setDepth(5)
 
 		this.ball = new CannonBall(this, this.cameras.main.width / 2, 0, )
 		this.ball.setDepth(2)
 
-		this.backingMusic = this.sound.add('level_backing-track',{ loop: true })
+		this.backingMusic = this.sound.add('level_backing_track', {
+			loop: true
+		})
 		this.backingMusic.play()
 
 		// display the Phaser.VERSION
@@ -138,7 +145,7 @@ export default class GameScene extends Phaser.Scene {
 		this.cursors = this.input.keyboard.createCursorKeys()
 
 		this.initializeAnimationsState(this.truffles)
-		this.initializeAnimationsState(this.orange)	
+		this.initializeAnimationsState(this.orange)
 	}
 
 	update() {
@@ -147,60 +154,56 @@ export default class GameScene extends Phaser.Scene {
 		this.ball.update()
 
 		const size = this.animationNames.length
-		
+
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
 
 			this.idiomCue = this.sound.add('a_boy_the_kid')
 			this.idiomCue.play()
-			
+
 			this.changeAnimation(3)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
-			
+
 			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
 			this.idiomCue.play()
-		    this.changeAnimation(2)
-	    }
+			this.changeAnimation(2)
+		}
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
 
 			this.idiomCue = this.sound.add('a_boy_the_kid')
 			this.idiomCue.play()
-			
+
 			this.changeAnimation(4)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-			
+
 			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
 			this.idiomCue.play()
-		    this.changeAnimation(1)
-	    }
-		
-		
+			this.changeAnimation(1)
+		}
 
-		if (this.cursors.right.isDown){
-             this.trufflesPosX += this.trufflesSpeed
-			 this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+		if (this.cursors.right.isDown) {
+			this.trufflesPosX += this.trufflesSpeed
+			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
 		}
-		
-		if (this.cursors.left.isDown){
+
+		if (this.cursors.left.isDown) {
 			this.trufflesPosX -= this.trufflesSpeed
-			this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
-			
-	    }
-	    
-		if (this.cursors.up.isDown){
-		    this.trufflesPosY -= this.trufflesSpeed
-		    this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+
 		}
-	    
-		if (this.cursors.down.isDown){
-		    this.trufflesPosY+= this.trufflesSpeed
-		    this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
-	    }
-        
-		if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown){
+
+		if (this.cursors.up.isDown) {
+			this.trufflesPosY -= this.trufflesSpeed
+			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+		}
+
+		if (this.cursors.down.isDown) {
+			this.trufflesPosY += this.trufflesSpeed
+			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+		}
+
+		if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
 			this.changeAnimation(0)
 		}
-   
-	   
 	}
 
 	private createTruffles(startAnim = 'idle') {
@@ -252,8 +255,4 @@ export default class GameScene extends Phaser.Scene {
 		this.truffles.play(animation, true)
 		this.frameText.setText(animation + "[ " + this.animationIndex + " ]")
 	}
-
-	
-
-	
 }
