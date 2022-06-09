@@ -22,7 +22,7 @@ export default class GameScene extends Phaser.Scene {
 
 	private trufflesPosX = 100
 	private trufflesPosY = 360
-	private trufflesSpeed = 5
+	private trufflesSpeed = 2
 
 	constructor() {
 		super({
@@ -98,6 +98,7 @@ export default class GameScene extends Phaser.Scene {
 		this.ball.update()
 
 		const size = this.animationNames.length
+		
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
 
 			this.idiomCue = this.sound.add('a_boy_the_kid')
@@ -108,32 +109,36 @@ export default class GameScene extends Phaser.Scene {
 			
 			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
 			this.idiomCue.play()
-
-			if (this.animationIndex <= 0) {
-				this.animationIndex = size - 1
-			} else {
-				--this.animationIndex
-			}
-
-			this.changeAnimation(this.animationIndex)
-		}
+		    this.changeAnimation(1)
+	    }
+		
+		
 
 		if (this.cursors.right.isDown){
              this.trufflesPosX += this.trufflesSpeed
 			 this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
 		}
+		
 		if (this.cursors.left.isDown){
 			this.trufflesPosX -= this.trufflesSpeed
 			this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
-	   }
-	   if (this.cursors.up.isDown){
-		this.trufflesPosY -= this.trufflesSpeed
-		this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
-       }
-	   if (this.cursors.down.isDown){
-		this.trufflesPosY+= this.trufflesSpeed
-		this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
-   }
+			
+	    }
+	    
+		if (this.cursors.up.isDown){
+		    this.trufflesPosY -= this.trufflesSpeed
+		    this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+		}
+	    
+		if (this.cursors.down.isDown){
+		    this.trufflesPosY+= this.trufflesSpeed
+		    this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+	    }
+        
+		if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown){
+			this.changeAnimation(0)
+		}
+   
 	   
 	}
 
