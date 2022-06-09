@@ -1,0 +1,20 @@
+
+lemon.png
+size: 60,34
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Lemon
+  rotate: true
+  xy: 2, 2
+  size: 30, 46
+  orig: 42, 50
+  offset: 6, 1
+  index: -1
+Shadow
+  rotate: true
+  xy: 50, 8
+  size: 24, 8
+  orig: 26, 10
+  offset: 1, 1
+  index: -1
