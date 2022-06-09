@@ -4,6 +4,9 @@ import CannonBall from '../objects/cannonBall'
 
 
 const TRUFFLES_KEY = 'truffles'
+const ORANGE_KEY = 'orange'
+const LEMON_KEY = 'lemon'
+const GRAPE_KEY = 'grape'
 
 export default class GameScene extends Phaser.Scene {
 
@@ -16,6 +19,9 @@ export default class GameScene extends Phaser.Scene {
 
 	private truffles!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
+	private orange!: SpineGameObject
+	private lemon!: SpineGameObject
+	private grape!: SpineGameObject
 
 	private animationNames: string[] = []
 	private animationIndex = 0
@@ -37,6 +43,9 @@ export default class GameScene extends Phaser.Scene {
 
 		this.load.setPath('assets/spine/')
 		this.load.spine(TRUFFLES_KEY, 'truffles_all.json', 'truffles_all.atlas')
+		this.load.spine(ORANGE_KEY, 'orange.json', 'orange.atlas')
+		this.load.spine(GRAPE_KEY, 'grape.json', 'grape.atlas')
+		this.load.spine(LEMON_KEY, 'lemon.json', 'lemon.atlas')
 	}
 
 	create() {
@@ -84,12 +93,16 @@ export default class GameScene extends Phaser.Scene {
 		const animation = 'idle'
 
 		this.truffles = this.createTruffles(animation)
+		this.orange = this.createOrange(animation)
+		this.lemon = this.createLemon(animation)
+		this.grape = this.createGrape(animation)
 		this.frameText.setText(animation)
 		this.frameText.setText(animation + "[ " + this.animationIndex + " ]")
 
 		this.cursors = this.input.keyboard.createCursorKeys()
 
 		this.initializeAnimationsState(this.truffles)
+		this.initializeAnimationsState(this.orange)	
 	}
 
 	update() {
@@ -104,8 +117,20 @@ export default class GameScene extends Phaser.Scene {
 			this.idiomCue = this.sound.add('a_boy_the_kid')
 			this.idiomCue.play()
 			
-			this.changeAnimation(2)
+			this.changeAnimation(3)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
+			
+			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
+			this.idiomCue.play()
+		    this.changeAnimation(2)
+	    }
+		if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
+
+			this.idiomCue = this.sound.add('a_boy_the_kid')
+			this.idiomCue.play()
+			
+			this.changeAnimation(4)
+		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
 			
 			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
 			this.idiomCue.play()
@@ -145,10 +170,35 @@ export default class GameScene extends Phaser.Scene {
 	private createTruffles(startAnim = 'idle') {
 		const truffles = this.add.spine(100, 360, TRUFFLES_KEY, startAnim, true)
 
-		truffles.scaleX = 0.2
-		truffles.scaleY = 0.2
+		truffles.scaleX = 0.25
+		truffles.scaleY = 0.25
 
 		return truffles
+	}
+	private createOrange(startAnim = 'idle') {
+		const orange = this.add.spine(120, 360, ORANGE_KEY, startAnim, true)
+
+		orange.scaleX = 0.7
+		orange.scaleY = 0.7
+
+		return orange
+	}
+	private createGrape(startAnim = 'idle') {
+		const grape = this.add.spine(80, 360, GRAPE_KEY, startAnim, true)
+
+		grape.scaleX = 0.7
+		grape.scaleY = 0.7
+
+		return grape
+	}
+	private createLemon(startAnim = 'idle') {
+		const lemon = this.add.spine(150, 360, LEMON_KEY, startAnim, true)
+
+		lemon.scaleX = 0.7
+		lemon.scaleY = 0.7
+
+
+		return lemon
 	}
 	private initializeAnimationsState(spineGO: SpineGameObject) {
 		const startAnim = spineGO.getCurrentAnimation().name
