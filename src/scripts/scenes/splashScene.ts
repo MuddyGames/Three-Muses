@@ -7,11 +7,11 @@ export default class SplashScene extends Phaser.Scene {
   timedEvents : Phaser.Time.TimerEvent[] = []
   backingMusic
 
-  output
+  //output
 
   logo
 
-  text
+  //text
 
   constructor() {
     super({
@@ -25,7 +25,7 @@ export default class SplashScene extends Phaser.Scene {
 
   create() {
 
-    this.text = new FrameText(this)
+    //this.text = new FrameText(this)
 
     this.backingMusic = this.sound.add('splash_screen_track',{ loop: true })
 		this.backingMusic.play()
@@ -40,25 +40,25 @@ export default class SplashScene extends Phaser.Scene {
     this.fpsText = new FpsText(this)
 
     // display the Phaser.VERSION
-    this.add
-      .text(this.cameras.main.width - 15, 15, `Phaser v${Phaser.VERSION}`, {
-        color: '#000000',
-        fontSize: '24px'
-      })
-      .setOrigin(1, 0)
+    //this.add
+    //  .text(this.cameras.main.width - 15, 15, `Phaser v${Phaser.VERSION}`, {
+    //    color: '#000000',
+    //    fontSize: '24px'
+    //  })
+    //  .setOrigin(1, 0)
   }
 
   update() {
 
-    this.output = [];
+    //this.output = [];
 
-    this.fpsText.update()
+    //this.fpsText.update()
 
-    for (var i = 0; i < this.timedEvents.length; i++)
-    {
-        this.output.push('Event.progress: ' + this.timedEvents[i].getProgress().toString().substr(0, 4));
-    }
-    this.text.setText(this.output)
+    //for (var i = 0; i < this.timedEvents.length; i++)
+    //{
+    //    this.output.push('Event.progress: ' + this.timedEvents[i].getProgress().toString().substr(0, 4));
+    //}
+    //this.text.setText(this.output)
   }
 
   private onEventLogo(logo) {

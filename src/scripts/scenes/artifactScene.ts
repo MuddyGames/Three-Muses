@@ -28,7 +28,7 @@ export default class ArtiFactScene extends Phaser.Scene {
 		this.backingMusic.play()
 
     // Drop Logos
-    this.timedEvents.push(this.time.delayedCall(30000, this.onEventGame, [], this))
+    this.timedEvents.push(this.time.delayedCall(2000, this.onEventGame, [], this))
 
   }
 
