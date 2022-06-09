@@ -18,6 +18,12 @@ export default class GameScene extends Phaser.Scene {
 	private animationNames: string[] = []
 	private animationIndex = 0
 
+	private trufflesPosX = 100
+	private trufflesPosY = 360
+	private trufflesSpeed = 5
+
+
+
 	constructor() {
 		super({
 			key: 'GameScene'
@@ -35,14 +41,14 @@ export default class GameScene extends Phaser.Scene {
 
 	create() {
 		const map = this.make.tilemap({ key: 'level', tileWidth: 32, tileHeight: 32});
-		const tileset = map.addTilesetImage("level1_tileset", 'tiles');
+		const tileset = map.addTilesetImage("map_1", 'tiles');
 		const hudTileset = map.addTilesetImage("hud", 'hudTiles');
 		const waterLayer = map.createLayer('map/ground/water', tileset, 0, 0);
 		const groundLayer = map.createLayer('map/ground/ground', tileset, 0, 0);
 		const ground2Layer = map.createLayer('map/shadow 1', tileset, 0, 0);
 		
-		const houseLayer = map.createLayer('map/buildings/houses/house 1', tileset, 0, 0);
 		const house2Layer = map.createLayer('map/buildings/houses/house 2', tileset, 0, 0);
+		const houseLayer = map.createLayer('map/buildings/houses/house 1', tileset, 0, 0);
 		const wallLayer = map.createLayer('map/buildings/walls', tileset, 0, 0);
 		const churchLayer = map.createLayer('map/buildings/church', tileset, 0, 0);
 		const castleLayer = map.createLayer('map/buildings/castle', tileset, 0, 0);
@@ -50,8 +56,8 @@ export default class GameScene extends Phaser.Scene {
 		
 		const wallTopLayer = map.createLayer('map/move behind /wall top', tileset, 0, 0);
 		const shad2Layer = map.createLayer('map/move behind /Shadow 2', tileset, 0, 0);
-		const houseRoofLayer = map.createLayer('map/move behind /house roof/house roof 1', tileset, 0, 0);
 		const house2RoofLayer = map.createLayer('map/move behind /house roof/house roof 2', tileset, 0, 0);
+		const houseRoofLayer = map.createLayer('map/move behind /house roof/house roof 1', tileset, 0, 0);
 		const towerTopLayer = map.createLayer('map/move behind /tower top', tileset, 0, 0);
 		const churchRoofLayer = map.createLayer('map/move behind /church roof', tileset, 0, 0);
 		const castleRoofLayer = map.createLayer('map/move behind /castle roof', tileset, 0, 0);
@@ -116,13 +122,33 @@ export default class GameScene extends Phaser.Scene {
 
 			this.changeAnimation(this.animationIndex)
 		}
+
+		if (this.cursors.right.isDown){
+             this.trufflesPosX += this.trufflesSpeed
+			 this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+		}
+		if (this.cursors.left.isDown){
+			this.trufflesPosX -= this.trufflesSpeed
+			this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+	   }
+	   if (this.cursors.up.isDown){
+		this.trufflesPosY -= this.trufflesSpeed
+		this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+       }
+	   if (this.cursors.down.isDown){
+		this.trufflesPosY+= this.trufflesSpeed
+		this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+   }
+   
+   
+	   
 	}
 
 	private createTruffles(startAnim = 'idle') {
-		const truffles = this.add.spine(400, 600, TRUFFLES_KEY, startAnim, true)
+		const truffles = this.add.spine(100, 360, TRUFFLES_KEY, startAnim, true)
 
-		truffles.scaleX = 0.5
-		truffles.scaleY = 0.5
+		truffles.scaleX = 0.2
+		truffles.scaleY = 0.2
 
 		return truffles
 	}
@@ -142,4 +168,8 @@ export default class GameScene extends Phaser.Scene {
 		this.truffles.play(animation, true)
 		this.frameText.setText(animation + "[ " + this.animationIndex + " ]")
 	}
+
+	
+
+	
 }
