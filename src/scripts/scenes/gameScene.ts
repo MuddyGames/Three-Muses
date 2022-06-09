@@ -18,6 +18,12 @@ export default class GameScene extends Phaser.Scene {
 	private animationNames: string[] = []
 	private animationIndex = 0
 
+	private trufflesPosX = 100
+	private trufflesPosY = 360
+	private trufflesSpeed = 5
+
+
+
 	constructor() {
 		super({
 			key: 'GameScene'
@@ -116,6 +122,26 @@ export default class GameScene extends Phaser.Scene {
 
 			this.changeAnimation(this.animationIndex)
 		}
+
+		if (this.cursors.right.isDown){
+             this.trufflesPosX += this.trufflesSpeed
+			 this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+		}
+		if (this.cursors.left.isDown){
+			this.trufflesPosX -= this.trufflesSpeed
+			this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+	   }
+	   if (this.cursors.up.isDown){
+		this.trufflesPosY -= this.trufflesSpeed
+		this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+       }
+	   if (this.cursors.down.isDown){
+		this.trufflesPosY+= this.trufflesSpeed
+		this.truffles.setPosition(this.trufflesPosX,this.trufflesPosY)
+   }
+   
+   
+	   
 	}
 
 	private createTruffles(startAnim = 'idle') {
@@ -142,4 +168,8 @@ export default class GameScene extends Phaser.Scene {
 		this.truffles.play(animation, true)
 		this.frameText.setText(animation + "[ " + this.animationIndex + " ]")
 	}
+
+	
+
+	
 }
