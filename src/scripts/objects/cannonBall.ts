@@ -12,7 +12,11 @@ export default class CannonBall extends Phaser.Physics.Arcade.Sprite {
       })*/
   }
   public update() {
-    this.x += 10;
+    this.y += 2;
     this.setPosition(this.x, this.y)
+
+    if (this.y >= 688  ) {
+      this.setPosition(this.x, this.y = 48)
+    }
   }
 }
