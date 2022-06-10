@@ -37,8 +37,8 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	preload() {
-		this.load.image('tiles', 'assets/level/tileset_1.png');
-		this.load.image('hudTiles', 'assets/level/hud.png');
+		this.load.image('tileset', 'assets/level/tileset_1.png');
+		this.load.image('hud', 'assets/level/hud.png');
 		this.load.tilemapTiledJSON('level', 'assets/level/truffles_level_1.json');
 
 		this.load.setPath('assets/spine/')
@@ -54,8 +54,8 @@ export default class GameScene extends Phaser.Scene {
 			tileWidth: 32,
 			tileHeight: 32
 		});
-		const tileset = map.addTilesetImage("tileset_1", 'tiles');
-		const hudTileset = map.addTilesetImage("hud", 'hudTiles');
+		const tileset = map.addTilesetImage("truffles_level_1_tileset", 'tileset');
+		const hudTileset = map.addTilesetImage("key_hud", 'hud');
 
 		const waterLayer = map.createLayer('map/ground/water_depth_00', tileset, 0, 0);
 		waterLayer.setDepth(0);
@@ -71,13 +71,13 @@ export default class GameScene extends Phaser.Scene {
 
 		const house2Layer = map.createLayer('map/buildings/house_depth_01/house_layer_2', tileset, 0, 0);
 		house2Layer.setDepth(1);
-		/*
-				const wall1Layer = map.createLayer('map/buildings/walls_dept_01', tileset, 0, 0);
-				wall1Layer.setDepth(1);
 
-				const wall2Layer = map.createLayer('map/buildings/walls_dept_03', tileset, 0, 0);
-				wall2Layer.setDepth(3);
+		const wall1Layer = map.createLayer('map/buildings/walls_depth_01', tileset, 0, 0);
+		wall1Layer.setDepth(1);
 
+		const wall2Layer = map.createLayer('map/buildings/walls_depth_03', tileset, 0, 0);
+		wall2Layer.setDepth(3);
+/*
 				const churchLayer = map.createLayer('map/buildings/church_depth_01', tileset, 0, 0);
 				churchLayer.setDepth(1);
 
