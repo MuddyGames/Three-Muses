@@ -31,11 +31,12 @@ export default class SplashScene extends Phaser.Scene {
 		this.backingMusic.play()
 
     // Drop Logos
-    this.logo = new Logo(this, this.cameras.main.width / 2, 0, 'the_hunt_museum')
-    this.timedEvents.push(this.time.delayedCall(2000, this.onEventLogo, ['limerick_museum'], this))
-    this.timedEvents.push(this.time.delayedCall(4000, this.onEventLogo, ['limerick_gallery_of_art'], this))
-    this.timedEvents.push(this.time.delayedCall(6000, this.onEventLogo, ['SETU_Ireland_logo'], this))
-    this.timedEvents.push(this.time.delayedCall(8000, this.onEventGame, [], this))
+    this.logo = new Logo(this, this.cameras.main.width / 2, 0, 'truffles_splash')
+    this.timedEvents.push(this.time.delayedCall(4500, this.onEventLogo, ['the_hunt_museum'], this))
+    this.timedEvents.push(this.time.delayedCall(5500, this.onEventLogo, ['limerick_museum'], this))
+    this.timedEvents.push(this.time.delayedCall(6500, this.onEventLogo, ['limerick_gallery_of_art'], this))
+    this.timedEvents.push(this.time.delayedCall(7500, this.onEventLogo, ['SETU_Ireland_logo'], this))
+    this.timedEvents.push(this.time.delayedCall(8500, this.onEventGame, [], this))
 
     this.fpsText = new FpsText(this)
 

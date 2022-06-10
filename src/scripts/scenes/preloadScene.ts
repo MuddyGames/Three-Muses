@@ -6,6 +6,8 @@ export default class PreloadScene extends Phaser.Scene {
 
   preload() {
 
+    this.load.image('truffles_splash', 'assets/splash/splash.png')
+
     this.load.image('the_hunt_museum', 'assets/logos/the_hunt_museum.png')
     this.load.image('limerick_museum', 'assets/logos/limerick_museum.png')
     this.load.image('limerick_gallery_of_art', 'assets/logos/limerick_gallery_of_art.png')
