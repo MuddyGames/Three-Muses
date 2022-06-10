@@ -116,7 +116,7 @@ export default class GameScene extends Phaser.Scene {
 		this.frameText.setDepth(5)
 
 		this.ball = new CannonBall(this, this.cameras.main.width / 2, 0, )
-		this.ball.setDepth(2)
+		this.ball.setDepth(5)
 
 		this.backingMusic = this.sound.add('level_backing_track', {
 			loop: true
