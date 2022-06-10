@@ -16,7 +16,7 @@ const config = {
   },
   backgroundColor: '#ffffff',
   scale: {
-    parent: 'phaser-game',
+    parent: 'three_muses_game',
     dom: {
       createContainer: true
     },
