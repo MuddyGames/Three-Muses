@@ -5,6 +5,7 @@ import SplashScene from './scenes/splashScene'
 import GameScene from './scenes/gameScene'
 import PreloadScene from './scenes/preloadScene'
 import ArtiFactScene from './scenes/artifactScene'
+import TestScene from './scenes/testScene'
 
 const DEFAULT_WIDTH = 1280
 const DEFAULT_HEIGHT = 720
@@ -25,7 +26,7 @@ const config = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, GameScene, SplashScene, ArtiFactScene],
+  scene: [PreloadScene, GameScene, SplashScene, ArtiFactScene, TestScene],
   plugins: {
     scene: [{
       key: 'SpinePlugin',
