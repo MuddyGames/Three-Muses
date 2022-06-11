@@ -30,6 +30,13 @@ export default class GameScene extends Phaser.Scene {
 	private trufflesPosY = 360
 	private trufflesSpeed = 2
 
+	// TileMap Data
+	private map!: Phaser.Tilemaps.Tilemap
+	private tile!: Phaser.Tilemaps.Tile
+	private waterLayer!: Phaser.Tilemaps.TilemapLayer
+	private groundLayer!: Phaser.Tilemaps.TilemapLayer
+	private ground2Layer!: Phaser.Tilemaps.TilemapLayer
+
 	constructor() {
 		super({
 			key: 'GameScene'
@@ -49,74 +56,74 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		const map = this.make.tilemap({
+		this.map = this.make.tilemap({
 			key: 'level',
 			tileWidth: 32,
 			tileHeight: 32
 		});
-		const tileset = map.addTilesetImage("truffles_level_1_tileset", 'tileset');
-		const hudTileset = map.addTilesetImage("key_hud", 'hud');
+		const tileset = this.map.addTilesetImage("truffles_level_1_tileset", 'tileset');
+		const hudTileset = this.map.addTilesetImage("key_hud", 'hud');
 
-		const waterLayer = map.createLayer('map/ground/water_depth_00', tileset, 0, 0);
-		waterLayer.setDepth(0);
+		this.waterLayer = this.map.createLayer('map/ground/water_depth_00', tileset, 0, 0);
+		this.waterLayer.setDepth(0);
 
-		const groundLayer = map.createLayer('map/ground/ground_depth_00', tileset, 0, 0);
-		groundLayer.setDepth(0);
+		this.groundLayer = this.map.createLayer('map/ground/ground_depth_00', tileset, 0, 0);
+		this.groundLayer.setDepth(0);
 
-		const ground2Layer = map.createLayer('map/shadow_depth_01', tileset, 0, 0);
-		ground2Layer.setDepth(1);
+		this.ground2Layer = this.map.createLayer('map/shadow_depth_01', tileset, 0, 0);
+		this.ground2Layer.setDepth(1);
 
-		const house2Layer = map.createLayer('map/buildings/house_depth_01/house_layer_2', tileset, 0, 0);
+		const house2Layer = this.map.createLayer('map/buildings/house_depth_01/house_layer_2', tileset, 0, 0);
 		house2Layer.setDepth(1);
 
-		const house1Layer = map.createLayer('map/buildings/house_depth_01/house_layer_1', tileset, 0, 0);
+		const house1Layer = this.map.createLayer('map/buildings/house_depth_01/house_layer_1', tileset, 0, 0);
 		house1Layer.setDepth(1);
 
-		const wall1Layer = map.createLayer('map/buildings/walls_depth_01', tileset, 0, 0);
+		const wall1Layer = this.map.createLayer('map/buildings/walls_depth_01', tileset, 0, 0);
 		wall1Layer.setDepth(1);
 
-		const wall2Layer = map.createLayer('map/buildings/walls_depth_03', tileset, 0, 0);
+		const wall2Layer = this.map.createLayer('map/buildings/walls_depth_03', tileset, 0, 0);
 		wall2Layer.setDepth(3);
 
-		const churchLayer = map.createLayer('map/buildings/church_depth_01', tileset, 0, 0);
+		const churchLayer = this.map.createLayer('map/buildings/church_depth_01', tileset, 0, 0);
 		churchLayer.setDepth(1);
 
-		const castleLayer = map.createLayer('map/buildings/castle_depth_01', tileset, 0, 0);
+		const castleLayer = this.map.createLayer('map/buildings/castle_depth_01', tileset, 0, 0);
 		castleLayer.setDepth(1);
 
-		const miscLayer = map.createLayer('map/buildings/miscellaneous_depth_01', tileset, 0, 0);
+		const miscLayer = this.map.createLayer('map/buildings/miscellaneous_depth_01', tileset, 0, 0);
 		miscLayer.setDepth(1);
 
-		const wallTop1Layer = map.createLayer('map/move behind /wall_top_depth_01', tileset, 0, 0);
+		const wallTop1Layer = this.map.createLayer('map/move behind /wall_top_depth_01', tileset, 0, 0);
 		wallTop1Layer.setDepth(1);
 
-		const wallTop2Layer = map.createLayer('map/move behind /wall_top_depth_03', tileset, 0, 0);
+		const wallTop2Layer = this.map.createLayer('map/move behind /wall_top_depth_03', tileset, 0, 0);
 		wallTop2Layer.setDepth(3);
 
-		const house2RoofLayer = map.createLayer('map/move behind /house_roof_depth_03/house_roof_layer_2', tileset, 0, 0);
+		const house2RoofLayer = this.map.createLayer('map/move behind /house_roof_depth_03/house_roof_layer_2', tileset, 0, 0);
 		house2RoofLayer.setDepth(3);
 
-		const houseRoofLayer = map.createLayer('map/move behind /house_roof_depth_03/house_roof_layer_1', tileset, 0, 0);
+		const houseRoofLayer = this.map.createLayer('map/move behind /house_roof_depth_03/house_roof_layer_1', tileset, 0, 0);
 		houseRoofLayer.setDepth(3);
 
-		const towerTop1Layer = map.createLayer('map/move behind /tower_top_depth_01', tileset, 0, 0);
+		const towerTop1Layer = this.map.createLayer('map/move behind /tower_top_depth_01', tileset, 0, 0);
 		towerTop1Layer.setDepth(1);
 
-		const towerTop2Layer = map.createLayer('map/move behind /tower_top_depth_03', tileset, 0, 0);
+		const towerTop2Layer = this.map.createLayer('map/move behind /tower_top_depth_03', tileset, 0, 0);
 		towerTop2Layer.setDepth(3);
 
-		const churchRoofLayer = map.createLayer('map/move behind /church_roof_depth_03', tileset, 0, 0);
+		const churchRoofLayer = this.map.createLayer('map/move behind /church_roof_depth_03', tileset, 0, 0);
 		churchRoofLayer.setDepth(1);
 
-		const castleRoofLayer = map.createLayer('map/move behind /castle_roof_depth_03', tileset, 0, 0);
+		const castleRoofLayer = this.map.createLayer('map/move behind /castle_roof_depth_03', tileset, 0, 0);
 		castleRoofLayer.setDepth(3);
 
-		const miscTop1Layer = map.createLayer('map/move behind /miscellaneous_top_depth_01', tileset, 0, 0);
+		const miscTop1Layer = this.map.createLayer('map/move behind /miscellaneous_top_depth_01', tileset, 0, 0);
 		miscTop1Layer.setDepth(1);
 
-		const hudLayer = map.createLayer('hud_depth_05', hudTileset, 0, 0);
+		const hudLayer = this.map.createLayer('hud_depth_05', hudTileset, 0, 0);
 		hudLayer.setDepth(5);
-		
+
 		//this.fpsText = new FpsText(this)
 		this.frameText = new FrameText(this)
 		this.frameText.setDepth(5)
@@ -189,22 +196,65 @@ export default class GameScene extends Phaser.Scene {
 		if (this.cursors.right.isDown) {
 			this.trufflesPosX += this.trufflesSpeed
 			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			const x = this.map.worldToTileX(this.trufflesPosX)
+			const y = this.map.worldToTileY(this.trufflesPosY)
+
+			this.tile = this.ground2Layer.getTileAt(x, y)
+
+			if (this.tile != null) {
+				if (this.tile.index !== 0) {
+					console.log("Collision : " + this.tile.index)
+					this.map.removeTile(this.tile)
+				}
+			}
 		}
 
 		if (this.cursors.left.isDown) {
 			this.trufflesPosX -= this.trufflesSpeed
 			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			const x = this.map.worldToTileX(this.trufflesPosX)
+			const y = this.map.worldToTileY(this.trufflesPosY)
 
+			this.tile = this.ground2Layer.getTileAt(x, y)
+
+			if (this.tile != null) {
+				if (this.tile.index !== 0) {
+					console.log("Collision : " + this.tile.index)
+					this.map.removeTile(this.tile)
+				}
+			}
 		}
 
 		if (this.cursors.up.isDown) {
 			this.trufflesPosY -= this.trufflesSpeed
 			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			const x = this.map.worldToTileX(this.trufflesPosX)
+			const y = this.map.worldToTileY(this.trufflesPosY)
+
+			this.tile = this.ground2Layer.getTileAt(x, y)
+
+			if (this.tile != null) {
+				if (this.tile.index !== 0) {
+					console.log("Collision : " + this.tile.index)
+					this.map.removeTile(this.tile)
+				}
+			}
 		}
 
 		if (this.cursors.down.isDown) {
 			this.trufflesPosY += this.trufflesSpeed
 			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			const x = this.map.worldToTileX(this.trufflesPosX)
+			const y = this.map.worldToTileY(this.trufflesPosY)
+
+			this.tile = this.ground2Layer.getTileAt(x, y)
+
+			if (this.tile != null) {
+				if (this.tile.index !== 0) {
+					console.log("Collision : " + this.tile.index)
+					this.map.removeTile(this.tile)
+				}
+			}
 		}
 
 		if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
