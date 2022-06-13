@@ -694,7 +694,7 @@
                          "x":0,
                          "y":0
                         }],
-                 "name":"move behind ",
+                 "name":"move_behind ",
                  "opacity":1,
                  "type":"group",
                  "visible":true,

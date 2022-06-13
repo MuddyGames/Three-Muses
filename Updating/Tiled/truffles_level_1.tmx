@@ -283,7 +283,7 @@
 </data>
    </layer>
   </group>
-  <group id="28" name="move behind ">
+  <group id="28" name="move_behind ">
    <layer id="19" name="wall_top_depth_01" width="40" height="23">
     <data encoding="csv">
 0,222,222,222,222,222,222,222,0,0,222,222,222,222,222,222,0,0,222,222,222,222,222,222,0,0,222,222,222,222,222,222,0,0,0,0,0,0,0,0,
