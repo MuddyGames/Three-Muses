@@ -5,6 +5,7 @@ import CannonBall from '../objects/cannonBall'
 
 const TRUFFLES_KEY = 'truffles'
 const KEYS = ['orange', 'lemon', 'grape']
+const IDLE_KEY = 'idle'
 
 export default class GameScene extends Phaser.Scene {
 
@@ -22,8 +23,13 @@ export default class GameScene extends Phaser.Scene {
 	private grape!: SpineGameObject
 	private fruit: SpineGameObject[] = []
 
-	private animationNames: string[] = []
-	private animationIndex = 0
+	private trufflesAnimationNames: string[] = []
+	private trufflesAnimationIndex = 0
+
+	private fruitAnimationNames: string[] = []
+	private orangeAnimationIndex = 0
+	private grapeAnimationIndex = 0
+	private lemonAnimationIndex = 0
 
 	private trufflesPosX = 100
 	private trufflesPosY = 360
@@ -37,6 +43,8 @@ export default class GameScene extends Phaser.Scene {
 	private groundLayer!: Phaser.Tilemaps.TilemapLayer
 	private ground2Layer!: Phaser.Tilemaps.TilemapLayer
 	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
+
+	private candyLayer!: Phaser.Tilemaps.TilemapLayer
 
 	constructor() {
 		super({
@@ -129,9 +137,9 @@ export default class GameScene extends Phaser.Scene {
 		this.collisionLayer.setDepth(2)
 		//this.collisionLayer.setVisible(false)
 
-		const candyLayer = this.map.createLayer('collectables_depth_02', tileset, 0, 0);
-		candyLayer.setDepth(2);
-		candyLayer.setVisible(false)
+		this.candyLayer = this.map.createLayer('collectables_depth_02', tileset, 0, 0);
+		this.candyLayer.setDepth(2);
+		this.candyLayer.setVisible(false)
 
 		//this.fpsText = new FpsText(this)
 		this.frameText = new FrameText(this)
@@ -153,33 +161,37 @@ export default class GameScene extends Phaser.Scene {
 		//	})
 		//	.setOrigin(1, 0)
 
-		const animation = 'idle'
 
-		this.truffles = this.createTruffles(animation)
+		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 100, 360, 0.25, 0.25)
 		this.truffles.setDepth(2)
 
-		this.orange = this.createFruit(animation, KEYS[0], 250, 300)
-		this.lemon = this.createFruit(animation, KEYS[1], 250, 400)
-		this.grape = this.createFruit(animation, KEYS[2], 250, 500)
-		this.frameText.setText(animation)
-		this.frameText.setText(animation + "[ " + this.animationIndex + " ]")
+		this.frameText.setText(IDLE_KEY)
+		this.frameText.setText(IDLE_KEY + "[ " + this.trufflesAnimationIndex + " ]")
 
 		this.cursors = this.input.keyboard.createCursorKeys()
 
-		this.initializeAnimationsState(this.truffles)
-		this.initializeAnimationsState(this.orange)
+		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
 		var tilesWide = 40
 		var tilesHigh = 23
-		for(let i = 0; i < tilesHigh; i++ ) {
-			for(let j = 0; j < tilesWide; j++ ) {
-				var tile = candyLayer.getTileAt(j, i)
-				if(tile != null)
-				{
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				var tile = this.candyLayer.getTileAt(j, i)
+				if (tile != null) {
 					console.log(tile.getTileData())
-					this.fruit.push(this.createFruit(animation, KEYS[0], j*this.tileSize, i*this.tileSize))
+					if (tile.index === 550) {
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+					} else if (tile.index === 653) {
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+					} else if (tile.index === 757) {
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[2], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+					}
 				}
 			}
+		}
+
+		for(let o = 0; o < this.fruit.length; o++){
+			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
 	}
 
@@ -188,39 +200,41 @@ export default class GameScene extends Phaser.Scene {
 		this.frameText.update()
 		this.ball.update()
 
-		const size = this.animationNames.length
+		const size = this.trufflesAnimationNames.length
 
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
 
 			this.idiomCue = this.sound.add('a_boy_the_kid')
 			this.idiomCue.play()
 
-			this.changeAnimation(4)
+			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 4)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
 
 			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
 			this.idiomCue.play()
-			this.changeAnimation(3)
+
+			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 3)
 		}
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
 
 			this.idiomCue = this.sound.add('a_boy_the_kid')
 			this.idiomCue.play()
 
-			this.changeAnimation(5)
+			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 5)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
 
 			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
 			this.idiomCue.play()
-			this.changeAnimation(2)
+
+			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 2)
 		}
 
 		if (this.cursors.right.isDown) {
-			
+
 			const x = this.map.worldToTileX(this.trufflesPosX)
 			const y = this.map.worldToTileY(this.trufflesPosY)
 
-			this.tile = this.collisionLayer.getTileAt(x+1, y)
+			this.tile = this.collisionLayer.getTileAt(x + 1, y)
 
 			if (this.tile == null) {
 				this.trufflesPosX += this.trufflesSpeed
@@ -232,7 +246,7 @@ export default class GameScene extends Phaser.Scene {
 			const x = this.map.worldToTileX(this.trufflesPosX)
 			const y = this.map.worldToTileY(this.trufflesPosY)
 
-			this.tile = this.collisionLayer.getTileAt(x-1, y)
+			this.tile = this.collisionLayer.getTileAt(x - 1, y)
 
 			if (this.tile == null) {
 				this.trufflesPosX -= this.trufflesSpeed
@@ -244,22 +258,22 @@ export default class GameScene extends Phaser.Scene {
 		if (this.cursors.up.isDown) {
 			const x = this.map.worldToTileX(this.trufflesPosX)
 			const y = this.map.worldToTileY(this.trufflesPosY)
-			
-			this.tile = this.collisionLayer.getTileAt(x, y-1)
+
+			this.tile = this.collisionLayer.getTileAt(x, y - 1)
 
 			if (this.tile == null) {
 				this.trufflesPosY -= this.trufflesSpeed
 				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
 			}
-			
-		}	
+
+		}
 
 		if (this.cursors.down.isDown) {
-			
+
 			const x = this.map.worldToTileX(this.trufflesPosX)
 			const y = this.map.worldToTileY(this.trufflesPosY)
 
-			this.tile = this.collisionLayer.getTileAt(x, y+1)
+			this.tile = this.collisionLayer.getTileAt(x, y + 1)
 
 			if (this.tile == null) {
 				this.trufflesPosY += this.trufflesSpeed
@@ -268,18 +282,20 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
-			this.changeAnimation(1)
+			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 1)
 		}
 	}
+	/*
+		private createTruffles(startAnim = 'idle') {
+			const truffles = this.add.spine(100, 360, TRUFFLES_KEY, startAnim, true)
 
-	private createTruffles(startAnim = 'idle') {
-		const truffles = this.add.spine(100, 360, TRUFFLES_KEY, startAnim, true)
+			truffles.scaleX = 0.25
+			truffles.scaleY = 0.25
 
-		truffles.scaleX = 0.25
-		truffles.scaleY = 0.25
-
-		return truffles
-	}
+			return truffles
+		}
+	*/
+	/*
 	private createFruit(startAnim = 'idle', key, x = 100, y = 100) {
 		const fruit = this.add.spine(x, y, key, startAnim, true)
 
@@ -287,21 +303,29 @@ export default class GameScene extends Phaser.Scene {
 		fruit.scaleY = 0.7
 
 		return fruit
-	}
-	private initializeAnimationsState(spineGO: SpineGameObject) {
-		const startAnim = spineGO.getCurrentAnimation().name
+	}*/
 
-		spineGO.getAnimationList().forEach((name, idx) => {
-			this.animationNames.push(name)
+	private createSpineObject(startAnim: string, key: string, x, y, scaleX, scaleY) {
+		let object = this.add.spine(x, y, key, startAnim, true)
+		object.scaleX = scaleX
+		object.scaleY = scaleY
+		return object
+	}
+
+	private initializeAnimationsState(spine: SpineGameObject, animationNames: string[]) {
+		const startAnim = spine.getCurrentAnimation().name
+
+		spine.getAnimationList().forEach((name, idx) => {
+			animationNames.push(name)
 			if (name === startAnim) {
-				this.animationIndex = idx
+				this.trufflesAnimationIndex = idx
 			}
 		})
 	}
 
-	private changeAnimation(index: number) {
-		const animation = this.animationNames[index]
-		this.truffles.play(animation, true)
-		this.frameText.setText(animation + "[ " + this.animationIndex + " ]")
+	private changeAnimation(spine: SpineGameObject, animationNames: string[], index: number) {
+		const animation = animationNames[index]
+		spine.play(animation, true)
+		this.frameText.setText(animation + "[ " + index + " ]")
 	}
 }
