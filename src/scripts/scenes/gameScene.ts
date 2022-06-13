@@ -20,6 +20,7 @@ export default class GameScene extends Phaser.Scene {
 	private orange!: SpineGameObject
 	private lemon!: SpineGameObject
 	private grape!: SpineGameObject
+	private fruit: SpineGameObject[] = []
 
 	private animationNames: string[] = []
 	private animationIndex = 0
@@ -130,6 +131,7 @@ export default class GameScene extends Phaser.Scene {
 
 		const candyLayer = this.map.createLayer('collectables_depth_02', tileset, 0, 0);
 		candyLayer.setDepth(2);
+		candyLayer.setVisible(false)
 
 		//this.fpsText = new FpsText(this)
 		this.frameText = new FrameText(this)
@@ -166,6 +168,19 @@ export default class GameScene extends Phaser.Scene {
 
 		this.initializeAnimationsState(this.truffles)
 		this.initializeAnimationsState(this.orange)
+
+		var tilesWide = 40
+		var tilesHigh = 23
+		for(let i = 0; i < tilesHigh; i++ ) {
+			for(let j = 0; j < tilesWide; j++ ) {
+				var tile = candyLayer.getTileAt(j, i)
+				if(tile != null)
+				{
+					console.log(tile.getTileData())
+					this.fruit.push(this.createFruit(animation, KEYS[0], j*this.tileSize, i*this.tileSize))
+				}
+			}
+		}
 	}
 
 	update() {
