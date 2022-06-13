@@ -48,7 +48,23 @@ export default class GameScene extends Phaser.Scene {
 	private groundLayer!: Phaser.Tilemaps.TilemapLayer
 	private ground2Layer!: Phaser.Tilemaps.TilemapLayer
 	private house2Layer!: Phaser.Tilemaps.TilemapLayer
-	
+
+	private house1Layer!: Phaser.Tilemaps.TilemapLayer
+	private wall1Layer!: Phaser.Tilemaps.TilemapLayer
+	private wall2Layer!: Phaser.Tilemaps.TilemapLayer
+	private churchLayer!: Phaser.Tilemaps.TilemapLayer
+	private castleLayer!: Phaser.Tilemaps.TilemapLayer
+	private miscLayer!: Phaser.Tilemaps.TilemapLayer
+	private wallTop1Layer!: Phaser.Tilemaps.TilemapLayer
+	private wallTop2Layer!: Phaser.Tilemaps.TilemapLayer
+	private house2RoofLayer!: Phaser.Tilemaps.TilemapLayer
+	private houseRoofLayer!: Phaser.Tilemaps.TilemapLayer
+	private towerTop1Layer!: Phaser.Tilemaps.TilemapLayer
+	private towerTop2Layer!: Phaser.Tilemaps.TilemapLayer
+	private churchRoofLayer!: Phaser.Tilemaps.TilemapLayer
+	private castleRoofLayer!: Phaser.Tilemaps.TilemapLayer
+	private miscTop1Layer!: Phaser.Tilemaps.TilemapLayer
+	private hudLayer!: Phaser.Tilemaps.TilemapLayer
 	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
 
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
@@ -92,53 +108,53 @@ export default class GameScene extends Phaser.Scene {
 		this.house2Layer = this.map.createLayer('map/buildings/house_depth_01/house_layer_2', this.tileset, 0, 0);
 		this.house2Layer.setDepth(1);
 
-		const house1Layer = this.map.createLayer('map/buildings/house_depth_01/house_layer_1', this.tileset, 0, 0);
-		house1Layer.setDepth(1);
+		this.house1Layer = this.map.createLayer('map/buildings/house_depth_01/house_layer_1', this.tileset, 0, 0);
+		this.house1Layer.setDepth(1);
 
-		const wall1Layer = this.map.createLayer('map/buildings/walls_depth_01', this.tileset, 0, 0);
-		wall1Layer.setDepth(1);
+		this.wall1Layer = this.map.createLayer('map/buildings/walls_depth_01', this.tileset, 0, 0);
+		this.wall1Layer.setDepth(1);
 
-		const wall2Layer = this.map.createLayer('map/buildings/walls_depth_03', this.tileset, 0, 0);
-		wall2Layer.setDepth(3);
+		this.wall2Layer = this.map.createLayer('map/buildings/walls_depth_03', this.tileset, 0, 0);
+		this.wall2Layer.setDepth(3);
 
-		const churchLayer = this.map.createLayer('map/buildings/church_depth_01', this.tileset, 0, 0);
-		churchLayer.setDepth(1);
+		this.churchLayer = this.map.createLayer('map/buildings/church_depth_01', this.tileset, 0, 0);
+		this.churchLayer.setDepth(1);
 
-		const castleLayer = this.map.createLayer('map/buildings/castle_depth_01', this.tileset, 0, 0);
-		castleLayer.setDepth(1);
+		this.castleLayer = this.map.createLayer('map/buildings/castle_depth_01', this.tileset, 0, 0);
+		this.castleLayer.setDepth(1);
 
-		const miscLayer = this.map.createLayer('map/buildings/miscellaneous_depth_01', this.tileset, 0, 0);
-		miscLayer.setDepth(1);
+		this.miscLayer = this.map.createLayer('map/buildings/miscellaneous_depth_01', this.tileset, 0, 0);
+		this.miscLayer.setDepth(1);
 
-		const wallTop1Layer = this.map.createLayer('map/move_behind /wall_top_depth_01', this.tileset, 0, 0);
-		wallTop1Layer.setDepth(1);
+		this.wallTop1Layer = this.map.createLayer('map/move_behind /wall_top_depth_01', this.tileset, 0, 0);
+		this.wallTop1Layer.setDepth(1);
 
-		const wallTop2Layer = this.map.createLayer('map/move_behind /wall_top_depth_03', this.tileset, 0, 0);
-		wallTop2Layer.setDepth(3);
+		this.wallTop2Layer = this.map.createLayer('map/move_behind /wall_top_depth_03', this.tileset, 0, 0);
+		this.wallTop2Layer.setDepth(3);
 
-		const house2RoofLayer = this.map.createLayer('map/move_behind /house_roof_depth_03/house_roof_layer_2', this.tileset, 0, 0);
-		house2RoofLayer.setDepth(3);
+		this.house2RoofLayer = this.map.createLayer('map/move_behind /house_roof_depth_03/house_roof_layer_2', this.tileset, 0, 0);
+		this.house2RoofLayer.setDepth(3);
 
-		const houseRoofLayer = this.map.createLayer('map/move_behind /house_roof_depth_03/house_roof_layer_1', this.tileset, 0, 0);
-		houseRoofLayer.setDepth(3);
+		this.houseRoofLayer = this.map.createLayer('map/move_behind /house_roof_depth_03/house_roof_layer_1', this.tileset, 0, 0);
+		this.houseRoofLayer.setDepth(3);
 
-		const towerTop1Layer = this.map.createLayer('map/move_behind /tower_top_depth_01', this.tileset, 0, 0);
-		towerTop1Layer.setDepth(1);
+		this.towerTop1Layer = this.map.createLayer('map/move_behind /tower_top_depth_01', this.tileset, 0, 0);
+		this.towerTop1Layer.setDepth(1);
 
-		const towerTop2Layer = this.map.createLayer('map/move_behind /tower_top_depth_03', this.tileset, 0, 0);
-		towerTop2Layer.setDepth(3);
+		this.towerTop2Layer = this.map.createLayer('map/move_behind /tower_top_depth_03', this.tileset, 0, 0);
+		this.towerTop2Layer.setDepth(3);
 
-		const churchRoofLayer = this.map.createLayer('map/move_behind /church_roof_depth_03', this.tileset, 0, 0);
-		churchRoofLayer.setDepth(1);
+		this.churchRoofLayer = this.map.createLayer('map/move_behind /church_roof_depth_03', this.tileset, 0, 0);
+		this.churchRoofLayer.setDepth(1);
 
-		const castleRoofLayer = this.map.createLayer('map/move_behind /castle_roof_depth_03', this.tileset, 0, 0);
-		castleRoofLayer.setDepth(3);
+		this.castleRoofLayer = this.map.createLayer('map/move_behind /castle_roof_depth_03', this.tileset, 0, 0);
+		this.castleRoofLayer.setDepth(3);
 
-		const miscTop1Layer = this.map.createLayer('map/move_behind /miscellaneous_top_depth_01', this.tileset, 0, 0);
-		miscTop1Layer.setDepth(1);
+		this.miscTop1Layer = this.map.createLayer('map/move_behind /miscellaneous_top_depth_01', this.tileset, 0, 0);
+		this.miscTop1Layer.setDepth(1);
 
-		const hudLayer = this.map.createLayer('hud_depth_05', this.hudTileset, 0, 0);
-		hudLayer.setDepth(5);
+		this.hudLayer = this.map.createLayer('hud_depth_05', this.hudTileset, 0, 0);
+		this.hudLayer.setDepth(5);
 
 		this.collisionLayer = this.map.createLayer('collide_depth_02', this.tileset, 0, 0);
 		this.collisionLayer.setDepth(2)
