@@ -28,6 +28,7 @@ export default class GameScene extends Phaser.Scene {
 	private trufflesPosX = 100
 	private trufflesPosY = 360
 	private trufflesSpeed = 2
+	private trufflesScale = 0.25
 	private tileSize = 32
 
 	// TileMap Data
@@ -176,7 +177,7 @@ export default class GameScene extends Phaser.Scene {
 				var tile = candyLayer.getTileAt(j, i)
 				if(tile != null)
 				{
-					console.log(tile.getTileData())
+					
 					this.fruit.push(this.createFruit(animation, KEYS[0], j*this.tileSize, i*this.tileSize))
 				}
 			}
@@ -217,7 +218,7 @@ export default class GameScene extends Phaser.Scene {
 
 		if (this.cursors.right.isDown) {
 			
-			const x = this.map.worldToTileX(this.trufflesPosX)
+			const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize/2)
 			const y = this.map.worldToTileY(this.trufflesPosY)
 
 			this.tile = this.collisionLayer.getTileAt(x+1, y)
@@ -229,7 +230,7 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (this.cursors.left.isDown) {
-			const x = this.map.worldToTileX(this.trufflesPosX)
+			const x = this.map.worldToTileX(this.trufflesPosX + this.tileSize/2)
 			const y = this.map.worldToTileY(this.trufflesPosY)
 
 			this.tile = this.collisionLayer.getTileAt(x-1, y)
@@ -243,7 +244,7 @@ export default class GameScene extends Phaser.Scene {
 
 		if (this.cursors.up.isDown) {
 			const x = this.map.worldToTileX(this.trufflesPosX)
-			const y = this.map.worldToTileY(this.trufflesPosY)
+			const y = this.map.worldToTileY(this.trufflesPosY + this.tileSize/2)
 			
 			this.tile = this.collisionLayer.getTileAt(x, y-1)
 
@@ -257,9 +258,9 @@ export default class GameScene extends Phaser.Scene {
 		if (this.cursors.down.isDown) {
 			
 			const x = this.map.worldToTileX(this.trufflesPosX)
-			const y = this.map.worldToTileY(this.trufflesPosY)
+			const y = this.map.worldToTileY(this.trufflesPosY + this.trufflesSpeed)
 
-			this.tile = this.collisionLayer.getTileAt(x, y+1)
+			this.tile = this.collisionLayer.getTileAt(x, y)
 
 			if (this.tile == null) {
 				this.trufflesPosY += this.trufflesSpeed
@@ -275,8 +276,8 @@ export default class GameScene extends Phaser.Scene {
 	private createTruffles(startAnim = 'idle') {
 		const truffles = this.add.spine(100, 360, TRUFFLES_KEY, startAnim, true)
 
-		truffles.scaleX = 0.25
-		truffles.scaleY = 0.25
+		truffles.scaleX = this.trufflesScale
+		truffles.scaleY = this.trufflesScale
 
 		return truffles
 	}
