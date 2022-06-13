@@ -1,0 +1,70 @@
+{
+"skeleton": {
+	"hash": "pAuSwzy6MIlQQqok6bxuEr9Zb7Q",
+	"spine": "3.8.72",
+	"x": 9,
+	"y": -62,
+	"width": 42,
+	"height": 57,
+	"images": "./images/",
+	"audio": "C:/Users/kinga/Desktop/Candy"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone2", "parent": "root", "length": 10.87, "rotation": -2.44, "x": 32.33, "y": -56.32 },
+	{ "name": "bone4", "parent": "root", "length": 29.61, "rotation": 89.02, "x": 32.09, "y": -44.12 }
+],
+"slots": [
+	{ "name": "Shadow", "bone": "bone2", "attachment": "Shadow" },
+	{ "name": "Lemon", "bone": "bone4", "attachment": "Lemon" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Shadow": {
+				"Shadow": { "color": "ffffffa4", "x": -0.3, "y": -0.69, "rotation": 2.44, "width": 26, "height": 10 }
+			},
+			"Lemon": {
+				"Lemon": { "x": 14.08, "y": 2.33, "rotation": -89.02, "width": 42, "height": 50 }
+			}
+		}
+	}
+],
+"animations": {
+	"eat": {
+		"bones": {
+			"bone2": {
+				"scale": [
+					{},
+					{ "time": 1.3333, "x": 0.01, "y": 0.01 }
+				]
+			},
+			"bone4": {
+				"scale": [
+					{},
+					{ "time": 1.3333, "x": 0.01, "y": 0.01 }
+				]
+			}
+		}
+	},
+	"idle": {
+		"bones": {
+			"bone2": {
+				"scale": [
+					{},
+					{ "time": 0.6667, "x": 0.56 },
+					{ "time": 1.3333 }
+				]
+			},
+			"bone4": {
+				"translate": [
+					{ "y": -2 },
+					{ "time": 0.6667, "y": 8.73 },
+					{ "time": 1.3333, "y": -2 }
+				]
+			}
+		}
+	}
+}
+}
