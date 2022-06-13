@@ -3,5 +3,5 @@
  <editorsettings>
   <export target="truffles_level_1_tileset.xml" format="tsx"/>
  </editorsettings>
- <image source="tileset_1.png" width="1668" height="2224"/>
+ <image source="../../src/assets/level/truffles_level_1_tileset.png" width="1668" height="2224"/>
 </tileset>
