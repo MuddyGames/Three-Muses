@@ -34,6 +34,7 @@ export default class GameScene extends Phaser.Scene {
 	private trufflesPosX = 100
 	private trufflesPosY = 360
 	private trufflesSpeed = 2
+	private trufflesScale = 0.25
 	private tileSize = 32
 
 	// TileMap Data
@@ -230,8 +231,8 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (this.cursors.right.isDown) {
-
-			const x = this.map.worldToTileX(this.trufflesPosX)
+			
+			const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize/2)
 			const y = this.map.worldToTileY(this.trufflesPosY)
 
 			this.tile = this.collisionLayer.getTileAt(x + 1, y)
@@ -243,7 +244,7 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (this.cursors.left.isDown) {
-			const x = this.map.worldToTileX(this.trufflesPosX)
+			const x = this.map.worldToTileX(this.trufflesPosX + this.tileSize/2)
 			const y = this.map.worldToTileY(this.trufflesPosY)
 
 			this.tile = this.collisionLayer.getTileAt(x - 1, y)
@@ -271,7 +272,7 @@ export default class GameScene extends Phaser.Scene {
 		if (this.cursors.down.isDown) {
 
 			const x = this.map.worldToTileX(this.trufflesPosX)
-			const y = this.map.worldToTileY(this.trufflesPosY)
+			const y = this.map.worldToTileY(this.trufflesPosY + this.trufflesSpeed)
 
 			this.tile = this.collisionLayer.getTileAt(x, y + 1)
 
@@ -285,25 +286,6 @@ export default class GameScene extends Phaser.Scene {
 			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 1)
 		}
 	}
-	/*
-		private createTruffles(startAnim = 'idle') {
-			const truffles = this.add.spine(100, 360, TRUFFLES_KEY, startAnim, true)
-
-			truffles.scaleX = 0.25
-			truffles.scaleY = 0.25
-
-			return truffles
-		}
-	*/
-	/*
-	private createFruit(startAnim = 'idle', key, x = 100, y = 100) {
-		const fruit = this.add.spine(x, y, key, startAnim, true)
-
-		fruit.scaleX = 0.7
-		fruit.scaleY = 0.7
-
-		return fruit
-	}*/
 
 	private createSpineObject(startAnim: string, key: string, x, y, scaleX, scaleY) {
 		let object = this.add.spine(x, y, key, startAnim, true)
