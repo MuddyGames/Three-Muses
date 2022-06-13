@@ -210,15 +210,6 @@ export default class GameScene extends Phaser.Scene {
 				this.trufflesPosX += this.trufflesSpeed
 				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
 			}
-
-			this.tile = this.ground2Layer.getTileAt(x, y)
-
-			if (this.tile != null) {
-				if (this.tile.index !== 0) {
-					console.log("Collision : " + this.tile.index)
-					this.map.removeTile(this.tile)
-				}
-			}
 		}
 
 		if (this.cursors.left.isDown) {
@@ -232,14 +223,6 @@ export default class GameScene extends Phaser.Scene {
 				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
 			}
 
-			this.tile = this.ground2Layer.getTileAt(x, y)
-
-			if (this.tile != null) {
-				if (this.tile.index !== 0) {
-					console.log("Collision : " + this.tile.index)
-					this.map.removeTile(this.tile)
-				}
-			}
 		}
 
 		if (this.cursors.up.isDown) {
@@ -251,15 +234,6 @@ export default class GameScene extends Phaser.Scene {
 			if (this.tile == null) {
 				this.trufflesPosY -= this.trufflesSpeed
 				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
-			}
-
-			this.tile = this.ground2Layer.getTileAt(x, y)
-
-			if (this.tile != null) {
-				if (this.tile.index !== 0) {
-					console.log("Collision : " + this.tile.index)
-					this.map.removeTile(this.tile)
-				}
 			}
 			
 		}	
@@ -274,15 +248,6 @@ export default class GameScene extends Phaser.Scene {
 			if (this.tile == null) {
 				this.trufflesPosY += this.trufflesSpeed
 				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
-			}
-
-			this.tile = this.ground2Layer.getTileAt(x, y)
-
-			if (this.tile != null) {
-				if (this.tile.index !== 0) {
-					console.log("Collision : " + this.tile.index)
-					this.map.removeTile(this.tile)
-				}
 			}
 		}
 
