@@ -4,9 +4,7 @@ import CannonBall from '../objects/cannonBall'
 
 
 const TRUFFLES_KEY = 'truffles'
-const ORANGE_KEY = 'orange'
-const LEMON_KEY = 'lemon'
-const GRAPE_KEY = 'grape'
+const KEYS = ['orange', 'lemon', 'grape']
 
 export default class GameScene extends Phaser.Scene {
 
@@ -52,9 +50,9 @@ export default class GameScene extends Phaser.Scene {
 
 		this.load.setPath('assets/spine/')
 		this.load.spine(TRUFFLES_KEY, 'truffles_all.json', 'truffles_all.atlas')
-		this.load.spine(ORANGE_KEY, 'orange.json', 'orange.atlas')
-		this.load.spine(GRAPE_KEY, 'grape.json', 'grape.atlas')
-		this.load.spine(LEMON_KEY, 'lemon.json', 'lemon.atlas')
+		this.load.spine(KEYS[0], 'orange.json', 'orange.atlas')
+		this.load.spine(KEYS[1], 'grape.json', 'grape.atlas')
+		this.load.spine(KEYS[2], 'lemon.json', 'lemon.atlas')
 	}
 
 	create() {
@@ -158,9 +156,9 @@ export default class GameScene extends Phaser.Scene {
 		this.truffles = this.createTruffles(animation)
 		this.truffles.setDepth(2)
 
-		this.orange = this.createOrange(animation)
-		this.lemon = this.createLemon(animation)
-		this.grape = this.createGrape(animation)
+		this.orange = this.createFruit(animation, KEYS[0], 250, 300)
+		this.lemon = this.createFruit(animation, KEYS[1], 250, 400)
+		this.grape = this.createFruit(animation, KEYS[2], 250, 500)
 		this.frameText.setText(animation)
 		this.frameText.setText(animation + "[ " + this.animationIndex + " ]")
 
@@ -267,30 +265,13 @@ export default class GameScene extends Phaser.Scene {
 
 		return truffles
 	}
-	private createOrange(startAnim = 'idle') {
-		const orange = this.add.spine(120, 360, ORANGE_KEY, startAnim, true)
+	private createFruit(startAnim = 'idle', key, x = 100, y = 100) {
+		const fruit = this.add.spine(x, y, key, startAnim, true)
 
-		orange.scaleX = 0.7
-		orange.scaleY = 0.7
+		fruit.scaleX = 0.7
+		fruit.scaleY = 0.7
 
-		return orange
-	}
-	private createGrape(startAnim = 'idle') {
-		const grape = this.add.spine(80, 360, GRAPE_KEY, startAnim, true)
-
-		grape.scaleX = 0.7
-		grape.scaleY = 0.7
-
-		return grape
-	}
-	private createLemon(startAnim = 'idle') {
-		const lemon = this.add.spine(150, 360, LEMON_KEY, startAnim, true)
-
-		lemon.scaleX = 0.7
-		lemon.scaleY = 0.7
-
-
-		return lemon
+		return fruit
 	}
 	private initializeAnimationsState(spineGO: SpineGameObject) {
 		const startAnim = spineGO.getCurrentAnimation().name
