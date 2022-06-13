@@ -154,14 +154,6 @@ export default class GameScene extends Phaser.Scene {
 		})
 		this.backingMusic.play()
 
-		// display the Phaser.VERSION
-		//this.add
-		//	.text(this.cameras.main.width - 15, 15, `Game Scene Phaser v${Phaser.VERSION}`, {
-		//		color: '#000000',
-		//		fontSize: '24px'
-		//	})
-		//	.setOrigin(1, 0)
-
 
 		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 100, 360, 0.25, 0.25)
 		this.truffles.setDepth(2)
