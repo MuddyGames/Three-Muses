@@ -182,24 +182,24 @@ export default class GameScene extends Phaser.Scene {
 			this.idiomCue = this.sound.add('a_boy_the_kid')
 			this.idiomCue.play()
 
-			this.changeAnimation(3)
+			this.changeAnimation(4)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
 
 			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
 			this.idiomCue.play()
-			this.changeAnimation(2)
+			this.changeAnimation(3)
 		}
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
 
 			this.idiomCue = this.sound.add('a_boy_the_kid')
 			this.idiomCue.play()
 
-			this.changeAnimation(4)
+			this.changeAnimation(5)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
 
 			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
 			this.idiomCue.play()
-			this.changeAnimation(1)
+			this.changeAnimation(2)
 		}
 
 		if (this.cursors.right.isDown) {
@@ -255,7 +255,7 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
-			this.changeAnimation(0)
+			this.changeAnimation(1)
 		}
 	}
 
