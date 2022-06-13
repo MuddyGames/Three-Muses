@@ -130,6 +130,9 @@ export default class GameScene extends Phaser.Scene {
 		this.collisionLayer.setDepth(2)
 		//this.collisionLayer.setVisible(false)
 
+		this.collisionLayer = this.map.createLayer('collectables_depth_02', tileset, 0, 0);
+		this.collisionLayer.setDepth(2)
+
 		//this.fpsText = new FpsText(this)
 		this.frameText = new FrameText(this)
 		this.frameText.setDepth(5)
