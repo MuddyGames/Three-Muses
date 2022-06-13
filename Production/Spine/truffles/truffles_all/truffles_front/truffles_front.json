@@ -1,0 +1,72 @@
+{ "skeleton": { "images": "C:/Users/jaysi/OneDrive/Desktop/truffles_front/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "tail", "bone": "root", "attachment": "tail" },
+	{ "name": "leg_left", "bone": "root", "attachment": "leg_left" },
+	{ "name": "leg_right", "bone": "root", "attachment": "leg_right" },
+	{ "name": "arm_left", "bone": "root", "attachment": "arm_left" },
+	{ "name": "arm-right", "bone": "root", "attachment": "arm-right" },
+	{ "name": "body", "bone": "root", "attachment": "body" },
+	{ "name": "ear_right", "bone": "root", "attachment": "ear_right" },
+	{ "name": "ear_left", "bone": "root", "attachment": "ear_left" },
+	{ "name": "head", "bone": "root", "attachment": "head" },
+	{ "name": "snout", "bone": "root", "attachment": "snout" },
+	{ "name": "eyes", "bone": "root", "attachment": "eyes" },
+	{ "name": "pupil_left", "bone": "root", "attachment": "pupil_left" },
+	{ "name": "pupil_right", "bone": "root", "attachment": "pupil_right" },
+	{ "name": "eyebrow_left", "bone": "root", "attachment": "eyebrow_left" },
+	{ "name": "eyebrow_right", "bone": "root", "attachment": "eyebrow_right" }
+],
+"skins": {
+	"default": {
+		"tail": {
+			"tail": { "x": 125, "y": -283.5, "width": 44, "height": 53 }
+		},
+		"leg_left": {
+			"leg_left": { "x": 230, "y": -318.5, "width": 54, "height": 105 }
+		},
+		"leg_right": {
+			"leg_right": { "x": 170.5, "y": -318.5, "width": 53, "height": 105 }
+		},
+		"arm_left": {
+			"arm_left": { "x": 257, "y": -231, "width": 66, "height": 50 }
+		},
+		"arm-right": {
+			"arm-right": { "x": 144, "y": -230.5, "width": 66, "height": 51 }
+		},
+		"body": {
+			"body": { "x": 200, "y": -256.5, "width": 126, "height": 153 }
+		},
+		"ear_right": {
+			"ear_right": { "x": 94, "y": -76.5, "width": 106, "height": 103 }
+		},
+		"ear_left": {
+			"ear_left": { "x": 304, "y": -75, "width": 106, "height": 102 }
+		},
+		"head": {
+			"head": { "x": 200, "y": -140, "width": 200, "height": 158 }
+		},
+		"snout": {
+			"snout": { "x": 200, "y": -166.5, "width": 64, "height": 41 }
+		},
+		"eyes": {
+			"eyes": { "x": 198.5, "y": -139, "width": 157, "height": 60 }
+		},
+		"pupil_left": {
+			"pupil_left": { "x": 251, "y": -143.5, "width": 34, "height": 35 }
+		},
+		"pupil_right": {
+			"pupil_right": { "x": 148, "y": -142.5, "width": 34, "height": 35 }
+		},
+		"eyebrow_left": {
+			"eyebrow_left": { "x": 234.5, "y": -100.5, "width": 19, "height": 15 }
+		},
+		"eyebrow_right": {
+			"eyebrow_right": { "x": 168.5, "y": -99.5, "width": 19, "height": 15 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

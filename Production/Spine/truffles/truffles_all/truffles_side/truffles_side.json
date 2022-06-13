@@ -1,0 +1,64 @@
+{ "skeleton": { "images": "C:/Users/jaysi/OneDrive/Desktop/truffles_side/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "ear_back", "bone": "root", "attachment": "ear_back" },
+	{ "name": "tail", "bone": "root", "attachment": "tail" },
+	{ "name": "leg_back", "bone": "root", "attachment": "leg_back" },
+	{ "name": "back_arm", "bone": "root", "attachment": "back_arm" },
+	{ "name": "body", "bone": "root", "attachment": "body" },
+	{ "name": "leg", "bone": "root", "attachment": "leg" },
+	{ "name": "head", "bone": "root", "attachment": "head" },
+	{ "name": "birthmark", "bone": "root", "attachment": "birthmark" },
+	{ "name": "eyebrow", "bone": "root", "attachment": "eyebrow" },
+	{ "name": "eye", "bone": "root", "attachment": "eye" },
+	{ "name": "pupil", "bone": "root", "attachment": "pupil" },
+	{ "name": "front_ear", "bone": "root", "attachment": "front_ear" },
+	{ "name": "arm", "bone": "root", "attachment": "arm" }
+],
+"skins": {
+	"default": {
+		"ear_back": {
+			"ear_back": { "x": 185, "y": -69.5, "width": 116, "height": 89 }
+		},
+		"tail": {
+			"tail": { "x": 278.5, "y": -280, "width": 47, "height": 56 }
+		},
+		"leg_back": {
+			"leg_back": { "x": 184.5, "y": -320.5, "width": 51, "height": 77 }
+		},
+		"back_arm": {
+			"back_arm": { "x": 245.5, "y": -233.5, "width": 75, "height": 45 }
+		},
+		"body": {
+			"body": { "x": 205, "y": -253, "width": 124, "height": 154 }
+		},
+		"leg": {
+			"leg": { "x": 225, "y": -320, "width": 64, "height": 98 }
+		},
+		"head": {
+			"head": { "x": 195.5, "y": -138, "width": 195, "height": 162 }
+		},
+		"birthmark": {
+			"birthmark": { "x": 180, "y": -139, "width": 72, "height": 76 }
+		},
+		"eyebrow": {
+			"eyebrow": { "x": 169.5, "y": -93, "width": 19, "height": 14 }
+		},
+		"eye": {
+			"eye": { "x": 169, "y": -137, "width": 54, "height": 60 }
+		},
+		"pupil": {
+			"pupil": { "x": 165.5, "y": -140, "width": 35, "height": 34 }
+		},
+		"front_ear": {
+			"front_ear": { "x": 290, "y": -84, "width": 120, "height": 104 }
+		},
+		"arm": {
+			"arm": { "x": 245.5, "y": -233.5, "width": 75, "height": 45 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
