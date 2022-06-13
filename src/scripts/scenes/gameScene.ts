@@ -29,6 +29,7 @@ export default class GameScene extends Phaser.Scene {
 	private trufflesPosX = 100
 	private trufflesPosY = 360
 	private trufflesSpeed = 2
+	private tileSize = 32
 
 	// TileMap Data
 	private map!: Phaser.Tilemaps.Tilemap
@@ -36,6 +37,7 @@ export default class GameScene extends Phaser.Scene {
 	private waterLayer!: Phaser.Tilemaps.TilemapLayer
 	private groundLayer!: Phaser.Tilemaps.TilemapLayer
 	private ground2Layer!: Phaser.Tilemaps.TilemapLayer
+	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
 
 	constructor() {
 		super({
@@ -124,6 +126,10 @@ export default class GameScene extends Phaser.Scene {
 		const hudLayer = this.map.createLayer('hud_depth_05', hudTileset, 0, 0);
 		hudLayer.setDepth(5);
 
+		this.collisionLayer = this.map.createLayer('collide_depth_02', tileset, 0, 0);
+		this.collisionLayer.setDepth(2)
+		//this.collisionLayer.setVisible(false)
+
 		//this.fpsText = new FpsText(this)
 		this.frameText = new FrameText(this)
 		this.frameText.setDepth(5)
@@ -194,10 +200,16 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (this.cursors.right.isDown) {
-			this.trufflesPosX += this.trufflesSpeed
-			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			
 			const x = this.map.worldToTileX(this.trufflesPosX)
 			const y = this.map.worldToTileY(this.trufflesPosY)
+
+			this.tile = this.collisionLayer.getTileAt(x+1, y)
+
+			if (this.tile == null) {
+				this.trufflesPosX += this.trufflesSpeed
+				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			}
 
 			this.tile = this.ground2Layer.getTileAt(x, y)
 
@@ -210,10 +222,15 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (this.cursors.left.isDown) {
-			this.trufflesPosX -= this.trufflesSpeed
-			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
 			const x = this.map.worldToTileX(this.trufflesPosX)
 			const y = this.map.worldToTileY(this.trufflesPosY)
+
+			this.tile = this.collisionLayer.getTileAt(x-1, y)
+
+			if (this.tile == null) {
+				this.trufflesPosX -= this.trufflesSpeed
+				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			}
 
 			this.tile = this.ground2Layer.getTileAt(x, y)
 
@@ -226,10 +243,15 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (this.cursors.up.isDown) {
-			this.trufflesPosY -= this.trufflesSpeed
-			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
 			const x = this.map.worldToTileX(this.trufflesPosX)
 			const y = this.map.worldToTileY(this.trufflesPosY)
+			
+			this.tile = this.collisionLayer.getTileAt(x, y-1)
+
+			if (this.tile == null) {
+				this.trufflesPosY -= this.trufflesSpeed
+				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			}
 
 			this.tile = this.ground2Layer.getTileAt(x, y)
 
@@ -239,13 +261,20 @@ export default class GameScene extends Phaser.Scene {
 					this.map.removeTile(this.tile)
 				}
 			}
-		}
+			
+		}	
 
 		if (this.cursors.down.isDown) {
-			this.trufflesPosY += this.trufflesSpeed
-			this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			
 			const x = this.map.worldToTileX(this.trufflesPosX)
 			const y = this.map.worldToTileY(this.trufflesPosY)
+
+			this.tile = this.collisionLayer.getTileAt(x, y+1)
+
+			if (this.tile == null) {
+				this.trufflesPosY += this.trufflesSpeed
+				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			}
 
 			this.tile = this.ground2Layer.getTileAt(x, y)
 
