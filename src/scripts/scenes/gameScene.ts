@@ -279,7 +279,7 @@ export default class GameScene extends Phaser.Scene {
 		}
 	}
 
-	private createSpineObject(startAnim: string, key: string, x, y, scaleX, scaleY) {
+	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {
 		let object = this.add.spine(x, y, key, startAnim, true)
 		object.scaleX = scaleX
 		object.scaleY = scaleY
