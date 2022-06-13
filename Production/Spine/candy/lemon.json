@@ -1,0 +1,192 @@
+{ "skeleton": { "images": "C:/Users/kinga/Desktop/lemon/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Background", "bone": "root" },
+	{ "name": "shade", "bone": "root", "attachment": "shade" },
+	{ "name": "lemon", "bone": "root", "attachment": "lemon" },
+	{ "name": "shine", "bone": "root", "attachment": "shine" },
+	{ "name": "shine2", "bone": "root", "attachment": "shine2" },
+	{ "name": "smoke1", "bone": "root", "attachment": "smoke1" },
+	{ "name": "smoke2", "bone": "root", "attachment": "smoke2" },
+	{ "name": "smoke3", "bone": "root", "attachment": "smoke3" },
+	{ "name": "smoke4", "bone": "root", "attachment": "smoke4" },
+	{ "name": "smoke5", "bone": "root", "attachment": "smoke5" },
+	{ "name": "smoke6", "bone": "root", "attachment": "smoke6" },
+	{ "name": "smoke7", "bone": "root", "attachment": "smoke7" },
+	{ "name": "star1", "bone": "root", "attachment": "star1" },
+	{ "name": "star2", "bone": "root", "attachment": "star2" },
+	{ "name": "star3", "bone": "root", "attachment": "star3" },
+	{ "name": "star4", "bone": "root", "attachment": "star4" },
+	{ "name": "star5", "bone": "root", "attachment": "star5" },
+	{ "name": "star6", "bone": "root", "attachment": "star6" },
+	{ "name": "star7", "bone": "root", "attachment": "star7" },
+	{ "name": "star8", "bone": "root", "attachment": "star8" },
+	{ "name": "orangedot1", "bone": "root", "attachment": "orangedot1" },
+	{ "name": "ordot2", "bone": "root", "attachment": "ordot2" },
+	{ "name": "ordot3", "bone": "root", "attachment": "ordot3" },
+	{ "name": "ordot4", "bone": "root", "attachment": "ordot4" },
+	{ "name": "ordot5", "bone": "root", "attachment": "ordot5" },
+	{ "name": "ordot6", "bone": "root", "attachment": "ordot6" },
+	{ "name": "ordot7", "bone": "root", "attachment": "ordot7" },
+	{ "name": "ordot8", "bone": "root", "attachment": "ordot8" },
+	{ "name": "ordot9", "bone": "root", "attachment": "ordot9" },
+	{ "name": "ordot10", "bone": "root", "attachment": "ordot10" },
+	{ "name": "ordot1", "bone": "root", "attachment": "ordot1" },
+	{ "name": "ordot12", "bone": "root", "attachment": "ordot12" },
+	{ "name": "ordot13", "bone": "root", "attachment": "ordot13" },
+	{ "name": "ordot14", "bone": "root", "attachment": "ordot14" },
+	{ "name": "dot1", "bone": "root", "attachment": "dot1" },
+	{ "name": "dot2", "bone": "root", "attachment": "dot2" },
+	{ "name": "dot3", "bone": "root", "attachment": "dot3" },
+	{ "name": "dot4", "bone": "root", "attachment": "dot4" },
+	{ "name": "dot5", "bone": "root", "attachment": "dot5" },
+	{ "name": "dot6", "bone": "root", "attachment": "dot6" },
+	{ "name": "dot7", "bone": "root", "attachment": "dot7" },
+	{ "name": "dot8", "bone": "root", "attachment": "dot8" },
+	{ "name": "dot9", "bone": "root", "attachment": "dot9" },
+	{ "name": "dot10", "bone": "root", "attachment": "dot10" },
+	{ "name": "dot11", "bone": "root", "attachment": "dot11" }
+],
+"skins": {
+	"default": {
+		"Background": {
+			"Background": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"shade": {
+			"shade": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"lemon": {
+			"lemon": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"shine": {
+			"shine": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"shine2": {
+			"shine2": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"smoke1": {
+			"smoke1": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"smoke2": {
+			"smoke2": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"smoke3": {
+			"smoke3": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"smoke4": {
+			"smoke4": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"smoke5": {
+			"smoke5": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"smoke6": {
+			"smoke6": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"smoke7": {
+			"smoke7": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"star1": {
+			"star1": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"star2": {
+			"star2": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"star3": {
+			"star3": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"star4": {
+			"star4": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"star5": {
+			"star5": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"star6": {
+			"star6": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"star7": {
+			"star7": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"star8": {
+			"star8": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"orangedot1": {
+			"orangedot1": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot2": {
+			"ordot2": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot3": {
+			"ordot3": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot4": {
+			"ordot4": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot5": {
+			"ordot5": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot6": {
+			"ordot6": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot7": {
+			"ordot7": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot8": {
+			"ordot8": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot9": {
+			"ordot9": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot10": {
+			"ordot10": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot1": {
+			"ordot1": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot12": {
+			"ordot12": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot13": {
+			"ordot13": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"ordot14": {
+			"ordot14": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"dot1": {
+			"dot1": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"dot2": {
+			"dot2": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"dot3": {
+			"dot3": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"dot4": {
+			"dot4": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"dot5": {
+			"dot5": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"dot6": {
+			"dot6": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"dot7": {
+			"dot7": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"dot8": {
+			"dot8": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"dot9": {
+			"dot9": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"dot10": {
+			"dot10": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"dot11": {
+			"dot11": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

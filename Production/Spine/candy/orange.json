@@ -1,0 +1,24 @@
+{ "skeleton": { "images": "C:/Users/kinga/Desktop/lemon/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Background", "bone": "root" },
+	{ "name": "Inserted Image", "bone": "root", "attachment": "Inserted Image" },
+	{ "name": "From selection", "bone": "root", "attachment": "From selection" }
+],
+"skins": {
+	"default": {
+		"Background": {
+			"Background": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"Inserted Image": {
+			"Inserted Image": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		},
+		"From selection": {
+			"From selection": { "x": 32, "y": -32, "width": 66, "height": 66 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

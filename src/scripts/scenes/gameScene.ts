@@ -130,7 +130,7 @@ export default class GameScene extends Phaser.Scene {
 		this.collisionLayer.setDepth(2)
 		//this.collisionLayer.setVisible(false)
 
-		const candyLayer = this.map.createLayer('collectables_depth_02', hudTileset, 0, 0);
+		const candyLayer = this.map.createLayer('collectables_depth_02', tileset, 0, 0);
 		candyLayer.setDepth(2);
 
 		//this.fpsText = new FpsText(this)
