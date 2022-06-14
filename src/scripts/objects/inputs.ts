@@ -7,7 +7,10 @@ export enum INPUT_TYPES {
     UNDER_ATTACK = 'under_attack',
     EATING_RIGHT = 'four_transition',
     EATING_LEFT = 'four_transition',
-    MUNCHING_LEFT = 'walk_four_left',
     EATING_UP = 'four_transition',
-    EATING_DOWN = 'four_transition'
+    EATING_DOWN = 'four_transition',
+    MUNCHING_LEFT = 'walk_four_left',
+    MUNCHING_RIGHT = 'walk_four_left',
+    MUNCHING_UP = 'walk_four_left',
+    MUNCHING_DOWN = 'walk_four_left',
 }
