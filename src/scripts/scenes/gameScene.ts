@@ -3,7 +3,9 @@ import FrameText from '../objects/frameText'
 import CannonBall from '../objects/cannonBall'
 import PlayerState from '../objects/PlayerState'
 
-import {INPUT_TYPES} from '../objects/inputs'
+import {
+	INPUT_TYPES
+} from '../objects/inputs'
 
 
 const TRUFFLES_KEY = 'truffles'
@@ -160,7 +162,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.hudLayer = this.map.createLayer('map/hud/hud_depth_05', this.hudTileset, 0, 0);
 		this.hudLayer.setDepth(5);
-		
+
 		this.collisionLayer = this.map.createLayer('map/environment_collision/collide_depth_02', this.tileset, 0, 0);
 		this.collisionLayer.setDepth(2)
 		//this.collisionLayer.setVisible(false)
@@ -231,28 +233,20 @@ export default class GameScene extends Phaser.Scene {
 
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
 
-			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
-			this.idiomCue.play()
-
-			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 3)
+			this.playerState.handleInput(INPUT_TYPES.WALK_LEFT)
 		}
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
 
-			this.idiomCue = this.sound.add('a_boy_the_kid')
-			this.idiomCue.play()
+			this.playerState.handleInput(INPUT_TYPES.WALK_UP)
 
-			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 5)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
 
-			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
-			this.idiomCue.play()
-
-			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 2)
+			this.playerState.handleInput(INPUT_TYPES.WALK_DOWN)
 		}
 
 		if (this.cursors.right.isDown) {
 
-			this.playerState.handleInput('walk-right-key')
+			this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT)
 
 			const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize / 2)
 			const y = this.map.worldToTileY(this.trufflesPosY)
@@ -305,8 +299,7 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
-			this.playerState.handleInput('no-key')
-			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 1)
+			this.playerState.handleInput(INPUT_TYPES.IDLE)
 		}
 
 		this.playerState.update() // Updates the Player State See PlayerStateMachine
