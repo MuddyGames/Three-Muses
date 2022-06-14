@@ -1,6 +1,8 @@
 import 'phaser'
 import 'phaser/plugins/spine/dist/SpinePlugin'
-import {INPUT_TYPES} from './inputs'
+import {
+    INPUT_TYPES
+} from './inputs'
 
 export default class PlayerStateMachine {
     spine!: SpineGameObject
@@ -49,7 +51,7 @@ export class Idle extends PlayerStateMachine {
     enter() {
         this.sound = this.scene.sound.add('story')
         this.sound.play()
-        this.spine.play('idle', true)
+        this.spine.play(INPUT_TYPES.IDLE, true)
     }
     update() {
         console.log('Updating the Idle State')
@@ -114,23 +116,17 @@ export class WalkingLeft extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string) {
-        if (input === 'no-key') {
-            console.log('Change State to Idle State')
+        if (input === INPUT_TYPES.IDLE) {
             return new Idle(this.scene, this.spine)
-        } else if (input === 'walk-right-key') {
-            console.log('Change State to Walking Right')
+        } else if (input === INPUT_TYPES.WALK_RIGHT) {
             return new WalkingRight(this.scene, this.spine)
-        } else if (input === 'walk-up-key') {
-            console.log('Change State to Walking Up')
+        } else if (input === INPUT_TYPES.WALK_UP) {
             return new WalkingUp(this.scene, this.spine)
-        } else if (input === 'walk-down-key') {
-            console.log('Change State to Walking Down')
+        } else if (input === INPUT_TYPES.WALK_DOWN) {
             return new WalkingDown(this.scene, this.spine)
-        } else if (input === 'eating-left-key') {
-            console.log('Change State to Eating Right')
+        } else if (input === INPUT_TYPES.EATING_LEFT) {
             return new EatingLeft(this.scene, this.spine)
-        } else if (input === 'under-attack-key') {
-            console.log('Change State to Under Attack')
+        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {
             return null
@@ -155,7 +151,6 @@ export class WalkingLeft extends PlayerStateMachine {
 // WalkingUp -> Idle
 // WalkingUp -> Walking Left
 // WalkingUp -> Walking Right
-// WalkingUp -> Walking Up
 // WalkingUp -> Walking Down
 // WalkingUp -> Eating Up
 // WalkingUp -> Under Attack
@@ -164,23 +159,17 @@ export class WalkingUp extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string) {
-        if (input === 'no-key') {
-            console.log('Change State to Idle State')
+        if (input === INPUT_TYPES.IDLE) {
             return new Idle(this.scene, this.spine)
-        } else if (input === 'walk-left-key') {
-            console.log('Change State to Walking Left')
+        } else if (input === INPUT_TYPES.WALK_LEFT) {
             return new WalkingLeft(this.scene, this.spine)
-        } else if (input === 'walk-right-key') {
-            console.log('Change State to Walking Right')
+        } else if (input === INPUT_TYPES.WALK_RIGHT) {
             return new WalkingRight(this.scene, this.spine)
-        } else if (input === 'walk-down-key') {
-            console.log('Change State to Walking Down')
+        } else if (input === INPUT_TYPES.WALK_DOWN) {
             return new WalkingDown(this.scene, this.spine)
-        } else if (input === 'eating-up-key') {
-            console.log('Change State to Eating Up')
+        } else if (input === INPUT_TYPES.EATING_UP) {
             return new EatingUp(this.scene, this.spine)
-        } else if (input === 'under-attack-key') {
-            console.log('Change State to Under Attack')
+        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {
             return null
@@ -190,7 +179,7 @@ export class WalkingUp extends PlayerStateMachine {
     enter() {
         this.sound = this.scene.sound.add('tackies')
         this.sound.play()
-        this.spine.play('run_up', true)
+        this.spine.play(INPUT_TYPES.WALK_UP, true)
 
     }
     update() {
@@ -214,29 +203,21 @@ export class WalkingDown extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string) {
-        if (input === 'no-key') {
-            console.log('Change State to Idle State')
+        if (input === INPUT_TYPES.IDLE) {
             return new Idle(this.scene, this.spine)
-        } else if (input === 'walk-left-key') {
-            console.log('Change State to Walking Left')
+        } else if (INPUT_TYPES.WALK_LEFT) {
             return new WalkingLeft(this.scene, this.spine)
-        } else if (input === 'walk-right-key') {
-            console.log('Change State to Walking Right')
+        } else if (input === INPUT_TYPES.WALK_RIGHT) {
             return new WalkingRight(this.scene, this.spine)
-        } else if (input === 'walk-up-key') {
-            console.log('Change State to Walking Up')
+        } else if (input === INPUT_TYPES.WALK_UP) {
             return new WalkingUp(this.scene, this.spine)
-        } else if (input === 'eating-down-key') {
-            console.log('Change State to Eating Down')
+        } else if (input === INPUT_TYPES.EATING_DOWN) {
             return new EatingDown(this.scene, this.spine)
-        } else if (input === 'under-attack-key') {
-            console.log('Change State to Under Attack')
+        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {
-            console.log('Staying in WalkingRight')
             return null
         }
-
     }
     enter() {
         console.log('Entering WalkingRight State this runs on Entry')
@@ -250,29 +231,61 @@ export class WalkingDown extends PlayerStateMachine {
     }
 }
 
+// Possible States
+// EatingLeft -> MunchingLeft
+// EatingLeft -> Under Attack
 export class EatingLeft extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         super(scene, spine)
     }
     handleInput(input: string) {
-        if (input === 'no-key') {
-            console.log('Change State to Idle State')
-            return new Idle(this.scene, this.spine)
+        if (input === INPUT_TYPES.MUNCHING_LEFT) {
+            return new MunchingLeft(this.scene, this.spine)
+        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            console.log('Staying in WalkingRight')
             return null
         }
 
     }
     enter() {
-        console.log('Entering WalkingRight State this runs on Entry')
+        console.log('Entering Eating Left State this runs on Entry')
 
     }
     update() {
-        console.log('Updating the WalkingRight State')
+        console.log('Updating the Eathing Left State')
     }
     exit() {
-        console.log('Exiting the WalkingRight State')
+        console.log('Exiting the Eating Left State')
+    }
+}
+
+// Possible States
+// MunchingLeft -> Idle
+// MunchingLeft -> Under Attack
+export class MunchingLeft extends PlayerStateMachine {
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
+    }
+    handleInput(input: string) {
+        if (input === INPUT_TYPES.IDLE) {
+            return new Idle(this.scene, this.spine)
+        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
+            return new UnderAttack(this.scene, this.spine)
+        } else {
+            return null
+        }
+
+    }
+    enter() {
+        console.log('Entering Munching Left State this runs on Entry')
+
+    }
+    update() {
+        console.log('Updating the Munching Left State')
+    }
+    exit() {
+        console.log('Exiting the Munching Left State')
     }
 }
 
