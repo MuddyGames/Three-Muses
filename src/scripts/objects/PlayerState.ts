@@ -1,12 +1,5 @@
 import 'phaser/plugins/spine/dist/SpinePlugin'
 
-const INPUT_TYPES = {
-    Class: Object.freeze({
-        WALK_RIGHT: 'walk_right',
-        WALK_LEFT: 'walk_left',
-    })
-}
-
 import PlayerStateMachine, {
     Idle
 } from './PlayerStateMachine'
