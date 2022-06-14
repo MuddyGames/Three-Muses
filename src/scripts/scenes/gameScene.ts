@@ -3,6 +3,8 @@ import FrameText from '../objects/frameText'
 import CannonBall from '../objects/cannonBall'
 import PlayerState from '../objects/PlayerState'
 
+import {INPUT_TYPES} from '../objects/inputs'
+
 
 const TRUFFLES_KEY = 'truffles'
 const KEYS = ['orange', 'lemon', 'grape']
@@ -225,12 +227,8 @@ export default class GameScene extends Phaser.Scene {
 
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
 
-			this.playerState.handleInput('walk-right-key')
+			this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT)
 
-			this.idiomCue = this.sound.add('a_boy_the_kid')
-			this.idiomCue.play()
-
-			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 4)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
 
 			this.idiomCue = this.sound.add('head_like_a_chewed_toffee')
