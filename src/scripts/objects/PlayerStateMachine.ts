@@ -8,6 +8,7 @@ export default class PlayerStateMachine {
     spine!: SpineGameObject
     scene!: Phaser.Scene
     sound!: Phaser.Sound.BaseSound
+    timer!: Phaser.Time.TimerEvent
 
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         this.scene = scene
@@ -254,12 +255,17 @@ export class EatingLeft extends PlayerStateMachine {
         this.sound = this.scene.sound.add('mup')
         this.sound.play()
         this.spine.play(INPUT_TYPES.EATING_LEFT, true)
+        this.timer = this.scene.time.delayedCall(500,this.next)
+        this.scene.time.addEvent(this.timer);
     }
     update() {
         console.log('Updating the Eating Left State')
     }
     exit() {
         console.log('Exiting the Eating Left State')
+    }
+    next(){
+        console.log('OPPPPPPPS')
     }
 }
 
@@ -463,10 +469,9 @@ export class UnderAttack extends PlayerStateMachine {
         }
     }
     enter() {
-        this.sound = this.scene.sound.add('mup')
+        this.sound = this.scene.sound.add('langers')
         this.sound.play()
         this.spine.play(INPUT_TYPES.UNDER_ATTACK, true)
-
     }
     update() {
         console.log('Updating the UnderAttack State')
@@ -483,6 +488,7 @@ export class Expired extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string) {
+        console.log('Process Input Expired State')
         if (input === INPUT_TYPES.IDLE) {
             return new Idle(this.scene, this.spine)
         } else {
@@ -491,6 +497,7 @@ export class Expired extends PlayerStateMachine {
 
     }
     enter() {
+        console.log('Entering the Expired State')
         this.sound = this.scene.sound.add('took_a_hopper')
         this.sound.play()
         this.spine.play(INPUT_TYPES.EXPIRED, true)

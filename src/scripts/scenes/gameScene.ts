@@ -193,7 +193,7 @@ export default class GameScene extends Phaser.Scene {
 		this.frameText.setText(IDLE_KEY + "[ " + this.trufflesAnimationIndex + " ]")
 
 		this.cursors = this.input.keyboard.createCursorKeys()
-		this.keys = this.input.keyboard.addKeys("E,Q,W,A,S,D");
+		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D");
 
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
@@ -203,7 +203,6 @@ export default class GameScene extends Phaser.Scene {
 			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.candyLayer.getTileAt(j, i)
 				if (tile != null) {
-					console.log(tile.getTileData())
 					if (tile.index === 4295) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 					} else if (tile.index === 4191) {
@@ -258,6 +257,9 @@ export default class GameScene extends Phaser.Scene {
 		}else if (this.keys.E.isDown) {
 			console.log('EXPIRED')
 			this.playerState.handleInput(INPUT_TYPES.EXPIRED)
+		}else if (this.keys.I.isDown) {
+			console.log('IDLING')
+			this.playerState.handleInput(INPUT_TYPES.IDLE)
 		}
 
 		if (this.cursors.right.isDown) {

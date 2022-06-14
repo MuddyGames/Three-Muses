@@ -13,5 +13,5 @@ export enum INPUT_TYPES {
     MUNCHING_RIGHT = 'walk_four_left', // TODO: Need Animation munching_right
     MUNCHING_UP = 'walk_four_left', // TODO: Need Animation munching_up
     MUNCHING_DOWN = 'walk_four_left', // TODO: Need Animation munching_down
-    EXPIRED = 'expired' // TODO: Need Animation expired 
+    EXPIRED = 'walk_four_left' // TODO: Need Animation expired 
 }
