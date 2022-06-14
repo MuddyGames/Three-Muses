@@ -4,13 +4,14 @@ export enum INPUT_TYPES {
     WALK_LEFT = 'run_left',
     WALK_UP = 'run_up',
     WALK_DOWN = 'run_down',
-    UNDER_ATTACK = 'under_attack',
-    EATING_RIGHT = 'four_transition',
-    EATING_LEFT = 'four_transition',
-    EATING_UP = 'four_transition',
-    EATING_DOWN = 'four_transition',
-    MUNCHING_LEFT = 'walk_four_left',
-    MUNCHING_RIGHT = 'walk_four_left',
-    MUNCHING_UP = 'walk_four_left',
-    MUNCHING_DOWN = 'walk_four_left',
+    UNDER_ATTACK = 'under_attack', // TODO: Need Animation under_attack
+    EATING_RIGHT = 'four_transition', // TODO: Need Animation four_transition_eating_right
+    EATING_LEFT = 'four_transition', // TODO: Need Animation four_transition_eating_left
+    EATING_UP = 'four_transition', // TODO: Need Animation four_transition_eating_up
+    EATING_DOWN = 'four_transition', // TODO: Need Animation four_transition_eating_up
+    MUNCHING_LEFT = 'walk_four_left', // TODO: Need Animation munching_left
+    MUNCHING_RIGHT = 'walk_four_left', // TODO: Need Animation munching_right
+    MUNCHING_UP = 'walk_four_left', // TODO: Need Animation munching_up
+    MUNCHING_DOWN = 'walk_four_left', // TODO: Need Animation munching_down
+    EXPIRED = 'expired' // TODO: Need Animation expired 
 }

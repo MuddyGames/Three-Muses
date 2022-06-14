@@ -445,49 +445,54 @@ export class UnderAttack extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string) {
-        if (input === 'no-key') {
-            console.log('Change State to Idle State')
-            return new Idle(this.scene, this.spine)
+        if (input === INPUT_TYPES.WALK_LEFT) {
+            return new WalkingLeft(this.scene, this.spine)
+        }else if(input === INPUT_TYPES.WALK_RIGHT) {
+            return new WalkingRight(this.scene, this.spine)
+        }else if(input === INPUT_TYPES.WALK_UP) {
+            return new WalkingUp(this.scene, this.spine)
+        }else if(input === INPUT_TYPES.WALK_DOWN) {
+            return new WalkingDown(this.scene, this.spine)
+        }else if(input === INPUT_TYPES.EXPIRED) {
+            return new Expired(this.scene, this.spine)
         } else {
-            console.log('Staying in WalkingRight')
             return null
         }
-
     }
     enter() {
-        console.log('Entering WalkingRight State this runs on Entry')
+        console.log('Entering UnderAttack State this runs on Entry')
 
     }
     update() {
-        console.log('Updating the WalkingRight State')
+        console.log('Updating the UnderAttack State')
     }
     exit() {
-        console.log('Exiting the WalkingRight State')
+        console.log('Exiting the UnderAttack State')
     }
 }
 
+// Possible States
+// Expired -> Idle
 export class Expired extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         super(scene, spine)
     }
     handleInput(input: string) {
-        if (input === 'no-key') {
-            console.log('Change State to Idle State')
+        if (input === INPUT_TYPES.IDLE) {
             return new Idle(this.scene, this.spine)
         } else {
-            console.log('Staying in WalkingRight')
             return null
         }
 
     }
     enter() {
-        console.log('Entering WalkingRight State this runs on Entry')
+        console.log('Entering Expired State this runs on Entry')
 
     }
     update() {
-        console.log('Updating the WalkingRight State')
+        console.log('Updating the Expired State')
     }
     exit() {
-        console.log('Exiting the WalkingRight State')
+        console.log('Exiting the Expired State')
     }
 }
