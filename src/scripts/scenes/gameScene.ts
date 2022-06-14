@@ -6,7 +6,9 @@ import PlayerState from '../objects/PlayerState'
 import {
 	INPUT_TYPES
 } from '../objects/inputs'
-import { UnderAttack } from '../objects/PlayerStateMachine'
+import {
+	UnderAttack
+} from '../objects/PlayerStateMachine'
 
 
 const TRUFFLES_KEY = 'truffles'
@@ -234,30 +236,29 @@ export default class GameScene extends Phaser.Scene {
 			this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
 			this.playerState.handleInput(INPUT_TYPES.WALK_LEFT)
-		}
-		if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
 			this.playerState.handleInput(INPUT_TYPES.WALK_UP)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
 			this.playerState.handleInput(INPUT_TYPES.WALK_DOWN)
 		} else if (this.keys.Q.isDown) {
 			console.log('UNDER ATTACK')
 			this.playerState.handleInput(INPUT_TYPES.UNDER_ATTACK)
-		}else if (this.keys.W.isDown) {
+		} else if (this.keys.W.isDown) {
 			console.log('EATING RIGHT')
 			this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
-		}else if (this.keys.A.isDown) {
+		} else if (this.keys.A.isDown) {
 			console.log('EATING LEFT')
 			this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
-		}else if (this.keys.S.isDown) {
+		} else if (this.keys.S.isDown) {
 			console.log('EATING UP')
 			this.playerState.handleInput(INPUT_TYPES.EATING_UP)
-		}else if (this.keys.D.isDown) {
+		} else if (this.keys.D.isDown) {
 			console.log('EATING DOWN')
 			this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
-		}else if (this.keys.E.isDown) {
+		} else if (this.keys.E.isDown) {
 			console.log('EXPIRED')
 			this.playerState.handleInput(INPUT_TYPES.EXPIRED)
-		}else if (this.keys.I.isDown) {
+		} else if (this.keys.I.isDown) {
 			console.log('IDLING')
 			this.playerState.handleInput(INPUT_TYPES.IDLE)
 		}
