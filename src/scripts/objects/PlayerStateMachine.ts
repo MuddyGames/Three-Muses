@@ -80,11 +80,9 @@ export class WalkingRight extends PlayerStateMachine {
             return new WalkingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_DOWN) {
             return new WalkingDown(this.scene, this.spine)
-        } else if (input === 'eating-right-key') {
-            console.log('Change State to Eating Right')
+        } else if (input === INPUT_TYPES.EATING_RIGHT) {
             return new EatingRight(this.scene, this.spine)
-        } else if (input === 'under-attack-key') {
-            console.log('Change State to Under Attack')
+        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {
             return null
@@ -93,7 +91,7 @@ export class WalkingRight extends PlayerStateMachine {
     enter() {
         this.sound = this.scene.sound.add('unreal')
         this.sound.play()
-        this.spine.play('run_right', true)
+        this.spine.play(INPUT_TYPES.WALK_RIGHT, true)
 
     }
     update() {
