@@ -1,6 +1,7 @@
 //import FpsText from '../objects/fpsText'
 import FrameText from '../objects/frameText'
 import CannonBall from '../objects/cannonBall'
+import PlayerState from '../objects/PlayerState'
 
 
 const TRUFFLES_KEY = 'truffles'
@@ -68,6 +69,8 @@ export default class GameScene extends Phaser.Scene {
 	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
 
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
+
+	private playerState!:PlayerState
 
 	constructor() {
 		super({
@@ -208,9 +211,14 @@ export default class GameScene extends Phaser.Scene {
 		for(let o = 0; o < this.fruit.length; o++){
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
+
+		this.playerState = new PlayerState(this.truffles);
 	}
 
 	update() {
+		this.playerState.handleInput('walk-right')
+		this.playerState.update()
+
 		//this.fpsText.update()
 		this.frameText.update()
 		this.ball.update()
