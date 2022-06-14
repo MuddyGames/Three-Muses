@@ -1,0 +1,24 @@
+{ "skeleton": { "images": "C:/Users/kinga/Desktop/windmill/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Background", "bone": "root" },
+	{ "name": "Layer 3", "bone": "root", "attachment": "Layer 3" },
+	{ "name": "Layer 4", "bone": "root", "attachment": "Layer 4" },
+],
+"skins": {
+	"default": {
+		"Background": {
+			"Background": { "x": 112, "y": -112, "width": 226, "height": 226 }
+		},
+		"Layer 3": {
+			"Layer 3": { "x": 100, "y": -104, "width": 176, "height": 184 }
+		},
+		"Layer 4": {
+			"Layer 4": { "x": 66.5, "y": -113.5, "width": 119, "height": 115 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
