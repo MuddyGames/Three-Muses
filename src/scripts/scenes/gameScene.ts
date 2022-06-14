@@ -6,6 +6,7 @@ import PlayerState from '../objects/PlayerState'
 import {
 	INPUT_TYPES
 } from '../objects/inputs'
+import { UnderAttack } from '../objects/PlayerStateMachine'
 
 
 const TRUFFLES_KEY = 'truffles'
@@ -23,6 +24,7 @@ export default class GameScene extends Phaser.Scene {
 
 	private truffles!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
+	private keys
 	private orange!: SpineGameObject
 	private lemon!: SpineGameObject
 	private grape!: SpineGameObject
@@ -191,6 +193,7 @@ export default class GameScene extends Phaser.Scene {
 		this.frameText.setText(IDLE_KEY + "[ " + this.trufflesAnimationIndex + " ]")
 
 		this.cursors = this.input.keyboard.createCursorKeys()
+		this.keys = this.input.keyboard.addKeys("E,Q,W,A,S,D");
 
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
@@ -225,23 +228,36 @@ export default class GameScene extends Phaser.Scene {
 		this.frameText.update()
 		this.ball.update()
 
+
 		const size = this.trufflesAnimationNames.length
 
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
-
 			this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT)
-
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
-
 			this.playerState.handleInput(INPUT_TYPES.WALK_LEFT)
 		}
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
-
 			this.playerState.handleInput(INPUT_TYPES.WALK_UP)
-
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-
 			this.playerState.handleInput(INPUT_TYPES.WALK_DOWN)
+		} else if (this.keys.Q.isDown) {
+			console.log('UNDER ATTACK')
+			this.playerState.handleInput(INPUT_TYPES.UNDER_ATTACK)
+		}else if (this.keys.W.isDown) {
+			console.log('EATING RIGHT')
+			this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
+		}else if (this.keys.A.isDown) {
+			console.log('EATING LEFT')
+			this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
+		}else if (this.keys.S.isDown) {
+			console.log('EATING UP')
+			this.playerState.handleInput(INPUT_TYPES.EATING_UP)
+		}else if (this.keys.D.isDown) {
+			console.log('EATING DOWN')
+			this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
+		}else if (this.keys.E.isDown) {
+			console.log('EXPIRED')
+			this.playerState.handleInput(INPUT_TYPES.EXPIRED)
 		}
 
 		if (this.cursors.right.isDown) {

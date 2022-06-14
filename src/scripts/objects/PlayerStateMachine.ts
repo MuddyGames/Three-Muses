@@ -136,7 +136,7 @@ export class WalkingLeft extends PlayerStateMachine {
     enter() {
         this.sound = this.scene.sound.add('mup')
         this.sound.play()
-        this.spine.play('run_left', true)
+        this.spine.play(INPUT_TYPES.WALK_LEFT, true)
 
     }
     update() {
@@ -220,7 +220,9 @@ export class WalkingDown extends PlayerStateMachine {
         }
     }
     enter() {
-        console.log('Entering WalkingRight State this runs on Entry')
+        this.sound = this.scene.sound.add('mup')
+        this.sound.play()
+        this.spine.play(INPUT_TYPES.WALK_DOWN, true)
 
     }
     update() {
@@ -249,11 +251,12 @@ export class EatingLeft extends PlayerStateMachine {
 
     }
     enter() {
-        console.log('Entering Eating Left State this runs on Entry')
-
+        this.sound = this.scene.sound.add('mup')
+        this.sound.play()
+        this.spine.play(INPUT_TYPES.EATING_LEFT, true)
     }
     update() {
-        console.log('Updating the Eathing Left State')
+        console.log('Updating the Eating Left State')
     }
     exit() {
         console.log('Exiting the Eating Left State')
@@ -460,7 +463,9 @@ export class UnderAttack extends PlayerStateMachine {
         }
     }
     enter() {
-        console.log('Entering UnderAttack State this runs on Entry')
+        this.sound = this.scene.sound.add('mup')
+        this.sound.play()
+        this.spine.play(INPUT_TYPES.UNDER_ATTACK, true)
 
     }
     update() {
@@ -486,7 +491,9 @@ export class Expired extends PlayerStateMachine {
 
     }
     enter() {
-        console.log('Entering Expired State this runs on Entry')
+        this.sound = this.scene.sound.add('took_a_hopper')
+        this.sound.play()
+        this.spine.play(INPUT_TYPES.EXPIRED, true)
 
     }
     update() {

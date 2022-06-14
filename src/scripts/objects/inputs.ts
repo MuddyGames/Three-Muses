@@ -4,7 +4,7 @@ export enum INPUT_TYPES {
     WALK_LEFT = 'run_left',
     WALK_UP = 'run_up',
     WALK_DOWN = 'run_down',
-    UNDER_ATTACK = 'under_attack', // TODO: Need Animation under_attack
+    UNDER_ATTACK = 'four_transition', // TODO: Need Animation under_attack
     EATING_RIGHT = 'four_transition', // TODO: Need Animation four_transition_eating_right
     EATING_LEFT = 'four_transition', // TODO: Need Animation four_transition_eating_left
     EATING_UP = 'four_transition', // TODO: Need Animation four_transition_eating_up

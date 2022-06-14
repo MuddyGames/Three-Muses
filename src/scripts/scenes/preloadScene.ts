@@ -24,6 +24,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio('story', ['assets/audio/idioms/story.mp3', 'assets/audio/idioms/story.ogg']);
     this.load.audio('mup', ['assets/audio/idioms/mup.mp3', 'assets/audio/idioms/mup.ogg']);
     this.load.audio('tackies', ['assets/audio/idioms/tackies.mp3', 'assets/audio/idioms/tackies.ogg']);
+    this.load.audio('langers', ['assets/audio/idioms/langers.mp3', 'assets/audio/idioms/langers.ogg']);
+    this.load.audio('took_a_hopper', ['assets/audio/idioms/took_a_hopper.mp3', 'assets/audio/idioms/took_a_hopper.ogg']);
 
     this.load.audio('a_boy_the_kid', ['assets/audio/idioms/a_boy_the_kid.mp3', 'assets/audio/idioms/a_boy_the_kid.ogg']);
     this.load.audio('head_like_a_chewed_toffee', ['assets/audio/idioms/head_like_a_chewed_toffee.mp3', 'assets/audio/idioms/head_like_a_chewed_toffee.ogg']);
