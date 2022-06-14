@@ -70,7 +70,7 @@ export default class GameScene extends Phaser.Scene {
 
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
 
-	private playerState!:PlayerState
+	private playerState!: PlayerState
 
 	constructor() {
 		super({
@@ -208,16 +208,14 @@ export default class GameScene extends Phaser.Scene {
 			}
 		}
 
-		for(let o = 0; o < this.fruit.length; o++){
+		for (let o = 0; o < this.fruit.length; o++) {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
 
-		this.playerState = new PlayerState(this.truffles);
+		this.playerState = new PlayerState(this, this.truffles);
 	}
 
 	update() {
-		this.playerState.handleInput('walk-right')
-		this.playerState.update()
 
 		//this.fpsText.update()
 		this.frameText.update()
@@ -226,6 +224,8 @@ export default class GameScene extends Phaser.Scene {
 		const size = this.trufflesAnimationNames.length
 
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
+
+			this.playerState.handleInput('walk-right-key')
 
 			this.idiomCue = this.sound.add('a_boy_the_kid')
 			this.idiomCue.play()
@@ -253,8 +253,10 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (this.cursors.right.isDown) {
-			
-			const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize/2)
+
+			this.playerState.handleInput('walk-right-key')
+
+			const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize / 2)
 			const y = this.map.worldToTileY(this.trufflesPosY)
 
 			this.tile = this.collisionLayer.getTileAt(x + 1, y)
@@ -266,7 +268,7 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (this.cursors.left.isDown) {
-			const x = this.map.worldToTileX(this.trufflesPosX + this.tileSize/2)
+			const x = this.map.worldToTileX(this.trufflesPosX + this.tileSize / 2)
 			const y = this.map.worldToTileY(this.trufflesPosY)
 
 			this.tile = this.collisionLayer.getTileAt(x - 1, y)
@@ -305,8 +307,11 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
+			this.playerState.handleInput('no-key')
 			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 1)
 		}
+
+		this.playerState.update() // Updates the Player State See PlayerStateMachine
 	}
 
 	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {

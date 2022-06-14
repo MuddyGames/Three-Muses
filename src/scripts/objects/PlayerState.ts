@@ -1,24 +1,27 @@
 import 'phaser/plugins/spine/dist/SpinePlugin'
-import StateMachine, { Idle } from './StateMachine'
+import PlayerStateMachine, {
+    Idle
+} from './PlayerStateMachine'
 
-export default class PlayerState{
-    private state!:StateMachine
-    constructor(spine: SpineGameObject){
-        this.state = new Idle(spine)
+export default class PlayerState {
+    private state
+    private new_state!: PlayerStateMachine
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        this.state = new Idle(scene, spine)
         this.state.enter()
     }
 
-    handleInput(input:string){
-       /*  let state
-        state = this.state.handleInput(input)
-        if(state !== null){
+    handleInput(input: string) {
+        const state = this.state.handleInput(input)
+        if (state !== null) {
             this.state.exit()
             this.state = state
-            //this.state.enter()
-        } */
+            this.state.enter()
+        }
+        return state
     }
-    update(){
-        //this.state.update()
+    update() {
+        this.state.update()
     }
 
 }
