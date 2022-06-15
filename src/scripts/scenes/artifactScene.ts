@@ -1,5 +1,5 @@
 import FpsText from '../objects/fpsText'
-import FrameText from '../objects/frameText'
+import ScoreText from '../objects/scoreText'
 
 export default class ArtiFactScene extends Phaser.Scene {
   timedEvents : Phaser.Time.TimerEvent[] = []

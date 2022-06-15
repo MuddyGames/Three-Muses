@@ -1,5 +1,5 @@
 import FpsText from '../objects/fpsText'
-import FrameText from '../objects/frameText'
+import ScoreText from '../objects/scoreText'
 import Logo from '../objects/logo'
 
 export default class TestScene extends Phaser.Scene {
