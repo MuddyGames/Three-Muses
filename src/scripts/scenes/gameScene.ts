@@ -288,7 +288,7 @@ export default class GameScene extends Phaser.Scene {
 
 		if (this.cursors.up.isDown) {
 			const x = this.map.worldToTileX(this.trufflesPosX)
-			const y = this.map.worldToTileY(this.trufflesPosY)
+			const y = this.map.worldToTileY(this.trufflesPosY + this.tileSize / 4)
 
 			this.tile = this.collisionLayer.getTileAt(x, y - 1)
 
@@ -304,7 +304,7 @@ export default class GameScene extends Phaser.Scene {
 			const x = this.map.worldToTileX(this.trufflesPosX)
 			const y = this.map.worldToTileY(this.trufflesPosY + this.trufflesSpeed)
 
-			this.tile = this.collisionLayer.getTileAt(x, y + 1)
+			this.tile = this.collisionLayer.getTileAt(x, y)
 
 			if (this.tile == null) {
 				this.trufflesPosY += this.trufflesSpeed
