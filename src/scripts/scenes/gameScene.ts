@@ -1,5 +1,5 @@
 //import FpsText from '../objects/fpsText'
-import FrameText from '../objects/frameText'
+import ScoreText from '../objects/scoreText'
 import CannonBall from '../objects/cannonBall'
 import PlayerState from '../objects/PlayerState'
 
@@ -21,6 +21,8 @@ export default class GameScene extends Phaser.Scene {
 	idiomCue
 
 	ball
+
+	score!: ScoreText
 
 	private truffles!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -97,6 +99,10 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
+
+		this.score = new ScoreText(this)
+		this.score.setDepth(4)
+
 		this.map = this.make.tilemap({
 			key: 'level',
 			tileWidth: 32,
@@ -217,6 +223,8 @@ export default class GameScene extends Phaser.Scene {
 	update() {
 
 		this.ball.update()
+
+		this.score.update()
 
 
 		const size = this.trufflesAnimationNames.length
