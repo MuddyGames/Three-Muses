@@ -1,9 +1,11 @@
 import 'phaser'
+import { Time } from 'phaser'
 import 'phaser/plugins/spine/dist/SpinePlugin'
 import {
     INPUT_TYPES
 } from './inputs'
 
+var canPlay!: boolean
 export default class PlayerStateMachine {
     spine!: SpineGameObject
     scene!: Phaser.Scene
@@ -19,6 +21,9 @@ export default class PlayerStateMachine {
     enter() {}
     update() {}
     exit() {}
+    playSound() {
+        canPlay = true
+    }
 }
 
 // Possible States
@@ -47,11 +52,13 @@ export class Idle extends PlayerStateMachine {
         } else {
             return null
         }
-
     }
     enter() {
         this.sound = this.scene.sound.add('story')
-        this.sound.play()
+        if(canPlay){
+            this.sound.play()
+            canPlay = false
+        }
         this.spine.play(INPUT_TYPES.IDLE, true)
     }
     update() {
@@ -93,9 +100,11 @@ export class WalkingRight extends PlayerStateMachine {
     }
     enter() {
         this.sound = this.scene.sound.add('unreal')
-        this.sound.play()
+        if(canPlay){
+            this.sound.play()
+            canPlay = false
+        }
         this.spine.play(INPUT_TYPES.WALK_RIGHT, true)
-
     }
     update() {
         console.log('Updating the WalkingRight State')
@@ -136,7 +145,10 @@ export class WalkingLeft extends PlayerStateMachine {
     }
     enter() {
         this.sound = this.scene.sound.add('gawke')
-        this.sound.play()
+        if(canPlay){
+            this.sound.play()
+            canPlay = false
+        }
         this.spine.play(INPUT_TYPES.WALK_LEFT, true)
 
     }
@@ -179,7 +191,10 @@ export class WalkingUp extends PlayerStateMachine {
     }
     enter() {
         this.sound = this.scene.sound.add('yurt')
-        this.sound.play()
+        if(canPlay){
+            this.sound.play()
+            canPlay = false
+        }
         this.spine.play(INPUT_TYPES.WALK_UP, true)
 
     }
@@ -222,7 +237,10 @@ export class WalkingDown extends PlayerStateMachine {
     }
     enter() {
         this.sound = this.scene.sound.add('shades')
-        this.sound.play()
+        if(canPlay){
+            this.sound.play()
+            canPlay = false
+        }
         this.spine.play(INPUT_TYPES.WALK_DOWN, true)
 
     }
@@ -253,7 +271,10 @@ export class EatingLeft extends PlayerStateMachine {
     }
     enter() {
         this.sound = this.scene.sound.add('mup')
-        this.sound.play()
+        if(canPlay){
+            this.sound.play()
+            canPlay = false
+        }
         this.spine.play(INPUT_TYPES.EATING_LEFT, true)
         this.timer = this.scene.time.delayedCall(500,this.next)
         this.scene.time.addEvent(this.timer);
@@ -470,7 +491,10 @@ export class UnderAttack extends PlayerStateMachine {
     }
     enter() {
         this.sound = this.scene.sound.add('langers')
-        this.sound.play()
+        if(canPlay){
+            this.sound.play()
+            canPlay = false
+        }
         this.spine.play(INPUT_TYPES.UNDER_ATTACK, true)
     }
     update() {
@@ -499,7 +523,10 @@ export class Expired extends PlayerStateMachine {
     enter() {
         console.log('Entering the Expired State')
         this.sound = this.scene.sound.add('took_a_hopper')
-        this.sound.play()
+        if(canPlay){
+            this.sound.play()
+            canPlay = false
+        }
         this.spine.play(INPUT_TYPES.EXPIRED, true)
 
     }
@@ -529,7 +556,10 @@ export class Revived extends PlayerStateMachine {
     enter() {
         console.log('Entering the Expired State')
         this.sound = this.scene.sound.add('state_of_ya')
-        this.sound.play()
+        if(canPlay){
+            this.sound.play()
+            canPlay = false
+        }
         this.spine.play(INPUT_TYPES.EXPIRED, true)
 
     }

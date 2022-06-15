@@ -41,8 +41,9 @@ export default class GameScene extends Phaser.Scene {
 	private trufflesPosX = 100
 	private trufflesPosY = 360
 	private trufflesSpeed = 2
-	private trufflesScale = 0.25
 	private tileSize = 32
+
+	private soundDelay = 500
 
 	// TileMap Data
 	private map!: Phaser.Tilemaps.Tilemap
@@ -212,12 +213,13 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		this.playerState = new PlayerState(this, this.truffles);
+
+		this.time.addEvent({ delay: this.soundDelay, callback: this.test, callbackScope: this})
 	}
 
 	update() {
 
 		this.ball.update()
-
 
 		const size = this.trufflesAnimationNames.length
 
@@ -340,5 +342,10 @@ export default class GameScene extends Phaser.Scene {
 	private changeAnimation(spine: SpineGameObject, animationNames: string[], index: number) {
 		const animation = animationNames[index]
 		spine.play(animation, true)
+	}
+
+	private test() {
+		this.playerState.playSound()
+		this.time.addEvent({ delay: this.soundDelay, callback: this.test, callbackScope: this})
 	}
 }
