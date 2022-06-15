@@ -1,7 +1,7 @@
 export default class ScoreText extends Phaser.GameObjects.Text {
   constructor(scene) {
     super(scene, 10, 50, '', {
-      color: 'blue',
+      color: '#EC00D7',
       fontSize: '48px',
       fontFamily: 'gamefont'
     })
@@ -10,6 +10,6 @@ export default class ScoreText extends Phaser.GameObjects.Text {
   }
 
   public update() {
-    this.setText(`SCORE!`)
+    this.setText(`0`)
   }
 }

@@ -19,12 +19,13 @@ const WINDMILL_KEY = 'windmill'
 
 export default class GameScene extends Phaser.Scene {
 
-	backingMusic
-	idiomCue
+	backingMusic!: Phaser.Sound.BaseSound
+	idiomCue!: Phaser.Sound.BaseSound
 
 	ball
 
-	score!: ScoreText
+	scoreText!: ScoreText
+	score!: number
 
 	private truffles!: SpineGameObject
 	private cannonball!: SpineGameObject
@@ -89,6 +90,7 @@ export default class GameScene extends Phaser.Scene {
 		super({
 			key: 'GameScene'
 		})
+		this.score = 0
 	}
 
 	preload() {
@@ -101,14 +103,17 @@ export default class GameScene extends Phaser.Scene {
 		this.load.spine(KEYS[0], 'fruits/orange/orange.json', 'fruits/orange/orange.atlas')
 		this.load.spine(KEYS[1], 'fruits/grape/grape.json', 'fruits/grape/grape.atlas')
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
-		this.load.spine(CANNONBALL_KEY,'cannonball/cannonball.json','cannonball/cannonball.atlas')
-		this.load.spine(WINDMILL_KEY,'windmill/windmill.json','windmill/windmill.atlas')
+		this.load.spine(CANNONBALL_KEY, 'cannonball/cannonball.json', 'cannonball/cannonball.atlas')
+		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
 	}
 
 	create() {
-
-		this.score = new ScoreText(this)
-		this.score.setDepth(4)
+		// Score Text
+		this.scoreText = new ScoreText(this)
+		this.scoreText.setShadow(3, 3)
+		this.scoreText.setStroke('#ffffff', 16);
+		this.scoreText.setShadow(2, 2, "#333333", 2, true, true);
+		this.scoreText.setDepth(4)
 
 		this.map = this.make.tilemap({
 			key: 'level',
@@ -226,14 +231,30 @@ export default class GameScene extends Phaser.Scene {
 
 		this.playerState = new PlayerState(this, this.truffles);
 
-		this.time.addEvent({ delay: this.soundDelay, callback: this.test, callbackScope: this})
+		this.time.addEvent({
+			delay: this.soundDelay,
+			callback: this.test,
+			callbackScope: this
+		})
+
+		// Score Event Update
+		this.time.addEvent({
+			delay: 300,
+			callback: this.scoreUpdate,
+			callbackScope: this,
+			loop: true
+		});
+
 	}
 
 	update() {
 
 		this.ball.update()
 
-		this.score.update()
+		//Score Starter
+		this.scoreText.setPosition(1100, 20)
+		this.scoreText.update()
+		this.scoreText.setText(' ' + this.score + ' ')
 
 		const size = this.trufflesAnimationNames.length
 
@@ -241,7 +262,7 @@ export default class GameScene extends Phaser.Scene {
 
 			/*this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT)*/
 
-			this.changeAnimation(this.truffles, this.trufflesAnimationNames,4)
+			this.changeAnimation(this.truffles, this.trufflesAnimationNames, 4)
 
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
 			this.playerState.handleInput(INPUT_TYPES.WALK_LEFT)
@@ -278,35 +299,35 @@ export default class GameScene extends Phaser.Scene {
 			this.playerState.handleInput(INPUT_TYPES.IDLE)
 		}
 
-		if (this.cursors.right.isDown){ 
+		if (this.cursors.right.isDown) {
 			const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize / 2)
 			const y = this.map.worldToTileY(this.trufflesPosY)
 
 			this.tile = this.collisionLayer.getTileAt(x + 1, y)
-			
+
 
 			if (this.tile == null) {
 				this.trufflesPosX += this.trufflesSpeed
 				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
-				}
-			
-				this.tile = this.candyLayer.getTileAt(x + 1, y)
-			if (this.tile != null){
-				if (this.tile.index !==0){
+			}
+
+			this.tile = this.candyLayer.getTileAt(x + 1, y)
+			if (this.tile != null) {
+				if (this.tile.index !== 0) {
 					console.log('yes ' + this.tile.index)
-					this.changeAnimation(this.truffles, this.trufflesAnimationNames,0)
+					this.changeAnimation(this.truffles, this.trufflesAnimationNames, 0)
 				}
 
-				for (let i = 0; i < this.fruit.length; i++){
-					
-					if(this.trufflesAABB(this.truffles, this.fruit[i])){
-						this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
-						
+				for (let i = 0; i < this.fruit.length; i++) {
+
+					if (this.trufflesAABB(this.truffles, this.fruit[i])) {
+						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
+
 					}
 				}
 			}
-		
-	    }
+
+		}
 
 		if (this.cursors.left.isDown) {
 			const x = this.map.worldToTileX(this.trufflesPosX + this.tileSize / 2)
@@ -318,18 +339,18 @@ export default class GameScene extends Phaser.Scene {
 				this.trufflesPosX -= this.trufflesSpeed
 				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
 			}
-				this.tile = this.candyLayer.getTileAt(x - 1, y)
-			if (this.tile != null){
-				if (this.tile.index !==0){
+			this.tile = this.candyLayer.getTileAt(x - 1, y)
+			if (this.tile != null) {
+				if (this.tile.index !== 0) {
 					console.log('yes ' + this.tile.index)
-					this.changeAnimation(this.truffles, this.trufflesAnimationNames,0)
+					this.changeAnimation(this.truffles, this.trufflesAnimationNames, 0)
 				}
 
-				for (let i = 0; i < this.fruit.length; i++){
-					
-					if(this.trufflesAABB(this.truffles, this.fruit[i])){
-						this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
-						
+				for (let i = 0; i < this.fruit.length; i++) {
+
+					if (this.trufflesAABB(this.truffles, this.fruit[i])) {
+						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
+
 					}
 				}
 			}
@@ -346,18 +367,18 @@ export default class GameScene extends Phaser.Scene {
 				this.trufflesPosY -= this.trufflesSpeed
 				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
 			}
-				this.tile = this.candyLayer.getTileAt(x, y - 1)
-			if (this.tile != null){
-				if (this.tile.index !==0){
+			this.tile = this.candyLayer.getTileAt(x, y - 1)
+			if (this.tile != null) {
+				if (this.tile.index !== 0) {
 					console.log('yes ' + this.tile.index)
-					this.changeAnimation(this.truffles, this.trufflesAnimationNames,0)
+					this.changeAnimation(this.truffles, this.trufflesAnimationNames, 0)
 				}
 
-				for (let i = 0; i < this.fruit.length; i++){
-					
-					if(this.trufflesAABB(this.truffles, this.fruit[i])){
-						this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
-						
+				for (let i = 0; i < this.fruit.length; i++) {
+
+					if (this.trufflesAABB(this.truffles, this.fruit[i])) {
+						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
+
 					}
 				}
 			}
@@ -375,19 +396,18 @@ export default class GameScene extends Phaser.Scene {
 				this.trufflesPosY += this.trufflesSpeed
 				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
 			}
-			
-				this.tile = this.candyLayer.getTileAt(x, y + 1)
-			if (this.tile != null){
-				if (this.tile.index !==0){
+
+			this.tile = this.candyLayer.getTileAt(x, y + 1)
+			if (this.tile != null) {
+				if (this.tile.index !== 0) {
 					console.log('yes ' + this.tile.index)
-					this.changeAnimation(this.truffles, this.trufflesAnimationNames,0)
+					this.changeAnimation(this.truffles, this.trufflesAnimationNames, 0)
 				}
 
-				for (let i = 0; i < this.fruit.length; i++){
-					
-					if(this.trufflesAABB(this.truffles, this.fruit[i])){
-						this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
-						
+				for (let i = 0; i < this.fruit.length; i++) {
+
+					if (this.trufflesAABB(this.truffles, this.fruit[i])) {
+						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
 					}
 				}
 			}
@@ -425,21 +445,29 @@ export default class GameScene extends Phaser.Scene {
 
 	private test() {
 		this.playerState.playSound()
-		this.time.addEvent({ delay: this.soundDelay, callback: this.test, callbackScope: this})
+		this.time.addEvent({
+			delay: this.soundDelay,
+			callback: this.test,
+			callbackScope: this
+		})
 	}
 
-	private trufflesAABB (truffles: SpineGameObject, collidable:SpineGameObject){
-    
+	private trufflesAABB(truffles: SpineGameObject, collidable: SpineGameObject) {
+
 		var collision = false;
 
-		if (truffles.x - (truffles.getBounds().size.x)/2 < collidable.x && 
-			truffles.x + (truffles.getBounds().size.x)/2  > collidable.x && 
-			truffles.y  - (truffles.getBounds().size.y) < collidable.y + (collidable.getBounds().size.y) && 
-			truffles.y + (truffles.getBounds().size.y) > collidable.y){
-			
+		if (truffles.x - (truffles.getBounds().size.x) / 2 < collidable.x &&
+			truffles.x + (truffles.getBounds().size.x) / 2 > collidable.x &&
+			truffles.y - (truffles.getBounds().size.y) < collidable.y + (collidable.getBounds().size.y) &&
+			truffles.y + (truffles.getBounds().size.y) > collidable.y) {
+
 			collision = true;
 		}
-         
+
 		return collision
+	}
+
+	private scoreUpdate() {
+		this.score += 151
 	}
 }
