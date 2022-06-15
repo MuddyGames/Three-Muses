@@ -25,4 +25,8 @@ export default class PlayerState {
         this.state.update()
     }
 
+    playSound() {
+        this.state.playSound()
+    }
+
 }
