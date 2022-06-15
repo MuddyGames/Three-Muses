@@ -195,7 +195,7 @@ export default class GameScene extends Phaser.Scene {
 		this.frameText.setText(IDLE_KEY + "[ " + this.trufflesAnimationIndex + " ]")
 
 		this.cursors = this.input.keyboard.createCursorKeys()
-		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R");
+		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
 
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
@@ -259,8 +259,11 @@ export default class GameScene extends Phaser.Scene {
 			console.log('EXPIRED')
 			this.playerState.handleInput(INPUT_TYPES.EXPIRED)
 		} else if (Phaser.Input.Keyboard.JustDown(this.keys.R)) {
-			console.log('EXPIRED')
+			console.log('REVIVE')
 			this.playerState.handleInput(INPUT_TYPES.REVIVE)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.T)) {
+			console.log('REVIVED')
+			this.playerState.handleInput(INPUT_TYPES.REVIVED)
 		} else if (Phaser.Input.Keyboard.JustDown(this.keys.I)) {
 			console.log('IDLING')
 			this.playerState.handleInput(INPUT_TYPES.IDLE)
