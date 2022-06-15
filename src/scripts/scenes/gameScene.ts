@@ -19,12 +19,13 @@ const WINDMILL_KEY = 'windmill'
 
 export default class GameScene extends Phaser.Scene {
 
-	backingMusic
-	idiomCue
+	backingMusic!: Phaser.Sound.BaseSound
+	idiomCue!: Phaser.Sound.BaseSound
 
 	ball
 
-	score!: ScoreText
+	scoreText!: ScoreText
+	score!: number
 
 	private truffles!: SpineGameObject
 	private cannonball!: SpineGameObject
@@ -87,6 +88,7 @@ export default class GameScene extends Phaser.Scene {
 		super({
 			key: 'GameScene'
 		})
+		this.score = 0
 	}
 
 	preload() {
@@ -99,14 +101,17 @@ export default class GameScene extends Phaser.Scene {
 		this.load.spine(KEYS[0], 'fruits/orange/orange.json', 'fruits/orange/orange.atlas')
 		this.load.spine(KEYS[1], 'fruits/grape/grape.json', 'fruits/grape/grape.atlas')
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
-		this.load.spine(CANNONBALL_KEY,'cannonball/cannonball.json','cannonball/cannonball.atlas')
-		this.load.spine(WINDMILL_KEY,'windmill/windmill.json','windmill/windmill.atlas')
+		this.load.spine(CANNONBALL_KEY, 'cannonball/cannonball.json', 'cannonball/cannonball.atlas')
+		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
 	}
 
 	create() {
-
-		this.score = new ScoreText(this)
-		this.score.setDepth(4)
+		// Score Text
+		this.scoreText = new ScoreText(this)
+		this.scoreText.setShadow(3, 3)
+		this.scoreText.setStroke('#ffffff', 16);
+		this.scoreText.setShadow(2, 2, "#333333", 2, true, true);
+		this.scoreText.setDepth(4)
 
 		this.setupMap()
 
@@ -157,7 +162,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.ball.update()
 
-		this.score.update()
+		this.scoreText.update()
 
 		const size = this.trufflesAnimationNames.length
 
@@ -369,11 +374,15 @@ export default class GameScene extends Phaser.Scene {
 
 	private resetSounds() {
 		this.playerState.playSound()
-		this.time.addEvent({ delay: this.soundDelay, callback: this.resetSounds, callbackScope: this})
+		this.time.addEvent({
+			delay: this.soundDelay,
+			callback: this.resetSounds,
+			callbackScope: this
+		})
 	}
 
-	private trufflesAABB (truffles: SpineGameObject, collidable:SpineGameObject){
-    
+	private trufflesAABB(truffles: SpineGameObject, collidable: SpineGameObject) {
+
 		var collision = false;
 
 		if (this.trufflesPosX - this.tileSize/2 < collidable.x + collidable.scaleX * collidable.width && 
@@ -382,7 +391,11 @@ export default class GameScene extends Phaser.Scene {
 			this.trufflesPosY > collidable.y){
 			collision = true;
 		}
-         
+
 		return collision
+	}
+
+	private scoreUpdate() {
+		this.score += 151
 	}
 }

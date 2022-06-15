@@ -1,0 +1,36 @@
+{ "skeleton": { "images": "C:/Users/kinga/Desktop/flag/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Layer 2", "bone": "root", "attachment": "Layer 2" },
+	{ "name": "flag1", "bone": "root", "attachment": "flag1" },
+	{ "name": "flag2", "bone": "root", "attachment": "flag2" },
+	{ "name": "flag3", "bone": "root", "attachment": "flag3" },
+	{ "name": "flag4", "bone": "root", "attachment": "flag4" },
+	{ "name": "flag5", "bone": "root", "attachment": "flag5" },
+],
+"skins": {
+	"default": {
+		"Layer 2": {
+			"Layer 2": { "x": 15.5, "y": -16, "width": 29, "height": 34 }
+		},
+		"flag1": {
+			"flag1": { "x": 16.5, "y": -4.5, "width": 5, "height": 7 }
+		},
+		"flag2": {
+			"flag2": { "x": 19.5, "y": -5.5, "width": 5, "height": 7 }
+		},
+		"flag3": {
+			"flag3": { "x": 22, "y": -6.5, "width": 4, "height": 7 }
+		},
+		"flag4": {
+			"flag4": { "x": 24, "y": -7, "width": 4, "height": 6 }
+		},
+		"flag5": {
+			"flag5": { "x": 26, "y": -7.5, "width": 4, "height": 5 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
