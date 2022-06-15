@@ -17,8 +17,6 @@ const IDLE_KEY = 'idle'
 
 export default class GameScene extends Phaser.Scene {
 
-	// fpsText
-	frameText
 	backingMusic
 	idiomCue
 
@@ -164,20 +162,16 @@ export default class GameScene extends Phaser.Scene {
 		this.miscTop1Layer = this.map.createLayer('map/environment_objects/miscellaneous_top_depth_01', this.tileset, 0, 0);
 		this.miscTop1Layer.setDepth(1);
 
-		this.hudLayer = this.map.createLayer('map/hud/hud_depth_05', this.hudTileset, 0, 0);
-		this.hudLayer.setDepth(5);
+		//this.hudLayer = this.map.createLayer('map/hud/hud_depth_05', this.hudTileset, 0, 0);
+		//this.hudLayer.setDepth(5);
 
 		this.collisionLayer = this.map.createLayer('map/environment_collision/collide_depth_02', this.tileset, 0, 0);
 		this.collisionLayer.setDepth(2)
-		//this.collisionLayer.setVisible(false)
+		this.collisionLayer.setVisible(false)
 
 		this.candyLayer = this.map.createLayer('map/collectables/candies_depth_02', this.tileset, 0, 0);
 		this.candyLayer.setDepth(2);
 		this.candyLayer.setVisible(true)
-
-		//this.fpsText = new FpsText(this)
-		this.frameText = new FrameText(this)
-		this.frameText.setDepth(5)
 
 		this.ball = new CannonBall(this, 288, 48, )
 		this.ball.setDepth(2)
@@ -190,9 +184,6 @@ export default class GameScene extends Phaser.Scene {
 
 		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 100, 360, 0.25, 0.25)
 		this.truffles.setDepth(2)
-
-		this.frameText.setText(IDLE_KEY)
-		this.frameText.setText(IDLE_KEY + "[ " + this.trufflesAnimationIndex + " ]")
 
 		this.cursors = this.input.keyboard.createCursorKeys()
 		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
@@ -225,8 +216,6 @@ export default class GameScene extends Phaser.Scene {
 
 	update() {
 
-		//this.fpsText.update()
-		this.frameText.update()
 		this.ball.update()
 
 
@@ -351,6 +340,5 @@ export default class GameScene extends Phaser.Scene {
 	private changeAnimation(spine: SpineGameObject, animationNames: string[], index: number) {
 		const animation = animationNames[index]
 		spine.play(animation, true)
-		this.frameText.setText(animation + "[ " + index + " ]")
 	}
 }
