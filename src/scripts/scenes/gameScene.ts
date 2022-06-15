@@ -14,6 +14,8 @@ import {
 const TRUFFLES_KEY = 'truffles'
 const KEYS = ['orange', 'lemon', 'grape']
 const IDLE_KEY = 'idle'
+const CANNONBALL_KEY = 'cannonball'
+const WINDMILL_KEY = 'windmill'
 
 export default class GameScene extends Phaser.Scene {
 
@@ -25,6 +27,8 @@ export default class GameScene extends Phaser.Scene {
 	score!: ScoreText
 
 	private truffles!: SpineGameObject
+	private cannonball!: SpineGameObject
+	private windmill!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private keys
 	private orange!: SpineGameObject
@@ -93,10 +97,12 @@ export default class GameScene extends Phaser.Scene {
 		this.load.tilemapTiledJSON('level', 'assets/level/truffles_level_1.json');
 
 		this.load.setPath('assets/spine/')
-		this.load.spine(TRUFFLES_KEY, 'truffles_all.json', 'truffles_all.atlas')
-		this.load.spine(KEYS[0], 'orange.json', 'orange.atlas')
-		this.load.spine(KEYS[1], 'grape.json', 'grape.atlas')
-		this.load.spine(KEYS[2], 'lemon.json', 'lemon.atlas')
+		this.load.spine(TRUFFLES_KEY, 'truffles/truffles_all.json', 'truffles/truffles_all.atlas')
+		this.load.spine(KEYS[0], 'fruits/orange/orange.json', 'fruits/orange/orange.atlas')
+		this.load.spine(KEYS[1], 'fruits/grape/grape.json', 'fruits/grape/grape.atlas')
+		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
+		this.load.spine(CANNONBALL_KEY,'cannonball/cannonball.json','cannonball/cannonball.atlas')
+		this.load.spine(WINDMILL_KEY,'windmill/windmill.json','windmill/windmill.atlas')
 	}
 
 	create() {
@@ -426,7 +432,11 @@ export default class GameScene extends Phaser.Scene {
     
 		var collision = false;
 
-		if (truffles.x < fruit.x + (fruit.getBounds().size.x + 32) && truffles.x + (truffles.getBounds().size.x + 32)  > fruit.x && truffles.y < fruit.y + (fruit.getBounds().size.y + 32) && truffles.y + (truffles.getBounds().size.y + 32) > fruit.y){
+		if (truffles.x < fruit.x + (fruit.getBounds().size.x + 32) && 
+			truffles.x + (truffles.getBounds().size.x + 32)  > fruit.x && 
+			truffles.y < fruit.y + (fruit.getBounds().size.y + 32) && 
+			truffles.y + (truffles.getBounds().size.y + 32) > fruit.y){
+			
 			collision = true;
 		}
          
