@@ -428,14 +428,14 @@ export default class GameScene extends Phaser.Scene {
 		this.time.addEvent({ delay: this.soundDelay, callback: this.test, callbackScope: this})
 	}
 
-	private trufflesAABB (truffles: SpineGameObject, fruit:SpineGameObject){
+	private trufflesAABB (truffles: SpineGameObject, collidable:SpineGameObject){
     
 		var collision = false;
 
-		if (truffles.x < fruit.x + (fruit.getBounds().size.x + 32) && 
-			truffles.x + (truffles.getBounds().size.x + 32)  > fruit.x && 
-			truffles.y < fruit.y + (fruit.getBounds().size.y + 32) && 
-			truffles.y + (truffles.getBounds().size.y + 32) > fruit.y){
+		if (truffles.x - (truffles.getBounds().size.x)/2 < collidable.x && 
+			truffles.x + (truffles.getBounds().size.x)/2  > collidable.x && 
+			truffles.y  - (truffles.getBounds().size.y) < collidable.y + (collidable.getBounds().size.y) && 
+			truffles.y + (truffles.getBounds().size.y) > collidable.y){
 			
 			collision = true;
 		}
