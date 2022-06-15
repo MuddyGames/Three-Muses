@@ -1,0 +1,60 @@
+{ "skeleton": { "images": "C:/Users/kinga/Desktop/tree/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Background", "bone": "root" },
+	{ "name": "shade", "bone": "root", "attachment": "shade" },
+	{ "name": "back3", "bone": "root", "attachment": "back3" },
+	{ "name": "back2", "bone": "root", "attachment": "back2" },
+	{ "name": "back1", "bone": "root", "attachment": "back1" },
+	{ "name": "trunk", "bone": "root", "attachment": "trunk" },
+	{ "name": "front3", "bone": "root", "attachment": "front3" },
+	{ "name": "front2", "bone": "root", "attachment": "front2" },
+	{ "name": "front1", "bone": "root", "attachment": "front1" },
+	{ "name": "leaf3", "bone": "root", "attachment": "leaf3" },
+	{ "name": "leaf2", "bone": "root", "attachment": "leaf2" },
+	{ "name": "leaf1", "bone": "root", "attachment": "leaf1" }
+],
+"skins": {
+	"default": {
+		"Background": {
+			"Background": { "x": 128, "y": -112, "width": 258, "height": 226 }
+		},
+		"shade": {
+			"shade": { "x": 169, "y": -172.5, "width": 146, "height": 91 }
+		},
+		"back3": {
+			"back3": { "x": 100.5, "y": -65.5, "width": 55, "height": 61 }
+		},
+		"back2": {
+			"back2": { "x": 137.5, "y": -91.5, "width": 65, "height": 69 }
+		},
+		"back1": {
+			"back1": { "x": 66.5, "y": -86.5, "width": 53, "height": 61 }
+		},
+		"trunk": {
+			"trunk": { "x": 102.5, "y": -133.5, "width": 89, "height": 163 }
+		},
+		"front3": {
+			"front3": { "x": 54.5, "y": -66, "width": 63, "height": 58 }
+		},
+		"front2": {
+			"front2": { "x": 102, "y": -50, "width": 80, "height": 64 }
+		},
+		"front1": {
+			"front1": { "x": 144.5, "y": -73.5, "width": 55, "height": 59 }
+		},
+		"leaf3": {
+			"leaf3": { "x": 176.5, "y": -105, "width": 9, "height": 10 }
+		},
+		"leaf2": {
+			"leaf2": { "x": 182, "y": -142, "width": 12, "height": 10 }
+		},
+		"leaf1": {
+			"leaf1": { "x": 202, "y": -170.5, "width": 12, "height": 11 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

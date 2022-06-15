@@ -1,0 +1,20 @@
+{ "skeleton": { "images": "C:/Users/kinga/Desktop/drawbridge/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Background", "bone": "root" },
+	{ "name": "Layer 5", "bone": "root", "attachment": "Layer 5" }
+],
+"skins": {
+	"default": {
+		"Background": {
+			"Background": { "x": 48.5, "y": -32, "width": 99, "height": 66 }
+		},
+		"Layer 5": {
+			"Layer 5": { "x": 57.5, "y": -32, "width": 81, "height": 66 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
