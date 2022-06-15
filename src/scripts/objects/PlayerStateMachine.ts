@@ -135,7 +135,7 @@ export class WalkingLeft extends PlayerStateMachine {
 
     }
     enter() {
-        this.sound = this.scene.sound.add('mup')
+        this.sound = this.scene.sound.add('gawke')
         this.sound.play()
         this.spine.play(INPUT_TYPES.WALK_LEFT, true)
 
@@ -178,7 +178,7 @@ export class WalkingUp extends PlayerStateMachine {
 
     }
     enter() {
-        this.sound = this.scene.sound.add('tackies')
+        this.sound = this.scene.sound.add('yurt')
         this.sound.play()
         this.spine.play(INPUT_TYPES.WALK_UP, true)
 
@@ -221,7 +221,7 @@ export class WalkingDown extends PlayerStateMachine {
         }
     }
     enter() {
-        this.sound = this.scene.sound.add('mup')
+        this.sound = this.scene.sound.add('shades')
         this.sound.play()
         this.spine.play(INPUT_TYPES.WALK_DOWN, true)
 
@@ -489,8 +489,8 @@ export class Expired extends PlayerStateMachine {
     }
     handleInput(input: string) {
         console.log('Process Input Expired State')
-        if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine)
+        if (input === INPUT_TYPES.REVIVE) {
+            return new Revived(this.scene, this.spine)
         } else {
             return null
         }
@@ -499,6 +499,36 @@ export class Expired extends PlayerStateMachine {
     enter() {
         console.log('Entering the Expired State')
         this.sound = this.scene.sound.add('took_a_hopper')
+        this.sound.play()
+        this.spine.play(INPUT_TYPES.EXPIRED, true)
+
+    }
+    update() {
+        console.log('Updating the Expired State')
+    }
+    exit() {
+        console.log('Exiting the Expired State')
+    }
+}
+
+// Possible States
+// Revived -> Idle
+export class Revived extends PlayerStateMachine {
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
+    }
+    handleInput(input: string) {
+        console.log('Process Input Expired State')
+        if (input === INPUT_TYPES.REVIVED) {
+            return new Idle(this.scene, this.spine)
+        } else {
+            return null
+        }
+
+    }
+    enter() {
+        console.log('Entering the Expired State')
+        this.sound = this.scene.sound.add('state_of_ya')
         this.sound.play()
         this.spine.play(INPUT_TYPES.EXPIRED, true)
 

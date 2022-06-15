@@ -195,7 +195,7 @@ export default class GameScene extends Phaser.Scene {
 		this.frameText.setText(IDLE_KEY + "[ " + this.trufflesAnimationIndex + " ]")
 
 		this.cursors = this.input.keyboard.createCursorKeys()
-		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D");
+		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R");
 
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
@@ -240,25 +240,28 @@ export default class GameScene extends Phaser.Scene {
 			this.playerState.handleInput(INPUT_TYPES.WALK_UP)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
 			this.playerState.handleInput(INPUT_TYPES.WALK_DOWN)
-		} else if (this.keys.Q.isDown) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.Q)) {
 			console.log('UNDER ATTACK')
 			this.playerState.handleInput(INPUT_TYPES.UNDER_ATTACK)
-		} else if (this.keys.W.isDown) {
-			console.log('EATING RIGHT')
-			this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
-		} else if (this.keys.A.isDown) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.W)) {
+			console.log('w EATING UP')
+			this.playerState.handleInput(INPUT_TYPES.EATING_UP)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.A)) {
 			console.log('EATING LEFT')
 			this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
-		} else if (this.keys.S.isDown) {
-			console.log('EATING UP')
-			this.playerState.handleInput(INPUT_TYPES.EATING_UP)
-		} else if (this.keys.D.isDown) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.S)) {
 			console.log('EATING DOWN')
 			this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
-		} else if (this.keys.E.isDown) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.D)) {
+			console.log('EATING RIGHT')
+			this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
 			console.log('EXPIRED')
 			this.playerState.handleInput(INPUT_TYPES.EXPIRED)
-		} else if (this.keys.I.isDown) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.R)) {
+			console.log('EXPIRED')
+			this.playerState.handleInput(INPUT_TYPES.REVIVE)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.I)) {
 			console.log('IDLING')
 			this.playerState.handleInput(INPUT_TYPES.IDLE)
 		}
