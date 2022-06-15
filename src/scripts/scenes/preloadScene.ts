@@ -1,7 +1,9 @@
 export default class PreloadScene extends Phaser.Scene {
 
   constructor() {
-    super({ key: 'PreloadScene' })
+    super({
+      key: 'PreloadScene'
+    })
   }
 
   preload() {
@@ -20,15 +22,30 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio('level_backing_track', ['assets/audio/level_backing_track.mp3', 'assets/audio/level_backing_track.ogg']);
 
     // Idioms
-    this.load.audio('unreal', ['assets/audio/idioms/unreal.mp3', 'assets/audio/idioms/unreal.ogg']);
-    this.load.audio('story', ['assets/audio/idioms/story.mp3', 'assets/audio/idioms/story.ogg']);
-    this.load.audio('mup', ['assets/audio/idioms/mup.mp3', 'assets/audio/idioms/mup.ogg']);
-    this.load.audio('tackies', ['assets/audio/idioms/tackies.mp3', 'assets/audio/idioms/tackies.ogg']);
-    this.load.audio('langers', ['assets/audio/idioms/langers.mp3', 'assets/audio/idioms/langers.ogg']);
-    this.load.audio('took_a_hopper', ['assets/audio/idioms/took_a_hopper.mp3', 'assets/audio/idioms/took_a_hopper.ogg']);
-
     this.load.audio('a_boy_the_kid', ['assets/audio/idioms/a_boy_the_kid.mp3', 'assets/audio/idioms/a_boy_the_kid.ogg']);
+    this.load.audio('come_here_i_want_ya', ['assets/audio/idioms/come_here_i_want_ya.mp3', 'assets/audio/idioms/come_here_i_want_ya.ogg']);
+    this.load.audio('copper_pipe', ['assets/audio/idioms/copper_pipe.mp3', 'assets/audio/idioms/copper_pipe.ogg']);
+    this.load.audio('decent', ['assets/audio/idioms/decent.mp3', 'assets/audio/idioms/decent.ogg']);
+    this.load.audio('dose', ['assets/audio/idioms/dose.mp3', 'assets/audio/idioms/dose.ogg']);
+    this.load.audio('gawke', ['assets/audio/idioms/gawke.mp3', 'assets/audio/idioms/gawke.ogg']);
     this.load.audio('head_like_a_chewed_toffee', ['assets/audio/idioms/head_like_a_chewed_toffee.mp3', 'assets/audio/idioms/head_like_a_chewed_toffee.ogg']);
+    this.load.audio('langers', ['assets/audio/idioms/langers.mp3', 'assets/audio/idioms/langers.ogg']);
+    this.load.audio('mup', ['assets/audio/idioms/mup.mp3', 'assets/audio/idioms/mup.ogg']);
+    this.load.audio('nippy', ['assets/audio/idioms/nippy.mp3', 'assets/audio/idioms/nippy.ogg']);
+    this.load.audio('sca', ['assets/audio/idioms/sca.mp3', 'assets/audio/idioms/sca.ogg']);
+    this.load.audio('shades', ['assets/audio/idioms/shades.mp3', 'assets/audio/idioms/shades.ogg']);
+    this.load.audio('sham', ['assets/audio/idioms/sham.mp3', 'assets/audio/idioms/sham.ogg']);
+    this.load.audio('state_of_ya', ['assets/audio/idioms/state_of_ya.mp3', 'assets/audio/idioms/state_of_ya.ogg']);
+    this.load.audio('story', ['assets/audio/idioms/story.mp3', 'assets/audio/idioms/story.ogg']);
+    this.load.audio('tackies', ['assets/audio/idioms/tackies.mp3', 'assets/audio/idioms/tackies.ogg']);
+    this.load.audio('took_a_hopper', ['assets/audio/idioms/took_a_hopper.mp3', 'assets/audio/idioms/took_a_hopper.ogg']);
+    this.load.audio('unreal', ['assets/audio/idioms/unreal.mp3', 'assets/audio/idioms/unreal.ogg']);
+    this.load.audio('well_boi_whats_the_craic', ['assets/audio/idioms/well_boi_whats_the_craic.mp3', 'assets/audio/idioms/well_boi_whats_the_craic.ogg']);
+    this.load.audio('well_kid', ['assets/audio/idioms/well_kid.mp3', 'assets/audio/idioms/well_kid.ogg']);
+    this.load.audio('yurt', ['assets/audio/idioms/yurt.mp3', 'assets/audio/idioms/yurt.ogg']);
+
+    //this.load.audio('unreal', ['assets/audio/idioms/unreal.mp3', 'assets/audio/idioms/unreal.ogg']);
+    //this.load.audio('unreal', ['assets/audio/idioms/unreal.mp3', 'assets/audio/idioms/unreal.ogg']);
   }
 
   create() {
