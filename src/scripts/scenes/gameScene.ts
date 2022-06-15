@@ -56,7 +56,6 @@ export default class GameScene extends Phaser.Scene {
 	private tile!: Phaser.Tilemaps.Tile
 
 	private tileset!: Phaser.Tilemaps.Tileset
-	private hudTileset!: Phaser.Tilemaps.Tileset
 
 	private waterLayer!: Phaser.Tilemaps.TilemapLayer
 	private groundLayer!: Phaser.Tilemaps.TilemapLayer
@@ -78,7 +77,6 @@ export default class GameScene extends Phaser.Scene {
 	private churchRoofLayer!: Phaser.Tilemaps.TilemapLayer
 	private castleRoofLayer!: Phaser.Tilemaps.TilemapLayer
 	private miscTop1Layer!: Phaser.Tilemaps.TilemapLayer
-	private hudLayer!: Phaser.Tilemaps.TilemapLayer
 	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
 
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
@@ -110,13 +108,172 @@ export default class GameScene extends Phaser.Scene {
 		this.score = new ScoreText(this)
 		this.score.setDepth(4)
 
+		this.setupMap()
+
+		this.ball = new CannonBall(this, 288, 48, )
+		this.ball.setDepth(2)
+
+		this.backingMusic = this.sound.add('level_backing_track', {
+			loop: true
+		})
+		this.backingMusic.play()
+
+
+		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 100, 360, 0.25, 0.25)
+		this.truffles.setDepth(2)
+
+		this.cursors = this.input.keyboard.createCursorKeys()
+		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
+
+		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
+
+		var tilesWide = 40
+		var tilesHigh = 23
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				var tile = this.candyLayer.getTileAt(j, i)
+				if (tile != null) {
+					if (tile.index === 4295) {
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+					} else if (tile.index === 4191) {
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+					} else if (tile.index === 4243) {
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[2], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+					}
+				}
+			}
+		}
+
+		for (let o = 0; o < this.fruit.length; o++) {
+			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
+		}
+
+		this.playerState = new PlayerState(this, this.truffles);
+
+		this.time.addEvent({ delay: this.soundDelay, callback: this.resetSounds, callbackScope: this})
+	}
+
+	update() {
+
+		this.ball.update()
+
+		this.score.update()
+
+		const size = this.trufflesAnimationNames.length
+
+		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
+
+			/*this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT)*/
+
+			this.changeAnimation(this.truffles, this.trufflesAnimationNames,4)
+
+		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
+			this.playerState.handleInput(INPUT_TYPES.WALK_LEFT)
+		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
+			this.playerState.handleInput(INPUT_TYPES.WALK_UP)
+		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
+			this.playerState.handleInput(INPUT_TYPES.WALK_DOWN)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.Q)) {
+			console.log('UNDER ATTACK')
+			this.playerState.handleInput(INPUT_TYPES.UNDER_ATTACK)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.W)) {
+			console.log('w EATING UP')
+			this.playerState.handleInput(INPUT_TYPES.EATING_UP)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.A)) {
+			console.log('EATING LEFT')
+			this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.S)) {
+			console.log('EATING DOWN')
+			this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.D)) {
+			console.log('EATING RIGHT')
+			this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
+			console.log('EXPIRED')
+			this.playerState.handleInput(INPUT_TYPES.EXPIRED)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.R)) {
+			console.log('REVIVE')
+			this.playerState.handleInput(INPUT_TYPES.REVIVE)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.T)) {
+			console.log('REVIVED')
+			this.playerState.handleInput(INPUT_TYPES.REVIVED)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.I)) {
+			console.log('IDLING')
+			this.playerState.handleInput(INPUT_TYPES.IDLE)
+		}
+
+		if (this.cursors.right.isDown){ 
+			const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize / 2)
+			const y = this.map.worldToTileY(this.trufflesPosY)
+
+			this.tile = this.collisionLayer.getTileAt(x + 1, y)
+			
+
+			if (this.tile == null) {
+				this.trufflesPosX += this.trufflesSpeed
+				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+				}
+	    }
+
+		if (this.cursors.left.isDown) {
+			const x = this.map.worldToTileX(this.trufflesPosX + this.tileSize / 2)
+			const y = this.map.worldToTileY(this.trufflesPosY)
+
+			this.tile = this.collisionLayer.getTileAt(x - 1, y)
+
+			if (this.tile == null) {
+				this.trufflesPosX -= this.trufflesSpeed
+				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			}
+		}
+
+		if (this.cursors.up.isDown) {
+			const x = this.map.worldToTileX(this.trufflesPosX)
+			const y = this.map.worldToTileY(this.trufflesPosY + this.tileSize / 4)
+
+			this.tile = this.collisionLayer.getTileAt(x, y - 1)
+
+			if (this.tile == null) {
+				this.trufflesPosY -= this.trufflesSpeed
+				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			}
+		}
+
+		if (this.cursors.down.isDown) {
+
+			const x = this.map.worldToTileX(this.trufflesPosX)
+			const y = this.map.worldToTileY(this.trufflesPosY + this.trufflesSpeed)
+
+			this.tile = this.collisionLayer.getTileAt(x, y)
+
+			if (this.tile == null) {
+				this.trufflesPosY += this.trufflesSpeed
+				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+			}
+		}
+
+		if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
+			this.playerState.handleInput(INPUT_TYPES.IDLE)
+		}
+		else {
+			for (let i = 0; i < this.fruit.length; i++){
+					
+					if(this.trufflesAABB(this.truffles, this.fruit[i])){
+						this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
+					}
+				}
+			}
+
+		this.playerState.update() // Updates the Player State See PlayerStateMachine*/
+	}
+
+	private setupMap() {
 		this.map = this.make.tilemap({
 			key: 'level',
 			tileWidth: 32,
 			tileHeight: 32
 		});
 		this.tileset = this.map.addTilesetImage("truffles_level_1_tileset", 'tileset');
-		this.hudTileset = this.map.addTilesetImage("hud", 'hud');
 
 		this.waterLayer = this.map.createLayer('map/water/water_depth_00', this.tileset, 0, 0);
 		this.waterLayer.setDepth(0);
@@ -185,219 +342,6 @@ export default class GameScene extends Phaser.Scene {
 		this.candyLayer = this.map.createLayer('map/collectables/candies_depth_02', this.tileset, 0, 0);
 		this.candyLayer.setDepth(2);
 		this.candyLayer.setVisible(true)
-
-		this.ball = new CannonBall(this, 288, 48, )
-		this.ball.setDepth(2)
-
-		this.backingMusic = this.sound.add('level_backing_track', {
-			loop: true
-		})
-		this.backingMusic.play()
-
-
-		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 100, 360, 0.25, 0.25)
-		this.truffles.setDepth(2)
-
-		this.cursors = this.input.keyboard.createCursorKeys()
-		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
-
-		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
-
-		var tilesWide = 40
-		var tilesHigh = 23
-		for (let i = 0; i < tilesHigh; i++) {
-			for (let j = 0; j < tilesWide; j++) {
-				var tile = this.candyLayer.getTileAt(j, i)
-				if (tile != null) {
-					if (tile.index === 4295) {
-						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
-					} else if (tile.index === 4191) {
-						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
-					} else if (tile.index === 4243) {
-						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[2], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
-					}
-				}
-			}
-		}
-
-		for (let o = 0; o < this.fruit.length; o++) {
-			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
-		}
-
-		this.playerState = new PlayerState(this, this.truffles);
-
-		this.time.addEvent({ delay: this.soundDelay, callback: this.test, callbackScope: this})
-	}
-
-	update() {
-
-		this.ball.update()
-
-		this.score.update()
-
-		const size = this.trufflesAnimationNames.length
-
-		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
-
-			/*this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT)*/
-
-			this.changeAnimation(this.truffles, this.trufflesAnimationNames,4)
-
-		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
-			this.playerState.handleInput(INPUT_TYPES.WALK_LEFT)
-		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
-			this.playerState.handleInput(INPUT_TYPES.WALK_UP)
-		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-			this.playerState.handleInput(INPUT_TYPES.WALK_DOWN)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.Q)) {
-			console.log('UNDER ATTACK')
-			this.playerState.handleInput(INPUT_TYPES.UNDER_ATTACK)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.W)) {
-			console.log('w EATING UP')
-			this.playerState.handleInput(INPUT_TYPES.EATING_UP)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.A)) {
-			console.log('EATING LEFT')
-			this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.S)) {
-			console.log('EATING DOWN')
-			this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.D)) {
-			console.log('EATING RIGHT')
-			this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
-			console.log('EXPIRED')
-			this.playerState.handleInput(INPUT_TYPES.EXPIRED)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.R)) {
-			console.log('REVIVE')
-			this.playerState.handleInput(INPUT_TYPES.REVIVE)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.T)) {
-			console.log('REVIVED')
-			this.playerState.handleInput(INPUT_TYPES.REVIVED)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.I)) {
-			console.log('IDLING')
-			this.playerState.handleInput(INPUT_TYPES.IDLE)
-		}
-
-		if (this.cursors.right.isDown){ 
-			const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize / 2)
-			const y = this.map.worldToTileY(this.trufflesPosY)
-
-			this.tile = this.collisionLayer.getTileAt(x + 1, y)
-			
-
-			if (this.tile == null) {
-				this.trufflesPosX += this.trufflesSpeed
-				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
-				}
-			
-				this.tile = this.candyLayer.getTileAt(x + 1, y)
-			if (this.tile != null){
-				if (this.tile.index !==0){
-					console.log('yes ' + this.tile.index)
-					this.changeAnimation(this.truffles, this.trufflesAnimationNames,0)
-				}
-
-				for (let i = 0; i < this.fruit.length; i++){
-					
-					if(this.trufflesAABB(this.truffles, this.fruit[i])){
-						this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
-						
-					}
-				}
-			}
-		
-	    }
-
-		if (this.cursors.left.isDown) {
-			const x = this.map.worldToTileX(this.trufflesPosX + this.tileSize / 2)
-			const y = this.map.worldToTileY(this.trufflesPosY)
-
-			this.tile = this.collisionLayer.getTileAt(x - 1, y)
-
-			if (this.tile == null) {
-				this.trufflesPosX -= this.trufflesSpeed
-				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
-			}
-				this.tile = this.candyLayer.getTileAt(x - 1, y)
-			if (this.tile != null){
-				if (this.tile.index !==0){
-					console.log('yes ' + this.tile.index)
-					this.changeAnimation(this.truffles, this.trufflesAnimationNames,0)
-				}
-
-				for (let i = 0; i < this.fruit.length; i++){
-					
-					if(this.trufflesAABB(this.truffles, this.fruit[i])){
-						this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
-						
-					}
-				}
-			}
-
-		}
-
-		if (this.cursors.up.isDown) {
-			const x = this.map.worldToTileX(this.trufflesPosX)
-			const y = this.map.worldToTileY(this.trufflesPosY + this.tileSize / 4)
-
-			this.tile = this.collisionLayer.getTileAt(x, y - 1)
-
-			if (this.tile == null) {
-				this.trufflesPosY -= this.trufflesSpeed
-				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
-			}
-				this.tile = this.candyLayer.getTileAt(x, y - 1)
-			if (this.tile != null){
-				if (this.tile.index !==0){
-					console.log('yes ' + this.tile.index)
-					this.changeAnimation(this.truffles, this.trufflesAnimationNames,0)
-				}
-
-				for (let i = 0; i < this.fruit.length; i++){
-					
-					if(this.trufflesAABB(this.truffles, this.fruit[i])){
-						this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
-						
-					}
-				}
-			}
-
-		}
-
-		if (this.cursors.down.isDown) {
-
-			const x = this.map.worldToTileX(this.trufflesPosX)
-			const y = this.map.worldToTileY(this.trufflesPosY + this.trufflesSpeed)
-
-			this.tile = this.collisionLayer.getTileAt(x, y)
-
-			if (this.tile == null) {
-				this.trufflesPosY += this.trufflesSpeed
-				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
-			}
-			
-				this.tile = this.candyLayer.getTileAt(x, y + 1)
-			if (this.tile != null){
-				if (this.tile.index !==0){
-					console.log('yes ' + this.tile.index)
-					this.changeAnimation(this.truffles, this.trufflesAnimationNames,0)
-				}
-
-				for (let i = 0; i < this.fruit.length; i++){
-					
-					if(this.trufflesAABB(this.truffles, this.fruit[i])){
-						this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
-						
-					}
-				}
-			}
-		}
-
-		if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
-			this.playerState.handleInput(INPUT_TYPES.IDLE)
-		}
-
-		this.playerState.update() // Updates the Player State See PlayerStateMachine*/
 	}
 
 	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {
@@ -423,20 +367,19 @@ export default class GameScene extends Phaser.Scene {
 		spine.play(animation, true)
 	}
 
-	private test() {
+	private resetSounds() {
 		this.playerState.playSound()
-		this.time.addEvent({ delay: this.soundDelay, callback: this.test, callbackScope: this})
+		this.time.addEvent({ delay: this.soundDelay, callback: this.resetSounds, callbackScope: this})
 	}
 
 	private trufflesAABB (truffles: SpineGameObject, collidable:SpineGameObject){
     
 		var collision = false;
 
-		if (truffles.x - (truffles.getBounds().size.x)/2 < collidable.x && 
-			truffles.x + (truffles.getBounds().size.x)/2  > collidable.x && 
-			truffles.y  - (truffles.getBounds().size.y) < collidable.y + (collidable.getBounds().size.y) && 
-			truffles.y + (truffles.getBounds().size.y) > collidable.y){
-			
+		if (this.trufflesPosX - this.tileSize/2 < collidable.x + collidable.scaleX * collidable.width && 
+			this.trufflesPosX + this.tileSize/2 > collidable.x && 
+			this.trufflesPosY - this.tileSize < collidable.y + collidable.scaleY * collidable.height && 
+			this.trufflesPosY > collidable.y){
 			collision = true;
 		}
          
