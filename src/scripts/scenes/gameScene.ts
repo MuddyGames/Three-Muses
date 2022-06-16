@@ -17,7 +17,7 @@ import {
 
 // Game State Management
 import {
-  GSM
+	GSM
 } from '../objects/gameStates'
 
 
@@ -35,14 +35,30 @@ enum Direction {
 
 export default class GameScene extends Phaser.Scene {
 
+	// Game State Management
+	private gameState!: GSM
+
+	// Hud Text
+	private collectablePoints!: number
+	private levelScore!: number
+	private bestRecordedTime!: number
+	private newRecordTime!: number
+	private currentScoreText!: HudText
+	private elapsedTimeText!: HudText
+	private recordTimeText!: HudText
+	private screenX!: number
+	private screenY!: number
+	private elapsedLevelTime!: number
+
+	// Level Music
 	backingMusic!: Phaser.Sound.BaseSound
+
+	// Truffle idioms
 	idiomCue!: Phaser.Sound.BaseSound
 
-	//ball
+	// Heads up Display
 
-	scoreText!: HudText
-	score!: number
-
+	// Level Objects
 	private truffles!: SpineGameObject
 	private cannonball: SpineGameObject[] = []
 	private windmill!: SpineGameObject
@@ -114,7 +130,12 @@ export default class GameScene extends Phaser.Scene {
 		super({
 			key: 'GameScene'
 		})
-		this.score = 0
+		// Heads up Display Data
+		this.collectablePoints = 0
+		this.levelScore = 0
+		this.newRecordTime = 0
+		this.screenX = 0
+		this.screenY = 0
 	}
 
 	preload() {
@@ -132,13 +153,47 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		// Score Text
-		this.scoreText = new HudText(this)
-		this.scoreText.setShadow(3, 3)
-		this.scoreText.setStroke('#ffffff', 16);
-		this.scoreText.setShadow(2, 2, "#333333", 2, true, true);
-		this.scoreText.setDepth(4)
 
+		//Setup Game State
+		this.gameState = GSM.PLAY
+
+		// Retrive Recorded Score and Time from LocalStorage
+		this.fetchRecordedScore()
+		this.fetchRecordedTime()
+		// Setup Screen Dimensions
+		let {
+			width,
+			height
+		} = this.sys.game.canvas;
+		this.screenX = width;
+		this.screenY = height
+
+		// Setup HUD
+		// Score
+		this.currentScoreText = new HudText(this)
+		this.currentScoreText.setShadow(3, 3)
+		this.currentScoreText.setStroke('#fff', 16);
+		this.currentScoreText.setShadow(2, 2, "#333333", 2, true, true);
+		// Elapsed Time
+		this.elapsedTimeText = new HudText(this)
+		this.elapsedTimeText.setShadow(3, 3)
+		this.elapsedTimeText.setStroke('#fff', 16);
+		this.elapsedTimeText.setShadow(2, 2, "#333333", 2, true, true);
+		// Record Time
+		this.recordTimeText = new HudText(this)
+		this.recordTimeText.setShadow(3, 3)
+		this.recordTimeText.setStroke('#fff', 16);
+		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
+
+		// Update Score Frequency
+		this.time.addEvent({
+			delay: 500,
+			loop: true,
+			callback: this.fetchRecordedScore,
+			callbackScope: this
+		});
+
+		//Setup Map Data
 		this.setupMap()
 
 		// Background music
@@ -214,9 +269,27 @@ export default class GameScene extends Phaser.Scene {
 
 	update(time: number, delta: number): void {
 
-		this.cannonballMove()
+		// TODO BETTER Game State Management
+		//If level Playable Update
+		if (this.gameState === GSM.PLAY) {
+			this.elapsedLevelTime = time;
+			let points = Phaser.Math.Between(50, 100);
+			this.setPoints(points)
 
-		this.scoreText.update()
+		} else if (this.gameState === GSM.LEVEL_COMPLETE) {
+
+			//Store Record Time
+			if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
+				this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
+				this.fetchRecordedTime()
+
+			} else {
+				this.newRecordTime = this.bestRecordedTime
+			}
+
+		}
+
+		this.cannonballMove()
 
 		const size = this.trufflesAnimationNames.length
 
@@ -330,8 +403,24 @@ export default class GameScene extends Phaser.Scene {
 				this.trufflesPosY = 360
 			}
 		}
+		// Display Updated HUD
+		this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.06)
+		this.currentScoreText.update()
+		this.currentScoreText.setText(' ' + this.levelScore + ' ')
+		this.currentScoreText.setDepth(10)
+
+		this.elapsedTimeText.setPosition(this.screenX * 0.65, this.screenY * 0.06)
+		this.elapsedTimeText.update()
+		this.elapsedTimeText.setText('Timer : ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
+		this.elapsedTimeText.setDepth(10)
+
+		this.recordTimeText.setPosition(this.screenX * 0.40, this.screenY * 0.06)
+		this.recordTimeText.update()
+		this.recordTimeText.setText('Best time : ' + this.bestRecordedTime + ' ')
+		this.recordTimeText.setDepth(10)
 	}
 
+	//Setup Map Data
 	private setupMap() {
 		this.map = this.make.tilemap({
 			key: 'level',
@@ -455,10 +544,6 @@ export default class GameScene extends Phaser.Scene {
 		return collision
 	}
 
-	private scoreUpdate() {
-		this.score += 151
-	}
-
 	private fruitAnimate(index: number) {
 		this.changeAnimation(this.fruit[index], this.fruitAnimationNames, 2)
 		this.time.addEvent({
@@ -531,5 +616,48 @@ export default class GameScene extends Phaser.Scene {
 
 			}
 		}
+	}
+
+	// Set Record Time
+	private setRecord(time: number) {
+		this.newRecordTime = time
+	}
+
+	// Add Points
+	private setPoints(points: number) {
+		this.collectablePoints += points
+	}
+
+	// Fetch Recorded Time
+	private fetchRecordedTime() {
+		let temp = window.localStorage.getItem('time')
+		if (temp !== null) {
+			this.bestRecordedTime = parseInt(temp) || 0
+			if (this.bestRecordedTime === 0) {
+				this.bestRecordedTime = 1000
+			}
+		} else {
+			this.bestRecordedTime = 0
+		}
+
+		window.localStorage.setItem('time', this.newRecordTime.toString())
+	}
+
+	// Fetch Recorded Score
+	private fetchRecordedScore() {
+		let temp = window.localStorage.getItem('score')
+		if (temp !== null) {
+			this.levelScore = parseInt(temp) || 0
+		} else {
+			this.levelScore = 0
+		}
+		this.levelScore += this.collectablePoints
+		this.collectablePoints = 0 // Reset Points
+		window.localStorage.setItem('score', this.levelScore.toString())
+	}
+
+	private gsmUpdate() {
+		this.gameState = GSM.LEVEL_COMPLETE
+		console.log('level complete')
 	}
 }
