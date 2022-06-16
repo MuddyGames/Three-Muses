@@ -404,19 +404,19 @@ export default class GameScene extends Phaser.Scene {
 			}
 		}
 		// Display Updated HUD
-		this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.06)
+		this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.04)
 		this.currentScoreText.update()
 		this.currentScoreText.setText(' ' + this.levelScore + ' ')
 		this.currentScoreText.setDepth(10)
 
-		this.elapsedTimeText.setPosition(this.screenX * 0.65, this.screenY * 0.06)
+		this.elapsedTimeText.setPosition(this.screenX * 0.75, this.screenY * 0.04)
 		this.elapsedTimeText.update()
 		this.elapsedTimeText.setText('Timer : ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
 		this.elapsedTimeText.setDepth(10)
 
-		this.recordTimeText.setPosition(this.screenX * 0.40, this.screenY * 0.06)
+		this.recordTimeText.setPosition(this.screenX * 0.55, this.screenY * 0.04)
 		this.recordTimeText.update()
-		this.recordTimeText.setText('Best time : ' + this.bestRecordedTime + ' ')
+		this.recordTimeText.setText('Record : ' + this.bestRecordedTime + ' ')
 		this.recordTimeText.setDepth(10)
 	}
 
