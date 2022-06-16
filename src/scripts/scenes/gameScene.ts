@@ -89,7 +89,8 @@ export default class GameScene extends Phaser.Scene {
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
 
 	private playerState!: PlayerState
-	private direction
+	private direction!: Direction
+	private canMove!: boolean
 
 	constructor() {
 		super({
@@ -134,6 +135,7 @@ export default class GameScene extends Phaser.Scene {
 		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 100, 360, 0.25, 0.25)
 		this.truffles.setDepth(2)
 		
+		this.canMove = true
 		this.direction = Direction.Down
 
 		this.cursors = this.input.keyboard.createCursorKeys()
@@ -194,113 +196,89 @@ export default class GameScene extends Phaser.Scene {
 			if(this.playerState.handleInput(INPUT_TYPES.WALK_DOWN)!=null) {
 				this.direction = Direction.Down
 			}
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.Q)) {
-			console.log('UNDER ATTACK')
-			this.playerState.handleInput(INPUT_TYPES.UNDER_ATTACK)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.W)) {
-			console.log('w EATING UP')
-			this.playerState.handleInput(INPUT_TYPES.EATING_UP)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.A)) {
-			console.log('EATING LEFT')
-			this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.S)) {
-			console.log('EATING DOWN')
-			this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.D)) {
-			console.log('EATING RIGHT')
-			this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.E)) {
-			console.log('EXPIRED')
-			this.playerState.handleInput(INPUT_TYPES.EXPIRED)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.R)) {
-			console.log('REVIVE')
-			this.playerState.handleInput(INPUT_TYPES.REVIVE)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.T)) {
-			console.log('REVIVED')
-			this.playerState.handleInput(INPUT_TYPES.REVIVED)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.I)) {
-			console.log('IDLING')
-			this.playerState.handleInput(INPUT_TYPES.IDLE)
 		}
 
-		if (this.cursors.right.isDown){ 
-			const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize / 2)
-			const y = this.map.worldToTileY(this.trufflesPosY)
+		if(this.canMove) {
+			if (this.cursors.right.isDown){ 
+				const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize / 2)
+				const y = this.map.worldToTileY(this.trufflesPosY)
 
-			this.tile = this.collisionLayer.getTileAt(x + 1, y)
-			
+				this.tile = this.collisionLayer.getTileAt(x + 1, y)
+				
 
-			if (this.tile == null) {
-				this.trufflesPosX += this.trufflesSpeed
-				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+				if (this.tile == null) {
+					this.trufflesPosX += this.trufflesSpeed
+					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+					}
+			}
+
+			if (this.cursors.left.isDown) {
+				const x = this.map.worldToTileX(this.trufflesPosX + this.tileSize / 2)
+				const y = this.map.worldToTileY(this.trufflesPosY)
+
+				this.tile = this.collisionLayer.getTileAt(x - 1, y)
+
+				if (this.tile == null) {
+					this.trufflesPosX -= this.trufflesSpeed
+					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
 				}
-	    }
-
-		if (this.cursors.left.isDown) {
-			const x = this.map.worldToTileX(this.trufflesPosX + this.tileSize / 2)
-			const y = this.map.worldToTileY(this.trufflesPosY)
-
-			this.tile = this.collisionLayer.getTileAt(x - 1, y)
-
-			if (this.tile == null) {
-				this.trufflesPosX -= this.trufflesSpeed
-				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
 			}
-		}
 
-		if (this.cursors.up.isDown) {
-			const x = this.map.worldToTileX(this.trufflesPosX)
-			const y = this.map.worldToTileY(this.trufflesPosY + this.tileSize / 4)
+			if (this.cursors.up.isDown) {
+				const x = this.map.worldToTileX(this.trufflesPosX)
+				const y = this.map.worldToTileY(this.trufflesPosY + this.tileSize / 4)
 
-			this.tile = this.collisionLayer.getTileAt(x, y - 1)
+				this.tile = this.collisionLayer.getTileAt(x, y - 1)
 
-			if (this.tile == null) {
-				this.trufflesPosY -= this.trufflesSpeed
-				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+				if (this.tile == null) {
+					this.trufflesPosY -= this.trufflesSpeed
+					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+				}
 			}
-		}
 
-		if (this.cursors.down.isDown) {
+			if (this.cursors.down.isDown) {
 
-			const x = this.map.worldToTileX(this.trufflesPosX)
-			const y = this.map.worldToTileY(this.trufflesPosY + this.trufflesSpeed)
+				const x = this.map.worldToTileX(this.trufflesPosX)
+				const y = this.map.worldToTileY(this.trufflesPosY + this.trufflesSpeed)
 
-			this.tile = this.collisionLayer.getTileAt(x, y)
+				this.tile = this.collisionLayer.getTileAt(x, y)
 
-			if (this.tile == null) {
-				this.trufflesPosY += this.trufflesSpeed
-				this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+				if (this.tile == null) {
+					this.trufflesPosY += this.trufflesSpeed
+					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+				}
 			}
-		}
 
-		if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
-			this.playerState.handleInput(INPUT_TYPES.IDLE)
-		}
-		else {
-			for (let i = 0; i < this.fruit.length; i++){
-					
-					if(!this.fruitMarked[i] && this.trufflesAABB(this.truffles, this.fruit[i])){
-						this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
-						this.time.addEvent({
-							delay: 480,
-							callback: this.fruitAniimate,
-							callbackScope: this,
-							args: [i]
-						})
-						this.fruitMarked[i] = true
-						switch(this.direction) {
-							case Direction.Up:
-								this.playerState.handleInput(INPUT_TYPES.EATING_UP)
-								break;
-							case Direction.Down:
-								this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
-								break;
-							case Direction.Left:
-								this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
-								break;
-							case Direction.Right:
-								this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
-								break;
+			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
+				this.playerState.handleInput(INPUT_TYPES.IDLE)
+			}
+			else {
+				for (let i = 0; i < this.fruit.length; i++){
+						
+						if(!this.fruitMarked[i] && this.trufflesAABB(this.truffles, this.fruit[i])){
+							this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
+							this.canMove = false
+							this.time.addEvent({
+								delay: 480,
+								callback: this.fruitAniimate,
+								callbackScope: this,
+								args: [i]
+							})
+							this.fruitMarked[i] = true
+							switch(this.direction) {
+								case Direction.Up:
+									this.playerState.handleInput(INPUT_TYPES.EATING_UP)
+									break;
+								case Direction.Down:
+									this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
+									break;
+								case Direction.Left:
+									this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
+									break;
+								case Direction.Right:
+									this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
+									break;
+							}
 						}
 					}
 				}
@@ -466,9 +444,8 @@ export default class GameScene extends Phaser.Scene {
 		this.tile = this.candyLayer.getTileAt(x, y)
 		this.map.removeTile(this.tile)
 		this.fruit[index].removeFromDisplayList()
-		this.fruit.splice(index, 1)
-		this.fruitMarked.splice(index, 1)
 
 		this.playerState.handleInput(INPUT_TYPES.IDLE)
+		this.canMove = true
 	}
 }
