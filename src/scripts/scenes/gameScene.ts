@@ -162,10 +162,10 @@ export default class GameScene extends Phaser.Scene {
 			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.candyLayer.getTileAt(j, i)
 				if (tile != null) {
-					if (tile.index === 570) {
+					if (tile.index === 674) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
-					} else if (tile.index === 674) {
+					} else if (tile.index === 570) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
 					} else if (tile.index === 622) {
@@ -378,7 +378,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.candyLayer = this.map.createLayer('map/collectables/candies_depth_02', this.tileset, 0, 0);
 		this.candyLayer.setDepth(2);
-		this.candyLayer.setVisible(true)
+		this.candyLayer.setVisible(false)
 	}
 
 	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {
