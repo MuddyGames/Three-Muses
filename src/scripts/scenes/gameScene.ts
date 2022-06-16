@@ -179,17 +179,21 @@ export default class GameScene extends Phaser.Scene {
 		const size = this.trufflesAnimationNames.length
 
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
-			this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT)
-			this.direction = Direction.Right
+			if(this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT)!=null) {
+				this.direction = Direction.Right
+			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
-			this.playerState.handleInput(INPUT_TYPES.WALK_LEFT)
-			this.direction = Direction.Left
+			if(this.playerState.handleInput(INPUT_TYPES.WALK_LEFT)!=null) {
+				this.direction = Direction.Left
+			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
-			this.playerState.handleInput(INPUT_TYPES.WALK_UP)
-			this.direction = Direction.Up
+			if(this.playerState.handleInput(INPUT_TYPES.WALK_UP)!=null) {
+				this.direction = Direction.Up
+			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-			this.playerState.handleInput(INPUT_TYPES.WALK_DOWN)
-			this.direction = Direction.Down
+			if(this.playerState.handleInput(INPUT_TYPES.WALK_DOWN)!=null) {
+				this.direction = Direction.Down
+			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.keys.Q)) {
 			console.log('UNDER ATTACK')
 			this.playerState.handleInput(INPUT_TYPES.UNDER_ATTACK)
@@ -451,7 +455,7 @@ export default class GameScene extends Phaser.Scene {
 				this.playerState.handleInput(INPUT_TYPES.MUNCHING_LEFT)
 				break;
 			case Direction.Right:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_LEFT)
+				this.playerState.handleInput(INPUT_TYPES.MUNCHING_RIGHT)
 				break;
 		}
 	}

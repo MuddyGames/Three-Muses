@@ -221,7 +221,7 @@ export class WalkingDown extends PlayerStateMachine {
     handleInput(input: string) {
         if (input === INPUT_TYPES.IDLE) {
             return new Idle(this.scene, this.spine)
-        } else if (INPUT_TYPES.WALK_LEFT) {
+        } else if (input === INPUT_TYPES.WALK_LEFT) {
             return new WalkingLeft(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_RIGHT) {
             return new WalkingRight(this.scene, this.spine)
@@ -245,10 +245,10 @@ export class WalkingDown extends PlayerStateMachine {
 
     }
     update() {
-        console.log('Updating the WalkingRight State')
+        console.log('Updating the WalkingDowm State')
     }
     exit() {
-        console.log('Exiting the WalkingRight State')
+        console.log('Exiting the WalkingDown State')
     }
 }
 
@@ -328,7 +328,7 @@ export class EatingRight extends PlayerStateMachine {
     }
     handleInput(input: string) {
         if (input === INPUT_TYPES.MUNCHING_RIGHT) {
-            return new MunchingLeft(this.scene, this.spine)
+            return new MunchingRight(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {
@@ -349,6 +349,35 @@ export class EatingRight extends PlayerStateMachine {
 }
 
 // Possible States
+// MunchingRight -> Idle
+// MunchingRight -> Under Attack
+export class MunchingRight extends PlayerStateMachine {
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
+    }
+    handleInput(input: string) {
+        if (input === INPUT_TYPES.IDLE) {
+            return new Idle(this.scene, this.spine)
+        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
+            return new UnderAttack(this.scene, this.spine)
+        } else {
+            return null
+        }
+
+    }
+    enter() {
+        console.log('Entering Munching Right State this runs on Entry')
+
+    }
+    update() {
+        console.log('Updating the Munching Right State')
+    }
+    exit() {
+        console.log('Exiting the Munching Right State')
+    }
+}
+
+// Possible States
 // EatingUp -> MunchingLeft
 // EatingUp -> Under Attack
 export class EatingUp extends PlayerStateMachine {
@@ -357,7 +386,7 @@ export class EatingUp extends PlayerStateMachine {
     }
     handleInput(input: string) {
         if (input === INPUT_TYPES.MUNCHING_UP) {
-            return new MunchingLeft(this.scene, this.spine)
+            return new MunchingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {
@@ -415,7 +444,7 @@ export class EatingDown extends PlayerStateMachine {
     }
     handleInput(input: string) {
         if (input === INPUT_TYPES.MUNCHING_DOWN) {
-            return new MunchingLeft(this.scene, this.spine)
+            return new MunchingDown(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {

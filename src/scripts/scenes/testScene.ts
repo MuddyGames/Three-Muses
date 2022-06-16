@@ -1,4 +1,4 @@
-import ScoreText from '../objects/scoreText'
+import ScoreText from '../objects/hudText'
 
 export default class TestScene extends Phaser.Scene {
  
