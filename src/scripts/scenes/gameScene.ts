@@ -58,7 +58,7 @@ export default class GameScene extends Phaser.Scene {
 
     private cannonballAnimationNames: string[] = []
 	private cannonballAnimationIndex = 0
-	private cannonballPosX: number[] = [268, 524, 780] 
+	private cannonballPosX: number[] = [269, 525, 781] 
 	private cannonballPosY: number[] = [60, 60, 60]
 	private cannonballSpeed = 2
 	private cannonballMoving:  boolean [] = [true, true, true]
@@ -145,9 +145,9 @@ export default class GameScene extends Phaser.Scene {
 		this.canMove = true
 		this.direction = Direction.Down
 
-		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[0], this.cannonballPosY[0], 1.3, 1.3)) 
-		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[1], this.cannonballPosY[1], 1.3, 1.3)) 
-		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[2], this.cannonballPosY[2], 1.3, 1.3)) 
+		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[0], this.cannonballPosY[0], 1.2, 1.2)) 
+		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[1], this.cannonballPosY[1], 1.2, 1.2)) 
+		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[2], this.cannonballPosY[2], 1.2, 1.2)) 
 		
 		this.windmill = this.createSpineObject(IDLE_KEY, WINDMILL_KEY, 50, 0, 1, 1)
 		this.windmill.setDepth(1)
