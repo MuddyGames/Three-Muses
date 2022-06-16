@@ -8,25 +8,25 @@ export default class TestScene extends Phaser.Scene {
   private gameState!: GSM
 
   // Hud Text
-  private points!: number
-  private score!: number
-  private bestTime!: number
-  private newRecord!: number
-  private scoreText!: HudText
-  private timeText!: HudText
-  private bestText!: HudText
+  private collectablePoints!: number
+  private levelScore!: number
+  private bestRecordedTime!: number
+  private newRecordTime!: number
+  private currentScoreText!: HudText
+  private elapsedTimeText!: HudText
+  private recordTimeText!: HudText
   private screenX!: number
   private screenY!: number
-  private elapsed!: number
+  private elapsedLevelTime!: number
 
 
   constructor() {
     super({
       key: 'TestScene'
     })
-    this.points = 0
-    this.score = 0
-    this.newRecord = 0
+    this.collectablePoints = 0
+    this.levelScore = 0
+    this.newRecordTime = 0
     this.screenX = 0
     this.screenY = 0
   }
@@ -35,11 +35,14 @@ export default class TestScene extends Phaser.Scene {
 
   create() {
 
+    //Setup Game State
     this.gameState = GSM.PLAY
 
-    this.scoreUpdate()
-    this.timeUpdate()
+    // Retrive Recorded Score and Time from LocalStorage
+    this.fetchRecordedScore()
+    this.fetchRecordedTime()
 
+    // Setup Screen Dimensions
     let {
       width,
       height
@@ -47,29 +50,32 @@ export default class TestScene extends Phaser.Scene {
     this.screenX = width;
     this.screenY = height
 
-    this.scoreText = new HudText(this)
-    this.scoreText.setShadow(3, 3)
-    this.scoreText.setStroke('#fff', 16);
-    this.scoreText.setShadow(2, 2, "#333333", 2, true, true);
+    // Setup HUD
+    // Score
+    this.currentScoreText = new HudText(this)
+    this.currentScoreText.setShadow(3, 3)
+    this.currentScoreText.setStroke('#fff', 16);
+    this.currentScoreText.setShadow(2, 2, "#333333", 2, true, true);
+    // Elapsed Time
+    this.elapsedTimeText = new HudText(this)
+    this.elapsedTimeText.setShadow(3, 3)
+    this.elapsedTimeText.setStroke('#fff', 16);
+    this.elapsedTimeText.setShadow(2, 2, "#333333", 2, true, true);
+    // Record Time
+    this.recordTimeText = new HudText(this)
+    this.recordTimeText.setShadow(3, 3)
+    this.recordTimeText.setStroke('#fff', 16);
+    this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
 
-
-    this.timeText = new HudText(this)
-    this.timeText.setShadow(3, 3)
-    this.timeText.setStroke('#fff', 16);
-    this.timeText.setShadow(2, 2, "#333333", 2, true, true);
-
-    this.bestText = new HudText(this)
-    this.bestText.setShadow(3, 3)
-    this.bestText.setStroke('#fff', 16);
-    this.bestText.setShadow(2, 2, "#333333", 2, true, true);
-
+    // Update Score Frequency
     this.time.addEvent({
       delay: 500,
       loop: true,
-      callback: this.scoreUpdate,
+      callback: this.fetchRecordedScore,
       callbackScope: this
     });
 
+    // Change Game State
     this.time.addEvent({
       delay: 5000,
       loop: true,
@@ -79,80 +85,77 @@ export default class TestScene extends Phaser.Scene {
 
   }
 
+  // Update Method
   update(time: number, delta: number): void {
 
+    //If level Playable Update
     if (this.gameState === GSM.PLAY) {
-      this.elapsed = time;
+      this.elapsedLevelTime = time;
       let points = Phaser.Math.Between(50, 100);
       this.setPoints(points)
 
-      this.scoreText.setPosition(this.screenX * 0.90, this.screenY * 0.06)
-      this.scoreText.update()
-      this.scoreText.setText(' ' + this.score + ' ')
-  
-      this.timeText.setPosition(this.screenX * 0.65, this.screenY * 0.06)
-      this.timeText.update()
-      this.timeText.setText('Timer : ' + this.elapsed + ' ')
-  
-      this.bestText.setPosition(this.screenX * 0.40, this.screenY * 0.06)
-      this.bestText.update()
-      this.bestText.setText('Best time : ' + this.bestTime + ' ')
-
     } else if (this.gameState === GSM.LEVEL_COMPLETE) {
 
-      //Store Time
-      if (Math.round((this.elapsed * 0.001)) <= this.bestTime) {
-        this.newRecord = Math.round((this.elapsed * 0.001))
-        this.timeUpdate()
-
-        this.scoreText.setPosition(this.screenX * 0.90, this.screenY * 0.06)
-        this.scoreText.update()
-        this.scoreText.setText(' ' + this.score + ' ')
-    
-        this.timeText.setPosition(this.screenX * 0.65, this.screenY * 0.06)
-        this.timeText.update()
-        this.timeText.setText('Timer : ' + this.newRecord + ' ')
-    
-        this.bestText.setPosition(this.screenX * 0.40, this.screenY * 0.06)
-        this.bestText.update()
-        this.bestText.setText('Best time : ' + this.bestTime + ' ')
+      //Store Record Time
+      if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
+        this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
+        this.fetchRecordedTime()
 
       } else {
-        this.newRecord = this.bestTime
+        this.newRecordTime = this.bestRecordedTime
       }
 
     }
 
+    // Display Updated HUD
+    this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.06)
+    this.currentScoreText.update()
+    this.currentScoreText.setText(' ' + this.levelScore + ' ')
+
+    this.elapsedTimeText.setPosition(this.screenX * 0.65, this.screenY * 0.06)
+    this.elapsedTimeText.update()
+    this.elapsedTimeText.setText('Timer : ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
+
+    this.recordTimeText.setPosition(this.screenX * 0.40, this.screenY * 0.06)
+    this.recordTimeText.update()
+    this.recordTimeText.setText('Best time : ' + this.bestRecordedTime + ' ')
+
   }
 
+  // Set Record Time
+  private setRecord(time: number) {
+    this.newRecordTime = time
+  }
 
+  // Add Points
   private setPoints(points: number) {
-    this.points += points
+    this.collectablePoints += points
   }
 
-  private timeUpdate() {
+  private fetchRecordedTime() {
     let temp = window.localStorage.getItem('time')
     if (temp !== null) {
-      this.bestTime = parseInt(temp) || 0
-      if (this.bestTime === 0) {
-        this.bestTime = 0
+      this.bestRecordedTime = parseInt(temp) || 0
+      if (this.bestRecordedTime === 0) {
+        this.bestRecordedTime = 1000
       }
     } else {
-      this.bestTime = 0
+      this.bestRecordedTime = 0
     }
-    window.localStorage.setItem('time', this.newRecord.toString())
+
+    window.localStorage.setItem('time', this.newRecordTime.toString())
   }
 
-  private scoreUpdate() {
+  private fetchRecordedScore() {
     let temp = window.localStorage.getItem('score')
     if (temp !== null) {
-      this.score = parseInt(temp) || 0
+      this.levelScore = parseInt(temp) || 0
     } else {
-      this.score = 0
+      this.levelScore = 0
     }
-    this.score += this.points
-    this.points = 0 // Reset Points
-    window.localStorage.setItem('score', this.score.toString())
+    this.levelScore += this.collectablePoints
+    this.collectablePoints = 0 // Reset Points
+    window.localStorage.setItem('score', this.levelScore.toString())
   }
 
   private gsmUpdate() {
