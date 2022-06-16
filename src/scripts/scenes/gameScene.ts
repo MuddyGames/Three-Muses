@@ -530,6 +530,7 @@ export default class GameScene extends Phaser.Scene {
 		})
 	}
 
+	//Truffles to Object Collision
 	private trufflesAABB(truffles: SpineGameObject, collidable: SpineGameObject) {
 
 		var collision = false;
@@ -544,6 +545,7 @@ export default class GameScene extends Phaser.Scene {
 		return collision
 	}
 
+	// Fruit Animations
 	private fruitAnimate(index: number) {
 		this.changeAnimation(this.fruit[index], this.fruitAnimationNames, 2)
 		this.time.addEvent({
@@ -567,6 +569,8 @@ export default class GameScene extends Phaser.Scene {
 				break;
 		}
 	}
+
+	// Delete fruits
 	private fruitDelete(index: number) {
 		const x = this.map.worldToTileX(this.fruit[index].x)
 		const y = this.map.worldToTileY(this.fruit[index].y)
@@ -579,6 +583,7 @@ export default class GameScene extends Phaser.Scene {
 		this.canMove = true
 	}
 
+	// Reset Cannon Balls
 	private cannonballReset(index: number) {
 		this.cannonball[index].setPosition(this.cannonballPosX[index], this.cannonballPosY[index] = 40)
 		this.changeAnimation(this.cannonball[index], this.cannonballAnimationNames, 1)
@@ -587,6 +592,7 @@ export default class GameScene extends Phaser.Scene {
 
 	}
 
+	// Move Cannon Balls
 	private cannonballMove() {
 
 		for (let i = 0; i < this.cannonball.length; i++) {
