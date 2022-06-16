@@ -33,7 +33,7 @@ export default class GameScene extends Phaser.Scene {
 	score!: number
 
 	private truffles!: SpineGameObject
-	private cannonball!: SpineGameObject
+	private cannonball: SpineGameObject [] = []
 	private windmill!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private keys
@@ -58,10 +58,10 @@ export default class GameScene extends Phaser.Scene {
 
     private cannonballAnimationNames: string[] = []
 	private cannonballAnimationIndex = 0
-	private cannonballPosX = 268 
-	private cannonballPosY = 60
+	private cannonballPosX: number[] = [269, 525, 781] 
+	private cannonballPosY: number[] = [60, 60, 60]
 	private cannonballSpeed = 2
-	private cannonballMoving = true
+	private cannonballMoving:  boolean [] = [true, true, true]
 
 	private soundDelay = 500
 
@@ -145,16 +145,17 @@ export default class GameScene extends Phaser.Scene {
 		this.canMove = true
 		this.direction = Direction.Down
 
-		this.cannonball = this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX, this.cannonballPosY, 1.3, 1.3)
-		this.cannonball.setDepth(2)
-
+		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[0], this.cannonballPosY[0], 1.2, 1.2)) 
+		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[1], this.cannonballPosY[1], 1.2, 1.2)) 
+		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[2], this.cannonballPosY[2], 1.2, 1.2)) 
+		
 		this.windmill = this.createSpineObject(IDLE_KEY, WINDMILL_KEY, 50, 0, 1, 1)
+		this.windmill.setDepth(1)
 
 		this.cursors = this.input.keyboard.createCursorKeys()
 		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
 
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
-		this.initializeAnimationsState(this.cannonball, this.cannonballAnimationNames)
 
 		var tilesWide = 40
 		var tilesHigh = 23
@@ -162,10 +163,10 @@ export default class GameScene extends Phaser.Scene {
 			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.candyLayer.getTileAt(j, i)
 				if (tile != null) {
-					if (tile.index === 570) {
+					if (tile.index === 674) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
-					} else if (tile.index === 674) {
+					} else if (tile.index === 570) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
 					} else if (tile.index === 622) {
@@ -178,6 +179,11 @@ export default class GameScene extends Phaser.Scene {
 
 		for (let o = 0; o < this.fruit.length; o++) {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
+		}
+
+		for (let i = 0; i < this.cannonball.length; i++){
+			this.cannonball[i].setDepth(2)
+			this.initializeAnimationsState(this.cannonball[i], this.cannonballAnimationNames)
 		}
 
 		this.playerState = new PlayerState(this, this.truffles);
@@ -297,12 +303,14 @@ export default class GameScene extends Phaser.Scene {
 				}
 			}
 		this.playerState.update() // Updates the Player State See PlayerStateMachine*/
-		if (this.trufflesAABB(this.truffles, this.cannonball)){
+		for (let i = 0; i < this.cannonball.length; i++){
+		if (this.trufflesAABB(this.truffles, this.cannonball[i])){
 			this.truffles.setPosition(100, 360)
 			this.trufflesPosX = 100
 			this.trufflesPosY = 360
+			}
 		}
-	}
+	}	
 
 	private setupMap() {
 		this.map = this.make.tilemap({
@@ -378,7 +386,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.candyLayer = this.map.createLayer('map/collectables/candies_depth_02', this.tileset, 0, 0);
 		this.candyLayer.setDepth(2);
-		this.candyLayer.setVisible(true)
+		this.candyLayer.setVisible(false)
 	}
 
 	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {
@@ -466,45 +474,46 @@ export default class GameScene extends Phaser.Scene {
 		this.canMove = true
 	}
 
-		private cannonballReset(){
-			this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY = 40)
-			this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 1)
+		private cannonballReset(index : number){
+			this.cannonball[index].setPosition(this.cannonballPosX[index], this.cannonballPosY[index] = 40)
+			this.changeAnimation(this.cannonball[index], this.cannonballAnimationNames, 1)
 			console.log(this.cannonballAnimationNames)
-			this.cannonballMoving = true
+			this.cannonballMoving[index] = true
 			
 		}
 	
 		private cannonballMove(){
 		
-		if (this.cannonballMoving){
-       	this.cannonballPosY += this.cannonballSpeed;
+		for (let i = 0; i < this.cannonball.length; i++){
+		if (this.cannonballMoving[i]){
+       	this.cannonballPosY[i] += this.cannonballSpeed;
 		
-		this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY)
-		//this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 2)
+		this.cannonball[i].setPosition(this.cannonballPosX[i], this.cannonballPosY[i])
+		
 		}
-
-		if (this.cannonballPosY >= 655){
+    
+		if (this.cannonballPosY[i] >= 655){
 			
 			this.time.addEvent({
 				
 				delay: 600,
 				callback: this.cannonballReset,
 				callbackScope: this,
+				args: [i]
 				
 			})
-            //this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 2)
-			//console.log(this.cannonballAnimationNames)
-			if (this.cannonballMoving)
+            
+			if (this.cannonballMoving[i])
 			{
-				this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 2)
+				this.changeAnimation(this.cannonball[i], this.cannonballAnimationNames, 2)
 			}
 			
-			this.cannonballMoving = false
+			this.cannonballMoving[i] = false
 			
 
 			
 
-		
-		}
+			}
+		}		
 	}
 }
