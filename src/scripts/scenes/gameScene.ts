@@ -41,6 +41,7 @@ export default class GameScene extends Phaser.Scene {
 	private trufflesAnimationIndex = 0
 
 	private fruitAnimationNames: string[] = []
+	private fruitMarked: boolean[] = []
 	private orangeAnimationIndex = 0
 	private grapeAnimationIndex = 0
 	private lemonAnimationIndex = 0
@@ -140,10 +141,13 @@ export default class GameScene extends Phaser.Scene {
 				if (tile != null) {
 					if (tile.index === 4295) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+						this.fruitMarked.push(false)
 					} else if (tile.index === 4191) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+						this.fruitMarked.push(false)
 					} else if (tile.index === 4243) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[2], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+						this.fruitMarked.push(false)
 					}
 				}
 			}
@@ -263,8 +267,15 @@ export default class GameScene extends Phaser.Scene {
 		else {
 			for (let i = 0; i < this.fruit.length; i++){
 					
-					if(this.trufflesAABB(this.truffles, this.fruit[i])){
+					if(!this.fruitMarked[i] && this.trufflesAABB(this.truffles, this.fruit[i])){
 						this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
+						this.time.addEvent({
+							delay: 480,
+							callback: this.fruitAniimate,
+							callbackScope: this,
+							args: [i]
+						})
+						this.fruitMarked[i] = true
 					}
 				}
 			}
@@ -397,5 +408,25 @@ export default class GameScene extends Phaser.Scene {
 
 	private scoreUpdate() {
 		this.score += 151
+	}
+
+	private fruitAniimate(index: number) {
+		this.changeAnimation(this.fruit[index],this.fruitAnimationNames,2)
+		this.time.addEvent({
+			delay: 640,
+			callback: this.fruitDelete,
+			callbackScope: this,
+			args: [index]
+		})
+	}
+	private fruitDelete(index: number) {
+		const x = this.map.worldToTileX(this.fruit[index].x)
+		const y = this.map.worldToTileY(this.fruit[index].y)
+
+		this.tile = this.candyLayer.getTileAt(x, y)
+		this.map.removeTile(this.tile)
+		this.fruit[index].removeFromDisplayList()
+		this.fruit.splice(index, 1)
+		this.fruitMarked.splice(index, 1)
 	}
 }
