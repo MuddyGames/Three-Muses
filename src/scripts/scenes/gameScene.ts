@@ -15,6 +15,7 @@ const KEYS = ['orange', 'lemon', 'grape']
 const IDLE_KEY = 'idle'
 const CANNONBALL_KEY = 'cannonball'
 const WINDMILL_KEY = 'windmill'
+let muteBtn 
 
 export default class GameScene extends Phaser.Scene {
 
@@ -114,9 +115,6 @@ export default class GameScene extends Phaser.Scene {
 		this.scoreText.setShadow(2, 2, "#333333", 2, true, true);
 		this.scoreText.setDepth(4)
 
-		const muteButton = this.add.text(100, 100, 'Mute', { fill: '#0f0' });
-    	muteButton.setInteractive();
-
 		this.setupMap()
 
 		this.ball = new CannonBall(this, 288, 48, )
@@ -164,6 +162,9 @@ export default class GameScene extends Phaser.Scene {
 
 		this.time.addEvent({ delay: this.soundDelay, callback: this.resetSounds, callbackScope: this})
 
+		muteBtn = this.add.text(100, 100, 'Hello World', { fontFamily: 'gamefont', color: '#EC00D7', fontSize: '56px' })
+		muteBtn.setInteractive()
+
 	}
 
 	update() {
@@ -173,6 +174,10 @@ export default class GameScene extends Phaser.Scene {
 		this.scoreText.update()
 
 		const size = this.trufflesAnimationNames.length
+
+		muteBtn.on('pointerdown', function(event){
+		  console.log("wuw")
+		})
 
 		this.input.addPointer(2);
 
