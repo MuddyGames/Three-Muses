@@ -1,4 +1,4 @@
-export default class ScoreText extends Phaser.GameObjects.Text {
+export default class HudText extends Phaser.GameObjects.Text {
   constructor(scene) {
     super(scene, 10, 50, '', {
       color: '#EC00D7',
@@ -6,7 +6,7 @@ export default class ScoreText extends Phaser.GameObjects.Text {
       fontFamily: 'gamefont'
     })
     scene.add.existing(this)
-    this.setOrigin(0)
+    this.setOrigin(0.5)
   }
 
   public update() {
