@@ -106,12 +106,16 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
+
 		// Score Text
 		this.scoreText = new ScoreText(this)
 		this.scoreText.setShadow(3, 3)
 		this.scoreText.setStroke('#ffffff', 16);
 		this.scoreText.setShadow(2, 2, "#333333", 2, true, true);
 		this.scoreText.setDepth(4)
+
+		const muteButton = this.add.text(100, 100, 'Mute', { fill: '#0f0' });
+    	muteButton.setInteractive();
 
 		this.setupMap()
 
@@ -156,6 +160,7 @@ export default class GameScene extends Phaser.Scene {
 		this.playerState = new PlayerState(this, this.truffles);
 
 		this.time.addEvent({ delay: this.soundDelay, callback: this.resetSounds, callbackScope: this})
+
 	}
 
 	update() {
@@ -166,6 +171,10 @@ export default class GameScene extends Phaser.Scene {
 
 		const size = this.trufflesAnimationNames.length
 
+		this.input.addPointer(2);
+
+		console.log(this.input.activePointer	);	
+		
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
 
 			/*this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT)*/
