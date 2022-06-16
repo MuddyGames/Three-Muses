@@ -1,5 +1,4 @@
-//import FpsText from '../objects/fpsText'
-import ScoreText from '../objects/scoreText'
+import HudText from '../objects/hudText'
 import CannonBall from '../objects/cannonBall'
 import PlayerState from '../objects/PlayerState'
 
@@ -30,7 +29,7 @@ export default class GameScene extends Phaser.Scene {
 
 	ball
 
-	scoreText!: ScoreText
+	scoreText!: HudText
 	score!: number
 
 	private truffles!: SpineGameObject
@@ -115,7 +114,7 @@ export default class GameScene extends Phaser.Scene {
 
 	create() {
 		// Score Text
-		this.scoreText = new ScoreText(this)
+		this.scoreText = new HudText(this)
 		this.scoreText.setShadow(3, 3)
 		this.scoreText.setStroke('#ffffff', 16);
 		this.scoreText.setShadow(2, 2, "#333333", 2, true, true);

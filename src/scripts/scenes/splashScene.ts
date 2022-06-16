@@ -1,5 +1,5 @@
 import FpsText from '../objects/fpsText'
-import ScoreText from '../objects/scoreText'
+import HudText from '../objects/hudText'
 import Logo from '../objects/logo'
 
 export default class SplashScene extends Phaser.Scene {
