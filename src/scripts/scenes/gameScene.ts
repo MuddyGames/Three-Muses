@@ -1,13 +1,24 @@
+// Heads up display text
 import HudText from '../objects/hudText'
-//import CannonBall from '../objects/cannonBall'
+
+// Player State
 import PlayerState from '../objects/PlayerState'
 
-import {
-	INPUT_TYPES
-} from '../objects/inputs'
+// Player state machine
 import {
 	UnderAttack
 } from '../objects/PlayerStateMachine'
+
+// Used for animations and game states
+import {
+	INPUT_TYPES
+} from '../objects/inputs'
+
+
+// Game State Management
+import {
+	GSM
+} from '../objects/gameStates'
 
 
 const TRUFFLES_KEY = 'truffles'
@@ -18,24 +29,40 @@ const WINDMILL_KEY = 'windmill'
 let muteBtn
 let music
 enum Direction {
-		Up,
-		Down,
-		Left,
-		Right
-		}
+	Up,
+	Down,
+	Left,
+	Right
+}
 
 export default class GameScene extends Phaser.Scene {
 
+	// Game State Management
+	private gameState!: GSM
+
+	// Hud Text
+	private collectablePoints!: number
+	private levelScore!: number
+	private bestRecordedTime!: number
+	private newRecordTime!: number
+	private currentScoreText!: HudText
+	private elapsedTimeText!: HudText
+	private recordTimeText!: HudText
+	private screenX!: number
+	private screenY!: number
+	private elapsedLevelTime!: number
+
+	// Level Music
 	backingMusic!: Phaser.Sound.BaseSound
+
+	// Truffle idioms
 	idiomCue!: Phaser.Sound.BaseSound
 
-	//ball
+	// Heads up Display
 
-	scoreText!: HudText
-	score!: number
-
+	// Level Objects
 	private truffles!: SpineGameObject
-	private cannonball!: SpineGameObject
+	private cannonball: SpineGameObject[] = []
 	private windmill!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private keys
@@ -58,12 +85,12 @@ export default class GameScene extends Phaser.Scene {
 	private trufflesSpeed = 2
 	private tileSize = 32
 
-    private cannonballAnimationNames: string[] = []
+	private cannonballAnimationNames: string[] = []
 	private cannonballAnimationIndex = 0
-	private cannonballPosX = 268 
-	private cannonballPosY = 60
+	private cannonballPosX: number[] = [269, 525, 781]
+	private cannonballPosY: number[] = [60, 60, 60]
 	private cannonballSpeed = 2
-	private cannonballMoving = true
+	private cannonballMoving: boolean[] = [true, true, true]
 
 	private soundDelay = 500
 
@@ -94,9 +121,9 @@ export default class GameScene extends Phaser.Scene {
 	private castleRoofLayer!: Phaser.Tilemaps.TilemapLayer
 	private miscTop1Layer!: Phaser.Tilemaps.TilemapLayer
 	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
-
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
 
+	// Player Data
 	private playerState!: PlayerState
 	private direction!: Direction
 	private canMove!: boolean
@@ -105,7 +132,12 @@ export default class GameScene extends Phaser.Scene {
 		super({
 			key: 'GameScene'
 		})
-		this.score = 0
+		// Heads up Display Data
+		this.collectablePoints = 0
+		this.levelScore = 0
+		this.newRecordTime = 0
+		this.screenX = 0
+		this.screenY = 0
 	}
 
 	preload() {
@@ -124,41 +156,88 @@ export default class GameScene extends Phaser.Scene {
 
 	create() {
 
-		// Score Text
-		this.scoreText = new HudText(this)
-		this.scoreText.setShadow(3, 3)
-		this.scoreText.setStroke('#ffffff', 16);
-		this.scoreText.setShadow(2, 2, "#333333", 2, true, true);
-		this.scoreText.setDepth(4)
+		//Setup Game State
+		this.gameState = GSM.PLAY
 
+		// Retrive Recorded Score and Time from LocalStorage
+		this.fetchRecordedScore()
+		this.fetchRecordedTime()
+		// Setup Screen Dimensions
+		let {
+			width,
+			height
+		} = this.sys.game.canvas;
+		this.screenX = width;
+		this.screenY = height
+
+		// Setup HUD
+		// Score
+		this.currentScoreText = new HudText(this)
+		this.currentScoreText.setShadow(3, 3)
+		this.currentScoreText.setStroke('#fff', 16);
+		this.currentScoreText.setShadow(2, 2, "#333333", 2, true, true);
+		// Elapsed Time
+		this.elapsedTimeText = new HudText(this)
+		this.elapsedTimeText.setShadow(3, 3)
+		this.elapsedTimeText.setStroke('#fff', 16);
+		this.elapsedTimeText.setShadow(2, 2, "#333333", 2, true, true);
+		// Record Time
+		this.recordTimeText = new HudText(this)
+		this.recordTimeText.setShadow(3, 3)
+		this.recordTimeText.setStroke('#fff', 16);
+		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
+
+		// Update Score Frequency
+		this.time.addEvent({
+			delay: 500,
+			loop: true,
+			callback: this.fetchRecordedScore,
+			callbackScope: this
+		});
+
+		//Setup Map Data
 		this.setupMap()
 
 		//this.ball = new CannonBall(this, 288, 48, )
 		//this.ball.setDepth(2)
 
-		music = this.sound.add('level_backing_track', {
+		music = this.sound.add('level_backing_track'),
+		this.backingMusic = this.sound.add('level_backing_track', {
 			loop: true
 		})
 		music.play()
 
 
+		
+		// Setup Truffles
 		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, this.trufflesPosX, this.trufflesPosY, 0.25, 0.25)
 		this.truffles.setDepth(2)
-		
+		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
+
 		this.canMove = true
 		this.direction = Direction.Down
 
-		this.cannonball = this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX, this.cannonballPosY, 1.3, 1.3)
-		this.cannonball.setDepth(2)
+		
+		// Cannon Ball Setup
+		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[0], this.cannonballPosY[0], 1.2, 1.2))
+		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[1], this.cannonballPosY[1], 1.2, 1.2))
+		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[2], this.cannonballPosY[2], 1.2, 1.2))
 
+		// Setup Cannon ball animations
+		for (let i = 0; i < this.cannonball.length; i++) {
+			this.cannonball[i].setDepth(2)
+			this.initializeAnimationsState(this.cannonball[i], this.cannonballAnimationNames)
+		}
+
+		// Add Windmill
 		this.windmill = this.createSpineObject(IDLE_KEY, WINDMILL_KEY, 50, 0, 1, 1)
+		this.windmill.setDepth(1)
 
+		// Keyboard Setup
 		this.cursors = this.input.keyboard.createCursorKeys()
 		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
 
-		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
-		this.initializeAnimationsState(this.cannonball, this.cannonballAnimationNames)
-
+		// Setup Fruits
 		var tilesWide = 40
 		var tilesHigh = 23
 		for (let i = 0; i < tilesHigh; i++) {
@@ -179,10 +258,12 @@ export default class GameScene extends Phaser.Scene {
 			}
 		}
 
+		// Init fruit animations
 		for (let o = 0; o < this.fruit.length; o++) {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
 
+		// Initialise Player State
 		this.playerState = new PlayerState(this, this.truffles);
 
 		this.time.addEvent({ delay: this.soundDelay, callback: this.resetSounds, callbackScope: this})
@@ -197,46 +278,71 @@ export default class GameScene extends Phaser.Scene {
 		//multitouch bits
 		this.input.addPointer(2);
 
+		this.time.addEvent({
+			delay: this.soundDelay,
+			callback: this.resetSounds,
+			callbackScope: this
+		})
 	}
 
-	update() {
+	// Game Update Method
+
+	update(time: number, delta: number): void {
+
+		// TODO BETTER Game State Management
+		//If level Playable Update
+		if (this.gameState === GSM.PLAY) {
+			this.elapsedLevelTime = time;
+			let points = Phaser.Math.Between(50, 100);
+			this.setPoints(points)
+
+		} else if (this.gameState === GSM.LEVEL_COMPLETE) {
+
+			//Store Record Time
+			if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
+				this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
+				this.fetchRecordedTime()
+
+			} else {
+				this.newRecordTime = this.bestRecordedTime
+			}
+
+		}
 
 		this.cannonballMove()
-
-		this.scoreText.update()
 
 		const size = this.trufflesAnimationNames.length
 		
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
-			if(this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT)!=null) {
+			if (this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT) != null) {
 				this.direction = Direction.Right
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
-			if(this.playerState.handleInput(INPUT_TYPES.WALK_LEFT)!=null) {
+			if (this.playerState.handleInput(INPUT_TYPES.WALK_LEFT) != null) {
 				this.direction = Direction.Left
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
-			if(this.playerState.handleInput(INPUT_TYPES.WALK_UP)!=null) {
+			if (this.playerState.handleInput(INPUT_TYPES.WALK_UP) != null) {
 				this.direction = Direction.Up
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-			if(this.playerState.handleInput(INPUT_TYPES.WALK_DOWN)!=null) {
+			if (this.playerState.handleInput(INPUT_TYPES.WALK_DOWN) != null) {
 				this.direction = Direction.Down
 			}
 		}
 
-		if(this.canMove) {
-			if (this.cursors.right.isDown){ 
+		if (this.canMove) {
+			if (this.cursors.right.isDown) {
 				const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize / 2)
 				const y = this.map.worldToTileY(this.trufflesPosY)
 
 				this.tile = this.collisionLayer.getTileAt(x + 1, y)
-				
+
 
 				if (this.tile == null) {
 					this.trufflesPosX += this.trufflesSpeed
 					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
-					}
+				}
 			}
 
 			if (this.cursors.left.isDown) {
@@ -278,47 +384,63 @@ export default class GameScene extends Phaser.Scene {
 
 			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
 				this.playerState.handleInput(INPUT_TYPES.IDLE)
-			}
-			else {
-				for (let i = 0; i < this.fruit.length; i++){
-						
-						if(!this.fruitMarked[i] && this.trufflesAABB(this.truffles, this.fruit[i])){
-							this.changeAnimation(this.fruit[i],this.fruitAnimationNames,1)
-							this.canMove = false
-							this.time.addEvent({
-								delay: 480,
-								callback: this.fruitAniimate,
-								callbackScope: this,
-								args: [i]
-							})
-							this.fruitMarked[i] = true
-							switch(this.direction) {
-								case Direction.Up:
-									this.playerState.handleInput(INPUT_TYPES.EATING_UP)
-									break;
-								case Direction.Down:
-									this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
-									break;
-								case Direction.Left:
-									this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
-									break;
-								case Direction.Right:
-									this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
-									break;
-							}
+			} else {
+				for (let i = 0; i < this.fruit.length; i++) {
+
+					if (!this.fruitMarked[i] && this.trufflesAABB(this.truffles, this.fruit[i])) {
+						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
+						this.canMove = false
+						this.time.addEvent({
+							delay: 480,
+							callback: this.fruitAnimate,
+							callbackScope: this,
+							args: [i]
+						})
+						this.fruitMarked[i] = true
+						switch (this.direction) {
+							case Direction.Up:
+								this.playerState.handleInput(INPUT_TYPES.EATING_UP)
+								break;
+							case Direction.Down:
+								this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
+								break;
+							case Direction.Left:
+								this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
+								break;
+							case Direction.Right:
+								this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
+								break;
 						}
 					}
 				}
 			}
-		this.playerState.update() // Updates the Player State See PlayerStateMachine*/
-		if (this.trufflesAABB(this.truffles, this.cannonball)){
-			this.truffles.setPosition(100, 360)
-			this.trufflesPosX = 100
-			this.trufflesPosY = 360
 		}
+		this.playerState.update() // Updates the Player State See PlayerStateMachine*/
+		for (let i = 0; i < this.cannonball.length; i++) {
+			if (this.trufflesAABB(this.truffles, this.cannonball[i])) {
+				this.truffles.setPosition(100, 360)
+				this.trufflesPosX = 100
+				this.trufflesPosY = 360
+			}
+		}
+		// Display Updated HUD
+		this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.04)
+		this.currentScoreText.update()
+		this.currentScoreText.setText(' ' + this.levelScore + ' ')
+		this.currentScoreText.setDepth(10)
 
+		this.elapsedTimeText.setPosition(this.screenX * 0.75, this.screenY * 0.04)
+		this.elapsedTimeText.update()
+		this.elapsedTimeText.setText('Timer : ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
+		this.elapsedTimeText.setDepth(10)
+
+		this.recordTimeText.setPosition(this.screenX * 0.55, this.screenY * 0.04)
+		this.recordTimeText.update()
+		this.recordTimeText.setText('Record : ' + this.bestRecordedTime + ' ')
+		this.recordTimeText.setDepth(10)
 	}
 
+	//Setup Map Data
 	private setupMap() {
 		this.map = this.make.tilemap({
 			key: 'level',
@@ -440,33 +562,31 @@ export default class GameScene extends Phaser.Scene {
 		})
 	}
 
+	//Truffles to Object Collision
 	private trufflesAABB(truffles: SpineGameObject, collidable: SpineGameObject) {
 
 		var collision = false;
 
-		if (this.trufflesPosX - this.tileSize/2 < collidable.x + collidable.scaleX * collidable.width && 
-			this.trufflesPosX + this.tileSize/2 > collidable.x && 
-			this.trufflesPosY - this.tileSize < collidable.y + collidable.scaleY * collidable.height && 
-			this.trufflesPosY > collidable.y){
+		if (this.trufflesPosX - this.tileSize / 2 < collidable.x + collidable.scaleX * collidable.width &&
+			this.trufflesPosX + this.tileSize / 2 > collidable.x &&
+			this.trufflesPosY - this.tileSize < collidable.y + collidable.scaleY * collidable.height &&
+			this.trufflesPosY > collidable.y) {
 			collision = true;
 		}
 
 		return collision
 	}
 
-	private scoreUpdate() {
-		this.score += 151
-	}
-
-	private fruitAniimate(index: number) {
-		this.changeAnimation(this.fruit[index],this.fruitAnimationNames,2)
+	// Fruit Animations
+	private fruitAnimate(index: number) {
+		this.changeAnimation(this.fruit[index], this.fruitAnimationNames, 2)
 		this.time.addEvent({
 			delay: 1000,
 			callback: this.fruitDelete,
 			callbackScope: this,
 			args: [index]
 		})
-		switch(this.direction) {
+		switch (this.direction) {
 			case Direction.Up:
 				this.playerState.handleInput(INPUT_TYPES.MUNCHING_UP)
 				break;
@@ -481,6 +601,8 @@ export default class GameScene extends Phaser.Scene {
 				break;
 		}
 	}
+
+	// Delete fruits
 	private fruitDelete(index: number) {
 		const x = this.map.worldToTileX(this.fruit[index].x)
 		const y = this.map.worldToTileY(this.fruit[index].y)
@@ -493,45 +615,87 @@ export default class GameScene extends Phaser.Scene {
 		this.canMove = true
 	}
 
-		private cannonballReset(){
-			this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY = 40)
-			this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 1)
-			console.log(this.cannonballAnimationNames)
-			this.cannonballMoving = true
-			
-		}
-	
-		private cannonballMove(){
-		
-		if (this.cannonballMoving){
-       	this.cannonballPosY += this.cannonballSpeed;
-		
-		this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY)
-		//this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 2)
-		}
+	// Reset Cannon Balls
+	private cannonballReset(index: number) {
+		this.cannonball[index].setPosition(this.cannonballPosX[index], this.cannonballPosY[index] = 40)
+		this.changeAnimation(this.cannonball[index], this.cannonballAnimationNames, 1)
+		console.log(this.cannonballAnimationNames)
+		this.cannonballMoving[index] = true
 
-		if (this.cannonballPosY >= 655){
-			
-			this.time.addEvent({
-				
-				delay: 600,
-				callback: this.cannonballReset,
-				callbackScope: this,
-				
-			})
-            //this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 2)
-			//console.log(this.cannonballAnimationNames)
-			if (this.cannonballMoving)
-			{
-				this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 2)
+	}
+
+	// Move Cannon Balls
+	private cannonballMove() {
+
+		for (let i = 0; i < this.cannonball.length; i++) {
+			if (this.cannonballMoving[i]) {
+				this.cannonballPosY[i] += this.cannonballSpeed;
+
+				this.cannonball[i].setPosition(this.cannonballPosX[i], this.cannonballPosY[i])
+
 			}
-			
-			this.cannonballMoving = false
-			
 
-			
+			if (this.cannonballPosY[i] >= 655) {
 
-		
+				this.time.addEvent({
+
+					delay: 600,
+					callback: this.cannonballReset,
+					callbackScope: this,
+					args: [i]
+
+				})
+
+				if (this.cannonballMoving[i]) {
+					this.changeAnimation(this.cannonball[i], this.cannonballAnimationNames, 2)
+				}
+
+				this.cannonballMoving[i] = false
+
+			}
 		}
+	}
+
+	// Set Record Time
+	private setRecord(time: number) {
+		this.newRecordTime = time
+	}
+
+	// Add Points
+	private setPoints(points: number) {
+		this.collectablePoints += points
+	}
+
+	// Fetch Recorded Time
+	private fetchRecordedTime() {
+		let temp = window.localStorage.getItem('time')
+		if (temp !== null) {
+			this.bestRecordedTime = parseInt(temp) || 0
+			if (this.bestRecordedTime === 0) {
+				this.bestRecordedTime = 1000
+			}
+		} else {
+			this.bestRecordedTime = 0
+		}
+
+		window.localStorage.setItem('time', this.newRecordTime.toString())
+	}
+
+	// Fetch Recorded Score
+	private fetchRecordedScore() {
+		let temp = window.localStorage.getItem('score')
+		if (temp !== null) {
+			this.levelScore = parseInt(temp) || 0
+		} else {
+			this.levelScore = 0
+		}
+		this.levelScore += this.collectablePoints
+		this.collectablePoints = 0 // Reset Points
+		window.localStorage.setItem('score', this.levelScore.toString())
+	}
+
+	private gsmUpdate() {
+		this.gameState = GSM.LEVEL_COMPLETE
+		console.log('level complete')
 	}
 }
