@@ -1,5 +1,5 @@
 import HudText from '../objects/hudText'
-import CannonBall from '../objects/cannonBall'
+//import CannonBall from '../objects/cannonBall'
 import PlayerState from '../objects/PlayerState'
 
 import {
@@ -27,7 +27,7 @@ export default class GameScene extends Phaser.Scene {
 	backingMusic!: Phaser.Sound.BaseSound
 	idiomCue!: Phaser.Sound.BaseSound
 
-	ball
+	//ball
 
 	scoreText!: HudText
 	score!: number
@@ -55,6 +55,12 @@ export default class GameScene extends Phaser.Scene {
 	private trufflesPosY = 360
 	private trufflesSpeed = 2
 	private tileSize = 32
+
+    private cannonballAnimationNames: string[] = []
+	private cannonballAnimationIndex = 0
+	private cannonballPosX = 268 
+	private cannonballPosY = 60
+	private cannonballSpeed = 5
 
 	private soundDelay = 500
 
@@ -123,8 +129,8 @@ export default class GameScene extends Phaser.Scene {
 
 		this.setupMap()
 
-		this.ball = new CannonBall(this, 288, 48, )
-		this.ball.setDepth(2)
+		//this.ball = new CannonBall(this, 288, 48, )
+		//this.ball.setDepth(2)
 
 		this.backingMusic = this.sound.add('level_backing_track', {
 			loop: true
@@ -132,11 +138,16 @@ export default class GameScene extends Phaser.Scene {
 		this.backingMusic.play()
 
 
-		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 100, 360, 0.25, 0.25)
+		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, this.trufflesPosX, this.trufflesPosY, 0.25, 0.25)
 		this.truffles.setDepth(2)
 		
 		this.canMove = true
 		this.direction = Direction.Down
+
+		this.cannonball = this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX, this.cannonballPosY, 1.3, 1.3)
+		this.cannonball.setDepth(2)
+
+		this.windmill = this.createSpineObject(IDLE_KEY, WINDMILL_KEY, 50, 0, 1, 1)
 
 		this.cursors = this.input.keyboard.createCursorKeys()
 		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
@@ -174,7 +185,7 @@ export default class GameScene extends Phaser.Scene {
 
 	update() {
 
-		this.ball.update()
+		this.cannonballMove()
 
 		this.scoreText.update()
 
@@ -283,8 +294,12 @@ export default class GameScene extends Phaser.Scene {
 					}
 				}
 			}
-
 		this.playerState.update() // Updates the Player State See PlayerStateMachine*/
+		if (this.trufflesAABB(this.truffles, this.cannonball)){
+			this.truffles.setPosition(100, 360)
+			this.trufflesPosX = 100
+			this.trufflesPosY = 360
+		}
 	}
 
 	private setupMap() {
@@ -447,5 +462,26 @@ export default class GameScene extends Phaser.Scene {
 
 		this.playerState.handleInput(INPUT_TYPES.IDLE)
 		this.canMove = true
+	}
+	
+		private cannonballMove(){
+		
+		this.cannonballPosY += this.cannonballSpeed;
+		
+		this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY)
+
+		/*if (this.trufflesAABB(this.truffles, this.cannonball)){
+			
+			this.truffles.setPosition(100, 360)
+		}*/
+
+		if (this.cannonballPosY >= 688){
+			
+			//this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 1)
+
+			this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY = 48)
+
+		
+		}
 	}
 }
