@@ -1,13 +1,24 @@
+// Heads up display text
 import HudText from '../objects/hudText'
-//import CannonBall from '../objects/cannonBall'
+
+// Player State
 import PlayerState from '../objects/PlayerState'
 
-import {
-	INPUT_TYPES
-} from '../objects/inputs'
+// Player state machine
 import {
 	UnderAttack
 } from '../objects/PlayerStateMachine'
+
+// Used for animations and game states
+import {
+	INPUT_TYPES
+} from '../objects/inputs'
+
+
+// Game State Management
+import {
+  GSM
+} from '../objects/gameStates'
 
 
 const TRUFFLES_KEY = 'truffles'
