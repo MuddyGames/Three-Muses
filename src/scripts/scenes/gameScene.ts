@@ -130,33 +130,40 @@ export default class GameScene extends Phaser.Scene {
 
 		this.setupMap()
 
-		//this.ball = new CannonBall(this, 288, 48, )
-		//this.ball.setDepth(2)
-
+		// Background music
 		this.backingMusic = this.sound.add('level_backing_track', {
 			loop: true
 		})
 		this.backingMusic.play()
 
-
+		// Setup Truffles
 		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, this.trufflesPosX, this.trufflesPosY, 0.25, 0.25)
 		this.truffles.setDepth(2)
+		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
 		this.canMove = true
 		this.direction = Direction.Down
 
+		// Cannon Ball Setup
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[0], this.cannonballPosY[0], 1.2, 1.2))
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[1], this.cannonballPosY[1], 1.2, 1.2))
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[2], this.cannonballPosY[2], 1.2, 1.2))
 
+		// Setup Cannon ball animations
+		for (let i = 0; i < this.cannonball.length; i++) {
+			this.cannonball[i].setDepth(2)
+			this.initializeAnimationsState(this.cannonball[i], this.cannonballAnimationNames)
+		}
+
+		// Add Windmill
 		this.windmill = this.createSpineObject(IDLE_KEY, WINDMILL_KEY, 50, 0, 1, 1)
 		this.windmill.setDepth(1)
 
+		// Keyboard Setup
 		this.cursors = this.input.keyboard.createCursorKeys()
 		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
 
-		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
-
+		// Setup Fruits
 		var tilesWide = 40
 		var tilesHigh = 23
 		for (let i = 0; i < tilesHigh; i++) {
@@ -177,15 +184,12 @@ export default class GameScene extends Phaser.Scene {
 			}
 		}
 
+		// Init fruit animations
 		for (let o = 0; o < this.fruit.length; o++) {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
 
-		for (let i = 0; i < this.cannonball.length; i++) {
-			this.cannonball[i].setDepth(2)
-			this.initializeAnimationsState(this.cannonball[i], this.cannonballAnimationNames)
-		}
-
+		// Initialise Player State
 		this.playerState = new PlayerState(this, this.truffles);
 
 		this.time.addEvent({
@@ -195,7 +199,9 @@ export default class GameScene extends Phaser.Scene {
 		})
 	}
 
-	update() {
+	// Game Update Method
+
+	update(time: number, delta: number): void {
 
 		this.cannonballMove()
 
