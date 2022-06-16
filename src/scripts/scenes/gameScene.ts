@@ -434,7 +434,7 @@ export default class GameScene extends Phaser.Scene {
 	private fruitAniimate(index: number) {
 		this.changeAnimation(this.fruit[index],this.fruitAnimationNames,2)
 		this.time.addEvent({
-			delay: 640,
+			delay: 1000,
 			callback: this.fruitDelete,
 			callbackScope: this,
 			args: [index]
@@ -467,7 +467,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 		private cannonballReset(){
-			this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY = 48)
+			this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY = 40)
 			this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 1)
 			console.log(this.cannonballAnimationNames)
 			this.cannonballMoving = true
@@ -480,9 +480,10 @@ export default class GameScene extends Phaser.Scene {
        	this.cannonballPosY += this.cannonballSpeed;
 		
 		this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY)
+		//this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 2)
 		}
 
-		if (this.cannonballPosY >= 688){
+		if (this.cannonballPosY >= 655){
 			
 			this.time.addEvent({
 				
@@ -491,8 +492,13 @@ export default class GameScene extends Phaser.Scene {
 				callbackScope: this,
 				
 			})
-            this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 2)
+            //this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 2)
 			//console.log(this.cannonballAnimationNames)
+			if (this.cannonballMoving)
+			{
+				this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 2)
+			}
+			
 			this.cannonballMoving = false
 			
 
