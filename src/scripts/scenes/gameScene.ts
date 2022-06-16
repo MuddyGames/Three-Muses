@@ -162,13 +162,13 @@ export default class GameScene extends Phaser.Scene {
 			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.candyLayer.getTileAt(j, i)
 				if (tile != null) {
-					if (tile.index === 4295) {
+					if (tile.index === 570) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
-					} else if (tile.index === 4191) {
+					} else if (tile.index === 674) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
-					} else if (tile.index === 4243) {
+					} else if (tile.index === 622) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[2], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
 					}

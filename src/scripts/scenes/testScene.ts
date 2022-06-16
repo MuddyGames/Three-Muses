@@ -6,14 +6,16 @@ import {
 export default class TestScene extends Phaser.Scene {
   private points!: number
   private score!: number
+  private bestTime!:number
   private scoreText!: HudText
   private timeText!: HudText
   private bestText!: HudText
   private screenX!: number
   private screenY!: number
 
-  private timer!: Phaser.Time.TimerEvent
   private elapsed!: number
+
+  private gameState!:GSM
 
   constructor() {
     super({
@@ -27,7 +29,12 @@ export default class TestScene extends Phaser.Scene {
   preload() {}
 
   create() {
-    //console.log(width, height)
+
+    this.gameState = GSM.PLAY
+
+    this.scoreUpdate()
+    this.timeUpdate()
+
     let {
       width,
       height
@@ -58,18 +65,28 @@ export default class TestScene extends Phaser.Scene {
       callbackScope: this
     });
 
+    this.time.addEvent({
+      delay: 5000,
+      loop: true,
+      callback: this.gsmUpdate,
+      callbackScope: this
+    });
+
   }
 
   update(time: number, delta: number): void {
 
     this.elapsed = time;
-    if (GSM.PLAY) {
+    if (this.gameState === GSM.PLAY) {
       let points = Phaser.Math.Between(50, 100);
       this.setPoints(points)
-    }else if(GSM.LEVEL_COMPLETE){
+    }else if(this.gameState === GSM.LEVEL_COMPLETE){
       //Store Time
+      if(this.bestTime >= this.elapsed){
+        this.timeUpdate()
+      }
     }else{
-      //Best Time
+      //Do Stuff
     }
 
     this.scoreText.setPosition(this.screenX * 0.90, this.screenY * 0.06)
@@ -82,7 +99,7 @@ export default class TestScene extends Phaser.Scene {
 
     this.bestText.setPosition(this.screenX * 0.40, this.screenY * 0.06)
     this.bestText.update()
-    this.bestText.setText('Best time : ' + 20 + ' ')
+    this.bestText.setText('Best time : ' + this.bestTime + ' ')
 
   }
 
@@ -91,9 +108,33 @@ export default class TestScene extends Phaser.Scene {
     this.points += points
   }
 
-  private scoreUpdate() {
-    this.score += this.points
-    this.points = 0 // Reset Points
+  private timeUpdate() {
+    let temp = window.localStorage.getItem('time')
+    if(temp!==null){
+      this.bestTime = parseInt(temp) || 0
+      if(this.bestTime === 0){
+        this.bestTime = 180
+      }
+    }else{
+      this.bestTime = 0
+    }
+    window.localStorage.setItem('time', this.bestTime.toString())
   }
 
+  private scoreUpdate() {
+    let temp = window.localStorage.getItem('score')
+    if(temp!==null){
+      this.score = parseInt(temp) || 0
+    }else{
+      this.score = 0
+    }
+    this.score += this.points
+    this.points = 0 // Reset Points
+    window.localStorage.setItem('score', this.score.toString())
+  }
+
+  private gsmUpdate(){
+    this.gameState = GSM.LEVEL_COMPLETE
+    console.log('level complete')
+  }
 }
