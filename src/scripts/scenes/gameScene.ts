@@ -288,7 +288,7 @@ export default class GameScene extends Phaser.Scene {
 						this.canMove = false
 						this.time.addEvent({
 							delay: 480,
-							callback: this.fruitAniimate,
+							callback: this.fruitAnimate,
 							callbackScope: this,
 							args: [i]
 						})
@@ -448,7 +448,7 @@ export default class GameScene extends Phaser.Scene {
 		this.score += 151
 	}
 
-	private fruitAniimate(index: number) {
+	private fruitAnimate(index: number) {
 		this.changeAnimation(this.fruit[index], this.fruitAnimationNames, 2)
 		this.time.addEvent({
 			delay: 1000,
