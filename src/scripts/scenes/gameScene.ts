@@ -36,7 +36,7 @@ export default class GameScene extends Phaser.Scene {
 	private cannonball: SpineGameObject[] = []
 	private windmill!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-	private keys!: Phaser.Input.Keyboard.Key
+	private keys
 	private orange!: SpineGameObject
 	private lemon!: SpineGameObject
 	private grape!: SpineGameObject
