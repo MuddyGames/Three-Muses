@@ -60,7 +60,8 @@ export default class GameScene extends Phaser.Scene {
 	private cannonballAnimationIndex = 0
 	private cannonballPosX = 268 
 	private cannonballPosY = 60
-	private cannonballSpeed = 5
+	private cannonballSpeed = 2
+	private cannonballMoving = true
 
 	private soundDelay = 500
 
@@ -153,6 +154,7 @@ export default class GameScene extends Phaser.Scene {
 		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
 
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
+		this.initializeAnimationsState(this.cannonball, this.cannonballAnimationNames)
 
 		var tilesWide = 40
 		var tilesHigh = 23
@@ -463,23 +465,38 @@ export default class GameScene extends Phaser.Scene {
 		this.playerState.handleInput(INPUT_TYPES.IDLE)
 		this.canMove = true
 	}
+
+		private cannonballReset(){
+			this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY = 48)
+			this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 1)
+			console.log(this.cannonballAnimationNames)
+			this.cannonballMoving = true
+			
+		}
 	
 		private cannonballMove(){
 		
-		this.cannonballPosY += this.cannonballSpeed;
+		if (this.cannonballMoving){
+       	this.cannonballPosY += this.cannonballSpeed;
 		
 		this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY)
-
-		/*if (this.trufflesAABB(this.truffles, this.cannonball)){
-			
-			this.truffles.setPosition(100, 360)
-		}*/
+		}
 
 		if (this.cannonballPosY >= 688){
 			
-			//this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 1)
+			this.time.addEvent({
+				
+				delay: 600,
+				callback: this.cannonballReset,
+				callbackScope: this,
+				
+			})
+            this.changeAnimation(this.cannonball, this.cannonballAnimationNames, 2)
+			//console.log(this.cannonballAnimationNames)
+			this.cannonballMoving = false
+			
 
-			this.cannonball.setPosition(this.cannonballPosX, this.cannonballPosY = 48)
+			
 
 		
 		}
