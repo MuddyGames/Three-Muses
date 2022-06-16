@@ -4,18 +4,21 @@ import {
 } from '../objects/gameStates'
 
 export default class TestScene extends Phaser.Scene {
+  // Game State Management
+  private gameState!: GSM
+
+  // Hud Text
   private points!: number
   private score!: number
-  private bestTime!:number
+  private bestTime!: number
+  private newRecord!: number
   private scoreText!: HudText
   private timeText!: HudText
   private bestText!: HudText
   private screenX!: number
   private screenY!: number
-
   private elapsed!: number
 
-  private gameState!:GSM
 
   constructor() {
     super({
@@ -23,7 +26,9 @@ export default class TestScene extends Phaser.Scene {
     })
     this.points = 0
     this.score = 0
+    this.newRecord = 0
     this.screenX = 0
+    this.screenY = 0
   }
 
   preload() {}
@@ -76,30 +81,47 @@ export default class TestScene extends Phaser.Scene {
 
   update(time: number, delta: number): void {
 
-    this.elapsed = time;
     if (this.gameState === GSM.PLAY) {
+      this.elapsed = time;
       let points = Phaser.Math.Between(50, 100);
       this.setPoints(points)
-    }else if(this.gameState === GSM.LEVEL_COMPLETE){
+
+      this.scoreText.setPosition(this.screenX * 0.90, this.screenY * 0.06)
+      this.scoreText.update()
+      this.scoreText.setText(' ' + this.score + ' ')
+  
+      this.timeText.setPosition(this.screenX * 0.65, this.screenY * 0.06)
+      this.timeText.update()
+      this.timeText.setText('Timer : ' + this.elapsed + ' ')
+  
+      this.bestText.setPosition(this.screenX * 0.40, this.screenY * 0.06)
+      this.bestText.update()
+      this.bestText.setText('Best time : ' + this.bestTime + ' ')
+
+    } else if (this.gameState === GSM.LEVEL_COMPLETE) {
+
       //Store Time
-      if(this.bestTime >= this.elapsed){
+      if (Math.round((this.elapsed * 0.001)) <= this.bestTime) {
+        this.newRecord = Math.round((this.elapsed * 0.001))
         this.timeUpdate()
+
+        this.scoreText.setPosition(this.screenX * 0.90, this.screenY * 0.06)
+        this.scoreText.update()
+        this.scoreText.setText(' ' + this.score + ' ')
+    
+        this.timeText.setPosition(this.screenX * 0.65, this.screenY * 0.06)
+        this.timeText.update()
+        this.timeText.setText('Timer : ' + this.newRecord + ' ')
+    
+        this.bestText.setPosition(this.screenX * 0.40, this.screenY * 0.06)
+        this.bestText.update()
+        this.bestText.setText('Best time : ' + this.bestTime + ' ')
+
+      } else {
+        this.newRecord = this.bestTime
       }
-    }else{
-      //Do Stuff
+
     }
-
-    this.scoreText.setPosition(this.screenX * 0.90, this.screenY * 0.06)
-    this.scoreText.update()
-    this.scoreText.setText(' ' + this.score + ' ')
-
-    this.timeText.setPosition(this.screenX * 0.65, this.screenY * 0.06)
-    this.timeText.update()
-    this.timeText.setText('Timer : ' + Math.round((this.elapsed * 0.001)) + ' ')
-
-    this.bestText.setPosition(this.screenX * 0.40, this.screenY * 0.06)
-    this.bestText.update()
-    this.bestText.setText('Best time : ' + this.bestTime + ' ')
 
   }
 
@@ -110,22 +132,22 @@ export default class TestScene extends Phaser.Scene {
 
   private timeUpdate() {
     let temp = window.localStorage.getItem('time')
-    if(temp!==null){
+    if (temp !== null) {
       this.bestTime = parseInt(temp) || 0
-      if(this.bestTime === 0){
-        this.bestTime = 180
+      if (this.bestTime === 0) {
+        this.bestTime = 0
       }
-    }else{
+    } else {
       this.bestTime = 0
     }
-    window.localStorage.setItem('time', this.bestTime.toString())
+    window.localStorage.setItem('time', this.newRecord.toString())
   }
 
   private scoreUpdate() {
     let temp = window.localStorage.getItem('score')
-    if(temp!==null){
+    if (temp !== null) {
       this.score = parseInt(temp) || 0
-    }else{
+    } else {
       this.score = 0
     }
     this.score += this.points
@@ -133,7 +155,7 @@ export default class TestScene extends Phaser.Scene {
     window.localStorage.setItem('score', this.score.toString())
   }
 
-  private gsmUpdate(){
+  private gsmUpdate() {
     this.gameState = GSM.LEVEL_COMPLETE
     console.log('level complete')
   }
