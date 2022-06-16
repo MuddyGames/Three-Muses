@@ -1,22 +1,27 @@
-export default class CannonBall extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y) {
-    super(scene, x, y, 'cannon-ball')
-    scene.add.existing(this)
-    this.setDisplaySize(20, 20)
+/*import 'phaser'
+import 'phaser/plugins/spine/dist/SpinePlugin'
 
-    /*this.setCollideWorldBounds(true)
-      .setBounce(0.6)
-      .setInteractive()
-      .on('pointerdown', () => {
-        this.setVelocityY(-400)
-      })*/
-  }
-  public update() {
-    this.y += 2;
-    this.setPosition(this.x, this.y)
+const CANNONBALL_KEY = 'cannon-ball'
 
-    if (this.y >= 688  ) {
-      this.setPosition(this.x, this.y = 48)
-    }
+export default class CannonBall{
+  load: any
+  
+  
+  constructor(scene: Phaser.Scene, spine: SpineGameObject){
+    
   }
-}
+  private cannonball!: SpineGameObject
+
+
+  preload() {
+    this.load.spine(CANNONBALL_KEY, 'cannonball/cannonball.json', 'cannon/cannonball.atlas')
+  }
+  
+  create(){
+
+    this.cannonball = this.createSpineObject(CANNONBALL_KEY)
+  }
+  createSpineObject(CANNONBALL_KEY: string): SpineGameObject {
+    throw new Error('Method not implemented.')
+  }
+}*/
