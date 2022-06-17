@@ -6,30 +6,28 @@ import 'phaser/plugins/spine/dist/SpinePlugin'
 import {
     INPUT_TYPES
 } from './inputs'
+import Player from './Player'
 import PlayerState from './PlayerState'
 
 var canPlay!: boolean
-export default class PlayerStateMachine {
-    player!: PlayerState
-    temp!: PlayerStateMachine
-    state!: PlayerStateMachine
-    spine!: SpineGameObject
-    scene!: Phaser.Scene
-    sound!: Phaser.Sound.BaseSound
-    elapsed!: number
+export default abstract class PlayerStateMachine {
+    protected spine!: SpineGameObject
+    protected scene!: Phaser.Scene
+    protected sound!: Phaser.Sound.BaseSound
+    protected animationTime!: number
+    protected animationElapsed!: number
+    protected idiomTime!: number
+    protected idiomElapsed!: number
 
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         this.scene = scene
         this.spine = spine
     }
 
-    handleInput(input: string) {}
-    enter(time: number, delta: number) {}
-    update(time: number, delta: number) {}
-    exit(time: number, delta: number) {}
-    playSound(time: number, delta: number) {
-        canPlay = true
-    }
+    abstract handleInput(input: string): PlayerStateMachine | undefined;
+    abstract enter(time: number, delta: number): void
+    abstract update(time: number, delta: number, player: Player): void
+    abstract exit(time: number, delta: number): void
 }
 
 // Possible States
@@ -39,27 +37,30 @@ export default class PlayerStateMachine {
 // Idle -> Walking Down
 // Idle -> Under Attack
 export class Idle extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
 
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
 
         if (input === INPUT_TYPES.WALK_RIGHT) {
-            return new WalkingRight(this.scene, this.spine, this.player)
+            return new WalkingRight(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_LEFT) {
-            return new WalkingLeft(this.scene, this.spine, this.player)
+            return new WalkingLeft(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_UP) {
-            return new WalkingUp(this.scene, this.spine, this.player)
+            return new WalkingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_DOWN) {
-            return new WalkingDown(this.scene, this.spine, this.player)
+            return new WalkingDown(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
     }
     enter(time: number, delta: number) {
+        console.log('Entering the Idle State')
+        this.animationTime = time
+        this.idiomTime = time
         this.sound = this.scene.sound.add('story')
         if (canPlay) {
             this.sound.play()
@@ -67,7 +68,7 @@ export class Idle extends PlayerStateMachine {
         }
         this.spine.play(INPUT_TYPES.IDLE, true)
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the Idle State')
     }
     exit(time: number, delta: number) {
@@ -84,24 +85,24 @@ export class Idle extends PlayerStateMachine {
 // WalkingRight -> Under Attack
 
 export class WalkingRight extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine, this.player)
+            return new Idle(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_LEFT) {
-            return new WalkingLeft(this.scene, this.spine, this.player)
+            return new WalkingLeft(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_UP) {
-            return new WalkingUp(this.scene, this.spine, this.player)
+            return new WalkingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_DOWN) {
-            return new WalkingDown(this.scene, this.spine, this.player)
+            return new WalkingDown(this.scene, this.spine)
         } else if (input === INPUT_TYPES.EATING_RIGHT) {
-            return new EatingRight(this.scene, this.spine, this.player)
+            return new EatingRight(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
     }
     enter(time: number, delta: number) {
@@ -128,24 +129,24 @@ export class WalkingRight extends PlayerStateMachine {
 // WalkingLeft -> Eating Left
 // WalkingLeft -> Under Attack
 export class WalkingLeft extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine, this.player)
+            return new Idle(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_RIGHT) {
-            return new WalkingRight(this.scene, this.spine, this.player)
+            return new WalkingRight(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_UP) {
-            return new WalkingUp(this.scene, this.spine, this.player)
+            return new WalkingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_DOWN) {
-            return new WalkingDown(this.scene, this.spine, this.player)
+            return new WalkingDown(this.scene, this.spine)
         } else if (input === INPUT_TYPES.EATING_LEFT) {
-            return new EatingLeft(this.scene, this.spine, this.player)
+            return new EatingLeft(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
 
     }
@@ -174,24 +175,24 @@ export class WalkingLeft extends PlayerStateMachine {
 // WalkingUp -> Eating Up
 // WalkingUp -> Under Attack
 export class WalkingUp extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine, this.player)
+            return new Idle(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_LEFT) {
-            return new WalkingLeft(this.scene, this.spine, this.player)
+            return new WalkingLeft(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_RIGHT) {
-            return new WalkingRight(this.scene, this.spine, this.player)
+            return new WalkingRight(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_DOWN) {
-            return new WalkingDown(this.scene, this.spine, this.player)
+            return new WalkingDown(this.scene, this.spine)
         } else if (input === INPUT_TYPES.EATING_UP) {
-            return new EatingUp(this.scene, this.spine, this.player)
+            return new EatingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
 
     }
@@ -204,7 +205,7 @@ export class WalkingUp extends PlayerStateMachine {
         this.spine.play(INPUT_TYPES.WALK_UP, true)
 
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the WalkingRight State')
     }
     exit(time: number, delta: number) {
@@ -221,24 +222,24 @@ export class WalkingUp extends PlayerStateMachine {
 // WalkingDown -> Eating Up
 // WalkingDown -> Under Attack
 export class WalkingDown extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine, this.player)
+            return new Idle(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_LEFT) {
-            return new WalkingLeft(this.scene, this.spine, this.player)
+            return new WalkingLeft(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_RIGHT) {
-            return new WalkingRight(this.scene, this.spine, this.player)
+            return new WalkingRight(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_UP) {
-            return new WalkingUp(this.scene, this.spine, this.player)
+            return new WalkingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.EATING_DOWN) {
-            return new EatingDown(this.scene, this.spine, this.player)
+            return new EatingDown(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
     }
     enter(time: number, delta: number) {
@@ -250,7 +251,7 @@ export class WalkingDown extends PlayerStateMachine {
         this.spine.play(INPUT_TYPES.WALK_DOWN, true)
 
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the WalkingDowm State')
     }
     exit(time: number, delta: number) {
@@ -259,53 +260,43 @@ export class WalkingDown extends PlayerStateMachine {
 }
 
 // Possible States
-// EatingLeft -> MunchingLeft
 // EatingLeft -> Under Attack
 export class EatingLeft extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        console.log('Constructed EatingLeft State')
+        super(scene, spine)
     }
-    handleInput(input: string) {
-        if (input === INPUT_TYPES.MUNCHING_LEFT) {
-            return new MunchingLeft(this.scene, this.spine, this.player)
-        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+    handleInput(input: string): PlayerStateMachine | undefined {
+        if (input === INPUT_TYPES.UNDER_ATTACK) {
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
 
     }
     enter(time: number, delta: number) {
-        this.sound = this.scene.sound.add('mup')
-        if (canPlay) {
-            this.sound.play()
-            canPlay = false
-        }
+        this.animationTime = time
+        this.idiomTime = time
+        this.sound = this.scene.sound.add('well_kid')
         this.spine.play(INPUT_TYPES.EATING_LEFT, true)
     }
-    update(time: number, delta: number) {
-        console.log('Updating the Eating Left State')
-        /*
-        	DEBUG_MSG("GlidePlayerState -> IdlePlayerState");
-	if (m_clock.getElapsedTime().asSeconds() > 1.2f) {
-		PlayerState* temp = player.getPlayerState();
-		PlayerState* state = new IdlePlayerState();
-		player.getPlayerState()->exit(player);
-		player.setPlayerState(state);
-		player.getPlayerState()->enter(player);
-		delete temp;
-	}
-        */
-        //this.temp = this.player.getState()
-        this.state = new UnderAttack(this.scene, this.spine, this.player)
-        //this.player.getState().exit(time, delta)
-        //this.player.setState(this.state)
-        //this.player.getState().enter(time, delta)
-
-        //let state = new UnderAttack(this.scene, this.spine, this.player)
-        //this.player.getState().exit()
-        //new MunchingLeft(this.scene, this.spine)
-
+    update(time: number, delta: number, player: Player) {
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+        if (this.animationElapsed >= player.getEatingDelay()) {
+            let temp = player.getState()
+            let state = new MunchingLeft(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta)
+            this.animationElapsed = 0
+            this.animationTime = time
+        }
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+            this.idiomElapsed = 0
+            this.idiomTime = time
+        }
     }
     exit(time: number, delta: number) {
         //console.log('Exiting the Eating Left State')
@@ -313,28 +304,38 @@ export class EatingLeft extends PlayerStateMachine {
 }
 
 // Possible States
-// MunchingLeft -> Idle
 // MunchingLeft -> Under Attack
 export class MunchingLeft extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
-        if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine, this.player)
-        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+    handleInput(input: string): PlayerStateMachine | undefined {
+        if (input === INPUT_TYPES.UNDER_ATTACK) {
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
 
     }
     enter(time: number, delta: number) {
-        //console.log('Entering Munching Left State this runs on Entry')
+        this.animationTime = time
+        this.sound = this.scene.sound.add('mup')
+        if (canPlay) {
+            this.sound.play()
+            canPlay = false
+        }
+        this.spine.play(INPUT_TYPES.MUNCHING_LEFT, true)
 
     }
-    update(time: number, delta: number) {
-        //console.log('Updating the Munching Left State')
+    update(time: number, delta: number, player: Player) {
+        let elapsed = time - this.animationTime
+        if (elapsed > 1000) {
+            let temp = player.getState()
+            let state = new Idle(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta)
+        }
     }
     exit(time: number, delta: number) {
         //console.log('Exiting the Munching Left State')
@@ -342,19 +343,16 @@ export class MunchingLeft extends PlayerStateMachine {
 }
 
 // Possible States
-// EatingRight -> MunchingLeft
 // EatingRight -> Under Attack
 export class EatingRight extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
-        if (input === INPUT_TYPES.MUNCHING_RIGHT) {
-            return new MunchingRight(this.scene, this.spine, this.player)
-        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+    handleInput(input: string): PlayerStateMachine | undefined {
+        if (input === INPUT_TYPES.UNDER_ATTACK) {
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
 
     }
@@ -362,7 +360,7 @@ export class EatingRight extends PlayerStateMachine {
         //console.log('Entering Eating Right State this runs on Entry')
 
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the Eathing Right State')
     }
     exit(time: number, delta: number) {
@@ -374,16 +372,16 @@ export class EatingRight extends PlayerStateMachine {
 // MunchingRight -> Idle
 // MunchingRight -> Under Attack
 export class MunchingRight extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine, this.player)
+            return new Idle(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
 
     }
@@ -391,7 +389,7 @@ export class MunchingRight extends PlayerStateMachine {
         //console.log('Entering Munching Right State this runs on Entry')
 
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the Munching Right State')
     }
     exit(time: number, delta: number) {
@@ -403,16 +401,16 @@ export class MunchingRight extends PlayerStateMachine {
 // EatingUp -> MunchingLeft
 // EatingUp -> Under Attack
 export class EatingUp extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         if (input === INPUT_TYPES.MUNCHING_UP) {
-            return new MunchingUp(this.scene, this.spine, this.player)
+            return new MunchingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
 
     }
@@ -420,7 +418,7 @@ export class EatingUp extends PlayerStateMachine {
         //console.log('Entering Eating Up State this runs on Entry')
 
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the Eathing Up State')
     }
     exit(time: number, delta: number) {
@@ -432,16 +430,16 @@ export class EatingUp extends PlayerStateMachine {
 // MunchingUp -> Idle
 // MunchingUp -> Under Attack
 export class MunchingUp extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine, this.player)
+            return new Idle(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
 
     }
@@ -449,7 +447,7 @@ export class MunchingUp extends PlayerStateMachine {
         //console.log('Entering Munching Up State this runs on Entry')
 
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the Munching Up State')
     }
     exit(time: number, delta: number) {
@@ -461,16 +459,16 @@ export class MunchingUp extends PlayerStateMachine {
 // EatingDown -> MunchingDown
 // EatingDown -> Under Attack
 export class EatingDown extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         if (input === INPUT_TYPES.MUNCHING_DOWN) {
-            return new MunchingDown(this.scene, this.spine, this.player)
+            return new MunchingDown(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
 
     }
@@ -478,7 +476,7 @@ export class EatingDown extends PlayerStateMachine {
         //console.log('Entering Eating Down State this runs on Entry')
 
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the Eathing Down State')
     }
     exit(time: number, delta: number) {
@@ -490,23 +488,23 @@ export class EatingDown extends PlayerStateMachine {
 // MunchingDown -> Idle
 // MunchingDown -> Under Attack
 export class MunchingDown extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine, this.player)
+            return new Idle(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
-            return new UnderAttack(this.scene, this.spine, this.player)
+            return new UnderAttack(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
     }
     enter(time: number, delta: number) {
         //console.log('Entering Munching Down State this runs on Entry')
 
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the Munching Down State')
     }
     exit(time: number, delta: number) {
@@ -522,33 +520,33 @@ export class MunchingDown extends PlayerStateMachine {
 // UnderAttack -> Walking Down
 // UnderAttack -> Expired
 export class UnderAttack extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         if (input === INPUT_TYPES.WALK_LEFT) {
-            return new WalkingLeft(this.scene, this.spine, this.player)
+            return new WalkingLeft(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_RIGHT) {
-            return new WalkingRight(this.scene, this.spine, this.player)
+            return new WalkingRight(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_UP) {
-            return new WalkingUp(this.scene, this.spine, this.player)
+            return new WalkingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_DOWN) {
-            return new WalkingDown(this.scene, this.spine, this.player)
+            return new WalkingDown(this.scene, this.spine)
         } else if (input === INPUT_TYPES.EXPIRED) {
-            return new Expired(this.scene, this.spine, this.player)
+            return new Expired(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
     }
     enter(time: number, delta: number) {
-        this.sound = this.scene.sound.add('langers')
+        //this.sound = this.scene.sound.add('langers')
         if (canPlay) {
             this.sound.play()
             canPlay = false
         }
         this.spine.play(INPUT_TYPES.UNDER_ATTACK, true)
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the UnderAttack State')
     }
     exit(time: number, delta: number) {
@@ -559,15 +557,15 @@ export class UnderAttack extends PlayerStateMachine {
 // Possible States
 // Expired -> Idle
 export class Expired extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         console.log('Process Input Expired State')
         if (input === INPUT_TYPES.REVIVE) {
-            return new Revived(this.scene, this.spine, this.player)
+            return new Revived(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
 
     }
@@ -581,7 +579,7 @@ export class Expired extends PlayerStateMachine {
         this.spine.play(INPUT_TYPES.EXPIRED, true)
 
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the Expired State')
     }
     exit(time: number, delta: number) {
@@ -592,15 +590,15 @@ export class Expired extends PlayerStateMachine {
 // Possible States
 // Revived -> Idle
 export class Revived extends PlayerStateMachine {
-    constructor(scene: Phaser.Scene, spine: SpineGameObject, player: PlayerState) {
-        super(scene, spine, player)
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
     }
-    handleInput(input: string) {
+    handleInput(input: string): PlayerStateMachine | undefined {
         console.log('Process Input Expired State')
         if (input === INPUT_TYPES.REVIVED) {
-            return new Idle(this.scene, this.spine, this.player)
+            return new Idle(this.scene, this.spine)
         } else {
-            return null
+            return undefined
         }
 
     }
@@ -614,7 +612,8 @@ export class Revived extends PlayerStateMachine {
         this.spine.play(INPUT_TYPES.EXPIRED, true)
 
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
+
         //console.log('Updating the Expired State')
     }
     exit(time: number, delta: number) {

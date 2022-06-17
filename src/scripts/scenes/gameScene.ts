@@ -19,6 +19,7 @@ import {
 import {
 	GSM
 } from '../objects/gameStates'
+import Player from '../objects/Player'
 
 
 const TRUFFLES_KEY = 'truffles'
@@ -36,6 +37,9 @@ enum Direction {
 }
 
 export default class GameScene extends Phaser.Scene {
+
+	// Player Class
+	private player!: Player
 
 	// Game State Management
 	private gameState!: GSM
@@ -65,7 +69,6 @@ export default class GameScene extends Phaser.Scene {
 	private cannonball: SpineGameObject[] = []
 	private windmill!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-	private keys
 	private orange!: SpineGameObject
 	private lemon!: SpineGameObject
 	private grape!: SpineGameObject
@@ -80,9 +83,9 @@ export default class GameScene extends Phaser.Scene {
 	private grapeAnimationIndex = 0
 	private lemonAnimationIndex = 0
 
-	private trufflesPosX = 100
-	private trufflesPosY = 360
-	private trufflesSpeed = 2
+	//private trufflesPosX = 100
+	//private trufflesPosY = 360
+	//private trufflesSpeed = 2
 	private tileSize = 32
 
 	private cannonballAnimationNames: string[] = []
@@ -155,6 +158,10 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
+		//Setup the Player
+		this.player = new Player(new Phaser.Math.Vector2(100, 300))
+		this.player.setVelocityX(new Phaser.Math.Vector2(2, 0))
+		this.player.setVelocityY(new Phaser.Math.Vector2(0, 2))
 
 		//Setup Game State
 		this.gameState = GSM.PLAY
@@ -207,7 +214,7 @@ export default class GameScene extends Phaser.Scene {
 
 
 		// Setup Truffles
-		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, this.trufflesPosX, this.trufflesPosY, 0.25, 0.25)
+		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, this.player.getX(), this.player.getY(), 0.25, 0.25)
 		this.truffles.setDepth(2)
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
@@ -234,7 +241,6 @@ export default class GameScene extends Phaser.Scene {
 
 		// Keyboard Setup
 		this.cursors = this.input.keyboard.createCursorKeys()
-		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
 
 		// Setup Fruits
 		var tilesWide = 40
@@ -261,10 +267,6 @@ export default class GameScene extends Phaser.Scene {
 		for (let o = 0; o < this.fruit.length; o++) {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
-
-		// Initialise Player State
-		this.playerState = new PlayerState(this, this.truffles, 0, 0);
-		this.playerState.init()
 
 		this.time.addEvent({
 			delay: this.soundDelay,
@@ -295,13 +297,15 @@ export default class GameScene extends Phaser.Scene {
 			callback: this.resetSounds,
 			callbackScope: this
 		})
+
+		// Initialise Player State
+		this.playerState = new PlayerState(this, this.truffles, 0, 0);
+		this.player.setState(this.playerState)
 	}
 
 	// Game Update Method
 
 	update(time: number, delta: number): void {
-
-		console.log("Time:" + time + " Delta:" + delta)
 
 		// TODO BETTER Game State Management
 		//If level Playable Update
@@ -326,76 +330,76 @@ export default class GameScene extends Phaser.Scene {
 		const size = this.trufflesAnimationNames.length
 
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT, time, delta) != null) {
+			if (this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player) != null) {
 				this.direction = Direction.Right
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_LEFT, time, delta) != null) {
+			if (this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player) != null) {
 				this.direction = Direction.Left
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_UP, time, delta) != null) {
+			if (this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player) != null) {
 				this.direction = Direction.Up
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_DOWN, time, delta) != null) {
+			if (this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player) != null) {
 				this.direction = Direction.Down
 			}
 		}
 
 		if (this.canMove) {
 			if (this.cursors.right.isDown) {
-				const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize / 2)
-				const y = this.map.worldToTileY(this.trufflesPosY)
+				const x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				const y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.collisionLayer.getTileAt(x + 1, y)
 
 
 				if (this.tile == null) {
-					this.trufflesPosX += this.trufflesSpeed
-					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+					this.player.moveRight()
+					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
 			}
 
 			if (this.cursors.left.isDown) {
-				const x = this.map.worldToTileX(this.trufflesPosX + this.tileSize / 2)
-				const y = this.map.worldToTileY(this.trufflesPosY)
+				const x = this.map.worldToTileX(this.player.getX() + this.tileSize / 2)
+				const y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.collisionLayer.getTileAt(x - 1, y)
 
 				if (this.tile == null) {
-					this.trufflesPosX -= this.trufflesSpeed
-					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+					this.player.moveLeft()
+					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
 			}
 
 			if (this.cursors.up.isDown) {
-				const x = this.map.worldToTileX(this.trufflesPosX)
-				const y = this.map.worldToTileY(this.trufflesPosY + this.tileSize / 4)
+				const x = this.map.worldToTileX(this.player.getX())
+				const y = this.map.worldToTileY(this.player.getY() + this.tileSize / 4)
 
 				this.tile = this.collisionLayer.getTileAt(x, y - 1)
 
 				if (this.tile == null) {
-					this.trufflesPosY -= this.trufflesSpeed
-					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+					this.player.moveUp()
+					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
 			}
 
 			if (this.cursors.down.isDown) {
 
-				const x = this.map.worldToTileX(this.trufflesPosX)
-				const y = this.map.worldToTileY(this.trufflesPosY + this.trufflesSpeed)
+				const x = this.map.worldToTileX(this.player.getX())
+				const y = this.map.worldToTileY(this.player.getY() + this.player.getVelocityY().y)
 
 				this.tile = this.collisionLayer.getTileAt(x, y)
 
 				if (this.tile == null) {
-					this.trufflesPosY += this.trufflesSpeed
-					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+					this.player.moveDown()
+					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
 			}
 
 			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
-				this.playerState.handleInput(INPUT_TYPES.IDLE, time, delta)
+				this.player.getState().handleInput(INPUT_TYPES.IDLE, time, delta, this.player)
 			} else {
 				for (let i = 0; i < this.fruit.length; i++) {
 
@@ -412,33 +416,39 @@ export default class GameScene extends Phaser.Scene {
 						switch (this.direction) {
 							case Direction.Up:
 								this.setPoints(250)
-								this.playerState.handleInput(INPUT_TYPES.EATING_UP, time, delta)
+								//this.player.getState().handleInput(INPUT_TYPES.EATING_UP, time, delta, this.player)
 								break;
 							case Direction.Down:
 								this.setPoints(350)
-								this.playerState.handleInput(INPUT_TYPES.EATING_DOWN, time, delta)
+								//this.player.getState().handleInput(INPUT_TYPES.EATING_DOWN, time, delta, this.player)
 								break;
 							case Direction.Left:
 								this.setPoints(100)
-								this.playerState.handleInput(INPUT_TYPES.EATING_LEFT, time, delta)
+								this.player.getState().handleInput(INPUT_TYPES.EATING_LEFT, time, delta, this.player)
 								break;
 							case Direction.Right:
 								this.setPoints(250)
-								this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT, time, delta)
+								//this.player.getState().handleInput(INPUT_TYPES.EATING_RIGHT, time, delta, this.player)
 								break;
 						}
 					}
 				}
 			}
 		}
-		this.playerState.update(time, delta) // Updates the Player State See PlayerStateMachine*/
+
+
+		// Set cannon ball positions
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.trufflesAABB(this.truffles, this.cannonball[i])) {
+				this.player.setX(100)
+				this.player.setY(360)
 				this.truffles.setPosition(100, 360)
-				this.trufflesPosX = 100
-				this.trufflesPosY = 360
 			}
 		}
+
+		// Updates the Player State See PlayerStateMachine*/
+		this.player.getState().getState()?.update(time, delta, this.player)
+
 		// Display Updated HUD
 		this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.04)
 		this.currentScoreText.update()
@@ -570,7 +580,6 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	private resetSounds(time: number, delta: number) {
-		this.playerState.playSound(time, delta)
 		this.time.addEvent({
 			delay: this.soundDelay,
 			callback: this.resetSounds,
@@ -583,10 +592,10 @@ export default class GameScene extends Phaser.Scene {
 
 		var collision = false;
 
-		if (this.trufflesPosX - this.tileSize / 2 < collidable.x + collidable.scaleX * collidable.width &&
-			this.trufflesPosX + this.tileSize / 2 > collidable.x &&
-			this.trufflesPosY - this.tileSize < collidable.y + collidable.scaleY * collidable.height &&
-			this.trufflesPosY > collidable.y) {
+		if (this.player.getX() - this.tileSize / 2 < collidable.x + collidable.scaleX * collidable.width &&
+			this.player.getX() + this.tileSize / 2 > collidable.x &&
+			this.player.getY() - this.tileSize < collidable.y + collidable.scaleY * collidable.height &&
+			this.player.getY() > collidable.y) {
 			collision = true;
 		}
 
@@ -602,20 +611,6 @@ export default class GameScene extends Phaser.Scene {
 			callbackScope: this,
 			args: [index, time, delta]
 		})
-		switch (this.direction) {
-			case Direction.Up:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_UP, time, delta)
-				break;
-			case Direction.Down:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_DOWN, time, delta)
-				break;
-			case Direction.Left:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_LEFT, time, delta)
-				break;
-			case Direction.Right:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_RIGHT, time, delta)
-				break;
-		}
 	}
 
 	// Delete fruits
@@ -627,7 +622,7 @@ export default class GameScene extends Phaser.Scene {
 		this.map.removeTile(this.tile)
 		this.fruit[index].removeFromDisplayList()
 
-		this.playerState.handleInput(INPUT_TYPES.IDLE, time, delta)
+		//this.player.getState().handleInput(INPUT_TYPES.IDLE, time, delta, this.player)
 		this.canMove = true
 	}
 
@@ -635,7 +630,6 @@ export default class GameScene extends Phaser.Scene {
 	private cannonballReset(index: number) {
 		this.cannonball[index].setPosition(this.cannonballPosX[index], this.cannonballPosY[index] = 40)
 		this.changeAnimation(this.cannonball[index], this.cannonballAnimationNames, 1)
-		console.log(this.cannonballAnimationNames)
 		this.cannonballMoving[index] = true
 
 	}
@@ -714,6 +708,6 @@ export default class GameScene extends Phaser.Scene {
 
 	private gsmUpdate() {
 		this.gameState = GSM.LEVEL_COMPLETE
-		console.log('level complete')
+		//console.log('level complete')
 	}
 }
