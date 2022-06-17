@@ -497,8 +497,8 @@ export default class GameScene extends Phaser.Scene {
 		this.wallTop1Layer = this.map.createLayer('map/castle/walls/wall_top_depth_01', this.tileset, 0, 0);
 		this.wallTop1Layer.setDepth(1);
 
-		this.wallTop2Layer = this.map.createLayer('map/castle/walls/wall_top_depth_03', this.tileset, 0, 0);
-		this.wallTop2Layer.setDepth(3);
+		this.wallTop2Layer = this.map.createLayer('map/castle/walls/wall_top_depth_04', this.tileset, 0, 0);
+		this.wallTop2Layer.setDepth(4);
 
 		this.house2RoofLayer = this.map.createLayer('map/buildings/background/house_roof_depth_03/house_roof_layer_2', this.tileset, 0, 0);
 		this.house2RoofLayer.setDepth(3);
@@ -509,8 +509,8 @@ export default class GameScene extends Phaser.Scene {
 		this.towerTop1Layer = this.map.createLayer('map/castle/tower/tower_top_depth_01', this.tileset, 0, 0);
 		this.towerTop1Layer.setDepth(1);
 
-		this.towerTop2Layer = this.map.createLayer('map/castle/tower/tower_top_depth_03', this.tileset, 0, 0);
-		this.towerTop2Layer.setDepth(3);
+		this.towerTop2Layer = this.map.createLayer('map/castle/tower/tower_top_depth_04', this.tileset, 0, 0);
+		this.towerTop2Layer.setDepth(4);
 
 		this.churchRoofLayer = this.map.createLayer('map/buildings/background/church_depth_03/church_roof_03', this.tileset, 0, 0);
 		this.churchRoofLayer.setDepth(1);
@@ -518,7 +518,7 @@ export default class GameScene extends Phaser.Scene {
 		this.castleRoofLayer = this.map.createLayer('map/castle/castle/castle_roof_depth_03', this.tileset, 0, 0);
 		this.castleRoofLayer.setDepth(3);
 
-		this.miscTop1Layer = this.map.createLayer('map/environment_objects/miscellaneous_top_depth_01', this.tileset, 0, 0);
+		this.miscTop1Layer = this.map.createLayer('map/environment_objects/tree_01', this.tileset, 0, 0);
 		this.miscTop1Layer.setDepth(1);
 
 		//this.hudLayer = this.map.createLayer('map/hud/hud_depth_05', this.hudTileset, 0, 0);
@@ -528,7 +528,7 @@ export default class GameScene extends Phaser.Scene {
 		this.collisionLayer.setDepth(2)
 		this.collisionLayer.setVisible(false)
 
-		this.candyLayer = this.map.createLayer('map/collectables/candies_depth_02', this.tileset, 0, 0);
+		this.candyLayer = this.map.createLayer('map/collectables/candies_level1_depth_02', this.tileset, 0, 0);
 		this.candyLayer.setDepth(2);
 		this.candyLayer.setVisible(false)
 	}
