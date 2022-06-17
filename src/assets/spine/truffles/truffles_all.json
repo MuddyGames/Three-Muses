@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "BM4Z8kB3JryJqYPVyJIgH9m8CrM",
+	"hash": "ck+KRBoR6lDqlQLvNQ1f/Dc2gyE",
 	"spine": "3.8.72",
 	"x": -112.38,
 	"y": -18.63,
@@ -194,9 +194,6 @@
 					"height": 153
 				}
 			},
-			"ear_left_front": {
-				"ear_left_front": { "x": 44.45, "y": 1.55, "rotation": -37.57, "width": 106, "height": 102 }
-			},
 			"leg_right_front": {
 				"leg_right_front": {
 					"type": "mesh",
@@ -263,6 +260,9 @@
 			"head_front4": {
 				"closed_eyes": { "x": 66.43, "y": 0.04, "rotation": -89.96, "width": 156, "height": 32 }
 			},
+			"snout_front": {
+				"snout_front": { "x": 38.08, "y": 0.03, "rotation": -89.96, "width": 64, "height": 41 }
+			},
 			"pupil": {
 				"pupil": { "x": -0.56, "y": -3.49, "rotation": -49.07, "width": 35, "height": 34 }
 			},
@@ -320,17 +320,8 @@
 					"height": 51
 				}
 			},
-			"back_arm": {
-				"back_arm": {
-					"type": "mesh",
-					"uvs": [ 0.33976, 0, 0.45123, 0.02027, 0.5228, 0.07111, 0.64244, 0.19103, 0.77684, 0.36183, 0.93812, 0.60263, 1, 0.72863, 0.98012, 0.91903, 0.90116, 1, 0.66764, 1, 0.44007, 0.94459, 0.26612, 0.90223, 0.083, 0.70343, 0, 0.49903, 0.06956, 0.15183, 0.1502, 0, 0.53828, 0.54383 ],
-					"triangles": [ 16, 2, 3, 16, 3, 4, 7, 5, 6, 16, 4, 5, 7, 16, 5, 10, 11, 16, 9, 10, 16, 16, 8, 9, 7, 8, 16, 1, 2, 16, 0, 1, 16, 14, 15, 0, 16, 14, 0, 12, 14, 16, 13, 14, 12, 11, 12, 16 ],
-					"vertices": [ 2, 16, 10.26, 18.09, 0.99215, 17, -19.39, 19.11, 0.00785, 2, 16, 18.34, 20.4, 0.92788, 17, -11.2, 21, 0.07212, 2, 16, 24.18, 20.3, 0.8199, 17, -5.37, 20.61, 0.1801, 2, 16, 34.52, 18.69, 0.44076, 17, 4.88, 18.47, 0.55924, 2, 16, 46.76, 15.38, 0.06112, 17, 16.92, 14.53, 0.93888, 1, 17, 31.91, 8.28, 1, 1, 17, 38.16, 4.45, 1, 1, 17, 39.57, -4.13, 1, 1, 17, 35.18, -9.52, 1, 2, 16, 50.01, -14.3, 0.01223, 17, 18.64, -15.29, 0.98777, 2, 16, 33.27, -18.44, 0.46762, 17, 1.71, -18.55, 0.53238, 2, 16, 20.47, -21.6, 0.89254, 17, -11.24, -21.04, 0.10746, 2, 16, 4.37, -18.5, 0.99969, 17, -27.15, -17.12, 3.1E-4, 1, 16, -4.86, -12.33, 1, 1, 16, -5.93, 4.11, 1, 1, 16, -2.91, 12.72, 1, 2, 16, 33.28, 1.04, 0.00939, 17, 2.72, 0.9, 0.99061 ],
-					"hull": 16,
-					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 22, 24, 24, 26, 26, 28, 28, 30, 0, 30, 14, 32, 32, 28, 32, 6, 18, 20, 20, 22, 32, 20 ],
-					"width": 75,
-					"height": 45
-				}
+			"ear_left_front": {
+				"ear_left_front": { "x": 44.45, "y": 1.55, "rotation": -37.57, "width": 106, "height": 102 }
 			},
 			"leg_right_back": {
 				"leg_right_back": {
@@ -344,8 +335,17 @@
 					"height": 105
 				}
 			},
-			"snout_front": {
-				"snout_front": { "x": 38.08, "y": 0.03, "rotation": -89.96, "width": 64, "height": 41 }
+			"back_arm": {
+				"back_arm": {
+					"type": "mesh",
+					"uvs": [ 0.33976, 0, 0.45123, 0.02027, 0.5228, 0.07111, 0.64244, 0.19103, 0.77684, 0.36183, 0.93812, 0.60263, 1, 0.72863, 0.98012, 0.91903, 0.90116, 1, 0.66764, 1, 0.44007, 0.94459, 0.26612, 0.90223, 0.083, 0.70343, 0, 0.49903, 0.06956, 0.15183, 0.1502, 0, 0.53828, 0.54383 ],
+					"triangles": [ 16, 2, 3, 16, 3, 4, 7, 5, 6, 16, 4, 5, 7, 16, 5, 10, 11, 16, 9, 10, 16, 16, 8, 9, 7, 8, 16, 1, 2, 16, 0, 1, 16, 14, 15, 0, 16, 14, 0, 12, 14, 16, 13, 14, 12, 11, 12, 16 ],
+					"vertices": [ 2, 16, 10.26, 18.09, 0.99215, 17, -19.39, 19.11, 0.00785, 2, 16, 18.34, 20.4, 0.92788, 17, -11.2, 21, 0.07212, 2, 16, 24.18, 20.3, 0.8199, 17, -5.37, 20.61, 0.1801, 2, 16, 34.52, 18.69, 0.44076, 17, 4.88, 18.47, 0.55924, 2, 16, 46.76, 15.38, 0.06112, 17, 16.92, 14.53, 0.93888, 1, 17, 31.91, 8.28, 1, 1, 17, 38.16, 4.45, 1, 1, 17, 39.57, -4.13, 1, 1, 17, 35.18, -9.52, 1, 2, 16, 50.01, -14.3, 0.01223, 17, 18.64, -15.29, 0.98777, 2, 16, 33.27, -18.44, 0.46762, 17, 1.71, -18.55, 0.53238, 2, 16, 20.47, -21.6, 0.89254, 17, -11.24, -21.04, 0.10746, 2, 16, 4.37, -18.5, 0.99969, 17, -27.15, -17.12, 3.1E-4, 1, 16, -4.86, -12.33, 1, 1, 16, -5.93, 4.11, 1, 1, 16, -2.91, 12.72, 1, 2, 16, 33.28, 1.04, 0.00939, 17, 2.72, 0.9, 0.99061 ],
+					"hull": 16,
+					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 22, 24, 24, 26, 26, 28, 28, 30, 0, 30, 14, 32, 32, 28, 32, 6, 18, 20, 20, 22, 32, 20 ],
+					"width": 75,
+					"height": 45
+				}
 			}
 		}
 	}
@@ -353,12 +353,7 @@
 "animations": {
 	"eating_down": {
 		"slots": {
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -368,67 +363,17 @@
 					{ "name": null }
 				]
 			},
-			"arm_left": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone7": {
+			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_right": {
-				"attachment": [
-					{ "time": 0.6667, "name": "eyebrow_left_front" }
-				]
-			},
-			"leg": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow": {
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -438,17 +383,12 @@
 					{ "name": null }
 				]
 			},
-			"birthmark": {
+			"eyebrow_right": {
 				"attachment": [
-					{ "name": null }
+					{ "time": 0.6667, "name": "eyebrow_left_front" }
 				]
 			},
 			"cheek": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -463,17 +403,77 @@
 					{ "name": null }
 				]
 			},
-			"arm_right": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -566,35 +566,10 @@
 	},
 	"eating_left": {
 		"slots": {
-			"head_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"eye": {
 				"attachment": [
 					{ "name": null },
 					{ "time": 0.6667, "name": "eye" }
-				]
-			},
-			"arm_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
 				]
 			},
 			"bone9": {
@@ -607,17 +582,7 @@
 					{ "name": null }
 				]
 			},
-			"ear_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_left_front": {
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -627,7 +592,12 @@
 					{ "name": null }
 				]
 			},
-			"eyebrow_right": {
+			"bone7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -637,17 +607,17 @@
 					{ "name": null }
 				]
 			},
-			"head_front3": {
+			"leg_left_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body_front": {
+			"leg_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eyebrow_left": {
+			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -657,12 +627,42 @@
 					{ "name": null }
 				]
 			},
-			"body_front2": {
+			"snout_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"ear_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -672,7 +672,7 @@
 					{ "name": null }
 				]
 			},
-			"leg_right_back": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -816,37 +816,12 @@
 	},
 	"eating_right": {
 		"slots": {
-			"birthmark": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"eye": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -861,17 +836,7 @@
 					{ "name": null }
 				]
 			},
-			"ear_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_left_front": {
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -881,7 +846,12 @@
 					{ "name": null }
 				]
 			},
-			"eyebrow_right": {
+			"bone7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -891,17 +861,17 @@
 					{ "name": null }
 				]
 			},
-			"head_front3": {
+			"leg_left_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body_front": {
+			"leg_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eyebrow_left": {
+			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -911,12 +881,42 @@
 					{ "name": null }
 				]
 			},
-			"body_front2": {
+			"snout_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"ear_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -926,7 +926,7 @@
 					{ "name": null }
 				]
 			},
-			"leg_right_back": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1073,12 +1073,7 @@
 	},
 	"eating_up": {
 		"slots": {
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1088,17 +1083,12 @@
 					{ "name": null }
 				]
 			},
-			"arm_left": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"tail": {
+			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1109,22 +1099,22 @@
 					{ "time": 0.6667, "name": "eyes_front" }
 				]
 			},
-			"leg_back": {
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm": {
+			"front_ear": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"pupil": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1134,7 +1124,27 @@
 					{ "name": null }
 				]
 			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1149,42 +1159,32 @@
 					{ "name": null }
 				]
 			},
-			"front_ear": {
+			"leg_left_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"birthmark": {
+			"arm_left": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body": {
+			"eye2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"back_arm": {
+			"leg_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_right": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1314,27 +1314,28 @@
 	},
 	"expired": {
 		"slots": {
-			"eye2": {
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"head": {
+			"cheek": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eye": {
+			"birthmark": {
+				"attachment": [
+					{ "name": null },
+					{ "time": 1.6667, "name": null }
+				]
+			},
+			"bone14": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"tail": {
+			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1344,27 +1345,17 @@
 					{ "name": null }
 				]
 			},
-			"leg_back": {
+			"front_ear": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone14": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1374,7 +1365,32 @@
 					{ "name": null }
 				]
 			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1389,7 +1405,7 @@
 					{ "name": null }
 				]
 			},
-			"front_ear": {
+			"leg_left_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1399,38 +1415,22 @@
 					{ "name": null }
 				]
 			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null },
-					{ "time": 1.6667, "name": null }
-				]
-			},
-			"cheek": {
+			"eye2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body": {
+			"leg_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"back_arm": {
+			"tail": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1581,77 +1581,7 @@
 	},
 	"idle": {
 		"slots": {
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"tail": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front4": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front3": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"front_ear": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1661,17 +1591,7 @@
 					{ "name": null }
 				]
 			},
-			"body": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1681,7 +1601,87 @@
 					{ "name": null }
 				]
 			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"back_arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1807,12 +1807,7 @@
 	},
 	"munching_down": {
 		"slots": {
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1822,37 +1817,32 @@
 					{ "name": null }
 				]
 			},
-			"arm_left": {
+			"birthmark": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_right": {
 				"attachment": [
 					{ "time": 0.3333, "name": null }
 				]
 			},
-			"bone7": {
+			"front_ear": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"cheek": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1862,7 +1852,27 @@
 					{ "name": null }
 				]
 			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1877,47 +1887,37 @@
 					{ "name": null }
 				]
 			},
-			"front_ear": {
+			"leg_left_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"birthmark": {
+			"arm_left": {
+				"attachment": [
+					{ "time": 0.3333, "name": null }
+				]
+			},
+			"eye2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"cheek": {
+			"leg_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"back_arm": {
+			"tail": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_right": {
-				"attachment": [
-					{ "time": 0.3333, "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2062,7 +2062,7 @@
 	},
 	"munching_left": {
 		"slots": {
-			"head_front2": {
+			"cheek": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2072,32 +2072,7 @@
 					{ "name": null }
 				]
 			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front": {
+			"bone9": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2107,17 +2082,7 @@
 					{ "name": null }
 				]
 			},
-			"ear_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_left_front": {
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2127,12 +2092,12 @@
 					{ "name": null }
 				]
 			},
-			"cheek": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"head_front3": {
+			"ear_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2142,17 +2107,52 @@
 					{ "name": null }
 				]
 			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"leg_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone9": {
+			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2162,7 +2162,7 @@
 					{ "name": null }
 				]
 			},
-			"leg_right_back": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2352,12 +2352,7 @@
 	},
 	"munching_right": {
 		"slots": {
-			"body_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front2": {
+			"cheek": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2367,67 +2362,7 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"bone9": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_right": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"cheek": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2437,12 +2372,7 @@
 					{ "name": null }
 				]
 			},
-			"eyebrow_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
+			"eyes_front": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2452,12 +2382,82 @@
 					{ "name": null }
 				]
 			},
-			"leg_right_front": {
+			"eyebrow_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2650,82 +2650,7 @@
 	},
 	"munching_up": {
 		"slots": {
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_left": {
-				"attachment": [
-					{ "time": 0.3333, "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "time": 0.6667, "name": null }
-				]
-			},
-			"tail": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"front_ear": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2735,24 +2660,9 @@
 					{ "name": null }
 				]
 			},
-			"body": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
-				]
-			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_right": {
-				"attachment": [
-					{ "time": 0.3333, "name": null }
 				]
 			},
 			"bone8": {
@@ -2760,7 +2670,97 @@
 					{ "time": 0.6667, "name": null }
 				]
 			},
+			"arm_right": {
+				"attachment": [
+					{ "time": 0.3333, "name": null }
+				]
+			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
+				"attachment": [
+					{ "time": 0.6667, "name": null }
+				]
+			},
+			"back_arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
+				"attachment": [
+					{ "time": 0.3333, "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2905,12 +2905,7 @@
 	},
 	"revive": {
 		"slots": {
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2920,27 +2915,7 @@
 					{ "name": null }
 				]
 			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"tail": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2950,12 +2925,27 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"pupil": {
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"cheek": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2965,7 +2955,27 @@
 					{ "name": null }
 				]
 			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2980,7 +2990,7 @@
 					{ "name": null }
 				]
 			},
-			"front_ear": {
+			"leg_left_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2990,37 +3000,27 @@
 					{ "name": null }
 				]
 			},
-			"birthmark": {
+			"eye2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"cheek": {
+			"leg_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"back_arm": {
+			"tail": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3103,12 +3103,7 @@
 	},
 	"revived": {
 		"slots": {
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3118,27 +3113,7 @@
 					{ "name": null }
 				]
 			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"tail": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3148,12 +3123,27 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"pupil": {
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3163,7 +3153,32 @@
 					{ "name": null }
 				]
 			},
+			"cheek": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3178,7 +3193,7 @@
 					{ "name": null }
 				]
 			},
-			"front_ear": {
+			"leg_left_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3188,37 +3203,22 @@
 					{ "name": null }
 				]
 			},
-			"birthmark": {
+			"eye2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"cheek": {
+			"leg_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"back_arm": {
+			"tail": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3301,12 +3301,7 @@
 	},
 	"splash": {
 		"slots": {
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3316,27 +3311,7 @@
 					{ "name": null }
 				]
 			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"tail": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3346,12 +3321,27 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"pupil": {
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"cheek": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3361,7 +3351,27 @@
 					{ "name": null }
 				]
 			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3376,7 +3386,7 @@
 					{ "name": null }
 				]
 			},
-			"front_ear": {
+			"leg_left_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3386,37 +3396,27 @@
 					{ "name": null }
 				]
 			},
-			"birthmark": {
+			"eye2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"cheek": {
+			"leg_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"back_arm": {
+			"tail": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3499,7 +3499,67 @@
 	},
 	"under_attack": {
 		"slots": {
-			"eye2": {
+			"body": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"birthmark": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"cheek": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"back_arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3509,7 +3569,22 @@
 					{ "name": null }
 				]
 			},
-			"eye": {
+			"head_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3524,82 +3599,7 @@
 					{ "name": null }
 				]
 			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front4": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front3": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"front_ear": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"cheek": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3777,72 +3777,7 @@
 	},
 	"walk_down": {
 		"slots": {
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"tail": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front3": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"front_ear": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3852,17 +3787,7 @@
 					{ "name": null }
 				]
 			},
-			"body": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3872,7 +3797,82 @@
 					{ "name": null }
 				]
 			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"back_arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4031,37 +4031,12 @@
 	},
 	"walk_four_left": {
 		"slots": {
-			"head_front2": {
+			"cheek": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4076,12 +4051,17 @@
 					{ "name": null }
 				]
 			},
-			"ear_right_front": {
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"eyebrow_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4091,7 +4071,42 @@
 					{ "name": null }
 				]
 			},
-			"eyebrow_right": {
+			"eyebrow_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4106,17 +4121,7 @@
 					{ "name": null }
 				]
 			},
-			"cheek": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_right": {
+			"arm_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4126,12 +4131,7 @@
 					{ "name": null }
 				]
 			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4324,37 +4324,12 @@
 	},
 	"walk_left": {
 		"slots": {
-			"head_front2": {
+			"cheek": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4369,12 +4344,17 @@
 					{ "name": null }
 				]
 			},
-			"ear_right_front": {
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"eyebrow_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4384,7 +4364,42 @@
 					{ "name": null }
 				]
 			},
-			"eyebrow_right": {
+			"eyebrow_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4399,17 +4414,7 @@
 					{ "name": null }
 				]
 			},
-			"cheek": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_right": {
+			"arm_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4419,12 +4424,7 @@
 					{ "name": null }
 				]
 			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4583,7 +4583,7 @@
 	},
 	"walk_right": {
 		"slots": {
-			"head_front2": {
+			"cheek": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4593,82 +4593,12 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"bone9": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"ear_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_right": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front3": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"cheek": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4679,12 +4609,82 @@
 					{ "time": 1, "name": "arm-right_front" }
 				]
 			},
-			"leg_right_front": {
+			"eyebrow_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4862,12 +4862,7 @@
 	},
 	"walk_up": {
 		"slots": {
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4877,7 +4872,7 @@
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4887,42 +4882,7 @@
 					{ "name": null }
 				]
 			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"front_ear": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4932,17 +4892,57 @@
 					{ "name": null }
 				]
 			},
-			"body": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
+			"leg": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
 				"attachment": [
 					{ "name": null }
 				]
