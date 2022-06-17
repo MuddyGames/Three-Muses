@@ -39,6 +39,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio('sca', ['assets/audio/idioms/sca.mp3', 'assets/audio/idioms/sca.ogg']);
     this.load.audio('shades', ['assets/audio/idioms/shades.mp3', 'assets/audio/idioms/shades.ogg']);
     this.load.audio('sham', ['assets/audio/idioms/sham.mp3', 'assets/audio/idioms/sham.ogg']);
+    this.load.audio('silent', ['assets/audio/idioms/silent.mp3', 'assets/audio/idioms/silent.ogg']);
     this.load.audio('state_of_ya', ['assets/audio/idioms/state_of_ya.mp3', 'assets/audio/idioms/state_of_ya.ogg']);
     this.load.audio('story', ['assets/audio/idioms/story.mp3', 'assets/audio/idioms/story.ogg']);
     this.load.audio('tackies', ['assets/audio/idioms/tackies.mp3', 'assets/audio/idioms/tackies.ogg']);

@@ -8,6 +8,7 @@ import {
 } from './PlayerStateMachine'
 
 export default class Player {
+    private move!: boolean
     private state!: PlayerState
     private reSpawnPosition!: Phaser.Math.Vector2
     private position!: Phaser.Math.Vector2
@@ -18,13 +19,18 @@ export default class Player {
     private idiomDelay!: number
 
     constructor(position: Phaser.Math.Vector2) {
+        this.move = true
         this.reSpawnPosition = position // Respawn Point
         this.position = position
         this.velocityX = new Phaser.Math.Vector2(0, 0)
         this.velocityY = new Phaser.Math.Vector2(0, 0)
-        this.eatingDelay = 500
-        this.munchingDelay = 500
-        this.idiomDelay = 500
+        this.eatingDelay = 1000
+        this.munchingDelay = 1000
+        this.idiomDelay = 100
+    }
+
+    setMove(move:boolean): void{
+        this.move = move
     }
 
     respawn(): void {
@@ -84,17 +90,23 @@ export default class Player {
     }
 
     moveLeft(): void {
-        //if (!(this.getState().getState() instanceof Idle ) || !(this.getState().getState() instanceof MunchingLeft )) {
-        this.position.subtract(this.velocityX)
-        //}
+        if (this.move) {
+            this.position.subtract(this.velocityX)
+        }
     }
     moveRight(): void {
-        this.position.add(this.velocityX)
+        if (this.move) {
+            this.position.add(this.velocityX)
+        }
     }
     moveUp(): void {
-        this.position.subtract(this.velocityY)
+        if (this.move) {
+            this.position.subtract(this.velocityY)
+        }
     }
     moveDown(): void {
-        this.position.add(this.velocityY)
+        if (this.move) {
+            this.position.add(this.velocityY)
+        }
     }
 }

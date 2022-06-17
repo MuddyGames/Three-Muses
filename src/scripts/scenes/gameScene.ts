@@ -299,7 +299,8 @@ export default class GameScene extends Phaser.Scene {
 		})
 
 		// Initialise Player State
-		this.playerState = new PlayerState(this, this.truffles, 0, 0);
+		this.playerState = new PlayerState(this, this.truffles, 0, 0)
+		this.playerState.getState()?.enter(0,0,this.player)
 		this.player.setState(this.playerState)
 	}
 
@@ -404,6 +405,7 @@ export default class GameScene extends Phaser.Scene {
 				for (let i = 0; i < this.fruit.length; i++) {
 
 					if (!this.fruitMarked[i] && this.trufflesAABB(this.truffles, this.fruit[i])) {
+						console.log('Fruit Collision ' + i)
 						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
 						this.canMove = false
 						this.time.addEvent({

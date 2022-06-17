@@ -24,10 +24,10 @@ export default abstract class PlayerStateMachine {
         this.spine = spine
     }
 
-    abstract handleInput(input: string): PlayerStateMachine | undefined;
-    abstract enter(time: number, delta: number): void
+    abstract handleInput(input: string): PlayerStateMachine | undefined
+    abstract enter(time: number, delta: number, player: Player): void
     abstract update(time: number, delta: number, player: Player): void
-    abstract exit(time: number, delta: number): void
+    abstract exit(time: number, delta: number, player: Player): void
 }
 
 // Possible States
@@ -57,22 +57,60 @@ export class Idle extends PlayerStateMachine {
             return undefined
         }
     }
-    enter(time: number, delta: number) {
-        console.log('Entering the Idle State')
+    enter(time: number, delta: number, player: Player) {
+        player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.sound = this.scene.sound.add('story')
-        if (canPlay) {
-            this.sound.play()
-            canPlay = false
+        let selection = Phaser.Math.Between(0, 10)
+        switch (selection) {
+            case 1:
+                this.sound = this.scene.sound.add('story')
+                break
+            case 2:
+                this.sound = this.scene.sound.add('silent')
+                break
+            case 3:
+                this.sound = this.scene.sound.add('sca')
+                break
+            case 4:
+                this.sound = this.scene.sound.add('silent')
+                break
+            case 5:
+                this.sound = this.scene.sound.add('nippy')
+                break
+            case 6:
+                this.sound = this.scene.sound.add('silent')
+                break
+            case 7:
+                this.sound = this.scene.sound.add('hun')
+                break;
+            case 8:
+                this.sound = this.scene.sound.add('silent')
+                break
+            case 9:
+                this.sound = this.scene.sound.add('a_boy_the_kid')
+                break;
+            case 10:
+                this.sound = this.scene.sound.add('silent')
+                break;
+            default:
+                console.log('silent')
+                this.sound = this.scene.sound.add('silent')
         }
         this.spine.play(INPUT_TYPES.IDLE, true)
     }
     update(time: number, delta: number, player: Player) {
-        //console.log('Updating the Idle State')
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
     }
-    exit(time: number, delta: number) {
-        //console.log('Exit the Idle State')
+    exit(time: number, delta: number, player: Player) {
+        player.setMove(true)
+        this.animationTime = 0
+        this.idiomTime = 0
     }
 }
 
@@ -115,6 +153,7 @@ export class WalkingRight extends PlayerStateMachine {
     }
     update(time: number, delta: number) {
         //console.log('Updating the WalkingRight State')
+
     }
     exit(time: number, delta: number) {
         //console.log('Exiting the WalkingRight State')
@@ -197,7 +236,7 @@ export class WalkingUp extends PlayerStateMachine {
         }
 
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         this.sound = this.scene.sound.add('yurt')
         if (canPlay) {
             this.sound.play()
@@ -209,7 +248,7 @@ export class WalkingUp extends PlayerStateMachine {
     update(time: number, delta: number, player: Player) {
         //console.log('Updating the WalkingRight State')
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the WalkingRight State')
     }
 }
@@ -243,7 +282,7 @@ export class WalkingDown extends PlayerStateMachine {
             return undefined
         }
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         this.sound = this.scene.sound.add('shades')
         if (canPlay) {
             this.sound.play()
@@ -255,7 +294,7 @@ export class WalkingDown extends PlayerStateMachine {
     update(time: number, delta: number, player: Player) {
         //console.log('Updating the WalkingDowm State')
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the WalkingDown State')
     }
 }
@@ -275,7 +314,8 @@ export class EatingLeft extends PlayerStateMachine {
         }
 
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
+        player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
         this.sound = this.scene.sound.add('well_kid')
@@ -284,23 +324,22 @@ export class EatingLeft extends PlayerStateMachine {
     update(time: number, delta: number, player: Player) {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
+
+        console.log('this.animationElapsed : ' + this.animationElapsed + ' this.idiomElapsed ' + this.idiomElapsed)
         if (this.animationElapsed >= player.getEatingDelay()) {
             let temp = player.getState()
             let state = new MunchingLeft(this.scene, this.spine)
-            player.getState().getState() ?.exit(time, delta)
+            player.getState().getState() ?.exit(time, delta, player)
             player.getState().setState(state)
-            player.getState().getState() ?.enter(time, delta)
-            this.animationElapsed = 0
-            this.animationTime = time
+            player.getState().getState() ?.enter(time, delta, player)
         }
         if (this.idiomElapsed >= player.getIdiomDelay()) {
             this.sound.play()
-            this.idiomElapsed = 0
-            this.idiomTime = time
         }
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         console.log('Exiting the EatingLeft State')
+        player.setMove(true)
         this.idiomElapsed = 0
         this.idiomTime = 0
     }
@@ -321,28 +360,32 @@ export class MunchingLeft extends PlayerStateMachine {
         }
 
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
+        player.setMove(false)
         this.animationTime = time
-        this.sound = this.scene.sound.add('mup')
-        if (canPlay) {
-            this.sound.play()
-            canPlay = false
-        }
+        this.idiomTime = time
+        this.sound = this.scene.sound.add('unreal')
         this.spine.play(INPUT_TYPES.MUNCHING_LEFT, true)
-
     }
     update(time: number, delta: number, player: Player) {
-        let elapsed = time - this.animationTime
-        if (elapsed > 1000) {
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+        if (this.animationElapsed > player.getMunchingDelay()) {
             let temp = player.getState()
             let state = new Idle(this.scene, this.spine)
-            player.getState().getState() ?.exit(time, delta)
+            player.getState().getState() ?.exit(time, delta, player)
             player.getState().setState(state)
-            player.getState().getState() ?.enter(time, delta)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
         }
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         console.log('Exiting the Munching Left State')
+        player.setMove(true)
+        this.idiomElapsed = 0
+        this.idiomTime = 0
     }
 }
 
@@ -360,14 +403,14 @@ export class EatingRight extends PlayerStateMachine {
         }
 
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         //console.log('Entering Eating Right State this runs on Entry')
 
     }
     update(time: number, delta: number, player: Player) {
         //console.log('Updating the Eathing Right State')
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the Eating Right State')
     }
 }
@@ -389,14 +432,14 @@ export class MunchingRight extends PlayerStateMachine {
         }
 
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         //console.log('Entering Munching Right State this runs on Entry')
 
     }
     update(time: number, delta: number, player: Player) {
         //console.log('Updating the Munching Right State')
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the Munching Right State')
     }
 }
@@ -418,14 +461,14 @@ export class EatingUp extends PlayerStateMachine {
         }
 
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         //console.log('Entering Eating Up State this runs on Entry')
 
     }
     update(time: number, delta: number, player: Player) {
         //console.log('Updating the Eathing Up State')
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the Eating Up State')
     }
 }
@@ -447,14 +490,14 @@ export class MunchingUp extends PlayerStateMachine {
         }
 
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         //console.log('Entering Munching Up State this runs on Entry')
 
     }
     update(time: number, delta: number, player: Player) {
         //console.log('Updating the Munching Up State')
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the Munching Up State')
     }
 }
@@ -476,14 +519,14 @@ export class EatingDown extends PlayerStateMachine {
         }
 
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         //console.log('Entering Eating Down State this runs on Entry')
 
     }
     update(time: number, delta: number, player: Player) {
         //console.log('Updating the Eathing Down State')
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the Eating Down State')
     }
 }
@@ -504,14 +547,14 @@ export class MunchingDown extends PlayerStateMachine {
             return undefined
         }
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         //console.log('Entering Munching Down State this runs on Entry')
 
     }
     update(time: number, delta: number, player: Player) {
         //console.log('Updating the Munching Down State')
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the Munching Down State')
     }
 }
@@ -542,7 +585,7 @@ export class UnderAttack extends PlayerStateMachine {
             return undefined
         }
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         //this.sound = this.scene.sound.add('langers')
         if (canPlay) {
             this.sound.play()
@@ -553,7 +596,7 @@ export class UnderAttack extends PlayerStateMachine {
     update(time: number, delta: number, player: Player) {
         //console.log('Updating the UnderAttack State')
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the UnderAttack State')
     }
 }
@@ -573,7 +616,7 @@ export class Expired extends PlayerStateMachine {
         }
 
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         console.log('Entering the Expired State')
         this.sound = this.scene.sound.add('took_a_hopper')
         if (canPlay) {
@@ -586,7 +629,7 @@ export class Expired extends PlayerStateMachine {
     update(time: number, delta: number, player: Player) {
         //console.log('Updating the Expired State')
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the Expired State')
     }
 }
@@ -606,7 +649,7 @@ export class Revived extends PlayerStateMachine {
         }
 
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         console.log('Entering the Expired State')
         this.sound = this.scene.sound.add('state_of_ya')
         if (canPlay) {
@@ -620,7 +663,41 @@ export class Revived extends PlayerStateMachine {
 
         //console.log('Updating the Expired State')
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the Expired State')
+    }
+}
+
+// Possible States
+// Splash -> Idle
+export class Splash extends PlayerStateMachine {
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
+    }
+    handleInput(input: string): PlayerStateMachine | undefined {
+        console.log('Process Input Splash State')
+        if (input === INPUT_TYPES.REVIVED) {
+            return new Idle(this.scene, this.spine)
+        } else {
+            return undefined
+        }
+
+    }
+    enter(time: number, delta: number, player: Player) {
+        console.log('Entering the Splash State')
+        this.sound = this.scene.sound.add('state_of_ya')
+        if (canPlay) {
+            this.sound.play()
+            canPlay = false
+        }
+        this.spine.play(INPUT_TYPES.EXPIRED, true)
+
+    }
+    update(time: number, delta: number, player: Player) {
+
+        //console.log('Updating the Splash State')
+    }
+    exit(time: number, delta: number, player: Player) {
+        //console.log('Exiting the Splash State')
     }
 }

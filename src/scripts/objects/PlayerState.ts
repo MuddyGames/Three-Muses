@@ -11,17 +11,16 @@ export default class PlayerState {
     private spine!: SpineGameObject
 
     constructor(scene: Phaser.Scene, spine: SpineGameObject, time: number, delta: number) {
+        console.log('Constructed Player State')
         this.state = new Idle(scene, spine)
-        this.state.enter(0, 0)
     }
 
     handleInput(input: string, time: number, delta: number, player: Player): PlayerStateMachine | undefined {
         let state = this.state?.handleInput(input) as PlayerStateMachine | undefined;
-        //let state = this.state.handleInput(input)
         if (state !== undefined) {
-            this.state?.exit(time, delta)
+            this.state?.exit(time, delta, player)
             this.state = state
-            this.state?.enter(time, delta)
+            this.state?.enter(time, delta, player)
         }
         return state
     }
