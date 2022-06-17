@@ -300,6 +300,7 @@ export class EatingLeft extends PlayerStateMachine {
         }
     }
     exit(time: number, delta: number) {
+        console.log('Exiting the EatingLeft State')
         this.idiomElapsed = 0
         this.idiomTime = 0
     }
@@ -309,6 +310,7 @@ export class EatingLeft extends PlayerStateMachine {
 // MunchingLeft -> Under Attack
 export class MunchingLeft extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        console.log('Constructed MunchingLeft State')
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
@@ -340,7 +342,7 @@ export class MunchingLeft extends PlayerStateMachine {
         }
     }
     exit(time: number, delta: number) {
-        //console.log('Exiting the Munching Left State')
+        console.log('Exiting the Munching Left State')
     }
 }
 

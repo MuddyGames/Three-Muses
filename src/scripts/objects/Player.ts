@@ -9,6 +9,7 @@ import {
 
 export default class Player {
     private state!: PlayerState
+    private reSpawnPosition!: Phaser.Math.Vector2
     private position!: Phaser.Math.Vector2
     private velocityX!: Phaser.Math.Vector2
     private velocityY!: Phaser.Math.Vector2
@@ -17,12 +18,13 @@ export default class Player {
     private idiomDelay!: number
 
     constructor(position: Phaser.Math.Vector2) {
+        this.reSpawnPosition = position // Respawn Point
         this.position = position
         this.velocityX = new Phaser.Math.Vector2(0, 0)
         this.velocityY = new Phaser.Math.Vector2(0, 0)
-        this.eatingDelay = 1000
-        this.munchingDelay = 1000
-        this.idiomDelay = 1000
+        this.eatingDelay = 500
+        this.munchingDelay = 500
+        this.idiomDelay = 500
     }
 
     getEatingDelay(): number {
