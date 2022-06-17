@@ -50,8 +50,8 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start('SplashScene')
-    //this.scene.start('GameScene')
+    //this.scene.start('SplashScene')
+    this.scene.start('GameScene')
     //this.scene.start('TestScene')
 
     /**
