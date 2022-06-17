@@ -15,5 +15,6 @@ export enum INPUT_TYPES {
         MUNCHING_DOWN = 'walk_four_left', // TODO: Need Animation munching_down
         EXPIRED = 'walk_four_left', // TODO: Need Animation expired 
         REVIVE = 'revive', // TODO: make a copy of idle of make a new one
-        REVIVED = 'revived' // TODO: make a copy of idle of make a new one
+        REVIVED = 'revived', // TODO: make a copy of idle of make a new one
+        SPLASH = 'revived' // TODO: make a copy of idle of make a new one
 }
