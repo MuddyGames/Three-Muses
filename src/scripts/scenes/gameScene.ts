@@ -219,11 +219,13 @@ export default class GameScene extends Phaser.Scene {
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[0], this.cannonballPosY[0], 1.2, 1.2))
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[1], this.cannonballPosY[1], 1.2, 1.2))
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[2], this.cannonballPosY[2], 1.2, 1.2))
-
+        
+		
 		// Setup Cannon ball animations
 		for (let i = 0; i < this.cannonball.length; i++) {
 			this.cannonball[i].setDepth(2)
 			this.initializeAnimationsState(this.cannonball[i], this.cannonballAnimationNames)
+			this.cannonball[i].setDepth(0)
 		}
 
 		// Add Windmill

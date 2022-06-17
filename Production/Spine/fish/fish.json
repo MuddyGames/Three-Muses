@@ -1,0 +1,80 @@
+{ "skeleton": { "images": "C:/Users/kinga/Desktop/fish/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Background", "bone": "root" },
+	{ "name": "fish", "bone": "root", "attachment": "fish" },
+	{ "name": "splash1", "bone": "root", "attachment": "splash1" },
+	{ "name": "dot1", "bone": "root", "attachment": "dot1" },
+	{ "name": "dot2", "bone": "root", "attachment": "dot2" },
+	{ "name": "dot3", "bone": "root", "attachment": "dot3" },
+	{ "name": "splash2", "bone": "root", "attachment": "splash2" },
+	{ "name": "splash3", "bone": "root", "attachment": "splash3" },
+	{ "name": "splash4", "bone": "root", "attachment": "splash4" },
+	{ "name": "splash5", "bone": "root", "attachment": "splash5" },
+	{ "name": "dot4", "bone": "root", "attachment": "dot4" },
+	{ "name": "dot5", "bone": "root", "attachment": "dot5" },
+	{ "name": "dot6", "bone": "root", "attachment": "dot6" },
+	{ "name": "dot7", "bone": "root", "attachment": "dot7" },
+	{ "name": "dot8", "bone": "root", "attachment": "dot8" },
+	{ "name": "dot9", "bone": "root", "attachment": "dot9" },
+	{ "name": "dot10", "bone": "root", "attachment": "dot10" }
+],
+"skins": {
+	"default": {
+		"Background": {
+			"Background": { "x": 80, "y": -42.5, "width": 162, "height": 87 }
+		},
+		"fish": {
+			"fish": { "x": 54, "y": -36, "width": 46, "height": 24 }
+		},
+		"splash1": {
+			"splash1": { "x": 27.5, "y": -52, "width": 19, "height": 12 }
+		},
+		"dot1": {
+			"dot1": { "x": 44, "y": -48, "width": 6, "height": 6 }
+		},
+		"dot2": {
+			"dot2": { "x": 50, "y": -51, "width": 6, "height": 6 }
+		},
+		"dot3": {
+			"dot3": { "x": 42, "y": -56, "width": 6, "height": 6 }
+		},
+		"splash2": {
+			"splash2": { "x": 19, "y": -49.5, "width": 12, "height": 15 }
+		},
+		"splash3": {
+			"splash3": { "x": 108.5, "y": -46, "width": 19, "height": 20 }
+		},
+		"splash4": {
+			"splash4": { "x": 108.5, "y": -46, "width": 19, "height": 20 }
+		},
+		"splash5": {
+			"splash5": { "x": 111.5, "y": -47, "width": 25, "height": 18 }
+		},
+		"dot4": {
+			"dot4": { "x": 127.5, "y": -44.5, "width": 7, "height": 7 }
+		},
+		"dot5": {
+			"dot5": { "x": 132, "y": -51, "width": 6, "height": 6 }
+		},
+		"dot6": {
+			"dot6": { "x": 97, "y": -45, "width": 6, "height": 6 }
+		},
+		"dot7": {
+			"dot7": { "x": 94, "y": -51.5, "width": 6, "height": 5 }
+		},
+		"dot8": {
+			"dot8": { "x": 96, "y": -40, "width": 6, "height": 6 }
+		},
+		"dot9": {
+			"dot9": { "x": 132, "y": -45.5, "width": 6, "height": 7 }
+		},
+		"dot10": {
+			"dot10": { "x": 93, "y": -45.5, "width": 6, "height": 5 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
