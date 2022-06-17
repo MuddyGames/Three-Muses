@@ -3,15 +3,12 @@ import HudText from '../objects/hudText'
 import Logo from '../objects/logo'
 
 export default class SplashScene extends Phaser.Scene {
-  fpsText
-  timedEvents : Phaser.Time.TimerEvent[] = []
-  backingMusic
-
-  //output
-
-  logo
-
-  //text
+  // Cycle through logos
+  private timedEvents : Phaser.Time.TimerEvent[] = []
+  private backingMusic!: Phaser.Sound.BaseSound
+  private splashTextTitle!: HudText
+  private splashTextSubTitle!: HudText
+  private logo!:Logo
 
   constructor() {
     super({
@@ -24,8 +21,17 @@ export default class SplashScene extends Phaser.Scene {
   }
 
   create() {
+    // Title
+    this.splashTextTitle = new HudText(this)
+		this.splashTextTitle.setShadow(3, 3)
+		this.splashTextTitle.setStroke('#fff', 16);
+		this.splashTextTitle.setShadow(2, 2, "#333333", 2, true, true);
 
-    //this.text = new FrameText(this)
+    // Sub Title
+    this.splashTextSubTitle = new HudText(this)
+		this.splashTextSubTitle.setShadow(3, 3)
+		this.splashTextSubTitle.setStroke('#fff', 16);
+		this.splashTextSubTitle.setShadow(2, 2, "#333333", 2, true, true);
 
     this.backingMusic = this.sound.add('splash_screen_track',{ loop: true })
 		this.backingMusic.play()
@@ -38,15 +44,7 @@ export default class SplashScene extends Phaser.Scene {
     this.timedEvents.push(this.time.delayedCall(7500, this.onEventLogo, ['SETU_Ireland_logo'], this))
     this.timedEvents.push(this.time.delayedCall(8500, this.onEventGame, [], this))
 
-    this.fpsText = new FpsText(this)
 
-    // display the Phaser.VERSION
-    //this.add
-    //  .text(this.cameras.main.width - 15, 15, `Phaser v${Phaser.VERSION}`, {
-    //    color: '#000000',
-    //    fontSize: '24px'
-    //  })
-    //  .setOrigin(1, 0)
   }
 
   update() {
