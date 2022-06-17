@@ -17,6 +17,9 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('limerick_gallery_of_art', 'assets/logos/limerick_gallery_of_art.png')
     this.load.image('SETU_Ireland_logo', 'assets/logos/SETU_Ireland_logo.png')
 
+    // Church Bells
+    this.load.audio('church_bells', ['assets/audio/splash/church_bells.mp3', 'assets/audio/splash/church_bells.ogg']);
+
     // Backing Tracks
     this.load.audio('splash_screen_track', ['assets/audio/splash/splash_screen_track.mp3', 'assets/audio/splash/splash_screen_track.ogg']);
     this.load.audio('level_backing_track', ['assets/audio/level/level_backing_track.mp3', 'assets/audio/level/level_backing_track.ogg']);
