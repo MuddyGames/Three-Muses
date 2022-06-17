@@ -1,0 +1,84 @@
+{ "skeleton": { "images": "C:/Users/kinga/Desktop/DPAD/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Up", "bone": "root", "attachment": "Up" },
+	{ "name": "Up copy", "bone": "root", "attachment": "Up copy" },
+	{ "name": "Down", "bone": "root", "attachment": "Down" },
+	{ "name": "Down copy", "bone": "root", "attachment": "Down copy" },
+	{ "name": "Right", "bone": "root", "attachment": "Right" },
+	{ "name": "Right copy", "bone": "root", "attachment": "Right copy" },
+	{ "name": "Left", "bone": "root", "attachment": "Left" },
+	{ "name": "Left copy", "bone": "root", "attachment": "Left copy" },
+	{ "name": "LeftUp", "bone": "root", "attachment": "LeftUp" },
+	{ "name": "LeftUp copy", "bone": "root", "attachment": "LeftUp copy" },
+	{ "name": "RightUp", "bone": "root", "attachment": "RightUp" },
+	{ "name": "RightUp copy", "bone": "root", "attachment": "RightUp copy" },
+	{ "name": "RightDown", "bone": "root", "attachment": "RightDown" },
+	{ "name": "RightDown copy", "bone": "root", "attachment": "RightDown copy" },
+	{ "name": "LeftDown", "bone": "root", "attachment": "LeftDown" },
+	{ "name": "LeftDown copy", "bone": "root", "attachment": "LeftDown copy" },
+	{ "name": "Middle", "bone": "root", "attachment": "Middle" },
+	{ "name": "Middle copy", "bone": "root", "attachment": "Middle copy" }
+],
+"skins": {
+	"default": {
+		"Up": {
+			"Up": { "x": 96.5, "y": -36, "width": 49, "height": 58 }
+		},
+		"Up copy": {
+			"Up copy": { "x": 96.5, "y": -36, "width": 49, "height": 58 }
+		},
+		"Down": {
+			"Down": { "x": 96.5, "y": -156, "width": 49, "height": 58 }
+		},
+		"Down copy": {
+			"Down copy": { "x": 96.5, "y": -156, "width": 49, "height": 58 }
+		},
+		"Right": {
+			"Right": { "x": 156.5, "y": -96, "width": 59, "height": 48 }
+		},
+		"Right copy": {
+			"Right copy": { "x": 156.5, "y": -96, "width": 59, "height": 48 }
+		},
+		"Left": {
+			"Left": { "x": 35.5, "y": -96, "width": 59, "height": 48 }
+		},
+		"Left copy": {
+			"Left copy": { "x": 35.5, "y": -96, "width": 59, "height": 48 }
+		},
+		"LeftUp": {
+			"LeftUp": { "x": 43.5, "y": -43.5, "width": 43, "height": 43 }
+		},
+		"LeftUp copy": {
+			"LeftUp copy": { "x": 43.5, "y": -43.5, "width": 43, "height": 43 }
+		},
+		"RightUp": {
+			"RightUp": { "x": 148.5, "y": -43.5, "width": 43, "height": 43 }
+		},
+		"RightUp copy": {
+			"RightUp copy": { "x": 148.5, "y": -43.5, "width": 43, "height": 43 }
+		},
+		"RightDown": {
+			"RightDown": { "x": 148.5, "y": -148.5, "width": 43, "height": 43 }
+		},
+		"RightDown copy": {
+			"RightDown copy": { "x": 148.5, "y": -148.5, "width": 43, "height": 43 }
+		},
+		"LeftDown": {
+			"LeftDown": { "x": 43.5, "y": -148.5, "width": 43, "height": 43 }
+		},
+		"LeftDown copy": {
+			"LeftDown copy": { "x": 43.5, "y": -148.5, "width": 43, "height": 43 }
+		},
+		"Middle": {
+			"Middle": { "x": 96.5, "y": -96, "width": 49, "height": 48 }
+		},
+		"Middle copy": {
+			"Middle copy": { "x": 96.5, "y": -96, "width": 49, "height": 48 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
