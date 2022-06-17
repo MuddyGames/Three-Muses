@@ -13,9 +13,10 @@ export default class PreloadScene extends Phaser.Scene {
 
     // Game Logos
     this.load.image('the_hunt_museum', 'assets/logos/the_hunt_museum.png')
-    this.load.image('limerick_museum', 'assets/logos/limerick_museum.png')
-    this.load.image('limerick_gallery_of_art', 'assets/logos/limerick_gallery_of_art.png')
-    this.load.image('SETU_Ireland_logo', 'assets/logos/SETU_Ireland_logo.png')
+    this.load.image('limerick_museum', 'assets/logos/limerick_city.png')
+    this.load.image('limerick_gallery_of_art', 'assets/logos/LCGA.png')
+    //this.load.image('SETU_Ireland_logo', 'assets/logos/SETU_Ireland_logo.png')
+    this.load.image('SETU_Ireland_logo', 'assets/logos/SETU_Ireland_computing.png')
 
     // Church Bells
     this.load.audio('church_bells', ['assets/audio/level/church_bells.mp3', 'assets/audio/level/church_bells.ogg']);
@@ -50,8 +51,8 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   create() {
-    //this.scene.start('SplashScene')
-    this.scene.start('GameScene')
+    this.scene.start('SplashScene')
+    //this.scene.start('GameScene')
     //this.scene.start('TestScene')
 
     /**
