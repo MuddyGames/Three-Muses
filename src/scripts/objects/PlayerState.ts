@@ -6,9 +6,8 @@ import PlayerStateMachine, {
 
 export default class PlayerState {
     private state
-    private new_state!: PlayerStateMachine
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
-        this.state = new Idle(scene, spine)
+        this.state = new Idle(scene, spine, this)
         this.state.enter()
     }
 
@@ -27,6 +26,14 @@ export default class PlayerState {
 
     playSound(time: number, delta: number) {
         this.state.playSound(time, delta)
+    }
+
+    getState() {
+        this.state
+    }
+
+    setState(state: PlayerStateMachine) {
+        this.state = state;
     }
 
 }
