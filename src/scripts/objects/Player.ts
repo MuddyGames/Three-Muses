@@ -27,6 +27,10 @@ export default class Player {
         this.idiomDelay = 500
     }
 
+    respawn(): void {
+        this.position = this.reSpawnPosition
+    }
+
     getEatingDelay(): number {
         return this.eatingDelay
     }
@@ -54,11 +58,11 @@ export default class Player {
         this.position.y = y
     }
 
-    setVelocityX(velocityX: Phaser.Math.Vector2) {
+    setVelocityX(velocityX: Phaser.Math.Vector2): void {
         this.velocityX = velocityX
     }
 
-    setVelocityY(velocityY: Phaser.Math.Vector2) {
+    setVelocityY(velocityY: Phaser.Math.Vector2): void {
         this.velocityY = velocityY
     }
 
@@ -75,22 +79,22 @@ export default class Player {
         return this.state
     }
 
-    setState(state: PlayerState) {
+    setState(state: PlayerState): void {
         this.state = state
     }
 
-    moveLeft() {
+    moveLeft(): void {
         //if (!(this.getState().getState() instanceof Idle ) || !(this.getState().getState() instanceof MunchingLeft )) {
-            this.position.subtract(this.velocityX)
+        this.position.subtract(this.velocityX)
         //}
     }
-    moveRight() {
+    moveRight(): void {
         this.position.add(this.velocityX)
     }
-    moveUp() {
+    moveUp(): void {
         this.position.subtract(this.velocityY)
     }
-    moveDown() {
+    moveDown(): void {
         this.position.add(this.velocityY)
     }
 }
