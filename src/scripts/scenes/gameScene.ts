@@ -268,7 +268,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.time.addEvent({ delay: this.soundDelay, callback: this.resetSounds, callbackScope: this})
 
-		muteBtn = this.add.text(20, 20, 'Mute', { fontFamily: 'gamefont', color: '#EC00D7', fontSize: '56px' })
+		muteBtn = this.add.text(2, 2, 'Mute', { fontFamily: 'gamefont', color: '#EC00D7', fontSize: '48px' })
 			.setInteractive()
 			.setDepth(5)
 			.on('pointerdown', this.toggleMute)
