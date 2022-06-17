@@ -288,6 +288,8 @@ export default class GameScene extends Phaser.Scene {
 
 	update(time: number, delta: number): void {
 
+		console.log("Time:"+ time +" Delta:" + delta)
+
 		// TODO BETTER Game State Management
 		//If level Playable Update
 		if (this.gameState === GSM.PLAY) {
