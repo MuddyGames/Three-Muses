@@ -414,7 +414,7 @@ export default class GameScene extends Phaser.Scene {
 				}
 			}
 		}
-		this.playerState.update() // Updates the Player State See PlayerStateMachine*/
+		this.playerState.update(time, delta) // Updates the Player State See PlayerStateMachine*/
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.trufflesAABB(this.truffles, this.cannonball[i])) {
 				this.truffles.setPosition(100, 360)
@@ -552,8 +552,8 @@ export default class GameScene extends Phaser.Scene {
 		spine.play(animation, true)
 	}
 
-	private resetSounds() {
-		this.playerState.playSound()
+	private resetSounds(time: number, delta: number) {
+		this.playerState.playSound(time, delta)
 		this.time.addEvent({
 			delay: this.soundDelay,
 			callback: this.resetSounds,
