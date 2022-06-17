@@ -36,6 +36,7 @@ export default abstract class PlayerStateMachine {
 // Idle -> Walking Up
 // Idle -> Walking Down
 // Idle -> Under Attack
+// Idle -> Expired
 export class Idle extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         super(scene, spine)
@@ -53,6 +54,8 @@ export class Idle extends PlayerStateMachine {
             return new WalkingDown(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
+        } else if (input === INPUT_TYPES.EXPIRED) {
+            return new Expired(this.scene, this.spine)
         } else {
             return undefined
         }
@@ -303,7 +306,6 @@ export class WalkingDown extends PlayerStateMachine {
 // EatingLeft -> Under Attack
 export class EatingLeft extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
-        console.log('Constructed EatingLeft State')
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
@@ -325,7 +327,6 @@ export class EatingLeft extends PlayerStateMachine {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
-        console.log('this.animationElapsed : ' + this.animationElapsed + ' this.idiomElapsed ' + this.idiomElapsed)
         if (this.animationElapsed >= player.getEatingDelay()) {
             let temp = player.getState()
             let state = new MunchingLeft(this.scene, this.spine)
@@ -338,7 +339,6 @@ export class EatingLeft extends PlayerStateMachine {
         }
     }
     exit(time: number, delta: number, player: Player) {
-        console.log('Exiting the EatingLeft State')
         player.setMove(true)
         this.idiomElapsed = 0
         this.idiomTime = 0
@@ -349,7 +349,6 @@ export class EatingLeft extends PlayerStateMachine {
 // MunchingLeft -> Under Attack
 export class MunchingLeft extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
-        console.log('Constructed MunchingLeft State')
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
@@ -382,7 +381,6 @@ export class MunchingLeft extends PlayerStateMachine {
         }
     }
     exit(time: number, delta: number, player: Player) {
-        console.log('Exiting the Munching Left State')
         player.setMove(true)
         this.idiomElapsed = 0
         this.idiomTime = 0
@@ -586,51 +584,107 @@ export class UnderAttack extends PlayerStateMachine {
         }
     }
     enter(time: number, delta: number, player: Player) {
-        //this.sound = this.scene.sound.add('langers')
-        if (canPlay) {
-            this.sound.play()
-            canPlay = false
-        }
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
+        this.sound = this.scene.sound.add('head_like_a_chewed_toffee')
         this.spine.play(INPUT_TYPES.UNDER_ATTACK, true)
     }
     update(time: number, delta: number, player: Player) {
-        //console.log('Updating the UnderAttack State')
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
     }
     exit(time: number, delta: number, player: Player) {
-        //console.log('Exiting the UnderAttack State')
+        player.setMove(true)
+        this.animationTime = 0
+        this.idiomTime = 0
     }
 }
 
 // Possible States
-// Expired -> Idle
 export class Expired extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        console.log('Process Input Expired State')
-        if (input === INPUT_TYPES.REVIVE) {
-            return new Revived(this.scene, this.spine)
-        } else {
-            return undefined
-        }
-
+        return undefined
     }
     enter(time: number, delta: number, player: Player) {
-        console.log('Entering the Expired State')
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
         this.sound = this.scene.sound.add('took_a_hopper')
-        if (canPlay) {
-            this.sound.play()
-            canPlay = false
-        }
         this.spine.play(INPUT_TYPES.EXPIRED, true)
-
     }
     update(time: number, delta: number, player: Player) {
-        //console.log('Updating the Expired State')
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+
+        if (this.animationElapsed >= player.getExpiredDelay()) {
+            let temp = player.getState()
+            let state = new Revive(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
+
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
     }
     exit(time: number, delta: number, player: Player) {
-        //console.log('Exiting the Expired State')
+        player.setMove(true)
+        this.animationTime = 0
+        this.idiomTime = 0
+    }
+}
+
+// Possible States
+export class Revive extends PlayerStateMachine {
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
+    }
+    handleInput(input: string): PlayerStateMachine | undefined {
+        return undefined
+    }
+    enter(time: number, delta: number, player: Player) {
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
+        this.sound = this.scene.sound.add('state_of_ya')
+        this.spine.play(INPUT_TYPES.REVIVE, true)
+    }
+    update(time: number, delta: number, player: Player) {
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+
+        // Respawn Player Position
+        console.log('respawn')
+        player.respawn()
+
+        if (this.animationElapsed >= player.getReviveDelay()) {
+            let temp = player.getState()
+            let state = new Revived(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
+
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
+    }
+    exit(time: number, delta: number, player: Player) {
+        player.setMove(true)
+        this.animationTime = 0
+        this.idiomTime = 0
     }
 }
 

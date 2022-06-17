@@ -442,9 +442,7 @@ export default class GameScene extends Phaser.Scene {
 		// Set cannon ball positions
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.trufflesAABB(this.truffles, this.cannonball[i])) {
-				this.player.setX(100)
-				this.player.setY(360)
-				this.truffles.setPosition(100, 360)
+				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
 			}
 		}
 
@@ -459,12 +457,12 @@ export default class GameScene extends Phaser.Scene {
 
 		this.elapsedTimeText.setPosition(this.screenX * 0.75, this.screenY * 0.04)
 		this.elapsedTimeText.update()
-		this.elapsedTimeText.setText('Timer : ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
+		this.elapsedTimeText.setText(' ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
 		this.elapsedTimeText.setDepth(10)
 
 		this.recordTimeText.setPosition(this.screenX * 0.55, this.screenY * 0.04)
 		this.recordTimeText.update()
-		this.recordTimeText.setText('Record : ' + this.bestRecordedTime + ' ')
+		this.recordTimeText.setText(' ' + this.bestRecordedTime + ' ')
 		this.recordTimeText.setDepth(10)
 	}
 

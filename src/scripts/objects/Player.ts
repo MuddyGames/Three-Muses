@@ -16,6 +16,9 @@ export default class Player {
     private velocityY!: Phaser.Math.Vector2
     private eatingDelay!: number
     private munchingDelay!: number
+    private underAttackDelay!: number
+    private expiredDelay!: number
+    private reviveDelay!: number
     private idiomDelay!: number
 
     constructor(position: Phaser.Math.Vector2) {
@@ -26,6 +29,9 @@ export default class Player {
         this.velocityY = new Phaser.Math.Vector2(0, 0)
         this.eatingDelay = 1000
         this.munchingDelay = 1000
+        this.underAttackDelay = 1000
+        this.expiredDelay = 1000
+        this.reviveDelay = 1000
         this.idiomDelay = 100
     }
 
@@ -43,6 +49,18 @@ export default class Player {
 
     getMunchingDelay(): number {
         return this.munchingDelay
+    }
+
+    getUnderAttackDelay(): number {
+        return this.underAttackDelay
+    }
+
+    getExpiredDelay(): number {
+        return this.expiredDelay
+    }
+
+    getReviveDelay(): number {
+        return this.expiredDelay
     }
 
     getIdiomDelay(): number {
