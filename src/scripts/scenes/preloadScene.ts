@@ -19,7 +19,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('SETU_Ireland_logo', 'assets/logos/SETU_Ireland_computing.png')
 
     // Church Bells
-    this.load.audio('church_bells', ['assets/audio/splash/church_bells.mp3', 'assets/audio/splash/church_bells.ogg']);
+    this.load.audio('church_bells', ['assets/audio/level/church_bells.mp3', 'assets/audio/level/church_bells.ogg']);
 
     // Backing Tracks
     this.load.audio('splash_screen_track', ['assets/audio/splash/splash_screen_track.mp3', 'assets/audio/splash/splash_screen_track.ogg']);
@@ -34,7 +34,6 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio('gawke', ['assets/audio/idioms/gawke.mp3', 'assets/audio/idioms/gawke.ogg']);
     this.load.audio('head_like_a_chewed_toffee', ['assets/audio/idioms/head_like_a_chewed_toffee.mp3', 'assets/audio/idioms/head_like_a_chewed_toffee.ogg']);
     this.load.audio('hun', ['assets/audio/idioms/hun.mp3', 'assets/audio/idioms/hun.ogg']);
-    this.load.audio('langers', ['assets/audio/idioms/langers.mp3', 'assets/audio/idioms/langers.ogg']);
     this.load.audio('mup', ['assets/audio/idioms/mup.mp3', 'assets/audio/idioms/mup.ogg']);
     this.load.audio('nippy', ['assets/audio/idioms/nippy.mp3', 'assets/audio/idioms/nippy.ogg']);
     this.load.audio('sca', ['assets/audio/idioms/sca.mp3', 'assets/audio/idioms/sca.ogg']);

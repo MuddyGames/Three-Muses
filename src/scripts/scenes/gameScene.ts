@@ -205,7 +205,7 @@ export default class GameScene extends Phaser.Scene {
 		this.backingMusic.play()
 
 
-		
+
 		// Setup Truffles
 		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, this.trufflesPosX, this.trufflesPosY, 0.25, 0.25)
 		this.truffles.setDepth(2)
@@ -214,16 +214,18 @@ export default class GameScene extends Phaser.Scene {
 		this.canMove = true
 		this.direction = Direction.Down
 
-		
+
 		// Cannon Ball Setup
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[0], this.cannonballPosY[0], 1.2, 1.2))
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[1], this.cannonballPosY[1], 1.2, 1.2))
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[2], this.cannonballPosY[2], 1.2, 1.2))
 
+
 		// Setup Cannon ball animations
 		for (let i = 0; i < this.cannonball.length; i++) {
 			this.cannonball[i].setDepth(2)
 			this.initializeAnimationsState(this.cannonball[i], this.cannonballAnimationNames)
+			this.cannonball[i].setDepth(0)
 		}
 
 		// Add Windmill
@@ -263,15 +265,31 @@ export default class GameScene extends Phaser.Scene {
 		// Initialise Player State
 		this.playerState = new PlayerState(this, this.truffles);
 
-		this.time.addEvent({ delay: this.soundDelay, callback: this.resetSounds, callbackScope: this})
+		this.time.addEvent({
+			delay: this.soundDelay,
+			callback: this.resetSounds,
+			callbackScope: this
+		})
 
+<<<<<<< HEAD
 		muteBtn = this.add.text(2, 2, 'Mute', { fontFamily: 'gamefont', color: '#EC00D7', fontSize: '48px' })
+=======
+		muteBtn = this.add.text(20, 20, 'Mute', {
+				fontFamily: 'gamefont',
+				color: '#EC00D7',
+				fontSize: '56px'
+			})
+>>>>>>> e08d75c860da350d63bb9e46bc9d0a17c3a4ce74
 			.setInteractive()
 			.setDepth(5)
 			.on('pointerdown', this.toggleMute)
-    		.on('pointerover', () => muteBtn.setStyle({ fill: '#f39c12' }))
-    		.on('pointerout', () => muteBtn.setStyle({ fill: '#FFF' }))
-		
+			.on('pointerover', () => muteBtn.setStyle({
+				fill: '#f39c12'
+			}))
+			.on('pointerout', () => muteBtn.setStyle({
+				fill: '#FFF'
+			}))
+
 		//multitouch bits
 		this.input.addPointer(2);
 
@@ -286,12 +304,12 @@ export default class GameScene extends Phaser.Scene {
 
 	update(time: number, delta: number): void {
 
+		console.log("Time:" + time + " Delta:" + delta)
+
 		// TODO BETTER Game State Management
 		//If level Playable Update
 		if (this.gameState === GSM.PLAY) {
 			this.elapsedLevelTime = time;
-			let points = Phaser.Math.Between(50, 100);
-			this.setPoints(points)
 
 		} else if (this.gameState === GSM.LEVEL_COMPLETE) {
 
@@ -309,7 +327,7 @@ export default class GameScene extends Phaser.Scene {
 		this.cannonballMove()
 
 		const size = this.trufflesAnimationNames.length
-		
+
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
 			if (this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT) != null) {
 				this.direction = Direction.Right
@@ -396,15 +414,19 @@ export default class GameScene extends Phaser.Scene {
 						this.fruitMarked[i] = true
 						switch (this.direction) {
 							case Direction.Up:
+								this.setPoints(250)
 								this.playerState.handleInput(INPUT_TYPES.EATING_UP)
 								break;
 							case Direction.Down:
+								this.setPoints(350)
 								this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
 								break;
 							case Direction.Left:
+								this.setPoints(100)
 								this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
 								break;
 							case Direction.Right:
+								this.setPoints(250)
 								this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
 								break;
 						}
@@ -412,7 +434,7 @@ export default class GameScene extends Phaser.Scene {
 				}
 			}
 		}
-		this.playerState.update() // Updates the Player State See PlayerStateMachine*/
+		this.playerState.update(time, delta) // Updates the Player State See PlayerStateMachine*/
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.trufflesAABB(this.truffles, this.cannonball[i])) {
 				this.truffles.setPosition(100, 360)
@@ -515,16 +537,16 @@ export default class GameScene extends Phaser.Scene {
 		this.candyLayer.setVisible(false)
 	}
 
-	private toggleMute(){
+	private toggleMute() {
 		console.log("toggeling music state");
-		if (muteBtn.text === "Mute"){
+		if (muteBtn.text === "Mute") {
 			muteBtn.setText("Unmute")
 			this.backingMusic.pause();
-		}else if(muteBtn.text === "Unmute"){
+		} else if (muteBtn.text === "Unmute") {
 			muteBtn.setText("Mute")
 			this.backingMusic.resume()
 		}
-	
+
 	}
 
 	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {
@@ -550,8 +572,8 @@ export default class GameScene extends Phaser.Scene {
 		spine.play(animation, true)
 	}
 
-	private resetSounds() {
-		this.playerState.playSound()
+	private resetSounds(time: number, delta: number) {
+		this.playerState.playSound(time, delta)
 		this.time.addEvent({
 			delay: this.soundDelay,
 			callback: this.resetSounds,
@@ -660,7 +682,9 @@ export default class GameScene extends Phaser.Scene {
 
 	// Add Points
 	private setPoints(points: number) {
-		this.collectablePoints += points
+		if (points > 0) {
+			this.collectablePoints += points
+		}
 	}
 
 	// Fetch Recorded Time
