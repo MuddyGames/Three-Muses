@@ -78,9 +78,9 @@ export default class Player {
     }
 
     moveLeft() {
-        if (!(this.getState().getState() instanceof Idle ) || !(this.getState().getState() instanceof MunchingLeft )) {
+        //if (!(this.getState().getState() instanceof Idle ) || !(this.getState().getState() instanceof MunchingLeft )) {
             this.position.subtract(this.velocityX)
-        }
+        //}
     }
     moveRight() {
         this.position.add(this.velocityX)

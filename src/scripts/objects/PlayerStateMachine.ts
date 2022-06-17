@@ -160,7 +160,8 @@ export class WalkingLeft extends PlayerStateMachine {
 
     }
     update(time: number, delta: number) {
-        //console.log('Updating the WalkingRight State')
+        // Movement should be part of player
+        //this.player.moveLeft()
     }
     exit(time: number, delta: number) {
         //console.log('Exiting the WalkingRight State')
@@ -299,7 +300,8 @@ export class EatingLeft extends PlayerStateMachine {
         }
     }
     exit(time: number, delta: number) {
-        //console.log('Exiting the Eating Left State')
+        this.idiomElapsed = 0
+        this.idiomTime = 0
     }
 }
 
