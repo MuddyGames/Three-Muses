@@ -27,7 +27,7 @@ const IDLE_KEY = 'idle'
 const CANNONBALL_KEY = 'cannonball'
 const WINDMILL_KEY = 'windmill'
 let muteBtn
-let music
+
 enum Direction {
 	Up,
 	Down,
@@ -159,7 +159,7 @@ export default class GameScene extends Phaser.Scene {
 		//Setup Game State
 		this.gameState = GSM.PLAY
 
-		// Retrive Recorded Score and Time from LocalStorage
+		// Retrieve Recorded Score and Time from LocalStorage
 		this.fetchRecordedScore()
 		this.fetchRecordedTime()
 		// Setup Screen Dimensions
@@ -198,14 +198,11 @@ export default class GameScene extends Phaser.Scene {
 		//Setup Map Data
 		this.setupMap()
 
-		//this.ball = new CannonBall(this, 288, 48, )
-		//this.ball.setDepth(2)
-
-		music = this.sound.add('level_backing_track'),
+		// Background Music
 		this.backingMusic = this.sound.add('level_backing_track', {
 			loop: true
 		})
-		music.play()
+		this.backingMusic.play()
 
 
 		
@@ -522,10 +519,10 @@ export default class GameScene extends Phaser.Scene {
 		console.log("toggeling music state");
 		if (muteBtn.text === "Mute"){
 			muteBtn.setText("Unmute")
-			music.pause();
+			this.backingMusic.pause();
 		}else if(muteBtn.text === "Unmute"){
 			muteBtn.setText("Mute")
-			music.resume()
+			this.backingMusic.resume()
 		}
 	
 	}
