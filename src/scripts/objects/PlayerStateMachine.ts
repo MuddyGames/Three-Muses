@@ -10,7 +10,6 @@ export default class PlayerStateMachine {
     spine!: SpineGameObject
     scene!: Phaser.Scene
     sound!: Phaser.Sound.BaseSound
-    timer!: Phaser.Time.TimerEvent
 
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         this.scene = scene
@@ -276,17 +275,12 @@ export class EatingLeft extends PlayerStateMachine {
             canPlay = false
         }
         this.spine.play(INPUT_TYPES.EATING_LEFT, true)
-        this.timer = this.scene.time.delayedCall(500,this.next)
-        this.scene.time.addEvent(this.timer);
     }
     update(time: number, delta: number) {
         console.log('Updating the Eating Left State')
     }
     exit(time: number, delta: number) {
         console.log('Exiting the Eating Left State')
-    }
-    next(time: number, delta: number){
-        console.log('OPPPPPPPS')
     }
 }
 
