@@ -263,7 +263,8 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		// Initialise Player State
-		this.playerState = new PlayerState(this, this.truffles);
+		this.playerState = new PlayerState(this, this.truffles, 0, 0);
+		this.playerState.init()
 
 		this.time.addEvent({
 			delay: this.soundDelay,
@@ -325,19 +326,19 @@ export default class GameScene extends Phaser.Scene {
 		const size = this.trufflesAnimationNames.length
 
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT) != null) {
+			if (this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT, time, delta) != null) {
 				this.direction = Direction.Right
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_LEFT) != null) {
+			if (this.playerState.handleInput(INPUT_TYPES.WALK_LEFT, time, delta) != null) {
 				this.direction = Direction.Left
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_UP) != null) {
+			if (this.playerState.handleInput(INPUT_TYPES.WALK_UP, time, delta) != null) {
 				this.direction = Direction.Up
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_DOWN) != null) {
+			if (this.playerState.handleInput(INPUT_TYPES.WALK_DOWN, time, delta) != null) {
 				this.direction = Direction.Down
 			}
 		}
@@ -394,7 +395,7 @@ export default class GameScene extends Phaser.Scene {
 			}
 
 			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
-				this.playerState.handleInput(INPUT_TYPES.IDLE)
+				this.playerState.handleInput(INPUT_TYPES.IDLE, time, delta)
 			} else {
 				for (let i = 0; i < this.fruit.length; i++) {
 
@@ -405,25 +406,25 @@ export default class GameScene extends Phaser.Scene {
 							delay: 480,
 							callback: this.fruitAnimate,
 							callbackScope: this,
-							args: [i]
+							args: [i, time, delta]
 						})
 						this.fruitMarked[i] = true
 						switch (this.direction) {
 							case Direction.Up:
 								this.setPoints(250)
-								this.playerState.handleInput(INPUT_TYPES.EATING_UP)
+								this.playerState.handleInput(INPUT_TYPES.EATING_UP, time, delta)
 								break;
 							case Direction.Down:
 								this.setPoints(350)
-								this.playerState.handleInput(INPUT_TYPES.EATING_DOWN)
+								this.playerState.handleInput(INPUT_TYPES.EATING_DOWN, time, delta)
 								break;
 							case Direction.Left:
 								this.setPoints(100)
-								this.playerState.handleInput(INPUT_TYPES.EATING_LEFT)
+								this.playerState.handleInput(INPUT_TYPES.EATING_LEFT, time, delta)
 								break;
 							case Direction.Right:
 								this.setPoints(250)
-								this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT)
+								this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT, time, delta)
 								break;
 						}
 					}
@@ -593,32 +594,32 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	// Fruit Animations
-	private fruitAnimate(index: number) {
+	private fruitAnimate(index: number, time: number, delta: number) {
 		this.changeAnimation(this.fruit[index], this.fruitAnimationNames, 2)
 		this.time.addEvent({
 			delay: 1000,
 			callback: this.fruitDelete,
 			callbackScope: this,
-			args: [index]
+			args: [index, time, delta]
 		})
 		switch (this.direction) {
 			case Direction.Up:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_UP)
+				this.playerState.handleInput(INPUT_TYPES.MUNCHING_UP, time, delta)
 				break;
 			case Direction.Down:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_DOWN)
+				this.playerState.handleInput(INPUT_TYPES.MUNCHING_DOWN, time, delta)
 				break;
 			case Direction.Left:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_LEFT)
+				this.playerState.handleInput(INPUT_TYPES.MUNCHING_LEFT, time, delta)
 				break;
 			case Direction.Right:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_RIGHT)
+				this.playerState.handleInput(INPUT_TYPES.MUNCHING_RIGHT, time, delta)
 				break;
 		}
 	}
 
 	// Delete fruits
-	private fruitDelete(index: number) {
+	private fruitDelete(index: number, time: number, delta: number) {
 		const x = this.map.worldToTileX(this.fruit[index].x)
 		const y = this.map.worldToTileY(this.fruit[index].y)
 
@@ -626,7 +627,7 @@ export default class GameScene extends Phaser.Scene {
 		this.map.removeTile(this.tile)
 		this.fruit[index].removeFromDisplayList()
 
-		this.playerState.handleInput(INPUT_TYPES.IDLE)
+		this.playerState.handleInput(INPUT_TYPES.IDLE, time, delta)
 		this.canMove = true
 	}
 

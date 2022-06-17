@@ -11,6 +11,8 @@ import PlayerState from './PlayerState'
 var canPlay!: boolean
 export default class PlayerStateMachine {
     player!: PlayerState
+    temp!: PlayerStateMachine
+    state!: PlayerStateMachine
     spine!: SpineGameObject
     scene!: Phaser.Scene
     sound!: Phaser.Sound.BaseSound
@@ -66,10 +68,10 @@ export class Idle extends PlayerStateMachine {
         this.spine.play(INPUT_TYPES.IDLE, true)
     }
     update(time: number, delta: number) {
-        console.log('Updating the Idle State')
+        //console.log('Updating the Idle State')
     }
     exit(time: number, delta: number) {
-        console.log('Exit the Idle State')
+        //console.log('Exit the Idle State')
     }
 }
 
@@ -111,10 +113,10 @@ export class WalkingRight extends PlayerStateMachine {
         this.spine.play(INPUT_TYPES.WALK_RIGHT, true)
     }
     update(time: number, delta: number) {
-        console.log('Updating the WalkingRight State')
+        //console.log('Updating the WalkingRight State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the WalkingRight State')
+        //console.log('Exiting the WalkingRight State')
     }
 }
 
@@ -157,10 +159,10 @@ export class WalkingLeft extends PlayerStateMachine {
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the WalkingRight State')
+        //console.log('Updating the WalkingRight State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the WalkingRight State')
+        //console.log('Exiting the WalkingRight State')
     }
 }
 
@@ -203,10 +205,10 @@ export class WalkingUp extends PlayerStateMachine {
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the WalkingRight State')
+        //console.log('Updating the WalkingRight State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the WalkingRight State')
+        //console.log('Exiting the WalkingRight State')
     }
 }
 
@@ -249,10 +251,10 @@ export class WalkingDown extends PlayerStateMachine {
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the WalkingDowm State')
+        //console.log('Updating the WalkingDowm State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the WalkingDown State')
+        //console.log('Exiting the WalkingDown State')
     }
 }
 
@@ -294,14 +296,19 @@ export class EatingLeft extends PlayerStateMachine {
 		delete temp;
 	}
         */
-        //let temp: = this.player.getState().exit()
+        //this.temp = this.player.getState()
+        this.state = new UnderAttack(this.scene, this.spine, this.player)
+        //this.player.getState().exit(time, delta)
+        //this.player.setState(this.state)
+        //this.player.getState().enter(time, delta)
+
         //let state = new UnderAttack(this.scene, this.spine, this.player)
         //this.player.getState().exit()
         //new MunchingLeft(this.scene, this.spine)
 
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the Eating Left State')
+        //console.log('Exiting the Eating Left State')
     }
 }
 
@@ -323,14 +330,14 @@ export class MunchingLeft extends PlayerStateMachine {
 
     }
     enter(time: number, delta: number) {
-        console.log('Entering Munching Left State this runs on Entry')
+        //console.log('Entering Munching Left State this runs on Entry')
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the Munching Left State')
+        //console.log('Updating the Munching Left State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the Munching Left State')
+        //console.log('Exiting the Munching Left State')
     }
 }
 
@@ -352,14 +359,14 @@ export class EatingRight extends PlayerStateMachine {
 
     }
     enter(time: number, delta: number) {
-        console.log('Entering Eating Right State this runs on Entry')
+        //console.log('Entering Eating Right State this runs on Entry')
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the Eathing Right State')
+        //console.log('Updating the Eathing Right State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the Eating Right State')
+        //console.log('Exiting the Eating Right State')
     }
 }
 
@@ -381,14 +388,14 @@ export class MunchingRight extends PlayerStateMachine {
 
     }
     enter(time: number, delta: number) {
-        console.log('Entering Munching Right State this runs on Entry')
+        //console.log('Entering Munching Right State this runs on Entry')
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the Munching Right State')
+        //console.log('Updating the Munching Right State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the Munching Right State')
+        //console.log('Exiting the Munching Right State')
     }
 }
 
@@ -410,14 +417,14 @@ export class EatingUp extends PlayerStateMachine {
 
     }
     enter(time: number, delta: number) {
-        console.log('Entering Eating Up State this runs on Entry')
+        //console.log('Entering Eating Up State this runs on Entry')
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the Eathing Up State')
+        //console.log('Updating the Eathing Up State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the Eating Up State')
+        //console.log('Exiting the Eating Up State')
     }
 }
 
@@ -439,14 +446,14 @@ export class MunchingUp extends PlayerStateMachine {
 
     }
     enter(time: number, delta: number) {
-        console.log('Entering Munching Up State this runs on Entry')
+        //console.log('Entering Munching Up State this runs on Entry')
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the Munching Up State')
+        //console.log('Updating the Munching Up State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the Munching Up State')
+        //console.log('Exiting the Munching Up State')
     }
 }
 
@@ -468,14 +475,14 @@ export class EatingDown extends PlayerStateMachine {
 
     }
     enter(time: number, delta: number) {
-        console.log('Entering Eating Down State this runs on Entry')
+        //console.log('Entering Eating Down State this runs on Entry')
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the Eathing Down State')
+        //console.log('Updating the Eathing Down State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the Eating Down State')
+        //console.log('Exiting the Eating Down State')
     }
 }
 
@@ -496,14 +503,14 @@ export class MunchingDown extends PlayerStateMachine {
         }
     }
     enter(time: number, delta: number) {
-        console.log('Entering Munching Down State this runs on Entry')
+        //console.log('Entering Munching Down State this runs on Entry')
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the Munching Down State')
+        //console.log('Updating the Munching Down State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the Munching Down State')
+        //console.log('Exiting the Munching Down State')
     }
 }
 
@@ -542,10 +549,10 @@ export class UnderAttack extends PlayerStateMachine {
         this.spine.play(INPUT_TYPES.UNDER_ATTACK, true)
     }
     update(time: number, delta: number) {
-        console.log('Updating the UnderAttack State')
+        //console.log('Updating the UnderAttack State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the UnderAttack State')
+        //console.log('Exiting the UnderAttack State')
     }
 }
 
@@ -575,10 +582,10 @@ export class Expired extends PlayerStateMachine {
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the Expired State')
+        //console.log('Updating the Expired State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the Expired State')
+        //console.log('Exiting the Expired State')
     }
 }
 
@@ -608,9 +615,9 @@ export class Revived extends PlayerStateMachine {
 
     }
     update(time: number, delta: number) {
-        console.log('Updating the Expired State')
+        //console.log('Updating the Expired State')
     }
     exit(time: number, delta: number) {
-        console.log('Exiting the Expired State')
+        //console.log('Exiting the Expired State')
     }
 }

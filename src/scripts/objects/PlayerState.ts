@@ -5,18 +5,26 @@ import PlayerStateMachine, {
 } from './PlayerStateMachine'
 
 export default class PlayerState {
-    private state
-    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
-        this.state = new Idle(scene, spine, this)
-        this.state.enter()
+    private state //!:PlayerStateMachine
+    private scene!: Phaser.Scene
+    private spine!: SpineGameObject
+
+    constructor(scene: Phaser.Scene, spine: SpineGameObject, time: number, delta: number) {
+        this.scene = scene
+        this.spine = spine
     }
 
-    handleInput(input: string) {
+    init() {
+        this.state = new Idle(this.scene, this.spine, this)
+        this.state.enter(0, 0)
+    }
+
+    handleInput(input: string, time: number, delta: number) {
         const state = this.state.handleInput(input)
         if (state !== null) {
-            this.state.exit()
+            this.state.exit(time, delta)
             this.state = state
-            this.state.enter()
+            this.state.enter(time, delta)
         }
         return state
     }
@@ -28,8 +36,8 @@ export default class PlayerState {
         this.state.playSound(time, delta)
     }
 
-    getState() {
-        this.state
+    getState(): PlayerStateMachine {
+        return this.state
     }
 
     setState(state: PlayerStateMachine) {
