@@ -21,12 +21,12 @@ export default class PlayerState {
         }
         return state
     }
-    update() {
-        this.state.update()
+    update(time: number, delta: number) {
+        this.state.update(time, delta)
     }
 
-    playSound() {
-        this.state.playSound()
+    playSound(time: number, delta: number) {
+        this.state.playSound(time, delta)
     }
 
 }
