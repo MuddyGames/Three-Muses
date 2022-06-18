@@ -23,10 +23,11 @@ import Player from '../objects/Player'
 
 
 const TRUFFLES_KEY = 'truffles'
-const KEYS = ['orange', 'lemon', 'grape']
 const IDLE_KEY = 'idle'
 const CANNONBALL_KEY = 'cannonball'
 const WINDMILL_KEY = 'windmill'
+const KEYS = ['orange', 'lemon', 'grape']
+
 let muteBtn
 
 enum Direction {
@@ -125,6 +126,7 @@ export default class GameScene extends Phaser.Scene {
 	private miscTop1Layer!: Phaser.Tilemaps.TilemapLayer
 	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
+	private goalLayer!: Phaser.Tilemaps.TilemapLayer
 
 	// Player Data
 	private playerState!: PlayerState
@@ -539,6 +541,10 @@ export default class GameScene extends Phaser.Scene {
 		this.candyLayer = this.map.createLayer('map/collectables/candies_level1_depth_02', this.tileset, 0, 0);
 		this.candyLayer.setDepth(2);
 		this.candyLayer.setVisible(false)
+
+		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
+		this.collisionLayer.setDepth(2)
+		this.collisionLayer.setVisible(true)
 	}
 
 	private toggleMute() {
