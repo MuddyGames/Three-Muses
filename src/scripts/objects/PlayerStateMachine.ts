@@ -38,6 +38,7 @@ export default abstract class PlayerStateMachine {
 // Idle -> Walking Up
 // Idle -> Walking Down
 // Idle -> Under Attack
+// Idle -> Reached Goal
 // Idle -> Expired
 export class Idle extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
@@ -58,6 +59,8 @@ export class Idle extends PlayerStateMachine {
             return new UnderAttack(this.scene, this.spine)
         } else if (input === INPUT_TYPES.EXPIRED) {
             return new Expired(this.scene, this.spine)
+        } else if (input === INPUT_TYPES.REACHED_GOAL) {
+            return new ReachedGoal(this.scene, this.spine)
         } else {
             return undefined
         }
@@ -156,6 +159,7 @@ export class Idle extends PlayerStateMachine {
 // WalkingRight -> Walking Down
 // WalkingRight -> Eating Right
 // WalkingRight -> Under Attack
+// WalkingRight -> Reached Goal
 // WalkingRight -> Expired
 export class WalkingRight extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
@@ -176,6 +180,8 @@ export class WalkingRight extends PlayerStateMachine {
             return new UnderAttack(this.scene, this.spine)
         } else if (input === INPUT_TYPES.EXPIRED) {
             return new Expired(this.scene, this.spine)
+        } else if (input === INPUT_TYPES.REACHED_GOAL) {
+            return new ReachedGoal(this.scene, this.spine)
         } else {
             return undefined
         }
@@ -244,6 +250,7 @@ export class WalkingRight extends PlayerStateMachine {
 // WalkingLeft -> Walking Down
 // WalkingLeft -> Eating Left
 // WalkingLeft -> Under Attack
+// WalkingLeft -> Reached Goal
 // WalkingLeft -> Expired
 export class WalkingLeft extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
@@ -264,7 +271,9 @@ export class WalkingLeft extends PlayerStateMachine {
             return new UnderAttack(this.scene, this.spine)
         } else if (input === INPUT_TYPES.EXPIRED) {
             return new Expired(this.scene, this.spine)
-        } else {
+        } else if (input === INPUT_TYPES.REACHED_GOAL) {
+            return new ReachedGoal(this.scene, this.spine)
+        }  else {
             return undefined
         }
     }
@@ -332,6 +341,7 @@ export class WalkingLeft extends PlayerStateMachine {
 // WalkingUp -> Walking Down
 // WalkingUp -> Eating Up
 // WalkingUp -> Under Attack
+// WalkingUp -> Reached Goal
 // WalkingUp -> Expired
 export class WalkingUp extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
@@ -352,6 +362,8 @@ export class WalkingUp extends PlayerStateMachine {
             return new UnderAttack(this.scene, this.spine)
         } else if (input === INPUT_TYPES.EXPIRED) {
             return new Expired(this.scene, this.spine)
+        } else if (input === INPUT_TYPES.REACHED_GOAL) {
+            return new ReachedGoal(this.scene, this.spine)
         } else {
             return undefined
         }
@@ -423,6 +435,7 @@ export class WalkingUp extends PlayerStateMachine {
 // WalkingDown -> Walking Down
 // WalkingDown -> Eating Up
 // WalkingDown -> Under Attack
+// WalkingDown -> Reached Goal
 // WalkingDown -> Expired
 export class WalkingDown extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
@@ -443,6 +456,8 @@ export class WalkingDown extends PlayerStateMachine {
             return new UnderAttack(this.scene, this.spine)
         } else if (input === INPUT_TYPES.EXPIRED) {
             return new Expired(this.scene, this.spine)
+        } else if (input === INPUT_TYPES.REACHED_GOAL) {
+            return new ReachedGoal(this.scene, this.spine)
         } else {
             return undefined
         }

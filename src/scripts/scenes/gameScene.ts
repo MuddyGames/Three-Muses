@@ -17,6 +17,7 @@ import {
 
 // Game State Management
 import {
+	GOAL,
 	GSM
 } from '../objects/gameStates'
 import Player from '../objects/Player'
@@ -349,8 +350,8 @@ export default class GameScene extends Phaser.Scene {
 
 		if (this.player.getMove()) {
 			if (this.cursors.right.isDown) {
-				const x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
-				const y = this.map.worldToTileY(this.player.getY())
+				let x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				let y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.collisionLayer.getTileAt(x + 1, y)
 
@@ -359,6 +360,20 @@ export default class GameScene extends Phaser.Scene {
 					this.player.moveRight()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
+
+				// Check is Goal Reached
+				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.goalLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === GOAL.TILE){
+						console.log('GOAL REACHED')
+						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+					}
+				}
+
 			}
 
 			if (this.cursors.left.isDown) {
