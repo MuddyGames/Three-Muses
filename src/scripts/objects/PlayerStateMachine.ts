@@ -358,7 +358,7 @@ export class WalkingUp extends PlayerStateMachine {
         player.setMove(true)
         this.animationTime = time
         this.idiomTime = time
-        let selection = Phaser.Math.Between(0, 10)
+        let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
                 this.sound = this.scene.sound.add('yurt')
@@ -521,7 +521,7 @@ export class EatingLeft extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        let selection = Phaser.Math.Between(0, 10)
+        let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
                 this.sound = this.scene.sound.add('well_kid')
@@ -601,7 +601,7 @@ export class MunchingLeft extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        let selection = Phaser.Math.Between(0, 10)
+        let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
                 this.sound = this.scene.sound.add('unreal')
@@ -680,7 +680,7 @@ export class EatingRight extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        let selection = Phaser.Math.Between(0, 10)
+        let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
                 this.sound = this.scene.sound.add('come_here_i_want_ya')
@@ -760,7 +760,7 @@ export class MunchingRight extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        let selection = Phaser.Math.Between(0, 10)
+        let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
                 this.sound = this.scene.sound.add('unreal')
@@ -839,7 +839,7 @@ export class EatingUp extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        let selection = Phaser.Math.Between(0, 10)
+        let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
                 this.sound = this.scene.sound.add('come_here_i_want_ya')
@@ -919,7 +919,7 @@ export class MunchingUp extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        let selection = Phaser.Math.Between(0, 10)
+        let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
                 this.sound = this.scene.sound.add('unreal')
@@ -998,7 +998,7 @@ export class EatingDown extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        let selection = Phaser.Math.Between(0, 10)
+        let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
                 this.sound = this.scene.sound.add('come_here_i_want_ya')
@@ -1078,7 +1078,7 @@ export class MunchingDown extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        let selection = Phaser.Math.Between(0, 10)
+        let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
                 this.sound = this.scene.sound.add('unreal')
@@ -1318,15 +1318,25 @@ export class Splash extends PlayerStateMachine {
     }
     enter(time: number, delta: number, player: Player) {
         console.log('Entering the Splash State')
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
         this.sound = this.scene.sound.add('state_of_ya')
-        this.spine.play(INPUT_TYPES.EXPIRED, true)
-
+        this.spine.play(INPUT_TYPES.SPLASH, true)
     }
     update(time: number, delta: number, player: Player) {
+        console.log('Updating the Splash State')
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
 
-        //console.log('Updating the Splash State')
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
     }
     exit(time: number, delta: number, player: Player) {
-        //console.log('Exiting the Splash State')
+        console.log('Exiting the Splash State')
+        player.setMove(true)
+        this.animationTime = 0
+        this.idiomTime = 0
     }
 }
