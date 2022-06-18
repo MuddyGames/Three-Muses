@@ -51,9 +51,6 @@ export default class GameScene extends Phaser.Scene {
 	// Game State Management
 	private gameState!: GSM
 
-	// Current Level
-	private current_level!: string
-
 	// Hud Text
 	private collectablePoints!: number
 	private levelScore!: number
@@ -775,31 +772,31 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	// Fetch Current Level
-	fetchCurrentLevel() : string {
+	loadCurrentLevel() : string {
 		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
 		if (temp !== null) {
-			this.current_level = temp
+			this.player.setCurrentLevel(temp)
 		} else {
-			this.current_level = LEVELS.LEVEL_01
+			this.player.setCurrentLevel(LEVELS.LEVEL_01)
 		}
-		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.current_level)
-		return this.current_level
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
+		return this.player.getCurrentLevel()
 	}
 
 	// Set Current Level to a New Level
-	setCurrentLevel(level: string) : string {
+	setCurrentLevel() : string {
 		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
+		let current_level: string
 		if (temp !== null) {
-			this.current_level = temp
+			current_level = temp
 		} else {
-			this.current_level = LEVELS.LEVEL_01
+			current_level = LEVELS.LEVEL_01
 		}
 		// Check if there the same and if not set the new level
-		if(this.current_level !== level){
-			this.current_level = level
-			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.current_level)
+		if(this.player.getCurrentLevel() !== current_level){
+			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
 		}
-		return this.current_level
+		return this.player.getCurrentLevel()
 	}
 
 
