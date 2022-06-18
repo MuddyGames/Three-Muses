@@ -1,0 +1,36 @@
+{ "skeleton": { "images": "C:/Users/kinga/Desktop/sound/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Background", "bone": "root" },
+	{ "name": "Layer 2", "bone": "root", "attachment": "Layer 2" },
+	{ "name": "Layer 3", "bone": "root", "attachment": "Layer 3" },
+	{ "name": "Layer 4", "bone": "root", "attachment": "Layer 4" },
+	{ "name": "Layer 5", "bone": "root", "attachment": "Layer 5" },
+	{ "name": "Layer 21", "bone": "root", "attachment": "Layer 21" }
+],
+"skins": {
+	"default": {
+		"Background": {
+			"Background": { "x": 32, "y": -30, "width": 66, "height": 62 }
+		},
+		"Layer 2": {
+			"Layer 2": { "x": 31, "y": -29.5, "width": 56, "height": 57 }
+		},
+		"Layer 3": {
+			"Layer 3": { "x": 24, "y": -29.5, "width": 20, "height": 29 }
+		},
+		"Layer 4": {
+			"Layer 4": { "x": 38, "y": -30.5, "width": 10, "height": 19 }
+		},
+		"Layer 5": {
+			"Layer 5": { "x": 43, "y": -30, "width": 12, "height": 28 }
+		},
+		"Layer 21": {
+			"Layer 21": { "x": 33, "y": -28.5, "width": 34, "height": 45 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

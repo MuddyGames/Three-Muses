@@ -1,0 +1,64 @@
+{ "skeleton": { "images": "C:/Users/kinga/Desktop/UI/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "pot copy", "bone": "root", "attachment": "pot copy" },
+	{ "name": "pot", "bone": "root", "attachment": "pot" },
+	{ "name": "weddingvase copy", "bone": "root", "attachment": "weddingvase copy" },
+	{ "name": "weddingvase", "bone": "root", "attachment": "weddingvase" },
+	{ "name": "pig copy", "bone": "root", "attachment": "pig copy" },
+	{ "name": "pig", "bone": "root", "attachment": "pig" },
+	{ "name": "alter copy", "bone": "root", "attachment": "alter copy" },
+	{ "name": "alter", "bone": "root", "attachment": "alter" },
+	{ "name": "star", "bone": "root" },
+	{ "name": "star copy", "bone": "root" },
+	{ "name": "star copy 2", "bone": "root" },
+	{ "name": "star copy 3", "bone": "root" },
+	{ "name": "star copy 4", "bone": "root" }
+],
+"skins": {
+	"default": {
+		"pot copy": {
+			"pot copy": { "x": 383.5, "y": -64, "width": 73, "height": 70 }
+		},
+		"pot": {
+			"pot": { "x": 383.5, "y": -64, "width": 65, "height": 62 }
+		},
+		"weddingvase copy": {
+			"weddingvase copy": { "x": 288, "y": -54.5, "width": 54, "height": 93 }
+		},
+		"weddingvase": {
+			"weddingvase": { "x": 288, "y": -54.5, "width": 46, "height": 85 }
+		},
+		"pig copy": {
+			"pig copy": { "x": 82, "y": -67, "width": 100, "height": 68 }
+		},
+		"pig": {
+			"pig": { "x": 82.5, "y": -67, "width": 93, "height": 60 }
+		},
+		"alter copy": {
+			"alter copy": { "x": 192, "y": -60.5, "width": 76, "height": 81 }
+		},
+		"alter": {
+			"alter": { "x": 192, "y": -60.5, "width": 68, "height": 73 }
+		},
+		"star": {
+			"star": { "x": 374.5, "y": -64, "width": 21, "height": 20 }
+		},
+		"star copy": {
+			"star copy": { "x": 387.5, "y": -73, "width": 21, "height": 20 }
+		},
+		"star copy 2": {
+			"star copy 2": { "x": 397.5, "y": -58, "width": 21, "height": 20 }
+		},
+		"star copy 3": {
+			"star copy 3": { "x": 384.5, "y": -52, "width": 21, "height": 20 }
+		},
+		"star copy 4": {
+			"star copy 4": { "x": 365.5, "y": -49, "width": 21, "height": 20 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
