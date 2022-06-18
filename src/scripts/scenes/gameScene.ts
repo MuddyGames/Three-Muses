@@ -819,8 +819,6 @@ export default class GameScene extends Phaser.Scene {
 		return this.player.getCurrentLevel()
 	}
 
-
-
 	private gsmUpdate(time: number, delta: number): void {
 		this.gameState = GSM.LEVEL_COMPLETE
 		console.log('level complete')

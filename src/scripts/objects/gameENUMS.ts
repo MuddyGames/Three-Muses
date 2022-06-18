@@ -16,6 +16,13 @@ export enum LEVELS{
     CREDITS = 'credits'
 }
 
+export enum ARTIFACTS{
+    ArtiFactOneScene = 'ArtiFactOneScene',
+    ArtiFactTwoScene = 'ArtiFactTwoScene',
+    ArtiFactThreeScene = 'ArtiFactThreeScene',
+    ArtiFactFourScene = 'ArtiFactFourScene'
+}
+
 export enum GOAL {
     TILE = 618 // Tile ID on level json
 };
