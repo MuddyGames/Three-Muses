@@ -20,7 +20,9 @@ import {
 	FRUITS,
 	GOAL,
 	GSM,
-	DIVER_TILES as DIVER
+	DIVER_TILES as DIVER,
+	LEVELS,
+	LEVEL_DATA_KEY
 } from '../objects/gameENUMS'
 import Player from '../objects/Player'
 
@@ -157,7 +159,6 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-
 		// Setup Screen Dimensions
 		let {
 			width,
@@ -178,6 +179,9 @@ export default class GameScene extends Phaser.Scene {
 		// Retrieve Recorded Score and Time from LocalStorage
 		this.fetchRecordedScore()
 		this.fetchRecordedTime()
+		
+		// Load Current Level
+		this.loadCurrentLevel()
 
 		// Setup HUD
 		// Score
@@ -323,11 +327,12 @@ export default class GameScene extends Phaser.Scene {
 	update(time: number, delta: number): void {
 
 		// TODO: BETTER Game State Management
-		//If level Playable Update
+		this.setCurrentLevel()
+		
 		if (this.gameState === GSM.PLAY) {
 			this.elapsedLevelTime = time;
 
-		} else if (this.gameState === GSM.LEVEL_01_COMPLETE || this.gameState === GSM.LEVEL_02_COMPLETE || this.gameState === GSM.LEVEL_03_COMPLETE || this.gameState === GSM.LEVEL_04_COMPLETE) {
+		} else if (this.gameState === GSM.LEVEL_COMPLETE) {
 
 			//Store Record Time
 			if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
@@ -338,6 +343,12 @@ export default class GameScene extends Phaser.Scene {
 				this.newRecordTime = this.bestRecordedTime
 			}
 
+			//this.setupMap()
+
+			//Phaser.Scene.call(this, this.player.getCurrentArtifact());
+			//this.scene.sendToBack(this)
+			//this.scene.start(this.player.getCurrentArtifact())
+			//this.scene.launch(this)
 		}
 
 		// Cannon Ball Movement
@@ -573,17 +584,34 @@ export default class GameScene extends Phaser.Scene {
 		this.collisionLayer.setDepth(2)
 		this.collisionLayer.setVisible(false)
 
-		this.candyLayer = this.map.createLayer('map/collectables/candies_level1_depth_02', this.tileset, 0, 0);
+		if(this.player.getCurrentLevel() === LEVELS.LEVEL_01){
+			this.candyLayer = this.map.createLayer('map/collectables/candies_level1_depth_02', this.tileset, 0, 0);
+			this.diverLayer = this.map.createLayer('map/patrol/level1', this.tileset, 0, 0);
+
+		} else if(this.player.getCurrentLevel() === LEVELS.LEVEL_02){
+			this.candyLayer = this.map.createLayer('map/collectables/candies_level2_depth_02', this.tileset, 0, 0);
+			this.diverLayer = this.map.createLayer('map/patrol/level2', this.tileset, 0, 0);
+		} else if(this.player.getCurrentLevel() === LEVELS.LEVEL_03){
+			this.candyLayer = this.map.createLayer('map/collectables/candies_level3_depth_02', this.tileset, 0, 0);
+			this.diverLayer = this.map.createLayer('map/patrol/level3', this.tileset, 0, 0);
+		} else if(this.player.getCurrentLevel() === LEVELS.LEVEL_04){
+			this.candyLayer = this.map.createLayer('map/collectables/candies_level4_depth_02', this.tileset, 0, 0);
+			this.diverLayer = this.map.createLayer('map/patrol/level4', this.tileset, 0, 0);
+		}  else{
+			this.candyLayer = this.map.createLayer('map/collectables/candies_level1_depth_02', this.tileset, 0, 0);
+			this.diverLayer = this.map.createLayer('map/patrol/level1', this.tileset, 0, 0);
+		}
+
 		this.candyLayer.setDepth(2);
-		this.candyLayer.setVisible(false)
+		this.candyLayer.setVisible(true)
+
+		this.diverLayer.setDepth(2)
+		this.diverLayer.setVisible(true)
+		
 
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(2)
 		this.goalLayer.setVisible(false)
-
-		this.diverLayer = this.map.createLayer('map/patrol/level1', this.tileset, 0, 0);
-		this.diverLayer.setDepth(2)
-		this.diverLayer.setVisible(false)
 	}
 
 	private toggleMute() {
@@ -745,8 +773,43 @@ export default class GameScene extends Phaser.Scene {
 		window.localStorage.setItem('score', this.levelScore.toString())
 	}
 
+	// Fetch Current Level
+	private loadCurrentLevel() : string {
+		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
+		if (temp !== null) {
+			this.player.setCurrentLevel(temp)
+		} else {
+			this.player.setCurrentLevel(LEVELS.LEVEL_01)
+		}
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
+		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT, this.player.getNextLevel())
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
+		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
+
+		return this.player.getCurrentLevel()
+	}
+
+	// Set Current Level to a New Level
+	private setCurrentLevel() : string {
+		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
+		let current_level: string
+		if (temp !== null) {
+			current_level = temp
+		} else {
+			current_level = LEVELS.LEVEL_01
+		}
+		// Check if there the same and if not set the new level
+		if(this.player.getCurrentLevel() !== current_level){
+			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
+			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT, this.player.getNextLevel())
+			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
+			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
+		}
+		return this.player.getCurrentLevel()
+	}
+
 	private gsmUpdate(time: number, delta: number): void {
-		this.gameState = GSM.LEVEL_01_COMPLETE
+		this.gameState = GSM.LEVEL_COMPLETE
 		console.log('level complete')
 	}
 }
