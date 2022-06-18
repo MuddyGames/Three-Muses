@@ -19,7 +19,8 @@ import {
 import {
 	FRUITS,
 	GOAL,
-	GSM
+	GSM,
+	DIVER_TILES as DIVER
 } from '../objects/gameENUMS'
 import Player from '../objects/Player'
 
@@ -29,6 +30,7 @@ const IDLE_KEY = 'idle'
 const CANNONBALL_KEY = 'cannonball'
 const WINDMILL_KEY = 'windmill'
 const KEYS = ['orange', 'lemon', 'grape']
+const DIVER_KEY = 'diver'
 
 let muteBtn
 
@@ -67,6 +69,7 @@ export default class GameScene extends Phaser.Scene {
 
 	// Level Objects
 	private truffles!: SpineGameObject
+	private divers: SpineGameObject[] = []
 	private cannonball: SpineGameObject[] = []
 	private windmill!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -77,6 +80,11 @@ export default class GameScene extends Phaser.Scene {
 
 	private trufflesAnimationNames: string[] = []
 	private trufflesAnimationIndex = 0
+
+	private diverAnimationNames: string[] = []
+	private diverAnimationIndex = 0
+	private diverMove: number[] = []
+	private diverSpeed = 0.5
 
 	private fruitAnimationNames: string[] = []
 	private fruitMarked: boolean[] = []
@@ -124,6 +132,7 @@ export default class GameScene extends Phaser.Scene {
 	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
 	private goalLayer!: Phaser.Tilemaps.TilemapLayer
+	private diverLayer!: Phaser.Tilemaps.TilemapLayer
 
 	// Player Data
 	private playerState!: PlayerState
@@ -148,6 +157,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.load.setPath('assets/spine/')
 		this.load.spine(TRUFFLES_KEY, 'truffles/truffles_all.json', 'truffles/truffles_all.atlas')
+		this.load.spine(DIVER_KEY, 'diver/diver_all.json', 'diver/diver_all.atlas')
 		this.load.spine(KEYS[0], 'fruits/orange/orange.json', 'fruits/orange/orange.atlas')
 		this.load.spine(KEYS[1], 'fruits/grape/grape.json', 'fruits/grape/grape.atlas')
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
@@ -205,6 +215,8 @@ export default class GameScene extends Phaser.Scene {
 
 		//Setup Map Data
 		this.setupMap()
+		var tilesWide = this.map.width
+		var tilesHigh = this.map.height
 
 		// Background Music
 		this.backingMusic = this.sound.add('level_backing_track', {
@@ -226,6 +238,23 @@ export default class GameScene extends Phaser.Scene {
 		this.truffles.setDepth(2)
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
+		// Setup Divers
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				var tile = this.diverLayer.getTileAt(j, i)
+				if (tile != null) {
+					if (tile.index === DIVER.START) {
+						this.divers.push(this.createSpineObject(IDLE_KEY, DIVER_KEY, j * this.tileSize, i * this.tileSize, 0.25, 0.25))
+						this.diverMove.push(this.diverSpeed)
+					}
+				}
+			}
+		}
+		// Init diver animations
+		for (let i = 0; i < this.divers.length; i++) {
+			this.initializeAnimationsState(this.divers[i], this.diverAnimationNames)
+		}
+		
 		// This should probably go into FSM or other
 		this.direction = Direction.Down
 
@@ -250,9 +279,6 @@ export default class GameScene extends Phaser.Scene {
 		this.cursors = this.input.keyboard.createCursorKeys()
 
 		// Setup Fruits
-		// TODO: Get this from tiled
-		var tilesWide = 40
-		var tilesHigh = 23
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.candyLayer.getTileAt(j, i)
@@ -451,8 +477,23 @@ export default class GameScene extends Phaser.Scene {
 			}
 		}
 
+		// Init fruit animations
+		for (let i = 0; i < this.divers.length; i++) {
+			this.divers[i].y += this.diverMove[i]
+			const x = this.map.worldToTileX(this.divers[i].x)
+			const y = this.map.worldToTileY(this.divers[i].y)
 
-		// Set cannon ball positions
+			this.tile = this.diverLayer.getTileAt(x, y)
+
+			if (this.tile.index == DIVER.START) {
+				this.diverMove[i] = this.diverSpeed
+			}
+			else if(this.tile.index == DIVER.END) {
+				this.diverMove[i] = -this.diverSpeed
+			}
+		}
+
+		// cannonball collisions
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.trufflesAABB(this.truffles, this.cannonball[i])) {
 				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
@@ -558,8 +599,12 @@ export default class GameScene extends Phaser.Scene {
 		this.candyLayer.setVisible(false)
 
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
-		this.collisionLayer.setDepth(2)
-		this.collisionLayer.setVisible(true)
+		this.goalLayer.setDepth(2)
+		this.goalLayer.setVisible(false)
+
+		this.diverLayer = this.map.createLayer('map/patrol/level1', this.tileset, 0, 0);
+		this.diverLayer.setDepth(2)
+		this.diverLayer.setVisible(false)
 	}
 
 	private toggleMute() {
