@@ -26,5 +26,6 @@ export enum FRUITS {
 
 export enum DIVER_TILES {
     START = 567,
-    END = 619
+    END = 619,
+    SPEED = 0.5
 }

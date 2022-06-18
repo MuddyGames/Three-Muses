@@ -174,7 +174,7 @@ export class WalkingRight extends PlayerStateMachine {
             return new WalkingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_DOWN) {
             return new WalkingDown(this.scene, this.spine)
-        } else if (input === INPUT_TYPES.EATING_RIGHT) {
+        } else if (input === INPUT_TYPES.EATING) {
             return new EatingRight(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
@@ -265,7 +265,7 @@ export class WalkingLeft extends PlayerStateMachine {
             return new WalkingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_DOWN) {
             return new WalkingDown(this.scene, this.spine)
-        } else if (input === INPUT_TYPES.EATING_LEFT) {
+        } else if (input === INPUT_TYPES.EATING) {
             return new EatingLeft(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
@@ -356,7 +356,7 @@ export class WalkingUp extends PlayerStateMachine {
             return new WalkingRight(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_DOWN) {
             return new WalkingDown(this.scene, this.spine)
-        } else if (input === INPUT_TYPES.EATING_UP) {
+        } else if (input === INPUT_TYPES.EATING) {
             return new EatingUp(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
@@ -450,7 +450,7 @@ export class WalkingDown extends PlayerStateMachine {
             return new WalkingRight(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_UP) {
             return new WalkingUp(this.scene, this.spine)
-        } else if (input === INPUT_TYPES.EATING_DOWN) {
+        } else if (input === INPUT_TYPES.EATING) {
             return new EatingDown(this.scene, this.spine)
         } else if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)

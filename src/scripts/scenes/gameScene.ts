@@ -34,13 +34,6 @@ const DIVER_KEY = 'diver'
 
 let muteBtn
 
-enum Direction {
-	Up,
-	Down,
-	Left,
-	Right
-}
-
 export default class GameScene extends Phaser.Scene {
 
 	// Player Class
@@ -84,7 +77,6 @@ export default class GameScene extends Phaser.Scene {
 	private diverAnimationNames: string[] = []
 	private diverAnimationIndex = 0
 	private diverMove: number[] = []
-	private diverSpeed = 0.5
 
 	private fruitAnimationNames: string[] = []
 	private fruitMarked: boolean[] = []
@@ -136,7 +128,6 @@ export default class GameScene extends Phaser.Scene {
 
 	// Player Data
 	private playerState!: PlayerState
-	private direction!: Direction
 
 	constructor() {
 		super({
@@ -246,7 +237,7 @@ export default class GameScene extends Phaser.Scene {
 				if (tile != null) {
 					if (tile.index === DIVER.START) {
 						this.divers.push(this.createSpineObject(IDLE_KEY, DIVER_KEY, j * this.tileSize, i * this.tileSize, 0.25, 0.25))
-						this.diverMove.push(this.diverSpeed)
+						this.diverMove.push(DIVER.SPEED)
 						this.divers[counter].setDepth(2)
 						counter++
 					}
@@ -257,9 +248,6 @@ export default class GameScene extends Phaser.Scene {
 		for (let i = 0; i < this.divers.length; i++) {
 			this.initializeAnimationsState(this.divers[i], this.diverAnimationNames)
 		}
-		
-		// This should probably go into FSM or other
-		this.direction = Direction.Down
 
 		// Cannon Ball Setup
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[0], this.cannonballPosY[0], 1.2, 1.2))
@@ -357,22 +345,18 @@ export default class GameScene extends Phaser.Scene {
 
 		const size = this.trufflesAnimationNames.length
 
-		// TODO : Direction Stuff Refactor
+		// Handles input
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
 			if (this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player) != null) {
-				this.direction = Direction.Right
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
 			if (this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player) != null) {
-				this.direction = Direction.Left
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
 			if (this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player) != null) {
-				this.direction = Direction.Up
 			}
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
 			if (this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player) != null) {
-				this.direction = Direction.Down
 			}
 		}
 
@@ -457,26 +441,18 @@ export default class GameScene extends Phaser.Scene {
 							args: [i, time, delta]
 						})
 						this.fruitMarked[i] = true
-						switch (this.direction) {
-							case Direction.Up:
-								this.addPoints(250)
-								this.player.getState().handleInput(INPUT_TYPES.EATING_UP, time, delta, this.player)
-								break;
-							case Direction.Down:
-								this.addPoints(350)
-								this.player.getState().handleInput(INPUT_TYPES.EATING_DOWN, time, delta, this.player)
-								break;
-							case Direction.Left:
-								this.addPoints(100)
-								this.player.getState().handleInput(INPUT_TYPES.EATING_LEFT, time, delta, this.player)
-								break;
-							case Direction.Right:
-								this.addPoints(250)
-								this.player.getState().handleInput(INPUT_TYPES.EATING_RIGHT, time, delta, this.player)
-								break;
-						}
+						this.addPoints(250)
+						this.player.getState().handleInput(INPUT_TYPES.EATING, time, delta, this.player)
 					}
 				}
+			}
+		}
+
+		// Diver Collision
+		for(let i = 0; i < this.divers.length; i++) {
+			if (this.trufflesAABB(this.truffles, this.divers[i])){
+				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
+				this.addPoints(-150)
 			}
 		}
 
@@ -489,10 +465,10 @@ export default class GameScene extends Phaser.Scene {
 			this.tile = this.diverLayer.getTileAt(x, y)
 
 			if (this.tile.index == DIVER.START) {
-				this.diverMove[i] = this.diverSpeed
+				this.diverMove[i] = DIVER.SPEED
 			}
 			else if(this.tile.index == DIVER.END) {
-				this.diverMove[i] = -this.diverSpeed
+				this.diverMove[i] = -DIVER.SPEED
 			}
 		}
 
