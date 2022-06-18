@@ -20,7 +20,9 @@ import {
 	FRUITS,
 	GOAL,
 	GSM,
-	DIVER_TILES as DIVER
+	DIVER_TILES as DIVER,
+	LEVELS,
+	LEVEL_DATA_KEY
 } from '../objects/gameENUMS'
 import Player from '../objects/Player'
 
@@ -772,16 +774,35 @@ export default class GameScene extends Phaser.Scene {
 		window.localStorage.setItem('score', this.levelScore.toString())
 	}
 
-	// Fetch Recorded Score
-	private fetchCurrentLevel() {
-		let temp = window.localStorage.getItem('level_current')
+	// Fetch Current Level
+	fetchCurrentLevel() : string {
+		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
 		if (temp !== null) {
 			this.current_level = temp
 		} else {
-			this.current_level = ''
+			this.current_level = LEVELS.LEVEL_01
 		}
-		window.localStorage.setItem('level_current', this.current_level)
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.current_level)
+		return this.current_level
 	}
+
+	// Set Current Level to a New Level
+	setCurrentLevel(level: string) : string {
+		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
+		if (temp !== null) {
+			this.current_level = temp
+		} else {
+			this.current_level = LEVELS.LEVEL_01
+		}
+		// Check if there the same and if not set the new level
+		if(this.current_level !== level){
+			this.current_level = level
+			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.current_level)
+		}
+		return this.current_level
+	}
+
+
 
 	private gsmUpdate(time: number, delta: number): void {
 		this.gameState = GSM.LEVEL_01_COMPLETE
