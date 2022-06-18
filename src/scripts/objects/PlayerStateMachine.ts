@@ -1375,7 +1375,7 @@ export class ReachedGoal extends PlayerStateMachine {
         this.idiomSound = this.scene.sound.add('well_sham_any_sca')
         this.punishmentSound = this.scene.sound.add('reached_goal',{volume:0.5})
         this.punishmentSound.play()
-        this.spine.play(INPUT_TYPES.SPLASH, true)
+        this.spine.play(INPUT_TYPES.REACHED_GOAL, true)
     }
     update(time: number, delta: number, player: Player) {
         console.log('Updating the ReachedGoal State')

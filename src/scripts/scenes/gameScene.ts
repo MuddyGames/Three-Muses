@@ -59,6 +59,9 @@ export default class GameScene extends Phaser.Scene {
 	// Level Music
 	backingMusic!: Phaser.Sound.BaseSound
 
+	// Church Bells
+	churchBells!: Phaser.Sound.BaseSound
+
 	// Truffle idioms
 	idiomCue!: Phaser.Sound.BaseSound
 
@@ -208,6 +211,15 @@ export default class GameScene extends Phaser.Scene {
 		})
 		this.backingMusic.play()
 
+		// Play Church Bells
+		this.churchBells = this.sound.add('church_bells', {volume: 0.5})
+		this.time.addEvent({
+			delay: 6000,
+			loop: true,
+			callback: this.playChurchBells,
+			callbackScope: this
+		});
+
 
 
 		// Setup Truffles
@@ -285,7 +297,7 @@ export default class GameScene extends Phaser.Scene {
 
 		// Initialise Player State
 		this.playerState = new PlayerState(this, this.truffles, 0, 0)
-		this.playerState.getState()?.enter(0,0,this.player)
+		this.playerState.getState()?.enter(0, 0, this.player)
 		this.player.setState(this.playerState)
 	}
 
@@ -577,6 +589,14 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		return collision
+	}
+
+	// Play Church Bells
+	private playChurchBells(index: number, time: number, delta: number) {
+		let chance = Phaser.Math.Between(0, 24)
+		if(chance === 12 || chance === 6){
+			this.churchBells.play()
+		}
 	}
 
 	// Fruit Animations
