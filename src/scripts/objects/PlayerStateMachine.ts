@@ -9,7 +9,6 @@ import {
 import Player from './Player'
 import PlayerState from './PlayerState'
 
-var canPlay!: boolean
 export default abstract class PlayerStateMachine {
     protected spine!: SpineGameObject
     protected scene!: Phaser.Scene
@@ -148,10 +147,6 @@ export class WalkingRight extends PlayerStateMachine {
     }
     enter(time: number, delta: number) {
         this.sound = this.scene.sound.add('unreal')
-        if (canPlay) {
-            this.sound.play()
-            canPlay = false
-        }
         this.spine.play(INPUT_TYPES.WALK_RIGHT, true)
     }
     update(time: number, delta: number) {
@@ -194,10 +189,6 @@ export class WalkingLeft extends PlayerStateMachine {
     }
     enter(time: number, delta: number) {
         this.sound = this.scene.sound.add('gawke')
-        if (canPlay) {
-            this.sound.play()
-            canPlay = false
-        }
         this.spine.play(INPUT_TYPES.WALK_LEFT, true)
 
     }
@@ -241,10 +232,6 @@ export class WalkingUp extends PlayerStateMachine {
     }
     enter(time: number, delta: number, player: Player) {
         this.sound = this.scene.sound.add('yurt')
-        if (canPlay) {
-            this.sound.play()
-            canPlay = false
-        }
         this.spine.play(INPUT_TYPES.WALK_UP, true)
 
     }
@@ -287,10 +274,6 @@ export class WalkingDown extends PlayerStateMachine {
     }
     enter(time: number, delta: number, player: Player) {
         this.sound = this.scene.sound.add('shades')
-        if (canPlay) {
-            this.sound.play()
-            canPlay = false
-        }
         this.spine.play(INPUT_TYPES.WALK_DOWN, true)
 
     }
@@ -746,10 +729,6 @@ export class Splash extends PlayerStateMachine {
     enter(time: number, delta: number, player: Player) {
         console.log('Entering the Splash State')
         this.sound = this.scene.sound.add('state_of_ya')
-        if (canPlay) {
-            this.sound.play()
-            canPlay = false
-        }
         this.spine.play(INPUT_TYPES.EXPIRED, true)
 
     }
