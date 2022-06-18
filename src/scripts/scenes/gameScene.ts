@@ -800,10 +800,10 @@ export default class GameScene extends Phaser.Scene {
 			this.player.setCurrentLevel(LEVELS.LEVEL_01)
 		}
 		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
-		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
-		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
-		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
-		
+		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT, this.player.getNextLevel())
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
+		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
+
 		return this.player.getCurrentLevel()
 	}
 
@@ -819,6 +819,9 @@ export default class GameScene extends Phaser.Scene {
 		// Check if there the same and if not set the new level
 		if(this.player.getCurrentLevel() !== current_level){
 			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
+			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT, this.player.getNextLevel())
+			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
+			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
 		}
 		return this.player.getCurrentLevel()
 	}
