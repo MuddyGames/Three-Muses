@@ -8,6 +8,7 @@ import ArtiFactOneScene from './scenes/artifactOneScene'
 import ArtiFactTwoScene from './scenes/artifactTwoScene'
 import ArtiFactThreeScene from './scenes/artifactThreeScene'
 import ArtiFactFourScene from './scenes/artifactFourScene'
+import Credits from './scenes/creditsScene'
 
 const DEFAULT_WIDTH = 1280
 const DEFAULT_HEIGHT = 720
@@ -28,7 +29,7 @@ const config = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, GameScene, SplashScene, ArtiFactOneScene, ArtiFactTwoScene, ArtiFactThreeScene, ArtiFactFourScene],
+  scene: [PreloadScene, GameScene, SplashScene, ArtiFactOneScene, ArtiFactTwoScene, ArtiFactThreeScene, ArtiFactFourScene, Credits],
   plugins: {
     scene: [{
       key: 'SpinePlugin',
