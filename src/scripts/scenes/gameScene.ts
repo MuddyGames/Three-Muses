@@ -17,6 +17,7 @@ import {
 
 // Game State Management
 import {
+	FRUITS,
 	GOAL,
 	GSM
 } from '../objects/gameENUMS'
@@ -63,11 +64,6 @@ export default class GameScene extends Phaser.Scene {
 
 	// Church Bells
 	churchBells!: Phaser.Sound.BaseSound
-
-	// Truffle idioms
-	idiomCue!: Phaser.Sound.BaseSound
-
-	// Heads up Display
 
 	// Level Objects
 	private truffles!: SpineGameObject
@@ -160,8 +156,18 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
+
+		// Setup Screen Dimensions
+		let {
+			width,
+			height
+		} = this.sys.game.canvas;
+		this.screenX = width;
+		this.screenY = height
+
 		//Setup the Player
-		this.player = new Player(new Phaser.Math.Vector2(100, 300))
+		// The X Y needs to come from tiles spawn points
+		this.player = new Player(new Phaser.Math.Vector2(100, 360))
 		this.player.setVelocityX(new Phaser.Math.Vector2(2, 0))
 		this.player.setVelocityY(new Phaser.Math.Vector2(0, 2))
 
@@ -171,13 +177,6 @@ export default class GameScene extends Phaser.Scene {
 		// Retrieve Recorded Score and Time from LocalStorage
 		this.fetchRecordedScore()
 		this.fetchRecordedTime()
-		// Setup Screen Dimensions
-		let {
-			width,
-			height
-		} = this.sys.game.canvas;
-		this.screenX = width;
-		this.screenY = height
 
 		// Setup HUD
 		// Score
@@ -222,22 +221,18 @@ export default class GameScene extends Phaser.Scene {
 			callbackScope: this
 		});
 
-
-
 		// Setup Truffles
 		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, this.player.getX(), this.player.getY(), 0.25, 0.25)
 		this.truffles.setDepth(2)
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
-		//this.canMove = true
+		// This should probably go into FSM or other
 		this.direction = Direction.Down
-
 
 		// Cannon Ball Setup
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[0], this.cannonballPosY[0], 1.2, 1.2))
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[1], this.cannonballPosY[1], 1.2, 1.2))
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[2], this.cannonballPosY[2], 1.2, 1.2))
-
 
 		// Setup Cannon ball animations
 		for (let i = 0; i < this.cannonball.length; i++) {
@@ -247,6 +242,7 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		// Add Windmill
+		// TODO: This needs to be from tiled
 		this.windmill = this.createSpineObject(IDLE_KEY, WINDMILL_KEY, 50, 0, 1, 1)
 		this.windmill.setDepth(1)
 
@@ -254,19 +250,20 @@ export default class GameScene extends Phaser.Scene {
 		this.cursors = this.input.keyboard.createCursorKeys()
 
 		// Setup Fruits
+		// TODO: Get this from tiled
 		var tilesWide = 40
 		var tilesHigh = 23
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.candyLayer.getTileAt(j, i)
 				if (tile != null) {
-					if (tile.index === 674) {
+					if (tile.index === FRUITS.ORANGE_TILE) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
-					} else if (tile.index === 570) {
+					} else if (tile.index === FRUITS.LEMON_TILE) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
-					} else if (tile.index === 622) {
+					} else if (tile.index === FRUITS.GRAPE_TILE) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[2], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
 					}
@@ -279,6 +276,7 @@ export default class GameScene extends Phaser.Scene {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
 
+		// TODO : This needs total refactoring
 		muteBtn = this.add.text(20, 20, 'Mute', {
 				fontFamily: 'gamefont',
 				color: '#EC00D7',
@@ -299,7 +297,7 @@ export default class GameScene extends Phaser.Scene {
 
 		// Initialise Player State
 		this.playerState = new PlayerState(this, this.truffles, 0, 0)
-		this.playerState.getState()?.enter(0, 0, this.player)
+		this.playerState.getState()?.enter(0, 0, this.player) // Activate Idle
 		this.player.setState(this.playerState)
 	}
 
@@ -307,7 +305,7 @@ export default class GameScene extends Phaser.Scene {
 
 	update(time: number, delta: number): void {
 
-		// TODO BETTER Game State Management
+		// TODO: BETTER Game State Management
 		//If level Playable Update
 		if (this.gameState === GSM.PLAY) {
 			this.elapsedLevelTime = time;
@@ -325,10 +323,12 @@ export default class GameScene extends Phaser.Scene {
 
 		}
 
+		// Cannon Ball Movement
 		this.cannonballMove()
 
 		const size = this.trufflesAnimationNames.length
 
+		// TODO : Direction Stuff Refactor
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
 			if (this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player) != null) {
 				this.direction = Direction.Right
@@ -347,6 +347,7 @@ export default class GameScene extends Phaser.Scene {
 			}
 		}
 
+		// Can player move
 		if (this.player.getMove()) {
 			if (this.cursors.right.isDown) {
 				let x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
@@ -354,13 +355,12 @@ export default class GameScene extends Phaser.Scene {
 
 				this.tile = this.collisionLayer.getTileAt(x + 1, y)
 
-
 				if (this.tile == null) {
 					this.player.moveRight()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
 
-				// Check is Goal Reached
+				// TODO: Check is Goal Reached on other keys
 				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
 				y = this.map.worldToTileY(this.player.getY())
 
@@ -421,7 +421,6 @@ export default class GameScene extends Phaser.Scene {
 					if (!this.fruitMarked[i] && this.trufflesAABB(this.truffles, this.fruit[i])) {
 						console.log('Fruit Collision ' + i)
 						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
-						//this.canMove = false
 						this.time.addEvent({
 							delay: 480,
 							callback: this.fruitAnimate,
@@ -640,9 +639,6 @@ export default class GameScene extends Phaser.Scene {
 		this.tile = this.candyLayer.getTileAt(x, y)
 		this.map.removeTile(this.tile)
 		this.fruit[index].removeFromDisplayList()
-
-		//this.player.getState().handleInput(INPUT_TYPES.IDLE, time, delta, this.player)
-		//this.canMove = true
 	}
 
 	// Reset Cannon Balls
