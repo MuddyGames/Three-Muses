@@ -27,19 +27,10 @@ export default class ArtiFactOneScene extends Phaser.Scene {
     this.backingMusic = this.sound.add('splash_screen_track',{ loop: true })
 		this.backingMusic.play()
 
-    // Move to next Artifact
-    this.timedEvents.push(this.time.delayedCall(2000, this.onEventGame, [], this))
-
   }
 
   update() {
 
-  }
-
-
-  private onEventGame() {
-    this.scene.start('ArtiFactTwoScene')
-    this.backingMusic.stop()
   }
 
 }

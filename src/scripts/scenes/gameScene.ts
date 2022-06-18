@@ -354,7 +354,10 @@ export default class GameScene extends Phaser.Scene {
 			} else {
 				this.newRecordTime = this.bestRecordedTime
 			}
-
+			//Phaser.Scene.call(this, this.player.getCurrentArtifact());
+			//this.scene.sendToBack(this)
+			//this.scene.start(this.player.getCurrentArtifact())
+			//this.scene.launch(this)
 		}
 
 		// Cannon Ball Movement
