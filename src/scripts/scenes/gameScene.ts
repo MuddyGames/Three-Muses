@@ -431,19 +431,19 @@ export default class GameScene extends Phaser.Scene {
 						this.fruitMarked[i] = true
 						switch (this.direction) {
 							case Direction.Up:
-								this.setPoints(250)
+								this.addPoints(250)
 								this.player.getState().handleInput(INPUT_TYPES.EATING_UP, time, delta, this.player)
 								break;
 							case Direction.Down:
-								this.setPoints(350)
+								this.addPoints(350)
 								this.player.getState().handleInput(INPUT_TYPES.EATING_DOWN, time, delta, this.player)
 								break;
 							case Direction.Left:
-								this.setPoints(100)
+								this.addPoints(100)
 								this.player.getState().handleInput(INPUT_TYPES.EATING_LEFT, time, delta, this.player)
 								break;
 							case Direction.Right:
-								this.setPoints(250)
+								this.addPoints(250)
 								this.player.getState().handleInput(INPUT_TYPES.EATING_RIGHT, time, delta, this.player)
 								break;
 						}
@@ -457,6 +457,7 @@ export default class GameScene extends Phaser.Scene {
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.trufflesAABB(this.truffles, this.cannonball[i])) {
 				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
+				this.addPoints(-150)
 			}
 		}
 
@@ -690,7 +691,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	// Add Points
-	private setPoints(points: number) {
+	private addPoints(points: number) {
 		if (points > 0) {
 			this.collectablePoints += points
 		}

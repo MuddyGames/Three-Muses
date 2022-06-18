@@ -17,5 +17,5 @@ export enum INPUT_TYPES {
         REVIVE = 'revive', 
         REVIVED = 'revived', 
         SPLASH = 'splash',
-        REACHED_GOAL = 'revived' // TODO Reached Goal
+        REACHED_GOAL = 'revived' // TODO Reached Goal Animation
 }

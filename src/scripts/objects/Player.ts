@@ -28,7 +28,7 @@ export default class Player {
         this.expiredDelay = 1000
         this.reviveDelay = 1000
         this.revivedDelay = 1000
-        this.idiomDelay = 100
+        this.idiomDelay = 200
     }
 
     setMove(move: boolean): void {

@@ -584,9 +584,9 @@ export class EatingLeft extends PlayerStateMachine {
         if (this.animationElapsed >= player.getEatingDelay()) {
             let temp = player.getState()
             let state = new MunchingLeft(this.scene, this.spine)
-            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().getState()?.exit(time, delta, player)
             player.getState().setState(state)
-            player.getState().getState() ?.enter(time, delta, player)
+            player.getState().getState()?.enter(time, delta, player)
         }
         if (this.idiomElapsed >= player.getIdiomDelay()) {
             this.idiomSound.play()
@@ -665,9 +665,10 @@ export class MunchingLeft extends PlayerStateMachine {
         if (this.animationElapsed > player.getMunchingDelay()) {
             let temp = player.getState()
             let state = new Idle(this.scene, this.spine)
-            player.getState().getState() ?.exit(time, delta, player)
+            // Make sure no gaps player.getState().getState()?.exit(time, delta, player)
+            player.getState().getState()?.exit(time, delta, player)
             player.getState().setState(state)
-            player.getState().getState() ?.enter(time, delta, player)
+            player.getState().getState()?.enter(time, delta, player)
         }
         if (this.idiomElapsed >= player.getIdiomDelay()) {
             this.idiomSound.play()
