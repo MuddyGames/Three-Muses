@@ -67,6 +67,18 @@ export default class Player {
         return this.current_level
     }
 
+    getNextLevel(): string{
+        return this.next_level
+    }
+
+    getCurrentArtifact(): string{
+        return this.current_artifact
+    }
+
+    getNextArtifact(): string{
+        return this.next_artifact
+    }
+
     setCurrentLevel(level: string): string{
         this.current_level = level
         return this.current_level

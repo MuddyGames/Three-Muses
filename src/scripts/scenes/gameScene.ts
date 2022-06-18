@@ -800,6 +800,10 @@ export default class GameScene extends Phaser.Scene {
 			this.player.setCurrentLevel(LEVELS.LEVEL_01)
 		}
 		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
+		
 		return this.player.getCurrentLevel()
 	}
 

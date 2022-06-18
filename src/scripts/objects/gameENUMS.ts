@@ -4,8 +4,12 @@ export enum GSM {
     GAME_COMPLETE = 'game_complete'
 };
 
+// Used for local storage keys
 export enum LEVEL_DATA_KEY{
-    CURRENT = 'level_current'
+    CURRENT = 'level_current',
+    NEXT = 'level_next',
+    CURRENT_ARTIFACT = 'artifact_current',
+    NEXT_ARTIFACT = 'artifact_next'
 }
 
 export enum LEVELS{
@@ -20,7 +24,8 @@ export enum ARTIFACTS{
     ArtiFactOneScene = 'ArtiFactOneScene',
     ArtiFactTwoScene = 'ArtiFactTwoScene',
     ArtiFactThreeScene = 'ArtiFactThreeScene',
-    ArtiFactFourScene = 'ArtiFactFourScene'
+    ArtiFactFourScene = 'ArtiFactFourScene',
+    CREDITS = 'Credits'
 }
 
 export enum GOAL {
