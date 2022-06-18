@@ -15,6 +15,7 @@ export default class Player {
     private reviveDelay!: number
     private revivedDelay!: number
     private idiomDelay!: number
+    private current_level!: string
 
     constructor(position: Phaser.Math.Vector2) {
         this.move = true
@@ -29,6 +30,15 @@ export default class Player {
         this.reviveDelay = 1000
         this.revivedDelay = 1000
         this.idiomDelay = 200
+    }
+
+    getCurrentLevel(): string{
+        return this.current_level
+    }
+
+    setCurrentLevel(level: string): string{
+        this.current_level = level
+        return this.current_level
     }
 
     setMove(move: boolean): void {
