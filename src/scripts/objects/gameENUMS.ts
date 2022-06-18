@@ -30,3 +30,8 @@ export enum FRUITS {
     GRAPE = 2,
     GRAPE_TILE = 622 // Tile ID on level json
 };
+
+export enum DIVER_TILES {
+    START = 567,
+    END = 619
+}
