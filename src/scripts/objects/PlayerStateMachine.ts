@@ -3,6 +3,7 @@ import {
     Time
 } from 'phaser'
 import 'phaser/plugins/spine/dist/SpinePlugin'
+import { LEVELS } from './gameENUMS'
 import {
     INPUT_TYPES
 } from './inputs'
@@ -1362,6 +1363,14 @@ export class Splash extends PlayerStateMachine {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
+        if (this.animationElapsed >= player.getGoalDelay()) {
+            let temp = player.getState()
+            let state = new Idle(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
+
         if (this.idiomElapsed >= player.getIdiomDelay()) {
             this.idiomSound.play()
         }
@@ -1409,7 +1418,16 @@ export class ReachedGoal extends PlayerStateMachine {
         this.idiomTime = 0
 
         // Game State Management
-        //let level = this.scene.
-
+        if(player.getCurrentLevel() === LEVELS.LEVEL_01){
+            player.setCurrentLevel(LEVELS.LEVEL_02)
+        }else if(player.getCurrentLevel() === LEVELS.LEVEL_02){
+            player.setCurrentLevel(LEVELS.LEVEL_03)
+        }else if(player.getCurrentLevel() === LEVELS.LEVEL_03){
+            player.setCurrentLevel(LEVELS.LEVEL_04)
+        }else if(player.getCurrentLevel() === LEVELS.LEVEL_04){
+            player.setCurrentLevel(LEVELS.CREDITS)
+        } else{
+            player.setCurrentLevel(LEVELS.LEVEL_01)
+        }
     }
 }

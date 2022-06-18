@@ -15,6 +15,7 @@ export default class Player {
     private reviveDelay!: number
     private revivedDelay!: number
     private idiomDelay!: number
+    private goalDelay!: number
     private current_level!: string
 
     constructor(position: Phaser.Math.Vector2) {
@@ -29,6 +30,7 @@ export default class Player {
         this.expiredDelay = 1000
         this.reviveDelay = 1000
         this.revivedDelay = 1000
+        this.goalDelay = 2000
         this.idiomDelay = 200
     }
 
@@ -74,6 +76,10 @@ export default class Player {
     }
 
     getRevivedDelay(): number {
+        return this.revivedDelay
+    }
+
+    getGoalDelay(): number {
         return this.revivedDelay
     }
 
