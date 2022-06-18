@@ -12,7 +12,10 @@ import PlayerState from './PlayerState'
 export default abstract class PlayerStateMachine {
     protected spine!: SpineGameObject
     protected scene!: Phaser.Scene
-    protected sound!: Phaser.Sound.BaseSound
+    protected idiomSound!: Phaser.Sound.BaseSound
+    protected rewardSound!: Phaser.Sound.BaseSound
+    protected punishmentSound!: Phaser.Sound.BaseSound
+    protected revivedSound!: Phaser.Sound.BaseSound
     protected animationTime!: number
     protected animationElapsed!: number
     protected idiomTime!: number
@@ -66,67 +69,67 @@ export class Idle extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 2:
-                this.sound = this.scene.sound.add('story')
+                this.idiomSound = this.scene.sound.add('story')
                 break
             case 3:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 4:
-                this.sound = this.scene.sound.add('sca')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('sca')
                 break
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 11:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 12:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 13:
-                this.sound = this.scene.sound.add('a_boy_the_kid')
+                this.idiomSound = this.scene.sound.add('a_boy_the_kid')
                 break;
             case 14:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 15:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 16:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 17:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 18:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 19:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 20:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
         this.spine.play(INPUT_TYPES.IDLE, true)
@@ -136,7 +139,7 @@ export class Idle extends PlayerStateMachine {
         this.idiomElapsed = time - this.idiomTime
 
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -184,37 +187,37 @@ export class WalkingRight extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
         this.spine.play(INPUT_TYPES.WALK_RIGHT, true)
@@ -224,7 +227,7 @@ export class WalkingRight extends PlayerStateMachine {
         this.idiomElapsed = time - this.idiomTime
 
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -272,37 +275,37 @@ export class WalkingLeft extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('gawke')
+                this.idiomSound = this.scene.sound.add('gawke')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('gawke')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('gawke')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('gawke')
+                this.idiomSound = this.scene.sound.add('gawke')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('gawke')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
         this.spine.play(INPUT_TYPES.WALK_LEFT, true)
@@ -312,7 +315,7 @@ export class WalkingLeft extends PlayerStateMachine {
         this.idiomElapsed = time - this.idiomTime
 
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -361,37 +364,37 @@ export class WalkingUp extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('yurt')
+                this.idiomSound = this.scene.sound.add('yurt')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('yurt')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('yurt')
+                this.idiomSound = this.scene.sound.add('yurt')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('yurt')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('yurt')
+                this.idiomSound = this.scene.sound.add('yurt')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
         this.spine.play(INPUT_TYPES.WALK_UP, true)
@@ -402,7 +405,7 @@ export class WalkingUp extends PlayerStateMachine {
         this.idiomElapsed = time - this.idiomTime
 
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -451,37 +454,37 @@ export class WalkingDown extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('yurt')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('yurt')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('yurt')
+                this.idiomSound = this.scene.sound.add('yurt')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('yurt')
+                this.idiomSound = this.scene.sound.add('yurt')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('yurt')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
         this.spine.play(INPUT_TYPES.WALK_DOWN, true)
@@ -491,7 +494,7 @@ export class WalkingDown extends PlayerStateMachine {
         this.idiomElapsed = time - this.idiomTime
 
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -524,37 +527,37 @@ export class EatingLeft extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('well_kid')
+                this.idiomSound = this.scene.sound.add('well_kid')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('well_kid')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('well_kid')
+                this.idiomSound = this.scene.sound.add('well_kid')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('well_kid')
+                this.idiomSound = this.scene.sound.add('well_kid')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('well_kid')
+                this.idiomSound = this.scene.sound.add('well_kid')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
         this.spine.play(INPUT_TYPES.EATING_LEFT, true)
@@ -571,7 +574,7 @@ export class EatingLeft extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -604,39 +607,41 @@ export class MunchingLeft extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
+        this.rewardSound = this.scene.sound.add('reward',{volume:0.5})
+        this.rewardSound.play()
         this.spine.play(INPUT_TYPES.MUNCHING_LEFT, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -650,7 +655,7 @@ export class MunchingLeft extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -683,37 +688,37 @@ export class EatingRight extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
         this.spine.play(INPUT_TYPES.EATING_RIGHT, true)
@@ -730,7 +735,7 @@ export class EatingRight extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -763,39 +768,41 @@ export class MunchingRight extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
+        this.rewardSound = this.scene.sound.add('reward',{volume:0.5})
+        this.rewardSound.play()
         this.spine.play(INPUT_TYPES.MUNCHING_RIGHT, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -809,7 +816,7 @@ export class MunchingRight extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -842,37 +849,37 @@ export class EatingUp extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
         this.spine.play(INPUT_TYPES.EATING_UP, true)
@@ -889,7 +896,7 @@ export class EatingUp extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -922,39 +929,41 @@ export class MunchingUp extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
+        this.rewardSound = this.scene.sound.add('reward',{volume:0.5})
+        this.rewardSound.play()
         this.spine.play(INPUT_TYPES.MUNCHING_UP, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -968,7 +977,7 @@ export class MunchingUp extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1001,37 +1010,37 @@ export class EatingDown extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
         this.spine.play(INPUT_TYPES.EATING_DOWN, true)
@@ -1048,7 +1057,7 @@ export class EatingDown extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1081,39 +1090,41 @@ export class MunchingDown extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 2:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 4:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 6:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break;
             case 8:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.sound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break;
             case 10:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.sound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
         }
+        this.rewardSound = this.scene.sound.add('reward',{volume:0.5})
+        this.rewardSound.play()
         this.spine.play(INPUT_TYPES.MUNCHING_DOWN, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -1127,7 +1138,7 @@ export class MunchingDown extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1167,7 +1178,7 @@ export class UnderAttack extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.sound = this.scene.sound.add('head_like_a_chewed_toffee')
+        this.idiomSound = this.scene.sound.add('head_like_a_chewed_toffee')
         this.spine.play(INPUT_TYPES.UNDER_ATTACK, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -1175,7 +1186,7 @@ export class UnderAttack extends PlayerStateMachine {
         this.idiomElapsed = time - this.idiomTime
 
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1197,7 +1208,9 @@ export class Expired extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.sound = this.scene.sound.add('took_a_hopper')
+        this.idiomSound = this.scene.sound.add('took_a_hopper')
+        this.punishmentSound = this.scene.sound.add('punish_one',{volume:0.5})
+        this.punishmentSound.play()
         this.spine.play(INPUT_TYPES.EXPIRED, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -1216,7 +1229,7 @@ export class Expired extends PlayerStateMachine {
         }
 
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1238,7 +1251,7 @@ export class Revive extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.sound = this.scene.sound.add('state_of_ya')
+        this.idiomSound = this.scene.sound.add('state_of_ya')
         this.spine.play(INPUT_TYPES.REVIVE, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -1258,7 +1271,7 @@ export class Revive extends PlayerStateMachine {
         }
 
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1281,7 +1294,9 @@ export class Revived extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.sound = this.scene.sound.add('well_boi_whats_the_craic')
+        this.idiomSound = this.scene.sound.add('well_boi_whats_the_craic')
+        this.punishmentSound = this.scene.sound.add('revived',{volume:0.5})
+        this.punishmentSound.play()
         this.spine.play(INPUT_TYPES.REVIVED, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -1297,7 +1312,7 @@ export class Revived extends PlayerStateMachine {
         }
 
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1321,7 +1336,9 @@ export class Splash extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.sound = this.scene.sound.add('state_of_ya')
+        this.idiomSound = this.scene.sound.add('state_of_ya')
+        this.punishmentSound = this.scene.sound.add('punish_two',{volume:0.5})
+        this.punishmentSound.play()
         this.spine.play(INPUT_TYPES.SPLASH, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -1330,11 +1347,47 @@ export class Splash extends PlayerStateMachine {
         this.idiomElapsed = time - this.idiomTime
 
         if (this.idiomElapsed >= player.getIdiomDelay()) {
-            this.sound.play()
+            this.idiomSound.play()
         }
     }
     exit(time: number, delta: number, player: Player) {
         console.log('Exiting the Splash State')
+        player.setMove(true)
+        this.animationTime = 0
+        this.idiomTime = 0
+    }
+}
+
+// Possible States
+export class ReachedGoal extends PlayerStateMachine {
+    constructor(scene: Phaser.Scene, spine: SpineGameObject) {
+        super(scene, spine)
+    }
+    handleInput(input: string): PlayerStateMachine | undefined {
+        console.log('Process Input ReachedGoal State')
+        return undefined
+    }
+    enter(time: number, delta: number, player: Player) {
+        console.log('Entering the ReachedGoal State')
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
+        this.idiomSound = this.scene.sound.add('well_sham_any_sca')
+        this.punishmentSound = this.scene.sound.add('reached_goal',{volume:0.5})
+        this.punishmentSound.play()
+        this.spine.play(INPUT_TYPES.SPLASH, true)
+    }
+    update(time: number, delta: number, player: Player) {
+        console.log('Updating the ReachedGoal State')
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.idiomSound.play()
+        }
+    }
+    exit(time: number, delta: number, player: Player) {
+        console.log('Exiting the ReachedGoal State')
         player.setMove(true)
         this.animationTime = 0
         this.idiomTime = 0
