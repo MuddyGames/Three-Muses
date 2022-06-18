@@ -354,6 +354,9 @@ export default class GameScene extends Phaser.Scene {
 			} else {
 				this.newRecordTime = this.bestRecordedTime
 			}
+
+			//this.setupMap()
+
 			//Phaser.Scene.call(this, this.player.getCurrentArtifact());
 			//this.scene.sendToBack(this)
 			//this.scene.start(this.player.getCurrentArtifact())
