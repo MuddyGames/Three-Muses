@@ -239,6 +239,7 @@ export default class GameScene extends Phaser.Scene {
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
 		// Setup Divers
+		var counter = 0;
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.diverLayer.getTileAt(j, i)
@@ -246,6 +247,8 @@ export default class GameScene extends Phaser.Scene {
 					if (tile.index === DIVER.START) {
 						this.divers.push(this.createSpineObject(IDLE_KEY, DIVER_KEY, j * this.tileSize, i * this.tileSize, 0.25, 0.25))
 						this.diverMove.push(this.diverSpeed)
+						this.divers[counter].setDepth(2)
+						counter++
 					}
 				}
 			}
