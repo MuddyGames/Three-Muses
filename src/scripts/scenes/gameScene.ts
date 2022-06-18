@@ -418,11 +418,11 @@ export default class GameScene extends Phaser.Scene {
 						switch (this.direction) {
 							case Direction.Up:
 								this.setPoints(250)
-								//this.player.getState().handleInput(INPUT_TYPES.EATING_UP, time, delta, this.player)
+								this.player.getState().handleInput(INPUT_TYPES.EATING_UP, time, delta, this.player)
 								break;
 							case Direction.Down:
 								this.setPoints(350)
-								//this.player.getState().handleInput(INPUT_TYPES.EATING_DOWN, time, delta, this.player)
+								this.player.getState().handleInput(INPUT_TYPES.EATING_DOWN, time, delta, this.player)
 								break;
 							case Direction.Left:
 								this.setPoints(100)
@@ -430,7 +430,7 @@ export default class GameScene extends Phaser.Scene {
 								break;
 							case Direction.Right:
 								this.setPoints(250)
-								//this.player.getState().handleInput(INPUT_TYPES.EATING_RIGHT, time, delta, this.player)
+								this.player.getState().handleInput(INPUT_TYPES.EATING_RIGHT, time, delta, this.player)
 								break;
 						}
 					}

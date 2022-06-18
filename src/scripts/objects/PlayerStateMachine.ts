@@ -145,15 +145,15 @@ export class WalkingRight extends PlayerStateMachine {
             return undefined
         }
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         this.sound = this.scene.sound.add('unreal')
         this.spine.play(INPUT_TYPES.WALK_RIGHT, true)
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         //console.log('Updating the WalkingRight State')
 
     }
-    exit(time: number, delta: number) {
+    exit(time: number, delta: number, player: Player) {
         //console.log('Exiting the WalkingRight State')
     }
 }
@@ -187,12 +187,12 @@ export class WalkingLeft extends PlayerStateMachine {
         }
 
     }
-    enter(time: number, delta: number) {
+    enter(time: number, delta: number, player: Player) {
         this.sound = this.scene.sound.add('gawke')
         this.spine.play(INPUT_TYPES.WALK_LEFT, true)
 
     }
-    update(time: number, delta: number) {
+    update(time: number, delta: number, player: Player) {
         // Movement should be part of player
         //this.player.moveLeft()
     }
@@ -297,7 +297,6 @@ export class EatingLeft extends PlayerStateMachine {
         } else {
             return undefined
         }
-
     }
     enter(time: number, delta: number, player: Player) {
         player.setMove(false)
@@ -340,7 +339,6 @@ export class MunchingLeft extends PlayerStateMachine {
         } else {
             return undefined
         }
-
     }
     enter(time: number, delta: number, player: Player) {
         player.setMove(false)
@@ -382,133 +380,199 @@ export class EatingRight extends PlayerStateMachine {
         } else {
             return undefined
         }
-
     }
     enter(time: number, delta: number, player: Player) {
-        //console.log('Entering Eating Right State this runs on Entry')
-
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
+        this.sound = this.scene.sound.add('come_here_i_want_ya')
+        this.spine.play(INPUT_TYPES.EATING_RIGHT, true)
     }
     update(time: number, delta: number, player: Player) {
-        //console.log('Updating the Eathing Right State')
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+
+        if (this.animationElapsed >= player.getEatingDelay()) {
+            let temp = player.getState()
+            let state = new MunchingRight(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
     }
     exit(time: number, delta: number, player: Player) {
-        //console.log('Exiting the Eating Right State')
+        player.setMove(true)
+        this.idiomElapsed = 0
+        this.idiomTime = 0
     }
 }
 
 // Possible States
-// MunchingRight -> Idle
 // MunchingRight -> Under Attack
 export class MunchingRight extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine)
-        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
+        if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {
             return undefined
         }
-
     }
     enter(time: number, delta: number, player: Player) {
-        //console.log('Entering Munching Right State this runs on Entry')
-
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
+        this.sound = this.scene.sound.add('unreal')
+        this.spine.play(INPUT_TYPES.MUNCHING_RIGHT, true)
     }
     update(time: number, delta: number, player: Player) {
-        //console.log('Updating the Munching Right State')
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+        if (this.animationElapsed > player.getMunchingDelay()) {
+            let temp = player.getState()
+            let state = new Idle(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
     }
     exit(time: number, delta: number, player: Player) {
-        //console.log('Exiting the Munching Right State')
+        player.setMove(true)
+        this.idiomElapsed = 0
+        this.idiomTime = 0
     }
 }
 
 // Possible States
-// EatingUp -> MunchingLeft
 // EatingUp -> Under Attack
 export class EatingUp extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        if (input === INPUT_TYPES.MUNCHING_UP) {
-            return new MunchingUp(this.scene, this.spine)
-        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
+        if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {
             return undefined
         }
-
     }
     enter(time: number, delta: number, player: Player) {
-        //console.log('Entering Eating Up State this runs on Entry')
-
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
+        this.sound = this.scene.sound.add('come_here_i_want_ya')
+        this.spine.play(INPUT_TYPES.EATING_UP, true)
     }
     update(time: number, delta: number, player: Player) {
-        //console.log('Updating the Eathing Up State')
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+
+        if (this.animationElapsed >= player.getEatingDelay()) {
+            let temp = player.getState()
+            let state = new MunchingUp(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
     }
     exit(time: number, delta: number, player: Player) {
-        //console.log('Exiting the Eating Up State')
+        player.setMove(true)
+        this.idiomElapsed = 0
+        this.idiomTime = 0
     }
 }
 
 // Possible States
-// MunchingUp -> Idle
 // MunchingUp -> Under Attack
 export class MunchingUp extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine)
-        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
+        if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {
             return undefined
         }
-
     }
     enter(time: number, delta: number, player: Player) {
-        //console.log('Entering Munching Up State this runs on Entry')
-
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
+        this.sound = this.scene.sound.add('unreal')
+        this.spine.play(INPUT_TYPES.MUNCHING_UP, true)
     }
     update(time: number, delta: number, player: Player) {
-        //console.log('Updating the Munching Up State')
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+        if (this.animationElapsed > player.getMunchingDelay()) {
+            let temp = player.getState()
+            let state = new Idle(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
     }
     exit(time: number, delta: number, player: Player) {
-        //console.log('Exiting the Munching Up State')
+        player.setMove(true)
+        this.idiomElapsed = 0
+        this.idiomTime = 0
     }
 }
 
 // Possible States
-// EatingDown -> MunchingDown
 // EatingDown -> Under Attack
 export class EatingDown extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        if (input === INPUT_TYPES.MUNCHING_DOWN) {
-            return new MunchingDown(this.scene, this.spine)
-        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
+        if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {
             return undefined
         }
-
     }
     enter(time: number, delta: number, player: Player) {
-        //console.log('Entering Eating Down State this runs on Entry')
-
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
+        this.sound = this.scene.sound.add('come_here_i_want_ya')
+        this.spine.play(INPUT_TYPES.EATING_DOWN, true)
     }
     update(time: number, delta: number, player: Player) {
-        //console.log('Updating the Eathing Down State')
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+
+        if (this.animationElapsed >= player.getEatingDelay()) {
+            let temp = player.getState()
+            let state = new MunchingDown(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
     }
     exit(time: number, delta: number, player: Player) {
-        //console.log('Exiting the Eating Down State')
+        player.setMove(true)
+        this.idiomElapsed = 0
+        this.idiomTime = 0
     }
 }
 
@@ -520,23 +584,37 @@ export class MunchingDown extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        if (input === INPUT_TYPES.IDLE) {
-            return new Idle(this.scene, this.spine)
-        } else if (input === INPUT_TYPES.UNDER_ATTACK) {
+        if (input === INPUT_TYPES.UNDER_ATTACK) {
             return new UnderAttack(this.scene, this.spine)
         } else {
             return undefined
         }
     }
     enter(time: number, delta: number, player: Player) {
-        //console.log('Entering Munching Down State this runs on Entry')
-
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
+        this.sound = this.scene.sound.add('unreal')
+        this.spine.play(INPUT_TYPES.MUNCHING_DOWN, true)
     }
     update(time: number, delta: number, player: Player) {
-        //console.log('Updating the Munching Down State')
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
+        if (this.animationElapsed > player.getMunchingDelay()) {
+            let temp = player.getState()
+            let state = new Idle(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
     }
     exit(time: number, delta: number, player: Player) {
-        //console.log('Exiting the Munching Down State')
+        player.setMove(true)
+        this.idiomElapsed = 0
+        this.idiomTime = 0
     }
 }
 
