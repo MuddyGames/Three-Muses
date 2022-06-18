@@ -19,7 +19,7 @@ import {
 import {
 	GOAL,
 	GSM
-} from '../objects/gameStates'
+} from '../objects/gameENUMS'
 import Player from '../objects/Player'
 
 
@@ -132,7 +132,6 @@ export default class GameScene extends Phaser.Scene {
 	// Player Data
 	private playerState!: PlayerState
 	private direction!: Direction
-	//private canMove!: boolean
 
 	constructor() {
 		super({
@@ -313,7 +312,7 @@ export default class GameScene extends Phaser.Scene {
 		if (this.gameState === GSM.PLAY) {
 			this.elapsedLevelTime = time;
 
-		} else if (this.gameState === GSM.LEVEL_COMPLETE) {
+		} else if (this.gameState === GSM.LEVEL_01_COMPLETE || this.gameState === GSM.LEVEL_02_COMPLETE || this.gameState === GSM.LEVEL_03_COMPLETE || this.gameState === GSM.LEVEL_04_COMPLETE) {
 
 			//Store Record Time
 			if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
@@ -369,8 +368,9 @@ export default class GameScene extends Phaser.Scene {
 
 				if(this.tile !== null){
 					if(this.tile.index === GOAL.TILE){
-						console.log('GOAL REACHED')
+						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.gsmUpdate(time, delta)
 					}
 				}
 
@@ -724,8 +724,8 @@ export default class GameScene extends Phaser.Scene {
 		window.localStorage.setItem('score', this.levelScore.toString())
 	}
 
-	private gsmUpdate() {
-		this.gameState = GSM.LEVEL_COMPLETE
-		//console.log('level complete')
+	private gsmUpdate(time: number, delta: number): void {
+		this.gameState = GSM.LEVEL_01_COMPLETE
+		console.log('level complete')
 	}
 }

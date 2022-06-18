@@ -1,7 +1,7 @@
 import HudText from '../objects/hudText'
 import {
   GSM
-} from '../objects/gameStates'
+} from '../objects/gameENUMS'
 
 export default class TestScene extends Phaser.Scene {
   // Game State Management
@@ -94,7 +94,7 @@ export default class TestScene extends Phaser.Scene {
       let points = Phaser.Math.Between(50, 100);
       this.setPoints(points)
 
-    } else if (this.gameState === GSM.LEVEL_COMPLETE) {
+    } else if (this.gameState === GSM.LEVEL_01_COMPLETE) {
 
       //Store Record Time
       if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
@@ -159,7 +159,7 @@ export default class TestScene extends Phaser.Scene {
   }
 
   private gsmUpdate() {
-    this.gameState = GSM.LEVEL_COMPLETE
+    this.gameState = GSM.LEVEL_01_COMPLETE
     console.log('level complete')
   }
 }
