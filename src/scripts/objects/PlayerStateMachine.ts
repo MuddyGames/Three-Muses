@@ -1363,14 +1363,6 @@ export class Splash extends PlayerStateMachine {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
-        if (this.animationElapsed >= player.getGoalDelay()) {
-            let temp = player.getState()
-            let state = new Idle(this.scene, this.spine)
-            player.getState().getState() ?.exit(time, delta, player)
-            player.getState().setState(state)
-            player.getState().getState() ?.enter(time, delta, player)
-        }
-
         if (this.idiomElapsed >= player.getIdiomDelay()) {
             this.idiomSound.play()
         }
@@ -1397,15 +1389,21 @@ export class ReachedGoal extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.idiomSound = this.scene.sound.add('well_sham_any_sca')
-        this.punishmentSound = this.scene.sound.add('reached_goal',{volume:0.5})
-        this.punishmentSound.play()
+        this.idiomSound = this.scene.sound.add('reached_goal')
         this.spine.play(INPUT_TYPES.REACHED_GOAL, true)
     }
     update(time: number, delta: number, player: Player) {
         console.log('Updating the ReachedGoal State')
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
+
+        if (this.animationElapsed >= player.getGoalDelay()) {
+            let temp = player.getState()
+            let state = new Idle(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
 
         if (this.idiomElapsed >= player.getIdiomDelay()) {
             this.idiomSound.play()

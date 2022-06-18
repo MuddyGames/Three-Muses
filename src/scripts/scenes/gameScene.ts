@@ -168,7 +168,6 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-
 		// Setup Screen Dimensions
 		let {
 			width,
@@ -189,6 +188,9 @@ export default class GameScene extends Phaser.Scene {
 		// Retrieve Recorded Score and Time from LocalStorage
 		this.fetchRecordedScore()
 		this.fetchRecordedTime()
+		
+		// Load Current Level
+		this.loadCurrentLevel()
 
 		// Setup HUD
 		// Score
@@ -337,7 +339,8 @@ export default class GameScene extends Phaser.Scene {
 	update(time: number, delta: number): void {
 
 		// TODO: BETTER Game State Management
-		//If level Playable Update
+		this.setCurrentLevel()
+		
 		if (this.gameState === GSM.PLAY) {
 			this.elapsedLevelTime = time;
 
@@ -772,7 +775,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	// Fetch Current Level
-	loadCurrentLevel() : string {
+	private loadCurrentLevel() : string {
 		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
 		if (temp !== null) {
 			this.player.setCurrentLevel(temp)
@@ -784,7 +787,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	// Set Current Level to a New Level
-	setCurrentLevel() : string {
+	private setCurrentLevel() : string {
 		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
 		let current_level: string
 		if (temp !== null) {
