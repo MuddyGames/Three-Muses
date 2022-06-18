@@ -1407,5 +1407,9 @@ export class ReachedGoal extends PlayerStateMachine {
         player.setMove(true)
         this.animationTime = 0
         this.idiomTime = 0
+
+        // Game State Management
+        
+
     }
 }

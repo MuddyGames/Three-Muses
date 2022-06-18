@@ -47,6 +47,9 @@ export default class GameScene extends Phaser.Scene {
 	// Game State Management
 	private gameState!: GSM
 
+	// Current Level
+	private current_level!: string
+
 	// Hud Text
 	private collectablePoints!: number
 	private levelScore!: number
@@ -719,6 +722,17 @@ export default class GameScene extends Phaser.Scene {
 		this.levelScore += this.collectablePoints
 		this.collectablePoints = 0 // Reset Points
 		window.localStorage.setItem('score', this.levelScore.toString())
+	}
+
+	// Fetch Recorded Score
+	private fetchCurrentLevel() {
+		let temp = window.localStorage.getItem('level_current')
+		if (temp !== null) {
+			this.current_level = temp
+		} else {
+			this.current_level = ''
+		}
+		window.localStorage.setItem('level_current', this.current_level)
 	}
 
 	private gsmUpdate(time: number, delta: number): void {

@@ -11,6 +11,13 @@ export enum GSM {
     GAME_COMPLETE = 'game_complete'
 };
 
+export enum LEVELS{
+    LEVEL_01 = 'level_01',
+    LEVEL_02 = 'level_02',
+    LEVEL_03 = 'level_03',
+    
+}
+
 export enum GOAL {
     TILE = 618 // Tile ID on level json
 };
