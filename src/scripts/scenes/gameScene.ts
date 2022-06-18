@@ -229,7 +229,8 @@ export default class GameScene extends Phaser.Scene {
 		});
 
 		// Setup Truffles
-		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, this.player.getX(), this.player.getY(), 0.25, 0.25)
+		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 
+			this.player.getX(), this.player.getY(), this.player.getScale(), this.player.getScale())
 		this.truffles.setDepth(2)
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
@@ -515,8 +516,8 @@ export default class GameScene extends Phaser.Scene {
 	private setupMap() {
 		this.map = this.make.tilemap({
 			key: 'level',
-			tileWidth: 32,
-			tileHeight: 32
+			tileWidth: this.tileSize,
+			tileHeight: this.tileSize
 		});
 		this.tileset = this.map.addTilesetImage("truffles_level_1_tileset", 'tileset');
 
@@ -607,7 +608,6 @@ export default class GameScene extends Phaser.Scene {
 
 		this.diverLayer.setDepth(2)
 		this.diverLayer.setVisible(true)
-		
 
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(2)
@@ -707,28 +707,19 @@ export default class GameScene extends Phaser.Scene {
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.cannonballMoving[i]) {
 				this.cannonballPosY[i] += this.cannonballSpeed;
-
 				this.cannonball[i].setPosition(this.cannonballPosX[i], this.cannonballPosY[i])
-
 			}
-
 			if (this.cannonballPosY[i] >= 655) {
-
 				this.time.addEvent({
-
 					delay: 600,
 					callback: this.cannonballReset,
 					callbackScope: this,
 					args: [i]
-
 				})
-
 				if (this.cannonballMoving[i]) {
 					this.changeAnimation(this.cannonball[i], this.cannonballAnimationNames, 2)
 				}
-
 				this.cannonballMoving[i] = false
-
 			}
 		}
 	}
