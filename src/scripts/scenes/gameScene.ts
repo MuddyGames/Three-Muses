@@ -126,7 +126,7 @@ export default class GameScene extends Phaser.Scene {
 	// Player Data
 	private playerState!: PlayerState
 	private direction!: Direction
-	private canMove!: boolean
+	//private canMove!: boolean
 
 	constructor() {
 		super({
@@ -215,7 +215,7 @@ export default class GameScene extends Phaser.Scene {
 		this.truffles.setDepth(2)
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
-		this.canMove = true
+		//this.canMove = true
 		this.direction = Direction.Down
 
 
@@ -333,7 +333,7 @@ export default class GameScene extends Phaser.Scene {
 			}
 		}
 
-		if (this.canMove) {
+		if (this.player.getMove()) {
 			if (this.cursors.right.isDown) {
 				const x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
 				const y = this.map.worldToTileY(this.player.getY())
@@ -392,7 +392,7 @@ export default class GameScene extends Phaser.Scene {
 					if (!this.fruitMarked[i] && this.trufflesAABB(this.truffles, this.fruit[i])) {
 						console.log('Fruit Collision ' + i)
 						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
-						this.canMove = false
+						//this.canMove = false
 						this.time.addEvent({
 							delay: 480,
 							callback: this.fruitAnimate,
@@ -600,7 +600,7 @@ export default class GameScene extends Phaser.Scene {
 		this.fruit[index].removeFromDisplayList()
 
 		//this.player.getState().handleInput(INPUT_TYPES.IDLE, time, delta, this.player)
-		this.canMove = true
+		//this.canMove = true
 	}
 
 	// Reset Cannon Balls
