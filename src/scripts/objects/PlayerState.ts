@@ -11,7 +11,6 @@ export default class PlayerState {
     private spine!: SpineGameObject
 
     constructor(scene: Phaser.Scene, spine: SpineGameObject, time: number, delta: number) {
-        console.log('Constructed Player State')
         this.state = new Idle(scene, spine)
     }
 
@@ -25,7 +24,6 @@ export default class PlayerState {
         return state
     }
     update(time: number, delta: number, player: Player) {
-        console.log('PlayerState UPDATE')
         this.state?.update(time, delta, player)
     }
 

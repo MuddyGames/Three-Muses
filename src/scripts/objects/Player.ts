@@ -1,11 +1,5 @@
 // Player State
 import PlayerState from './PlayerState'
-import {
-    EatingLeft,
-    Idle,
-    MunchingDown,
-    MunchingLeft
-} from './PlayerStateMachine'
 
 export default class Player {
     private move!: boolean
@@ -19,6 +13,7 @@ export default class Player {
     private underAttackDelay!: number
     private expiredDelay!: number
     private reviveDelay!: number
+    private revivedDelay!: number
     private idiomDelay!: number
 
     constructor(position: Phaser.Math.Vector2) {
@@ -32,6 +27,7 @@ export default class Player {
         this.underAttackDelay = 1000
         this.expiredDelay = 1000
         this.reviveDelay = 1000
+        this.revivedDelay = 1000
         this.idiomDelay = 100
     }
 
@@ -60,7 +56,11 @@ export default class Player {
     }
 
     getReviveDelay(): number {
-        return this.expiredDelay
+        return this.reviveDelay
+    }
+
+    getRevivedDelay(): number {
+        return this.revivedDelay
     }
 
     getIdiomDelay(): number {

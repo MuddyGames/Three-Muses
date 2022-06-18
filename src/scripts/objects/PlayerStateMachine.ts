@@ -695,30 +695,36 @@ export class Revived extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        console.log('Process Input Expired State')
-        if (input === INPUT_TYPES.REVIVED) {
-            return new Idle(this.scene, this.spine)
-        } else {
-            return undefined
-        }
+        return undefined
 
     }
     enter(time: number, delta: number, player: Player) {
-        console.log('Entering the Expired State')
-        this.sound = this.scene.sound.add('state_of_ya')
-        if (canPlay) {
-            this.sound.play()
-            canPlay = false
-        }
-        this.spine.play(INPUT_TYPES.EXPIRED, true)
-
+        player.setMove(false)
+        this.animationTime = time
+        this.idiomTime = time
+        this.sound = this.scene.sound.add('well_boi_whats_the_craic')
+        this.spine.play(INPUT_TYPES.REVIVED, true)
     }
     update(time: number, delta: number, player: Player) {
+        this.animationElapsed = time - this.animationTime
+        this.idiomElapsed = time - this.idiomTime
 
-        //console.log('Updating the Expired State')
+        if (this.animationElapsed >= player.getRevivedDelay()) {
+            let temp = player.getState()
+            let state = new Idle(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
+
+        if (this.idiomElapsed >= player.getIdiomDelay()) {
+            this.sound.play()
+        }
     }
     exit(time: number, delta: number, player: Player) {
-        //console.log('Exiting the Expired State')
+        player.setMove(true)
+        this.animationTime = 0
+        this.idiomTime = 0
     }
 }
 
