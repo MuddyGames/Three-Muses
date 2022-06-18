@@ -83,10 +83,7 @@ export default class GameScene extends Phaser.Scene {
 	private grapeAnimationIndex = 0
 	private lemonAnimationIndex = 0
 
-	//private trufflesPosX = 100
-	//private trufflesPosY = 360
-	//private trufflesSpeed = 2
-	private tileSize = 32
+	private tileSize: number = 32
 
 	private cannonballAnimationNames: string[] = []
 	private cannonballAnimationIndex = 0
@@ -95,7 +92,7 @@ export default class GameScene extends Phaser.Scene {
 	private cannonballSpeed = 2
 	private cannonballMoving: boolean[] = [true, true, true]
 
-	private soundDelay = 500
+	//private soundDelay = 500
 
 	// TileMap Data
 	private map!: Phaser.Tilemaps.Tilemap
@@ -268,12 +265,6 @@ export default class GameScene extends Phaser.Scene {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
 
-		this.time.addEvent({
-			delay: this.soundDelay,
-			callback: this.resetSounds,
-			callbackScope: this
-		})
-
 		muteBtn = this.add.text(20, 20, 'Mute', {
 				fontFamily: 'gamefont',
 				color: '#EC00D7',
@@ -291,12 +282,6 @@ export default class GameScene extends Phaser.Scene {
 
 		//multitouch bits
 		this.input.addPointer(2);
-
-		this.time.addEvent({
-			delay: this.soundDelay,
-			callback: this.resetSounds,
-			callbackScope: this
-		})
 
 		// Initialise Player State
 		this.playerState = new PlayerState(this, this.truffles, 0, 0)
@@ -577,14 +562,6 @@ export default class GameScene extends Phaser.Scene {
 	private changeAnimation(spine: SpineGameObject, animationNames: string[], index: number) {
 		const animation = animationNames[index]
 		spine.play(animation, true)
-	}
-
-	private resetSounds(time: number, delta: number) {
-		this.time.addEvent({
-			delay: this.soundDelay,
-			callback: this.resetSounds,
-			callbackScope: this
-		})
 	}
 
 	//Truffles to Object Collision
