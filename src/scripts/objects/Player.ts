@@ -31,8 +31,12 @@ export default class Player {
         this.idiomDelay = 100
     }
 
-    setMove(move:boolean): void{
+    setMove(move: boolean): void {
         this.move = move
+    }
+
+    getMove(): boolean {
+        return this.move
     }
 
     respawn(): void {

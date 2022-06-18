@@ -126,7 +126,6 @@ export class Idle extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -215,7 +214,6 @@ export class WalkingRight extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -304,7 +302,6 @@ export class WalkingLeft extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -319,7 +316,6 @@ export class WalkingLeft extends PlayerStateMachine {
         }
     }
     exit(time: number, delta: number, player: Player) {
-        console.log('Exiting the WalkingLeft State')
         player.setMove(true)
         this.animationTime = 0
         this.idiomTime = 0
@@ -395,7 +391,6 @@ export class WalkingUp extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -486,7 +481,6 @@ export class WalkingDown extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -560,7 +554,6 @@ export class EatingLeft extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -641,7 +634,6 @@ export class MunchingLeft extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -721,7 +713,6 @@ export class EatingRight extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -802,7 +793,6 @@ export class MunchingRight extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -882,7 +872,6 @@ export class EatingUp extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -963,7 +952,6 @@ export class MunchingUp extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -1043,7 +1031,6 @@ export class EatingDown extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
@@ -1124,7 +1111,6 @@ export class MunchingDown extends PlayerStateMachine {
                 this.sound = this.scene.sound.add('silent')
                 break;
             default:
-                console.log('silent')
                 this.sound = this.scene.sound.add('silent')
                 break
         }
