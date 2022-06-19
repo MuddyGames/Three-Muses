@@ -384,7 +384,7 @@ export default class GameScene extends Phaser.Scene {
 					this.player.moveRight()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
-
+				
 				// TODO: Check is Goal Reached on other keys
 				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
 				y = this.map.worldToTileY(this.player.getY())
