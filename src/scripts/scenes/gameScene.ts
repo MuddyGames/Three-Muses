@@ -164,7 +164,7 @@ export default class GameScene extends Phaser.Scene {
 			width,
 			height
 		} = this.sys.game.canvas;
-		this.screenX = width;
+		this.screenX = width
 		this.screenY = height
 
 		//Setup the Player

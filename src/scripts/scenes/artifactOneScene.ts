@@ -1,11 +1,10 @@
-import FpsText from '../objects/fpsText'
 import HudText from '../objects/hudText'
 
 export default class ArtiFactOneScene extends Phaser.Scene {
   timedEvents : Phaser.Time.TimerEvent[] = []
-  backingMusic
-
-  element
+  private background!: Phaser.GameObjects.Image
+  private backingMusic!: Phaser.Sound.BaseSound
+  private element!: Phaser.GameObjects.DOMElement 
 
   constructor() {
     super({
@@ -20,9 +19,18 @@ export default class ArtiFactOneScene extends Phaser.Scene {
 
   create() {
 
-    this.element = this.add.dom(this.cameras.main.width / 2, 100).createFromCache('artifact_one');
+    // Setup Screen Dimensions
+		let {
+			width,
+			height
+		} = this.sys.game.canvas;
 
-    this.element.setPerspective(800);
+    this.background = this.add.image(width / 2 , height / 2, 'artifact_scene_background')
+    this.background.setDisplaySize(width, height);
+    this.background.setOrigin(0.5, 0.5)
+
+    this.element = this.add.dom(this.cameras.main.width / 2, 100).createFromCache('artifact_one');
+    //this.element.setPerspective(800);
 
     this.backingMusic = this.sound.add('splash_screen_track',{ loop: true })
 		this.backingMusic.play()

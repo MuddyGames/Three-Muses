@@ -11,6 +11,9 @@ export default class PreloadScene extends Phaser.Scene {
     //Splash Screen
     this.load.image('truffles_splash', 'assets/splash/splash.png')
 
+    //Artifact Pages and Scene Background
+    this.load.image('artifact_scene_background', 'assets/artifacts/img/background.png')
+
     // Game Logos
     this.load.image('the_hunt_museum', 'assets/logos/the_hunt_museum.png')
     this.load.image('limerick_museum', 'assets/logos/limerick_city.png')
@@ -59,9 +62,9 @@ export default class PreloadScene extends Phaser.Scene {
 
   create() {
     //this.scene.start('SplashScene')
-    this.scene.start('GameScene')
+    //this.scene.start('GameScene')
     //this.scene.start('TestScene')
-    //this.scene.start('ArtiFactOneScene')
+    this.scene.start('ArtiFactOneScene')
 
     /**
      * This is how you would dynamically import the mainScene class (with code splitting),
