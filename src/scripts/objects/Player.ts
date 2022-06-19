@@ -21,6 +21,7 @@ export default class Player {
     private next_level!: string
     private current_artifact!: string
     private next_artifact!: string
+    private scale!: number
 
     constructor(position: Phaser.Math.Vector2) {
         this.move = true
@@ -36,6 +37,7 @@ export default class Player {
         this.revivedDelay = 1000
         this.goalDelay = 2000
         this.idiomDelay = 200
+        this.scale = 0.25
     }
 
     getCurrentLevel(): string{
@@ -166,6 +168,10 @@ export default class Player {
 
     setState(state: PlayerState): void {
         this.state = state
+    }
+
+    getScale(): number {
+        return this.scale
     }
 
     moveLeft(): void {
