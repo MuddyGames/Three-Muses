@@ -635,7 +635,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(2)
-		this.goalLayer.setVisible(false)
+		this.goalLayer.setVisible(true)
 	}
 
 	private toggleMute() {
@@ -771,7 +771,7 @@ export default class GameScene extends Phaser.Scene {
 
 	// Fetch Recorded Time
 	private fetchRecordedTime() {
-		let temp = window.localStorage.getItem('time')
+		let temp = window.localStorage.getItem('time_' + this.loadCurrentLevel())
 		if (temp !== null) {
 			this.bestRecordedTime = parseInt(temp) || 0
 			if (this.bestRecordedTime === 0) {
@@ -781,12 +781,12 @@ export default class GameScene extends Phaser.Scene {
 			this.bestRecordedTime = 0
 		}
 
-		window.localStorage.setItem('time', this.newRecordTime.toString())
+		window.localStorage.setItem('time_' + this.loadCurrentLevel(), this.newRecordTime.toString())
 	}
 
 	// Fetch Recorded Score
 	private fetchRecordedScore() {
-		let temp = window.localStorage.getItem('score')
+		let temp = window.localStorage.getItem('score_' + this.loadCurrentLevel())
 		if (temp !== null) {
 			this.levelScore = parseInt(temp) || 0
 		} else {
@@ -794,7 +794,7 @@ export default class GameScene extends Phaser.Scene {
 		}
 		this.levelScore += this.collectablePoints
 		this.collectablePoints = 0 // Reset Points
-		window.localStorage.setItem('score', this.levelScore.toString())
+		window.localStorage.setItem('score_' + this.loadCurrentLevel(), this.levelScore.toString())
 	}
 
 	// Fetch Current Level

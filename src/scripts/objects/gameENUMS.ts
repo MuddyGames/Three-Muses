@@ -13,11 +13,11 @@ export enum LEVEL_DATA_KEY{
 }
 
 export enum LEVELS{
-    LEVEL_01 = 'level_01',
-    LEVEL_02 = 'level_02',
-    LEVEL_03 = 'level_03',
-    LEVEL_04 = 'level_04',
-    CREDITS = 'credits'
+    LEVEL_01 = 'LEVEL_01',
+    LEVEL_02 = 'LEVEL_02',
+    LEVEL_03 = 'LEVEL_03',
+    LEVEL_04 = 'LEVEL_04',
+    CREDITS = 'Credits'
 }
 
 export enum ARTIFACTS{
