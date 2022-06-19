@@ -348,6 +348,8 @@ export default class GameScene extends Phaser.Scene {
 
 			//Phaser.Scene.call(this, this.player.getCurrentArtifact());
 			//this.scene.sendToBack(this)
+			//this.scene.stop();
+			//this.scene.start();
 			//this.scene.start(this.player.getCurrentArtifact())
 			//this.scene.launch(this)
 		}
