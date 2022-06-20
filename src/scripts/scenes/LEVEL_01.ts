@@ -279,7 +279,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 		// Keyboard Setup
 		this.cursors = this.input.keyboard.createCursorKeys()
 		// Add WASD
-		//this.keys = this.input.keyboard.addKeys("W,A,S,D")
 		this.keys = this.input.keyboard.addKeys('W,A,S,D')
 
 		//Multitouch
@@ -359,6 +358,8 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 
 			// Change Levels
+			// NOTE IMPORTANT
+			// LEVEL NEXTS TO BE SET TO NEXT LEVEL AND SCENE TO NEXT ARTIFACT
 			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_02)
 			this.backingMusic.stop()
 			this.scene.start('ArtiFactOneScene')
@@ -603,24 +604,30 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.miscTop1Layer = this.map.createLayer('map/environment_objects/tree_01', this.tileset, 0, 0);
 		this.miscTop1Layer.setDepth(1);
 
-		//this.hudLayer = this.map.createLayer('map/hud/hud_depth_05', this.hudTileset, 0, 0);
-		//this.hudLayer.setDepth(5);
-
 		this.collisionLayer = this.map.createLayer('map/environment_collision/collide_depth_02', this.tileset, 0, 0);
 		this.collisionLayer.setDepth(2)
 		this.collisionLayer.setVisible(false)
 
-		if(this.player.getCurrentLevel() === LEVELS.LEVEL_01){
+		// Check the levels to load
+		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
+		let current_level: string
+			if (temp !== null) {
+				current_level = temp
+			} else {
+			current_level = LEVELS.LEVEL_01
+		}
+
+		if(current_level === LEVELS.LEVEL_01){
 			this.candyLayer = this.map.createLayer('map/collectables/candies_level1_depth_02', this.tileset, 0, 0);
 			this.diverLayer = this.map.createLayer('map/patrol/level1', this.tileset, 0, 0);
 
-		} else if(this.player.getCurrentLevel() === LEVELS.LEVEL_02){
+		} else if(current_level === LEVELS.LEVEL_02){
 			this.candyLayer = this.map.createLayer('map/collectables/candies_level2_depth_02', this.tileset, 0, 0);
 			this.diverLayer = this.map.createLayer('map/patrol/level2', this.tileset, 0, 0);
-		} else if(this.player.getCurrentLevel() === LEVELS.LEVEL_03){
+		} else if(current_level === LEVELS.LEVEL_03){
 			this.candyLayer = this.map.createLayer('map/collectables/candies_level3_depth_02', this.tileset, 0, 0);
 			this.diverLayer = this.map.createLayer('map/patrol/level3', this.tileset, 0, 0);
-		} else if(this.player.getCurrentLevel() === LEVELS.LEVEL_04){
+		} else if(current_level === LEVELS.LEVEL_04){
 			this.candyLayer = this.map.createLayer('map/collectables/candies_level4_depth_02', this.tileset, 0, 0);
 			this.diverLayer = this.map.createLayer('map/patrol/level4', this.tileset, 0, 0);
 		}  else{
@@ -629,7 +636,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 
 		this.candyLayer.setDepth(2);
-		this.candyLayer.setVisible(true)
+		this.candyLayer.setVisible(false)
 
 		this.diverLayer.setDepth(2)
 		this.diverLayer.setVisible(true)
