@@ -118,6 +118,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private churchRoofLayer!: Phaser.Tilemaps.TilemapLayer
 	private castleRoofLayer!: Phaser.Tilemaps.TilemapLayer
 	private miscTop1Layer!: Phaser.Tilemaps.TilemapLayer
+	private miscTop2Layer!: Phaser.Tilemaps.TilemapLayer
 	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
 	private goalLayer!: Phaser.Tilemaps.TilemapLayer
@@ -646,6 +647,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		this.miscTop1Layer = this.map.createLayer('map/environment_objects/tree_01', this.tileset, 0, 0);
 		this.miscTop1Layer.setDepth(1);
+
+		this.miscTop2Layer = this.map.createLayer('map/environment_objects/tree_top_04', this.tileset, 0, 0);
+		this.miscTop2Layer.setDepth(4);
 
 		this.collisionLayer = this.map.createLayer('map/environment_collision/collide_depth_02', this.tileset, 0, 0);
 		this.collisionLayer.setDepth(2)
