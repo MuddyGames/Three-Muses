@@ -360,9 +360,9 @@ export default class LEVEL_04 extends Phaser.Scene {
 			// Change Levels
 			// NOTE IMPORTANT
 			// LEVEL NEXTS TO BE SET TO NEXT LEVEL AND SCENE TO NEXT ARTIFACT
-			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_02)
+			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_04)
 			this.backingMusic.stop()
-			this.scene.start('ArtiFactOneScene')
+			this.scene.start('ArtiFactFourScene')
 			// ENDS: Change Levels
 		}
 

@@ -37,7 +37,7 @@ export default class Credits extends Phaser.Scene {
 
   private onEventGame() {
     this.backingMusic.stop()
-    this.scene.stop('LEVEL_01')
-    this.scene.start('LEVEL_01')
+    window.location.reload()
+    this.scene.start('PreloadScene')
   }
 }
