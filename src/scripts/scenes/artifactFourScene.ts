@@ -46,8 +46,8 @@ export default class ArtiFactFourScene extends Phaser.Scene {
 
 
   private onEventGame() {
-    this.scene.start('GameScene')
     this.backingMusic.stop()
+    this.scene.start('Credits')
   }
 
 }

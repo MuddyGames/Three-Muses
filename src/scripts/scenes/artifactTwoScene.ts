@@ -18,7 +18,9 @@ export default class ArtiFactTwoScene extends Phaser.Scene {
   }
 
   create() {
-     
+
+    console.log('TWO')
+
     // Setup Screen Dimensions
 		let {
 			width,
@@ -30,8 +32,7 @@ export default class ArtiFactTwoScene extends Phaser.Scene {
     this.background.setOrigin(0.5, 0.5)
 
     this.element = this.add.dom(this.cameras.main.width / 2, 100).createFromCache('artifact_two');
-
-    this.element.setPerspective(800);
+    //this.element.setPerspective(800);
 
     this.backingMusic = this.sound.add('splash_screen_track',{ loop: true })
 		this.backingMusic.play()
@@ -47,8 +48,7 @@ export default class ArtiFactTwoScene extends Phaser.Scene {
 
 
   private onEventGame() {
-    this.scene.start('ArtiFactThreeScene')
     this.backingMusic.stop()
+    this.scene.start('LEVEL_03')
   }
-
 }
