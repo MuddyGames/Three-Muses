@@ -35,8 +35,7 @@ const WINDMILL_KEY = 'windmill'
 const DPAD_KEY = 'dpad'
 const KEYS = ['orange', 'lemon', 'grape']
 const DIVER_KEY = 'diver'
-
-let muteBtn
+const SOUND_KEY = 'soundbtn'
 
 export default class GameScene extends Phaser.Scene {
 
@@ -75,6 +74,7 @@ export default class GameScene extends Phaser.Scene {
 	private grape!: SpineGameObject
 	private fruit: SpineGameObject[] = []
 	private dpad!: SpineGameObject
+	private soundbtn!: SpineGameObject
 
 	private trufflesAnimationNames: string[] = []
 	private trufflesAnimationIndex = 0
@@ -161,6 +161,7 @@ export default class GameScene extends Phaser.Scene {
 		this.load.spine(CANNONBALL_KEY, 'cannonball/cannonball.json', 'cannonball/cannonball.atlas')
 		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
 		this.load.spine(DPAD_KEY, 'dpad/DPad.json', 'dpad/DPad.atlas')
+		this.load.spine(SOUND_KEY, 'sound/sound.json', 'sound/sound.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -308,22 +309,42 @@ export default class GameScene extends Phaser.Scene {
 		for (let o = 0; o < this.fruit.length; o++) {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
+		
+		this.soundbtn = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.001, this.screenY * 0.001, 1, 1)
+		.setScale(0.8, 0.8)
+		.setDepth(5)
+		.setInteractive()
+		let soundStates = this.soundbtn.getAnimationList()
+		let soundState = true
+		this.soundbtn.on('pointerdown', () => {
+			if (soundState == true){
+				soundState = false
+				this.soundbtn.play(soundStates[1], true)
+				this.game.sound.mute = true
+				return
+			} if (soundState == false){
+				soundState = true
+				this.game.sound.mute = false
+				this.soundbtn.play(soundStates[0], true)
+				return
+			}
+		})
 
 		// TODO : This needs total refactoring
-		muteBtn = this.add.text(20, 20, 'Mute', {
-				fontFamily: 'gamefont',
-				color: '#EC00D7',
-				fontSize: '56px'
-			})
-			.setInteractive()
-			.setDepth(5)
-			.on('pointerdown', this.toggleMute)
-			.on('pointerover', () => muteBtn.setStyle({
-				fill: '#f39c12'
-			}))
-			.on('pointerout', () => muteBtn.setStyle({
-				fill: '#FFF'
-			}))
+		//muteBtn = this.add.text(20, 20, 'Mute', {
+		//		fontFamily: 'gamefont',
+		//		color: '#EC00D7',
+		//		fontSize: '56px'
+		//	})
+		//	.setInteractive()
+		//	.setDepth(5)
+		//	.on('pointerdown', this.toggleMute)
+		//	.on('pointerover', () => muteBtn.setStyle({
+		//		fill: '#f39c12'
+		//	}))
+		//	.on('pointerout', () => muteBtn.setStyle({
+		//		fill: '#FFF'
+		//	}))
 
 
 
@@ -636,20 +657,6 @@ export default class GameScene extends Phaser.Scene {
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(2)
 		this.goalLayer.setVisible(true)
-	}
-
-	private toggleMute() {
-		console.log("toggeling music state");
-		if (muteBtn.text === "Mute") {
-			muteBtn.setText("Unmute")
-			this.backingMusic.pause();
-			//this.scene.sound.mute = true
-		} else if (muteBtn.text === "Unmute") {
-			muteBtn.setText("Mute")
-			this.backingMusic.resume()
-			//this.scene.sound.mute = false
-		}
-
 	}
 
 	private handleDpad(dir){
