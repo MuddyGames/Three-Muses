@@ -31,6 +31,7 @@ const TRUFFLES_KEY = 'truffles'
 const IDLE_KEY = 'idle'
 const CANNONBALL_KEY = 'cannonball'
 const WINDMILL_KEY = 'windmill'
+const DPAD_KEY = 'dpad'
 const KEYS = ['orange', 'lemon', 'grape']
 const DIVER_KEY = 'diver'
 
@@ -72,6 +73,7 @@ export default class GameScene extends Phaser.Scene {
 	private lemon!: SpineGameObject
 	private grape!: SpineGameObject
 	private fruit: SpineGameObject[] = []
+	private dpad!: SpineGameObject
 
 	private trufflesAnimationNames: string[] = []
 	private trufflesAnimationIndex = 0
@@ -157,6 +159,7 @@ export default class GameScene extends Phaser.Scene {
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
 		this.load.spine(CANNONBALL_KEY, 'cannonball/cannonball.json', 'cannonball/cannonball.atlas')
 		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
+		this.load.spine(DPAD_KEY, 'dpad/DPad.json', 'dpad/DPad.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -278,6 +281,10 @@ export default class GameScene extends Phaser.Scene {
 		//this.keys = this.input.keyboard.addKeys("W,A,S,D")
 		this.keys = this.input.keyboard.addKeys('W,A,S,D')
 
+		//Multitouch
+		this.input.addPointer(2);
+
+
 		// Setup Fruits
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
@@ -318,8 +325,6 @@ export default class GameScene extends Phaser.Scene {
 				fill: '#FFF'
 			}))
 
-		//multitouch bits
-		this.input.addPointer(2);
 
 
 		// Initialise Player State
@@ -634,11 +639,17 @@ export default class GameScene extends Phaser.Scene {
 		if (muteBtn.text === "Mute") {
 			muteBtn.setText("Unmute")
 			this.backingMusic.pause();
+			//this.scene.sound.mute = true
 		} else if (muteBtn.text === "Unmute") {
 			muteBtn.setText("Mute")
 			this.backingMusic.resume()
+			//this.scene.sound.mute = false
 		}
 
+	}
+
+	private handleDpad(dir){
+		console.log(dir)
 	}
 
 	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {
