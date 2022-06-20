@@ -591,7 +591,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 				for (let i = 0; i < this.fruit.length; i++) {
 
 					if (!this.fruitMarked[i] && this.trufflesAABB(this.fruit[i])) {
-						console.log('Fruit Collision ' + i)
 						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
 						this.time.addEvent({
 							delay: 480,

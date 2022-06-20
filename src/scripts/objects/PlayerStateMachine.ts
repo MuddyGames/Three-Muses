@@ -1292,10 +1292,6 @@ export class Revive extends PlayerStateMachine {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
-        // Respawn Player Position
-        console.log('respawn')
-        player.respawn()
-
         if (this.animationElapsed >= player.getReviveDelay()) {
             let temp = player.getState()
             let state = new Revived(this.scene, this.spine)
@@ -1364,11 +1360,9 @@ export class Splash extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        console.log('Process Input Splash State')
         return undefined
     }
     enter(time: number, delta: number, player: Player) {
-        console.log('Entering the Splash State')
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
@@ -1378,7 +1372,6 @@ export class Splash extends PlayerStateMachine {
         this.spine.play(INPUT_TYPES.SPLASH, true)
     }
     update(time: number, delta: number, player: Player) {
-        console.log('Updating the Splash State')
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
@@ -1388,7 +1381,6 @@ export class Splash extends PlayerStateMachine {
         }
     }
     exit(time: number, delta: number, player: Player) {
-        console.log('Exiting the Splash State')
         player.setMove(true)
         this.animationTime = 0
         this.idiomTime = 0
@@ -1401,11 +1393,9 @@ export class ReachedGoal extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        console.log('Process Input ReachedGoal State')
         return undefined
     }
     enter(time: number, delta: number, player: Player) {
-        console.log('Entering the ReachedGoal State')
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
@@ -1413,7 +1403,6 @@ export class ReachedGoal extends PlayerStateMachine {
         this.spine.play(INPUT_TYPES.REACHED_GOAL, true)
     }
     update(time: number, delta: number, player: Player) {
-        console.log('Updating the ReachedGoal State')
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
@@ -1431,7 +1420,6 @@ export class ReachedGoal extends PlayerStateMachine {
         }
     }
     exit(time: number, delta: number, player: Player) {
-        console.log('Exiting the ReachedGoal State')
         player.setMove(true)
         this.animationTime = 0
         this.idiomTime = 0
