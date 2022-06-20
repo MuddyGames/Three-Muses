@@ -53,6 +53,6 @@ export default class ArtiFactThreeScene extends Phaser.Scene {
 
   private onClickNextLevel() {
     this.backingMusic.stop()
-    this.scene.start('LEVEL_03')
+    this.scene.start('LEVEL_04')
   }
 }
