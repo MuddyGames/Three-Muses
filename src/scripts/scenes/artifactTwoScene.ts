@@ -18,9 +18,6 @@ export default class ArtiFactTwoScene extends Phaser.Scene {
   }
 
   create() {
-
-    console.log('TWO')
-
     // Setup Screen Dimensions
 		let {
 			width,

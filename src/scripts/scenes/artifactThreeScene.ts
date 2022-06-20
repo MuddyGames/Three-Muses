@@ -30,8 +30,6 @@ export default class ArtiFactThreeScene extends Phaser.Scene {
 
     this.element = this.add.dom(this.cameras.main.width / 2, 100).createFromCache('artifact_three');
 
-    this.element.setPerspective(800);
-
     this.backingMusic = this.sound.add('splash_screen_track',{ loop: true })
 		this.backingMusic.play()
 
