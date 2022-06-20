@@ -34,11 +34,11 @@ export enum GOAL {
 
 export enum FRUITS {
     ORANGE = 0,
-    ORANGE_TILE = 674, // Tile ID on level json
+    ORANGE_TILE = 707, // Tile ID on level json
     LEMON = 1,
-    LEMON_TILE = 622, // Tile ID on level json
+    LEMON_TILE = 655, // Tile ID on level json
     GRAPE = 2,
-    GRAPE_TILE = 570 // Tile ID on level json
+    GRAPE_TILE = 603 // Tile ID on level json
 };
 
 export enum DIVER_TILES {
