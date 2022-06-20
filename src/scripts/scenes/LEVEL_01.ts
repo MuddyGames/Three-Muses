@@ -255,7 +255,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				if (tile != null) {
 					if (tile.index === DIVER.START) {
 						this.divers.push(this.createSpineObject(DIVER_ANIM.WALK_DOWN, DIVER_KEY, 
-							j * this.tileSize, i * this.tileSize, DIVER.SCALE, DIVER.SCALE))
+							j * this.tileSize, i * this.tileSize + (this.tileSize - 1), DIVER.SCALE, DIVER.SCALE))
 						this.diverMove.push(DIVER.SPEED)
 					}
 				}
@@ -511,9 +511,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 			if (this.tile.index == DIVER.START) {
 				this.diverMove[i] = DIVER.SPEED
-				if(this.divers[i].getCurrentAnimation().name != DIVER_ANIM.WALK_DOWN) {
-					this.divers[i].play(DIVER_ANIM.WALK_DOWN, true)
-				}
+				this.divers[i].play(DIVER_ANIM.WALK_DOWN, true)
 			}
 			else if(this.tile.index == DIVER.END) {
 				this.diverMove[i] = -DIVER.SPEED
