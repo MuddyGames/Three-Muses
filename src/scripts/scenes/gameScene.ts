@@ -20,9 +20,10 @@ import {
 	FRUITS,
 	GOAL,
 	GSM,
-	DIVER_TILES as DIVER,
+	DIVER,
 	LEVELS,
-	LEVEL_DATA_KEY
+	LEVEL_DATA_KEY,
+	DIVER_ANIM
 } from '../objects/gameENUMS'
 import Player from '../objects/Player'
 
@@ -153,7 +154,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.load.setPath('assets/spine/')
 		this.load.spine(TRUFFLES_KEY, 'truffles/truffles_all.json', 'truffles/truffles_all.atlas')
-		this.load.spine(DIVER_KEY, 'diver/diver_all.json', 'diver/diver_all.atlas')
+		this.load.spine(DIVER_KEY, 'diver/diver.json', 'diver/diver.atlas')
 		this.load.spine(KEYS[0], 'fruits/orange/orange.json', 'fruits/orange/orange.atlas')
 		this.load.spine(KEYS[1], 'fruits/grape/grape.json', 'fruits/grape/grape.atlas')
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
@@ -239,16 +240,14 @@ export default class GameScene extends Phaser.Scene {
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
 		// Setup Divers
-		var counter = 0;
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.diverLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === DIVER.START) {
-						this.divers.push(this.createSpineObject(IDLE_KEY, DIVER_KEY, j * this.tileSize, i * this.tileSize, 0.25, 0.25))
+						this.divers.push(this.createSpineObject(DIVER_ANIM.WALK_DOWN, DIVER_KEY, 
+							j * this.tileSize, i * this.tileSize, DIVER.SCALE, DIVER.SCALE))
 						this.diverMove.push(DIVER.SPEED)
-						this.divers[counter].setDepth(2)
-						counter++
 					}
 				}
 			}
@@ -256,6 +255,7 @@ export default class GameScene extends Phaser.Scene {
 		// Init diver animations
 		for (let i = 0; i < this.divers.length; i++) {
 			this.initializeAnimationsState(this.divers[i], this.diverAnimationNames)
+			this.divers[i].setDepth(2)
 		}
 
 		// Cannon Ball Setup
@@ -488,7 +488,7 @@ export default class GameScene extends Phaser.Scene {
 			}
 		}
 
-		// Init fruit animations
+		// Diver Move
 		for (let i = 0; i < this.divers.length; i++) {
 			this.divers[i].y += this.diverMove[i]
 			const x = this.map.worldToTileX(this.divers[i].x)
@@ -498,9 +498,13 @@ export default class GameScene extends Phaser.Scene {
 
 			if (this.tile.index == DIVER.START) {
 				this.diverMove[i] = DIVER.SPEED
+				if(this.divers[i].getCurrentAnimation().name != DIVER_ANIM.WALK_DOWN) {
+					this.divers[i].play(DIVER_ANIM.WALK_DOWN, true)
+				}
 			}
 			else if(this.tile.index == DIVER.END) {
 				this.diverMove[i] = -DIVER.SPEED
+				this.divers[i].play(DIVER_ANIM.WALK_UP, true)
 			}
 		}
 
