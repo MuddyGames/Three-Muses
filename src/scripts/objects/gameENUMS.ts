@@ -42,8 +42,8 @@ export enum FRUITS {
 };
 
 export enum DIVER {
-    START = 567,
-    END = 619,
+    START = 600,
+    END = 652,
     SPEED = 0.5,
     SCALE = 0.2
 }
