@@ -208,10 +208,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.recordTimeText.setShadow(3, 3)
 		this.recordTimeText.setStroke('#fff', 16);
 		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
-		this.hudtimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.68, this.screenY * 0.001, 1, 1)
+		this.hudtimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
 		.setDepth(5)
-		.setScale(0.7, 0.7)
-		//this.hudtimer.play()
+		.setScale(0.75, 0.75 	)
+		let hudTimerAnimationStates = this.hudtimer.getAnimationList()
+		this.hudtimer.play(hudTimerAnimationStates[1], true)
 
 		// Update Score Frequency
 		this.time.addEvent({
