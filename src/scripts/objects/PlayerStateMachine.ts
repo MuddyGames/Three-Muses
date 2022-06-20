@@ -14,6 +14,7 @@ export default abstract class PlayerStateMachine {
     protected spine!: SpineGameObject
     protected scene!: Phaser.Scene
     protected idiomSound!: Phaser.Sound.BaseSound
+    protected idiomPlayed!: boolean
     protected rewardSound!: Phaser.Sound.BaseSound
     protected punishmentSound!: Phaser.Sound.BaseSound
     protected revivedSound!: Phaser.Sound.BaseSound
@@ -25,6 +26,7 @@ export default abstract class PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
         this.scene = scene
         this.spine = spine
+        this.idiomPlayed = false
     }
 
     abstract handleInput(input: string): PlayerStateMachine | undefined
@@ -82,7 +84,7 @@ export class Idle extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 4:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('well_sham_any_sca')
                 break
             case 5:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -100,7 +102,7 @@ export class Idle extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 10:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('well_sham_any_sca')
                 break;
             case 11:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -115,7 +117,7 @@ export class Idle extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 15:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('well_sham_any_sca')
                 break;
             case 16:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -124,7 +126,7 @@ export class Idle extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 18:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('decent')
                 break
             case 19:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -142,8 +144,9 @@ export class Idle extends PlayerStateMachine {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -233,8 +236,9 @@ export class WalkingRight extends PlayerStateMachine {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -324,8 +328,9 @@ export class WalkingLeft extends PlayerStateMachine {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -417,8 +422,9 @@ export class WalkingUp extends PlayerStateMachine {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -509,8 +515,9 @@ export class WalkingDown extends PlayerStateMachine {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -589,8 +596,9 @@ export class EatingLeft extends PlayerStateMachine {
             player.getState().setState(state)
             player.getState().getState()?.enter(time, delta, player)
         }
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -671,8 +679,9 @@ export class MunchingLeft extends PlayerStateMachine {
             player.getState().setState(state)
             player.getState().getState()?.enter(time, delta, player)
         }
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -751,8 +760,9 @@ export class EatingRight extends PlayerStateMachine {
             player.getState().setState(state)
             player.getState().getState() ?.enter(time, delta, player)
         }
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -832,8 +842,9 @@ export class MunchingRight extends PlayerStateMachine {
             player.getState().setState(state)
             player.getState().getState() ?.enter(time, delta, player)
         }
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -912,8 +923,9 @@ export class EatingUp extends PlayerStateMachine {
             player.getState().setState(state)
             player.getState().getState() ?.enter(time, delta, player)
         }
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -946,13 +958,13 @@ export class MunchingUp extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.idiomSound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('decent')
                 break
             case 2:
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.idiomSound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('decent')
                 break
             case 4:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -964,7 +976,7 @@ export class MunchingUp extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.idiomSound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('decent')
                 break;
             case 8:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -976,7 +988,7 @@ export class MunchingUp extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('decent')
                 break
         }
         this.rewardSound = this.scene.sound.add('reward',{volume:0.5})
@@ -993,8 +1005,9 @@ export class MunchingUp extends PlayerStateMachine {
             player.getState().setState(state)
             player.getState().getState() ?.enter(time, delta, player)
         }
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1073,8 +1086,9 @@ export class EatingDown extends PlayerStateMachine {
             player.getState().setState(state)
             player.getState().getState() ?.enter(time, delta, player)
         }
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1154,8 +1168,9 @@ export class MunchingDown extends PlayerStateMachine {
             player.getState().setState(state)
             player.getState().getState() ?.enter(time, delta, player)
         }
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1202,8 +1217,9 @@ export class UnderAttack extends PlayerStateMachine {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1245,8 +1261,9 @@ export class Expired extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
 
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1268,7 +1285,7 @@ export class Revive extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.idiomSound = this.scene.sound.add('state_of_ya')
+        this.idiomSound = this.scene.sound.add('dose')
         this.spine.play(INPUT_TYPES.REVIVE, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -1287,8 +1304,9 @@ export class Revive extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
 
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1328,8 +1346,9 @@ export class Revived extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
 
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1363,8 +1382,9 @@ export class Splash extends PlayerStateMachine {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
 
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {
@@ -1405,8 +1425,9 @@ export class ReachedGoal extends PlayerStateMachine {
             player.getState().getState() ?.enter(time, delta, player)
         }
 
-        if (this.idiomElapsed >= player.getIdiomDelay()) {
+        if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
+            this.idiomPlayed = true
         }
     }
     exit(time: number, delta: number, player: Player) {

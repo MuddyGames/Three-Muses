@@ -11,7 +11,7 @@ export enum INPUT_TYPES {
         EATING_UP = 'eating_up',
         EATING_DOWN = 'eating_down',
         MUNCHING_LEFT = 'munching_left',
-        MUNCHING_RIGHT = 'munching_down',
+        MUNCHING_RIGHT = 'munching_right',
         MUNCHING_UP = 'munching_up',
         MUNCHING_DOWN = 'munching_down',
         EXPIRED = 'expired', 

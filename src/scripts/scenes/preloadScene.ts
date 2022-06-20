@@ -39,7 +39,6 @@ export default class PreloadScene extends Phaser.Scene {
     // Idioms
     this.load.audio('a_boy_the_kid', ['assets/audio/idioms/a_boy_the_kid.mp3', 'assets/audio/idioms/a_boy_the_kid.ogg']);
     this.load.audio('come_here_i_want_ya', ['assets/audio/idioms/come_here_i_want_ya.mp3', 'assets/audio/idioms/come_here_i_want_ya.ogg']);
-    this.load.audio('copper_pipe', ['assets/audio/idioms/copper_pipe.mp3', 'assets/audio/idioms/copper_pipe.ogg']);
     this.load.audio('decent', ['assets/audio/idioms/decent.mp3', 'assets/audio/idioms/decent.ogg']);
     this.load.audio('dose', ['assets/audio/idioms/dose.mp3', 'assets/audio/idioms/dose.ogg']);
     this.load.audio('gawke', ['assets/audio/idioms/gawke.mp3', 'assets/audio/idioms/gawke.ogg']);

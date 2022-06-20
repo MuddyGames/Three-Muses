@@ -1,10 +1,10 @@
 import HudText from '../objects/hudText'
 
 export default class ArtiFactFourScene extends Phaser.Scene {
-  timedEvents : Phaser.Time.TimerEvent[] = []
   private background!: Phaser.GameObjects.Image
   private backingMusic!: Phaser.Sound.BaseSound
   private element!: Phaser.GameObjects.DOMElement 
+  private nextLevel!: HudText
 
   constructor() {
     super({
@@ -30,24 +30,27 @@ export default class ArtiFactFourScene extends Phaser.Scene {
 
     this.element = this.add.dom(this.cameras.main.width / 2, 100).createFromCache('artifact_four');
 
-    this.element.setPerspective(800);
-
     this.backingMusic = this.sound.add('splash_screen_track',{ loop: true })
 		this.backingMusic.play()
-
-    // Move to next Artifact
-    this.timedEvents.push(this.time.delayedCall(2000, this.onEventGame, [], this))
-
+    
+    // Move to next Level
+    this.nextLevel = new HudText(this)
+    this.nextLevel.setShadow(3, 3)
+		this.nextLevel.setStroke('#fff', 16);
+		this.nextLevel.setShadow(2, 2, "#333333", 2, true, true);
+    this.nextLevel.setPosition(width * 0.25, height * 0.80)
+    this.nextLevel.on('pointerdown', () => this.onClickNextLevel());
   }
 
   update() {
-
+    this.nextLevel.update()
+    this.nextLevel.setText('Next Level')
+    this.nextLevel.setInteractive()
   }
 
 
-  private onEventGame() {
+  private onClickNextLevel() {
     this.backingMusic.stop()
     this.scene.start('Credits')
   }
-
 }
