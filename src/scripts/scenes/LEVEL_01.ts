@@ -36,6 +36,7 @@ const DPAD_KEY = 'dpad'
 const KEYS = ['orange', 'lemon', 'grape']
 const DIVER_KEY = 'diver'
 const SOUND_KEY = 'soundbtn'
+const TIMER_KEY = 'hudtimer'
 
 export default class LEVEL_01 extends Phaser.Scene {
 
@@ -56,6 +57,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private screenX!: number
 	private screenY!: number
 	private elapsedLevelTime!: number
+	private hudtimer!: SpineGameObject
 
 	// Level Music
 	private backingMusic!: Phaser.Sound.BaseSound
@@ -162,6 +164,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
 		this.load.spine(DPAD_KEY, 'dpad/DPad.json', 'dpad/DPad.atlas')
 		this.load.spine(SOUND_KEY, 'sound/sound.json', 'sound/sound.atlas')
+		this.load.spine(TIMER_KEY, 'timer/timer.json', 'timer/timer.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -205,6 +208,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.recordTimeText.setShadow(3, 3)
 		this.recordTimeText.setStroke('#fff', 16);
 		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
+		this.hudtimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
+		.setDepth(5)
+		.setScale(0.75, 0.75 	)
+		let hudTimerAnimationStates = this.hudtimer.getAnimationList()
+		this.hudtimer.play(hudTimerAnimationStates[1], true)
 
 		// Update Score Frequency
 		this.time.addEvent({
@@ -315,17 +323,20 @@ export default class LEVEL_01 extends Phaser.Scene {
 		.setDepth(5)
 		.setInteractive()
 		let soundStates = this.soundbtn.getAnimationList()
-		let soundState = true
+		let savedSoundState = window.localStorage.getItem('soundState')
+		let soundState = true		
 		this.soundbtn.on('pointerdown', () => {
 			if (soundState == true){
 				soundState = false
 				this.soundbtn.play(soundStates[1], true)
+				window.localStorage.setItem('soundState', soundState.toString())
 				this.game.sound.mute = true
 				return
 			} if (soundState == false){
 				soundState = true
 				this.game.sound.mute = false
 				this.soundbtn.play(soundStates[0], true)
+				window.localStorage.setItem('soundState', soundState.toString())
 				return
 			}
 		})
