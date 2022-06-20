@@ -143,7 +143,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	preload(time: number, delta: number): void {
 		this.load.image('tileset', 'assets/level/truffles_level_1_tileset.png');
-		this.load.image('hud', 'assets/level/hud.png');
 		this.load.tilemapTiledJSON('level', 'assets/level/truffles_level_1.json');
 
 		this.load.setPath('assets/spine/')
