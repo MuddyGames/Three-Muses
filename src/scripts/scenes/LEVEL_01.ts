@@ -358,14 +358,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 				this.newRecordTime = this.bestRecordedTime
 			}
 
-			//this.setupMap()
-
-			//Phaser.Scene.call(this, this.player.getCurrentArtifact());
-			//this.scene.sendToBack(this)
-			//this.scene.stop();
-			//this.scene.start();
-			//this.scene.start(this.player.getCurrentArtifact())
-			//this.scene.launch(this)
+			// Change Levels
+			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_02)
+			this.backingMusic.stop()
+			this.scene.start('ArtiFactOneScene')
+			// ENDS: Change Levels
 		}
 
 		// Cannon Ball Movement

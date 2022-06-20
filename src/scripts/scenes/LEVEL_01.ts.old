@@ -356,11 +356,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 			//window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
 			//this.setCurrentLevel()
 
-			console.log(this.player.getCurrentLevel())
-			console.log(this.player.getNextLevel())
-			console.log(this.player.getCurrentArtifact())
-			console.log(this.player.getNextArtifact())
-
 			this.backingMusic.stop()
 			this.scene.start('ArtiFactOneScene')
 			// ENDS: Change Levels
