@@ -41,8 +41,14 @@ export enum FRUITS {
     GRAPE_TILE = 603 // Tile ID on level json
 };
 
-export enum DIVER_TILES {
-    START = 567,
-    END = 619,
-    SPEED = 0.5
+export enum DIVER {
+    START = 600,
+    END = 652,
+    SPEED = 0.5,
+    SCALE = 0.2
+}
+
+export enum DIVER_ANIM {
+    WALK_DOWN = 'walk_front',
+    WALK_UP = 'walk_back'
 }
