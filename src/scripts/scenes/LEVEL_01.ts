@@ -4,16 +4,10 @@ import HudText from '../objects/hudText'
 // Player State
 import PlayerState from '../objects/PlayerState'
 
-// Player state machine
-import {
-	UnderAttack
-} from '../objects/PlayerStateMachine'
-
 // Used for animations and game states
 import {
 	INPUT_TYPES
 } from '../objects/inputs'
-
 
 // Game State Management
 import {
@@ -25,9 +19,11 @@ import {
 	LEVEL_DATA_KEY,
 	DIVER_ANIM
 } from '../objects/gameENUMS'
+
+// Player holds player data
 import Player from '../objects/Player'
 
-
+// TODO Move Magic Data to KEYs
 const TRUFFLES_KEY = 'truffles'
 const IDLE_KEY = 'idle'
 const CANNONBALL_KEY = 'cannonball'
@@ -38,6 +34,7 @@ const DIVER_KEY = 'diver'
 const SOUND_KEY = 'soundbtn'
 const TIMER_KEY = 'hudtimer'
 
+// NEED TO CREATE LEVEL_01 to LEVEL_04 for final build 
 export default class LEVEL_01 extends Phaser.Scene {
 
 	// Player Class
@@ -71,28 +68,24 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private cannonball: SpineGameObject[] = []
 	private windmill!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-	private orange!: SpineGameObject
-	private lemon!: SpineGameObject
-	private grape!: SpineGameObject
+
 	private fruit: SpineGameObject[] = []
 	private dpad!: SpineGameObject
 	private soundbtn!: SpineGameObject
 
 	private trufflesAnimationNames: string[] = []
-	private trufflesAnimationIndex = 0
+	private trufflesAnimationIndex = 0 // TODO : Remove this magic num of 0
 
 	private diverAnimationNames: string[] = []
-	private diverAnimationIndex = 0
+	private diverAnimationIndex = 0 // TODO : Remove this magic num of 0
 	private diverMove: number[] = []
 
 	private fruitAnimationNames: string[] = []
 	private fruitMarked: boolean[] = []
-	private orangeAnimationIndex = 0
-	private grapeAnimationIndex = 0
-	private lemonAnimationIndex = 0
 
 	private tileSize: number = 32
 
+	// TODO : Rework so that is in screen space
 	private cannonballAnimationNames: string[] = []
 	private cannonballAnimationIndex = 0
 	private cannonballPosX: number[] = [269, 525, 781]
@@ -110,7 +103,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private groundLayer!: Phaser.Tilemaps.TilemapLayer
 	private ground2Layer!: Phaser.Tilemaps.TilemapLayer
 	private house2Layer!: Phaser.Tilemaps.TilemapLayer
-
 	private house1Layer!: Phaser.Tilemaps.TilemapLayer
 	private wall1Layer!: Phaser.Tilemaps.TilemapLayer
 	private wall2Layer!: Phaser.Tilemaps.TilemapLayer
@@ -208,9 +200,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.recordTimeText.setShadow(3, 3)
 		this.recordTimeText.setStroke('#fff', 16);
 		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
+
+		// TODO : Remove magic numbers
 		this.hudtimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
 		.setDepth(5)
-		.setScale(0.75, 0.75 	)
+		.setScale( 0.75, 0.75 )
 		let hudTimerAnimationStates = this.hudtimer.getAnimationList()
 		this.hudtimer.play(hudTimerAnimationStates[1], true)
 
@@ -418,7 +412,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 				
 				// Check is Goal Reached
-				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				x = this.map.worldToTileX(this.player.getX())
 				y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.goalLayer.getTileAt(x, y)
@@ -445,7 +439,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 
 				// Check is Goal Reached
-				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				x = this.map.worldToTileX(this.player.getX())
 				y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.goalLayer.getTileAt(x, y)
@@ -471,7 +465,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 
 				// Check is Goal Reached
-				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				x = this.map.worldToTileX(this.player.getX())
 				y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.goalLayer.getTileAt(x, y)
@@ -498,7 +492,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 
 				// Check is Goal Reached
-				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				x = this.map.worldToTileX(this.player.getX())
 				y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.goalLayer.getTileAt(x, y)
