@@ -26,6 +26,7 @@ const KEYS = ['orange', 'lemon', 'grape']
 const IDLE_KEY = 'idle'
 const CANNONBALL_KEY = 'cannonball'
 const WINDMILL_KEY = 'windmill'
+const DPAD_KEY = 'dpad'
 let muteBtn
 
 enum Direction {
@@ -70,6 +71,7 @@ export default class GameScene extends Phaser.Scene {
 	private lemon!: SpineGameObject
 	private grape!: SpineGameObject
 	private fruit: SpineGameObject[] = []
+	private dpad!: SpineGameObject
 
 	private trufflesAnimationNames: string[] = []
 	private trufflesAnimationIndex = 0
@@ -152,6 +154,7 @@ export default class GameScene extends Phaser.Scene {
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
 		this.load.spine(CANNONBALL_KEY, 'cannonball/cannonball.json', 'cannonball/cannonball.atlas')
 		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
+		this.load.spine(DPAD_KEY, 'dpad/DPad.json', 'dpad/DPad.atlas')
 	}
 
 	create() {
@@ -236,6 +239,10 @@ export default class GameScene extends Phaser.Scene {
 		this.cursors = this.input.keyboard.createCursorKeys()
 		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
 
+		//Multitouch
+		this.input.addPointer(2);
+
+
 		// Setup Fruits
 		var tilesWide = 40
 		var tilesHigh = 23
@@ -287,8 +294,6 @@ export default class GameScene extends Phaser.Scene {
 				fill: '#FFF'
 			}))
 
-		//multitouch bits
-		this.input.addPointer(2);
 
 		this.time.addEvent({
 			delay: this.soundDelay,
@@ -301,7 +306,7 @@ export default class GameScene extends Phaser.Scene {
 
 	update(time: number, delta: number): void {
 
-		console.log("Time:" + time + " Delta:" + delta)
+		//console.log("Time:" + time + " Delta:" + delta)
 
 		// TODO BETTER Game State Management
 		//If level Playable Update
@@ -539,11 +544,17 @@ export default class GameScene extends Phaser.Scene {
 		if (muteBtn.text === "Mute") {
 			muteBtn.setText("Unmute")
 			this.backingMusic.pause();
+			//this.scene.sound.mute = true
 		} else if (muteBtn.text === "Unmute") {
 			muteBtn.setText("Mute")
 			this.backingMusic.resume()
+			//this.scene.sound.mute = false
 		}
 
+	}
+
+	private handleDpad(dir){
+		console.log(dir)
 	}
 
 	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {
@@ -635,7 +646,7 @@ export default class GameScene extends Phaser.Scene {
 	private cannonballReset(index: number) {
 		this.cannonball[index].setPosition(this.cannonballPosX[index], this.cannonballPosY[index] = 40)
 		this.changeAnimation(this.cannonball[index], this.cannonballAnimationNames, 1)
-		console.log(this.cannonballAnimationNames)
+		//console.log(this.cannonballAnimationNames)
 		this.cannonballMoving[index] = true
 
 	}
