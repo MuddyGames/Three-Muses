@@ -4,16 +4,10 @@ import HudText from '../objects/hudText'
 // Player State
 import PlayerState from '../objects/PlayerState'
 
-// Player state machine
-import {
-	UnderAttack
-} from '../objects/PlayerStateMachine'
-
 // Used for animations and game states
 import {
 	INPUT_TYPES
 } from '../objects/inputs'
-
 
 // Game State Management
 import {
@@ -25,9 +19,11 @@ import {
 	LEVEL_DATA_KEY,
 	DIVER_ANIM
 } from '../objects/gameENUMS'
+
+// Player holds player data
 import Player from '../objects/Player'
 
-
+// TODO Move Magic Data to KEYs
 const TRUFFLES_KEY = 'truffles'
 const IDLE_KEY = 'idle'
 const CANNONBALL_KEY = 'cannonball'
@@ -36,7 +32,9 @@ const DPAD_KEY = 'dpad'
 const KEYS = ['orange', 'lemon', 'grape']
 const DIVER_KEY = 'diver'
 const SOUND_KEY = 'soundbtn'
+const TIMER_KEY = 'hudtimer'
 
+// NEED TO CREATE LEVEL_01 to LEVEL_04 for final build 
 export default class LEVEL_04 extends Phaser.Scene {
 
 	// Player Class
@@ -56,6 +54,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 	private screenX!: number
 	private screenY!: number
 	private elapsedLevelTime!: number
+	private hudtimer!: SpineGameObject
 
 	// Level Music
 	private backingMusic!: Phaser.Sound.BaseSound
@@ -69,18 +68,16 @@ export default class LEVEL_04 extends Phaser.Scene {
 	private cannonball: SpineGameObject[] = []
 	private windmill!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-	private orange!: SpineGameObject
-	private lemon!: SpineGameObject
-	private grape!: SpineGameObject
+
 	private fruit: SpineGameObject[] = []
 	private dpad!: SpineGameObject
 	private soundbtn!: SpineGameObject
 
 	private trufflesAnimationNames: string[] = []
-	private trufflesAnimationIndex = 0
+	private trufflesAnimationIndex = 0 // TODO : Remove this magic num of 0
 
 	private diverAnimationNames: string[] = []
-	private diverAnimationIndex = 0
+	private diverAnimationIndex = 0 // TODO : Remove this magic num of 0
 	private diverMove: number[] = []
 
 	private fruitAnimationNames: string[] = []
@@ -88,9 +85,12 @@ export default class LEVEL_04 extends Phaser.Scene {
 	private orangeAnimationIndex = 0
 	private grapeAnimationIndex = 0
 	private lemonAnimationIndex = 0
+	private dpadAnimationIndex = 0
+	private dpadAnimationNames = []
 
 	private tileSize: number = 32
 
+	// TODO : Rework so that is in screen space
 	private cannonballAnimationNames: string[] = []
 	private cannonballAnimationIndex = 0
 	private cannonballPosX: number[] = [269, 525, 781]
@@ -108,7 +108,6 @@ export default class LEVEL_04 extends Phaser.Scene {
 	private groundLayer!: Phaser.Tilemaps.TilemapLayer
 	private ground2Layer!: Phaser.Tilemaps.TilemapLayer
 	private house2Layer!: Phaser.Tilemaps.TilemapLayer
-
 	private house1Layer!: Phaser.Tilemaps.TilemapLayer
 	private wall1Layer!: Phaser.Tilemaps.TilemapLayer
 	private wall2Layer!: Phaser.Tilemaps.TilemapLayer
@@ -124,6 +123,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 	private churchRoofLayer!: Phaser.Tilemaps.TilemapLayer
 	private castleRoofLayer!: Phaser.Tilemaps.TilemapLayer
 	private miscTop1Layer!: Phaser.Tilemaps.TilemapLayer
+	private miscTop2Layer!: Phaser.Tilemaps.TilemapLayer
 	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
 	private goalLayer!: Phaser.Tilemaps.TilemapLayer
@@ -149,7 +149,6 @@ export default class LEVEL_04 extends Phaser.Scene {
 
 	preload(time: number, delta: number): void {
 		this.load.image('tileset', 'assets/level/truffles_level_1_tileset.png');
-		this.load.image('hud', 'assets/level/hud.png');
 		this.load.tilemapTiledJSON('level', 'assets/level/truffles_level_1.json');
 
 		this.load.setPath('assets/spine/')
@@ -160,8 +159,9 @@ export default class LEVEL_04 extends Phaser.Scene {
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
 		this.load.spine(CANNONBALL_KEY, 'cannonball/cannonball.json', 'cannonball/cannonball.atlas')
 		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
-		this.load.spine(DPAD_KEY, 'dpad/DPad.json', 'dpad/DPad.atlas')
+		this.load.spine(DPAD_KEY, 'dpad/DPad_02.json', 'dpad/DPad_02.atlas')
 		this.load.spine(SOUND_KEY, 'sound/sound.json', 'sound/sound.atlas')
+		this.load.spine(TIMER_KEY, 'timer/timer.json', 'timer/timer.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -206,6 +206,13 @@ export default class LEVEL_04 extends Phaser.Scene {
 		this.recordTimeText.setStroke('#fff', 16);
 		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
 
+		// TODO : Remove magic numbers
+		this.hudtimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
+		.setDepth(5)
+		.setScale( 0.75, 0.75 )
+		let hudTimerAnimationStates = this.hudtimer.getAnimationList()
+		this.hudtimer.play(hudTimerAnimationStates[1], true)
+
 		// Update Score Frequency
 		this.time.addEvent({
 			delay: 500,
@@ -247,7 +254,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 				if (tile != null) {
 					if (tile.index === DIVER.START) {
 						this.divers.push(this.createSpineObject(DIVER_ANIM.WALK_DOWN, DIVER_KEY, 
-							j * this.tileSize, i * this.tileSize, DIVER.SCALE, DIVER.SCALE))
+							j * this.tileSize, i * this.tileSize + (this.tileSize - 1), DIVER.SCALE, DIVER.SCALE))
 						this.diverMove.push(DIVER.SPEED)
 					}
 				}
@@ -281,9 +288,72 @@ export default class LEVEL_04 extends Phaser.Scene {
 		// Add WASD
 		this.keys = this.input.keyboard.addKeys('W,A,S,D')
 
-		//Multitouch
+		//Multitouch: the below sets the amount of concurrent touches can happen
 		this.input.addPointer(2);
 
+		// Add dpad
+		this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, 1180, 630, 1, 1)
+		.setScale(0.9)
+		.setDepth(5)
+		let dpad_bones = this.dpad.getBoneList()
+		let dpadAnimationNames = this.dpad.getAnimationList()
+		for (var i = 0; i < dpad_bones.length; i++){
+			let bone = this.dpad.findBone(dpad_bones[i])
+			// The line below creates touch-zones over the top of the dpad buttons. These are the touch-reactive elements.
+			// To make them visible, remove the last parameter of the function which sets the alpha to 0 - transparency full.
+			// When testing, it might be needed to make these touch-zones bigger or smaller, the third argument sets the size of the circle. 
+			let controls = this.add.circle(bone.worldX, 720 - (bone.worldY), 15, 0x00000000, 0)
+			controls['bone'] = bone.data.name
+			controls.setDepth(5)
+			controls.setInteractive()
+			controls.on('pointerdown', function dpadInput(this, dpad){
+				let dinput = this['bone']
+				switch (dinput){
+					case "Up":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						console.log("dpad up")
+						//this.player.moveUp()
+						break
+					case "Down":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						console.log("dpad down")
+						//this.player.moveDown()
+						break
+					case "Left":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						console.log("dpad left")
+						//this.player.moveLeft()
+						break
+					case "Right":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						console.log("dpad right")
+						//this.player.moveRight()
+						break
+					case "LeftDown":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						break
+					case "LeftUp":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						break
+					case "RightDown":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						break
+					case "RightUp":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						break
+					case "Static":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						break
+					default:
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf("Static")
+						break
+				}
+			})
+			controls.on('pointerup', function(this){
+				this.dpadAnimationIndex = dpadAnimationNames.indexOf("Static")
+			})
+		}
+		
 
 		// Setup Fruits
 		for (let i = 0; i < tilesHigh; i++) {
@@ -315,17 +385,24 @@ export default class LEVEL_04 extends Phaser.Scene {
 		.setDepth(5)
 		.setInteractive()
 		let soundStates = this.soundbtn.getAnimationList()
+		let savedSoundState = window.localStorage.getItem('soundState')
 		let soundState = true
+		if (window.localStorage.getItem('soundState') === "false"){
+			this.game.sound.mute = true
+			this.soundbtn.play(soundStates[1], true)
+		}
 		this.soundbtn.on('pointerdown', () => {
 			if (soundState == true){
 				soundState = false
 				this.soundbtn.play(soundStates[1], true)
+				window.localStorage.setItem('soundState', soundState.toString())
 				this.game.sound.mute = true
 				return
 			} if (soundState == false){
 				soundState = true
 				this.game.sound.mute = false
 				this.soundbtn.play(soundStates[0], true)
+				window.localStorage.setItem('soundState', soundState.toString())
 				return
 			}
 		})
@@ -357,13 +434,12 @@ export default class LEVEL_04 extends Phaser.Scene {
 				this.newRecordTime = this.bestRecordedTime
 			}
 
-			// Change Levels
-			// NOTE IMPORTANT
-			// LEVEL NEXTS TO BE SET TO NEXT LEVEL AND SCENE TO NEXT ARTIFACT
-			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_04)
-			this.backingMusic.stop()
-			this.scene.start('ArtiFactFourScene')
-			// ENDS: Change Levels
+			this.time.addEvent({
+				delay: 6000,
+				loop: true,
+				callback: this.levelComplete,
+				callbackScope: this
+			});
 		}
 
 		// Cannon Ball Movement
@@ -394,6 +470,13 @@ export default class LEVEL_04 extends Phaser.Scene {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
 		}
 
+		// DOES NOT WORK, can't feed new player input into the PlayerStateMachine.
+		// if (this.dpadAnimationIndex == this.dpadAnimationNames.indexOf("Up")){
+		// 	this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
+		// } else if (this.dpadAnimationIndex == this.dpadAnimationNames.indexOf("Down")){
+		// 	this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
+		// }
+
 		// Can player move
 		if (this.player.getMove()) {
 			if (this.cursors.right.isDown) {
@@ -407,8 +490,8 @@ export default class LEVEL_04 extends Phaser.Scene {
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
 				
-				// TODO: Check is Goal Reached on other keys
-				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				// Check is Goal Reached
+				x = this.map.worldToTileX(this.player.getX())
 				y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.goalLayer.getTileAt(x, y)
@@ -424,8 +507,8 @@ export default class LEVEL_04 extends Phaser.Scene {
 			}
 
 			if (this.cursors.left.isDown) {
-				const x = this.map.worldToTileX(this.player.getX() + this.tileSize / 2)
-				const y = this.map.worldToTileY(this.player.getY())
+				let x = this.map.worldToTileX(this.player.getX() + this.tileSize / 2)
+				let y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.collisionLayer.getTileAt(x - 1, y)
 
@@ -433,11 +516,25 @@ export default class LEVEL_04 extends Phaser.Scene {
 					this.player.moveLeft()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
+
+				// Check is Goal Reached
+				x = this.map.worldToTileX(this.player.getX())
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.goalLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === GOAL.TILE){
+						// Reached Goal
+						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.gsmUpdate(time, delta)
+					}
+				}
 			}
 
 			if (this.cursors.up.isDown) {
-				const x = this.map.worldToTileX(this.player.getX())
-				const y = this.map.worldToTileY(this.player.getY() + this.tileSize / 4)
+				let x = this.map.worldToTileX(this.player.getX())
+				let y = this.map.worldToTileY(this.player.getY() + this.tileSize / 4)
 
 				this.tile = this.collisionLayer.getTileAt(x, y - 1)
 
@@ -445,18 +542,46 @@ export default class LEVEL_04 extends Phaser.Scene {
 					this.player.moveUp()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
+
+				// Check is Goal Reached
+				x = this.map.worldToTileX(this.player.getX())
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.goalLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === GOAL.TILE){
+						// Reached Goal
+						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.gsmUpdate(time, delta)
+					}
+				}
 			}
 
 			if (this.cursors.down.isDown) {
 
-				const x = this.map.worldToTileX(this.player.getX())
-				const y = this.map.worldToTileY(this.player.getY() + this.player.getVelocityY().y)
+				let x = this.map.worldToTileX(this.player.getX())
+				let y = this.map.worldToTileY(this.player.getY() + this.player.getVelocityY().y)
 
 				this.tile = this.collisionLayer.getTileAt(x, y)
 
 				if (this.tile == null) {
 					this.player.moveDown()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
+				}
+
+				// Check is Goal Reached
+				x = this.map.worldToTileX(this.player.getX())
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.goalLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === GOAL.TILE){
+						// Reached Goal
+						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.gsmUpdate(time, delta)
+					}
 				}
 			}
 
@@ -465,7 +590,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 			} else {
 				for (let i = 0; i < this.fruit.length; i++) {
 
-					if (!this.fruitMarked[i] && this.trufflesAABB(this.truffles, this.fruit[i])) {
+					if (!this.fruitMarked[i] && this.trufflesAABB(this.fruit[i])) {
 						console.log('Fruit Collision ' + i)
 						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
 						this.time.addEvent({
@@ -484,7 +609,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 
 		// Diver Collision
 		for(let i = 0; i < this.divers.length; i++) {
-			if (this.trufflesAABB(this.truffles, this.divers[i])){
+			if (this.trufflesEnemyCollision(this.divers[i])){
 				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
 				this.addPoints(-150)
 			}
@@ -500,9 +625,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 
 			if (this.tile.index == DIVER.START) {
 				this.diverMove[i] = DIVER.SPEED
-				if(this.divers[i].getCurrentAnimation().name != DIVER_ANIM.WALK_DOWN) {
-					this.divers[i].play(DIVER_ANIM.WALK_DOWN, true)
-				}
+				this.divers[i].play(DIVER_ANIM.WALK_DOWN, true)
 			}
 			else if(this.tile.index == DIVER.END) {
 				this.diverMove[i] = -DIVER.SPEED
@@ -512,7 +635,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 
 		// cannonball collisions
 		for (let i = 0; i < this.cannonball.length; i++) {
-			if (this.trufflesAABB(this.truffles, this.cannonball[i])) {
+			if (this.trufflesAABB(this.cannonball[i])) {
 				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
 				this.addPoints(-150)
 			}
@@ -604,6 +727,9 @@ export default class LEVEL_04 extends Phaser.Scene {
 		this.miscTop1Layer = this.map.createLayer('map/environment_objects/tree_01', this.tileset, 0, 0);
 		this.miscTop1Layer.setDepth(1);
 
+		this.miscTop2Layer = this.map.createLayer('map/environment_objects/tree_top_04', this.tileset, 0, 0);
+		this.miscTop2Layer.setDepth(4);
+
 		this.collisionLayer = this.map.createLayer('map/environment_collision/collide_depth_02', this.tileset, 0, 0);
 		this.collisionLayer.setDepth(2)
 		this.collisionLayer.setVisible(false)
@@ -646,9 +772,6 @@ export default class LEVEL_04 extends Phaser.Scene {
 		this.goalLayer.setVisible(true)
 	}
 
-	private handleDpad(dir){
-		console.log(dir)
-	}
 
 	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {
 		let object = this.add.spine(x, y, key, startAnim, true)
@@ -674,7 +797,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 	}
 
 	//Truffles to Object Collision
-	private trufflesAABB(truffles: SpineGameObject, collidable: SpineGameObject) {
+	private trufflesAABB(collidable: SpineGameObject) {
 
 		var collision = false;
 
@@ -684,6 +807,18 @@ export default class LEVEL_04 extends Phaser.Scene {
 			this.player.getY() > collidable.y) {
 			collision = true;
 		}
+
+		return collision
+	}
+	private trufflesEnemyCollision(enemy: SpineGameObject) {
+
+		var collision = false;
+
+		if((this.map.worldToTileX(this.player.getX()) == this.map.worldToTileX(enemy.x) ||
+			this.map.worldToTileX(this.player.getX()) == this.map.worldToTileX(enemy.x)-1) &&
+			this.map.worldToTileY(this.player.getY()) == this.map.worldToTileY(enemy.y)) {
+				collision = true;
+			}
 
 		return collision
 	}
@@ -825,6 +960,16 @@ export default class LEVEL_04 extends Phaser.Scene {
 
 	private gsmUpdate(time: number, delta: number): void {
 		this.gameState = GSM.LEVEL_COMPLETE
-		console.log('level complete')
+	}
+
+	private levelComplete(){
+		// Change Levels
+		// NOTE IMPORTANT
+		// LEVEL NEXTS TO BE SET TO NEXT LEVEL AND SCENE TO NEXT ARTIFACT
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.CREDITS)
+		this.backingMusic.stop()
+		this.scene.start('ArtiFactFourScene')
+		// ENDS: Change Levels
+
 	}
 }
