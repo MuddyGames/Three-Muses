@@ -57,10 +57,10 @@ export default class GameScene extends Phaser.Scene {
 	private elapsedLevelTime!: number
 
 	// Level Music
-	backingMusic!: Phaser.Sound.BaseSound
+	private backingMusic!: Phaser.Sound.BaseSound
 
 	// Church Bells
-	churchBells!: Phaser.Sound.BaseSound
+	private churchBells!: Phaser.Sound.BaseSound
 
 	// Level Objects
 	private truffles!: SpineGameObject
@@ -94,8 +94,6 @@ export default class GameScene extends Phaser.Scene {
 	private cannonballPosY: number[] = [60, 60, 60]
 	private cannonballSpeed = 2
 	private cannonballMoving: boolean[] = [true, true, true]
-
-	//private soundDelay = 500
 
 	// TileMap Data
 	private map!: Phaser.Tilemaps.Tilemap
@@ -131,6 +129,9 @@ export default class GameScene extends Phaser.Scene {
 	// Player Data
 	private playerState!: PlayerState
 
+	// WASD
+	private keys
+
 	constructor() {
 		super({
 			key: 'GameScene'
@@ -143,7 +144,7 @@ export default class GameScene extends Phaser.Scene {
 		this.screenY = 0
 	}
 
-	preload() {
+	preload(time: number, delta: number): void {
 		this.load.image('tileset', 'assets/level/truffles_level_1_tileset.png');
 		this.load.image('hud', 'assets/level/hud.png');
 		this.load.tilemapTiledJSON('level', 'assets/level/truffles_level_1.json');
@@ -158,7 +159,7 @@ export default class GameScene extends Phaser.Scene {
 		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
 	}
 
-	create() {
+	create(time: number, delta: number): void {
 		// Setup Screen Dimensions
 		let {
 			width,
@@ -273,6 +274,9 @@ export default class GameScene extends Phaser.Scene {
 
 		// Keyboard Setup
 		this.cursors = this.input.keyboard.createCursorKeys()
+		// Add WASD
+		//this.keys = this.input.keyboard.addKeys("W,A,S,D")
+		this.keys = this.input.keyboard.addKeys('W,A,S,D')
 
 		// Setup Fruits
 		for (let i = 0; i < tilesHigh; i++) {
@@ -316,6 +320,7 @@ export default class GameScene extends Phaser.Scene {
 
 		//multitouch bits
 		this.input.addPointer(2);
+
 
 		// Initialise Player State
 		this.playerState = new PlayerState(this, this.truffles, 0, 0)
@@ -361,17 +366,25 @@ export default class GameScene extends Phaser.Scene {
 
 		// Handles input
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
-			if (this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player) != null) {
-			}
+			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player) 
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
-			if (this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player) != null) {
-			}
+			this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
-			if (this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player) != null) {
-			}
+			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-			if (this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player) != null) {
-			}
+			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.D)) {
+			console.log('D')
+			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.A)) {
+			console.log('A')
+			this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.W)) {
+			console.log('W')
+			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.S)) {
+			console.log('S')
+			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
 		}
 
 		// Can player move
