@@ -368,13 +368,12 @@ export default class LEVEL_01 extends Phaser.Scene {
 				this.newRecordTime = this.bestRecordedTime
 			}
 
-			// Change Levels
-			// NOTE IMPORTANT
-			// LEVEL NEXTS TO BE SET TO NEXT LEVEL AND SCENE TO NEXT ARTIFACT
-			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_02)
-			this.backingMusic.stop()
-			this.scene.start('ArtiFactOneScene')
-			// ENDS: Change Levels
+			this.time.addEvent({
+				delay: 6000,
+				loop: true,
+				callback: this.levelComplete,
+				callbackScope: this
+			});
 		}
 
 		// Cannon Ball Movement
@@ -879,6 +878,13 @@ export default class LEVEL_01 extends Phaser.Scene {
 	}
 
 	private levelComplete(){
+		// Change Levels
+		// NOTE IMPORTANT
+		// LEVEL NEXTS TO BE SET TO NEXT LEVEL AND SCENE TO NEXT ARTIFACT
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_02)
+		this.backingMusic.stop()
+		this.scene.start('ArtiFactOneScene')
+		// ENDS: Change Levels
 
 	}
 }
