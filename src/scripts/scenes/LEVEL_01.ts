@@ -90,6 +90,8 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private orangeAnimationIndex = 0
 	private grapeAnimationIndex = 0
 	private lemonAnimationIndex = 0
+	private dpadAnimationIndex = 0
+	private dpadAnimationNames = []
 
 	private tileSize: number = 32
 
@@ -162,7 +164,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
 		this.load.spine(CANNONBALL_KEY, 'cannonball/cannonball.json', 'cannonball/cannonball.atlas')
 		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
-		this.load.spine(DPAD_KEY, 'dpad/DPad.json', 'dpad/DPad.atlas')
+		this.load.spine(DPAD_KEY, 'dpad/DPad_02.json', 'dpad/DPad_02.atlas')
 		this.load.spine(SOUND_KEY, 'sound/sound.json', 'sound/sound.atlas')
 		this.load.spine(TIMER_KEY, 'timer/timer.json', 'timer/timer.atlas')
 	}
@@ -289,9 +291,72 @@ export default class LEVEL_01 extends Phaser.Scene {
 		// Add WASD
 		this.keys = this.input.keyboard.addKeys('W,A,S,D')
 
-		//Multitouch
+		//Multitouch: the below sets the amount of concurrent touches can happen
 		this.input.addPointer(2);
 
+		// Add dpad
+		this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, 1180, 630, 1, 1)
+		.setScale(0.9)
+		.setDepth(5)
+		let dpad_bones = this.dpad.getBoneList()
+		let dpadAnimationNames = this.dpad.getAnimationList()
+		for (var i = 0; i < dpad_bones.length; i++){
+			let bone = this.dpad.findBone(dpad_bones[i])
+			// The line below creates touch-zones over the top of the dpad buttons. These are the touch-reactive elements.
+			// To make them visible, remove the last parameter of the function which sets the alpha to 0 - transparency full.
+			// When testing, it might be needed to make these touch-zones bigger or smaller, the third argument sets the size of the circle. 
+			let controls = this.add.circle(bone.worldX, 720 - (bone.worldY), 15, 0x00000000, 0)
+			controls['bone'] = bone.data.name
+			controls.setDepth(5)
+			controls.setInteractive()
+			controls.on('pointerdown', function dpadInput(this, dpad){
+				let dinput = this['bone']
+				switch (dinput){
+					case "Up":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						console.log("dpad up")
+						//this.player.moveUp()
+						break
+					case "Down":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						console.log("dpad down")
+						//this.player.moveDown()
+						break
+					case "Left":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						console.log("dpad left")
+						//this.player.moveLeft()
+						break
+					case "Right":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						console.log("dpad right")
+						//this.player.moveRight()
+						break
+					case "LeftDown":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						break
+					case "LeftUp":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						break
+					case "RightDown":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						break
+					case "RightUp":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						break
+					case "Static":
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
+						break
+					default:
+						this.dpadAnimationIndex = dpadAnimationNames.indexOf("Static")
+						break
+				}
+			})
+			controls.on('pointerup', function(this){
+				this.dpadAnimationIndex = dpadAnimationNames.indexOf("Static")
+			})
+		}
+		
 
 		// Setup Fruits
 		for (let i = 0; i < tilesHigh; i++) {
@@ -324,7 +389,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 		.setInteractive()
 		let soundStates = this.soundbtn.getAnimationList()
 		let savedSoundState = window.localStorage.getItem('soundState')
-		let soundState = true		
+		let soundState = true
+		if (window.localStorage.getItem('soundState') === "false"){
+			this.game.sound.mute = true
+			this.soundbtn.play(soundStates[1], true)
+		}
 		this.soundbtn.on('pointerdown', () => {
 			if (soundState == true){
 				soundState = false
@@ -403,6 +472,13 @@ export default class LEVEL_01 extends Phaser.Scene {
 			console.log('S')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
 		}
+
+		// DOES NOT WORK, can't feed new player input into the PlayerStateMachine.
+		// if (this.dpadAnimationIndex == this.dpadAnimationNames.indexOf("Up")){
+		// 	this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
+		// } else if (this.dpadAnimationIndex == this.dpadAnimationNames.indexOf("Down")){
+		// 	this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
+		// }
 
 		// Can player move
 		if (this.player.getMove()) {
@@ -696,9 +772,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.goalLayer.setVisible(true)
 	}
 
-	private handleDpad(dir){
-		console.log(dir)
-	}
 
 	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {
 		let object = this.add.spine(x, y, key, startAnim, true)
