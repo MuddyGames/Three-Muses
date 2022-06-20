@@ -20,9 +20,10 @@ import {
 	FRUITS,
 	GOAL,
 	GSM,
-	DIVER_TILES as DIVER,
+	DIVER,
 	LEVELS,
-	LEVEL_DATA_KEY
+	LEVEL_DATA_KEY,
+	DIVER_ANIM
 } from '../objects/gameENUMS'
 import Player from '../objects/Player'
 
@@ -31,10 +32,10 @@ const TRUFFLES_KEY = 'truffles'
 const IDLE_KEY = 'idle'
 const CANNONBALL_KEY = 'cannonball'
 const WINDMILL_KEY = 'windmill'
+const DPAD_KEY = 'dpad'
 const KEYS = ['orange', 'lemon', 'grape']
 const DIVER_KEY = 'diver'
-
-let muteBtn
+const SOUND_KEY = 'soundbtn'
 
 export default class LEVEL_03 extends Phaser.Scene {
 
@@ -72,6 +73,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private lemon!: SpineGameObject
 	private grape!: SpineGameObject
 	private fruit: SpineGameObject[] = []
+	private dpad!: SpineGameObject
+	private soundbtn!: SpineGameObject
 
 	private trufflesAnimationNames: string[] = []
 	private trufflesAnimationIndex = 0
@@ -134,7 +137,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 	constructor() {
 		super({
-			key: 'LEVEL_04'
+			key: 'LEVEL_03'
 		})
 		// Heads up Display Data
 		this.collectablePoints = 0
@@ -151,12 +154,14 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 		this.load.setPath('assets/spine/')
 		this.load.spine(TRUFFLES_KEY, 'truffles/truffles_all.json', 'truffles/truffles_all.atlas')
-		this.load.spine(DIVER_KEY, 'diver/diver_all.json', 'diver/diver_all.atlas')
+		this.load.spine(DIVER_KEY, 'diver/diver.json', 'diver/diver.atlas')
 		this.load.spine(KEYS[0], 'fruits/orange/orange.json', 'fruits/orange/orange.atlas')
 		this.load.spine(KEYS[1], 'fruits/grape/grape.json', 'fruits/grape/grape.atlas')
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
 		this.load.spine(CANNONBALL_KEY, 'cannonball/cannonball.json', 'cannonball/cannonball.atlas')
 		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
+		this.load.spine(DPAD_KEY, 'dpad/DPad.json', 'dpad/DPad.atlas')
+		this.load.spine(SOUND_KEY, 'sound/sound.json', 'sound/sound.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -236,16 +241,14 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
 		// Setup Divers
-		var counter = 0;
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.diverLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === DIVER.START) {
-						this.divers.push(this.createSpineObject(IDLE_KEY, DIVER_KEY, j * this.tileSize, i * this.tileSize, 0.25, 0.25))
+						this.divers.push(this.createSpineObject(DIVER_ANIM.WALK_DOWN, DIVER_KEY, 
+							j * this.tileSize, i * this.tileSize, DIVER.SCALE, DIVER.SCALE))
 						this.diverMove.push(DIVER.SPEED)
-						this.divers[counter].setDepth(2)
-						counter++
 					}
 				}
 			}
@@ -253,6 +256,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		// Init diver animations
 		for (let i = 0; i < this.divers.length; i++) {
 			this.initializeAnimationsState(this.divers[i], this.diverAnimationNames)
+			this.divers[i].setDepth(2)
 		}
 
 		// Cannon Ball Setup
@@ -275,8 +279,11 @@ export default class LEVEL_03 extends Phaser.Scene {
 		// Keyboard Setup
 		this.cursors = this.input.keyboard.createCursorKeys()
 		// Add WASD
-		//this.keys = this.input.keyboard.addKeys("W,A,S,D")
 		this.keys = this.input.keyboard.addKeys('W,A,S,D')
+
+		//Multitouch
+		this.input.addPointer(2);
+
 
 		// Setup Fruits
 		for (let i = 0; i < tilesHigh; i++) {
@@ -301,26 +308,27 @@ export default class LEVEL_03 extends Phaser.Scene {
 		for (let o = 0; o < this.fruit.length; o++) {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
-
-		// TODO : This needs total refactoring
-		muteBtn = this.add.text(20, 20, 'Mute', {
-				fontFamily: 'gamefont',
-				color: '#EC00D7',
-				fontSize: '56px'
-			})
-			.setInteractive()
-			.setDepth(5)
-			.on('pointerdown', this.toggleMute)
-			.on('pointerover', () => muteBtn.setStyle({
-				fill: '#f39c12'
-			}))
-			.on('pointerout', () => muteBtn.setStyle({
-				fill: '#FFF'
-			}))
-
-		//multitouch bits
-		this.input.addPointer(2);
-
+		
+		// Mute button
+		this.soundbtn = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.001, this.screenY * 0.001, 1, 1)
+		.setScale(0.8, 0.8)
+		.setDepth(5)
+		.setInteractive()
+		let soundStates = this.soundbtn.getAnimationList()
+		let soundState = true
+		this.soundbtn.on('pointerdown', () => {
+			if (soundState == true){
+				soundState = false
+				this.soundbtn.play(soundStates[1], true)
+				this.game.sound.mute = true
+				return
+			} if (soundState == false){
+				soundState = true
+				this.game.sound.mute = false
+				this.soundbtn.play(soundStates[0], true)
+				return
+			}
+		})
 
 		// Initialise Player State
 		this.playerState = new PlayerState(this, this.truffles, 0, 0)
@@ -350,21 +358,12 @@ export default class LEVEL_03 extends Phaser.Scene {
 			}
 
 			// Change Levels
-			//window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
-			//window.localStorage.setItem(LEVEL_DATA_KEY.NEXT, this.player.getNextLevel())
-			//window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
-			//window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
-			//this.setCurrentLevel()
-
-			console.log(this.player.getCurrentLevel())
-			console.log(this.player.getNextLevel())
-			console.log(this.player.getCurrentArtifact())
-			console.log(this.player.getNextArtifact())
-
+			// NOTE IMPORTANT
+			// LEVEL NEXTS TO BE SET TO NEXT LEVEL AND SCENE TO NEXT ARTIFACT
+			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_02)
 			this.backingMusic.stop()
-			this.scene.start('ArtiFactFourScene')
+			this.scene.start('ArtiFactOneScene')
 			// ENDS: Change Levels
-			
 		}
 
 		// Cannon Ball Movement
@@ -491,7 +490,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 			}
 		}
 
-		// Init fruit animations
+		// Diver Move
 		for (let i = 0; i < this.divers.length; i++) {
 			this.divers[i].y += this.diverMove[i]
 			const x = this.map.worldToTileX(this.divers[i].x)
@@ -501,9 +500,13 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 			if (this.tile.index == DIVER.START) {
 				this.diverMove[i] = DIVER.SPEED
+				if(this.divers[i].getCurrentAnimation().name != DIVER_ANIM.WALK_DOWN) {
+					this.divers[i].play(DIVER_ANIM.WALK_DOWN, true)
+				}
 			}
 			else if(this.tile.index == DIVER.END) {
 				this.diverMove[i] = -DIVER.SPEED
+				this.divers[i].play(DIVER_ANIM.WALK_UP, true)
 			}
 		}
 
@@ -595,14 +598,11 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.churchRoofLayer = this.map.createLayer('map/buildings/background/church_depth_03/church_roof_03', this.tileset, 0, 0);
 		this.churchRoofLayer.setDepth(1);
 
-		this.castleRoofLayer = this.map.createLayer('map/castle/castle/castle_roof_depth_03', this.tileset, 0, 0);
-		this.castleRoofLayer.setDepth(3);
+		this.castleRoofLayer = this.map.createLayer('map/castle/castle/castle_roof_depth_02', this.tileset, 0, 0);
+		this.castleRoofLayer.setDepth(2);
 
 		this.miscTop1Layer = this.map.createLayer('map/environment_objects/tree_01', this.tileset, 0, 0);
 		this.miscTop1Layer.setDepth(1);
-
-		//this.hudLayer = this.map.createLayer('map/hud/hud_depth_05', this.hudTileset, 0, 0);
-		//this.hudLayer.setDepth(5);
 
 		this.collisionLayer = this.map.createLayer('map/environment_collision/collide_depth_02', this.tileset, 0, 0);
 		this.collisionLayer.setDepth(2)
@@ -611,9 +611,9 @@ export default class LEVEL_03 extends Phaser.Scene {
 		// Check the levels to load
 		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
 		let current_level: string
-		if (temp !== null) {
-			current_level = temp
-		} else {
+			if (temp !== null) {
+				current_level = temp
+			} else {
 			current_level = LEVELS.LEVEL_01
 		}
 
@@ -636,7 +636,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		}
 
 		this.candyLayer.setDepth(2);
-		this.candyLayer.setVisible(true)
+		this.candyLayer.setVisible(false)
 
 		this.diverLayer.setDepth(2)
 		this.diverLayer.setVisible(true)
@@ -646,16 +646,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.goalLayer.setVisible(true)
 	}
 
-	private toggleMute() {
-		console.log("toggeling music state");
-		if (muteBtn.text === "Mute") {
-			muteBtn.setText("Unmute")
-			this.backingMusic.pause();
-		} else if (muteBtn.text === "Unmute") {
-			muteBtn.setText("Mute")
-			this.backingMusic.resume()
-		}
-
+	private handleDpad(dir){
+		console.log(dir)
 	}
 
 	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {

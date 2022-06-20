@@ -29,7 +29,7 @@ export enum ARTIFACTS{
 }
 
 export enum GOAL {
-    TILE = 618 // Tile ID on level json
+    TILE = 651 // Tile ID on level json
 };
 
 export enum FRUITS {
