@@ -29,21 +29,21 @@ export enum ARTIFACTS{
 }
 
 export enum GOAL {
-    TILE = 651 // Tile ID on level json
+    TILE = 551 // Tile ID on level json
 };
 
 export enum FRUITS {
     ORANGE = 0,
-    ORANGE_TILE = 707, // Tile ID on level json
+    ORANGE_TILE = 555, // Tile ID on level json
     LEMON = 1,
-    LEMON_TILE = 655, // Tile ID on level json
+    LEMON_TILE = 503, // Tile ID on level json
     GRAPE = 2,
-    GRAPE_TILE = 603 // Tile ID on level json
+    GRAPE_TILE = 607 // Tile ID on level json
 };
 
 export enum DIVER {
-    START = 600,
-    END = 652,
+    START = 500,
+    END = 552,
     SPEED = 0.5,
     SCALE = 0.2
 }
