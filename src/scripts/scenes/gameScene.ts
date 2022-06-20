@@ -310,6 +310,7 @@ export default class GameScene extends Phaser.Scene {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
 		
+		// Mute button
 		this.soundbtn = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.001, this.screenY * 0.001, 1, 1)
 		.setScale(0.8, 0.8)
 		.setDepth(5)
@@ -329,24 +330,6 @@ export default class GameScene extends Phaser.Scene {
 				return
 			}
 		})
-
-		// TODO : This needs total refactoring
-		//muteBtn = this.add.text(20, 20, 'Mute', {
-		//		fontFamily: 'gamefont',
-		//		color: '#EC00D7',
-		//		fontSize: '56px'
-		//	})
-		//	.setInteractive()
-		//	.setDepth(5)
-		//	.on('pointerdown', this.toggleMute)
-		//	.on('pointerover', () => muteBtn.setStyle({
-		//		fill: '#f39c12'
-		//	}))
-		//	.on('pointerout', () => muteBtn.setStyle({
-		//		fill: '#FFF'
-		//	}))
-
-
 
 		// Initialise Player State
 		this.playerState = new PlayerState(this, this.truffles, 0, 0)
