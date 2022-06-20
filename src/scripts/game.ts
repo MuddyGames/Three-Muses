@@ -4,8 +4,11 @@ import 'phaser/plugins/spine/dist/SpinePlugin'
 import SplashScene from './scenes/splashScene'
 import GameScene from './scenes/gameScene'
 import PreloadScene from './scenes/preloadScene'
-import ArtiFactScene from './scenes/artifactScene'
-import TestScene from './scenes/testScene'
+import ArtiFactOneScene from './scenes/artifactOneScene'
+import ArtiFactTwoScene from './scenes/artifactTwoScene'
+import ArtiFactThreeScene from './scenes/artifactThreeScene'
+import ArtiFactFourScene from './scenes/artifactFourScene'
+import Credits from './scenes/creditsScene'
 
 const DEFAULT_WIDTH = 1280
 const DEFAULT_HEIGHT = 720
@@ -26,7 +29,7 @@ const config = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, GameScene, SplashScene, ArtiFactScene, TestScene],
+  scene: [PreloadScene, GameScene, SplashScene, ArtiFactOneScene, ArtiFactTwoScene, ArtiFactThreeScene, ArtiFactFourScene, Credits],
   plugins: {
     scene: [{
       key: 'SpinePlugin',

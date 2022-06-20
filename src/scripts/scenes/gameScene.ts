@@ -17,26 +17,30 @@ import {
 
 // Game State Management
 import {
-	GSM
-} from '../objects/gameStates'
+	FRUITS,
+	GOAL,
+	GSM,
+	DIVER_TILES as DIVER,
+	LEVELS,
+	LEVEL_DATA_KEY
+} from '../objects/gameENUMS'
+import Player from '../objects/Player'
 
 
 const TRUFFLES_KEY = 'truffles'
-const KEYS = ['orange', 'lemon', 'grape']
 const IDLE_KEY = 'idle'
 const CANNONBALL_KEY = 'cannonball'
 const WINDMILL_KEY = 'windmill'
 const DPAD_KEY = 'dpad'
+const KEYS = ['orange', 'lemon', 'grape']
+const DIVER_KEY = 'diver'
+
 let muteBtn
 
-enum Direction {
-	Up,
-	Down,
-	Left,
-	Right
-}
-
 export default class GameScene extends Phaser.Scene {
+
+	// Player Class
+	private player!: Player
 
 	// Game State Management
 	private gameState!: GSM
@@ -54,19 +58,17 @@ export default class GameScene extends Phaser.Scene {
 	private elapsedLevelTime!: number
 
 	// Level Music
-	backingMusic!: Phaser.Sound.BaseSound
+	private backingMusic!: Phaser.Sound.BaseSound
 
-	// Truffle idioms
-	idiomCue!: Phaser.Sound.BaseSound
-
-	// Heads up Display
+	// Church Bells
+	private churchBells!: Phaser.Sound.BaseSound
 
 	// Level Objects
 	private truffles!: SpineGameObject
+	private divers: SpineGameObject[] = []
 	private cannonball: SpineGameObject[] = []
 	private windmill!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-	private keys
 	private orange!: SpineGameObject
 	private lemon!: SpineGameObject
 	private grape!: SpineGameObject
@@ -76,16 +78,17 @@ export default class GameScene extends Phaser.Scene {
 	private trufflesAnimationNames: string[] = []
 	private trufflesAnimationIndex = 0
 
+	private diverAnimationNames: string[] = []
+	private diverAnimationIndex = 0
+	private diverMove: number[] = []
+
 	private fruitAnimationNames: string[] = []
 	private fruitMarked: boolean[] = []
 	private orangeAnimationIndex = 0
 	private grapeAnimationIndex = 0
 	private lemonAnimationIndex = 0
 
-	private trufflesPosX = 100
-	private trufflesPosY = 360
-	private trufflesSpeed = 2
-	private tileSize = 32
+	private tileSize: number = 32
 
 	private cannonballAnimationNames: string[] = []
 	private cannonballAnimationIndex = 0
@@ -93,8 +96,6 @@ export default class GameScene extends Phaser.Scene {
 	private cannonballPosY: number[] = [60, 60, 60]
 	private cannonballSpeed = 2
 	private cannonballMoving: boolean[] = [true, true, true]
-
-	private soundDelay = 500
 
 	// TileMap Data
 	private map!: Phaser.Tilemaps.Tilemap
@@ -124,11 +125,14 @@ export default class GameScene extends Phaser.Scene {
 	private miscTop1Layer!: Phaser.Tilemaps.TilemapLayer
 	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
+	private goalLayer!: Phaser.Tilemaps.TilemapLayer
+	private diverLayer!: Phaser.Tilemaps.TilemapLayer
 
 	// Player Data
 	private playerState!: PlayerState
-	private direction!: Direction
-	private canMove!: boolean
+
+	// WASD
+	private keys
 
 	constructor() {
 		super({
@@ -142,13 +146,14 @@ export default class GameScene extends Phaser.Scene {
 		this.screenY = 0
 	}
 
-	preload() {
+	preload(time: number, delta: number): void {
 		this.load.image('tileset', 'assets/level/truffles_level_1_tileset.png');
 		this.load.image('hud', 'assets/level/hud.png');
 		this.load.tilemapTiledJSON('level', 'assets/level/truffles_level_1.json');
 
 		this.load.setPath('assets/spine/')
 		this.load.spine(TRUFFLES_KEY, 'truffles/truffles_all.json', 'truffles/truffles_all.atlas')
+		this.load.spine(DIVER_KEY, 'diver/diver_all.json', 'diver/diver_all.atlas')
 		this.load.spine(KEYS[0], 'fruits/orange/orange.json', 'fruits/orange/orange.atlas')
 		this.load.spine(KEYS[1], 'fruits/grape/grape.json', 'fruits/grape/grape.atlas')
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
@@ -157,7 +162,20 @@ export default class GameScene extends Phaser.Scene {
 		this.load.spine(DPAD_KEY, 'dpad/DPad.json', 'dpad/DPad.atlas')
 	}
 
-	create() {
+	create(time: number, delta: number): void {
+		// Setup Screen Dimensions
+		let {
+			width,
+			height
+		} = this.sys.game.canvas;
+		this.screenX = width
+		this.screenY = height
+
+		//Setup the Player
+		// The X Y needs to come from tiles spawn points
+		this.player = new Player(new Phaser.Math.Vector2(100, 360))
+		this.player.setVelocityX(new Phaser.Math.Vector2(2, 0))
+		this.player.setVelocityY(new Phaser.Math.Vector2(0, 2))
 
 		//Setup Game State
 		this.gameState = GSM.PLAY
@@ -165,13 +183,9 @@ export default class GameScene extends Phaser.Scene {
 		// Retrieve Recorded Score and Time from LocalStorage
 		this.fetchRecordedScore()
 		this.fetchRecordedTime()
-		// Setup Screen Dimensions
-		let {
-			width,
-			height
-		} = this.sys.game.canvas;
-		this.screenX = width;
-		this.screenY = height
+		
+		// Load Current Level
+		this.loadCurrentLevel()
 
 		// Setup HUD
 		// Score
@@ -200,6 +214,8 @@ export default class GameScene extends Phaser.Scene {
 
 		//Setup Map Data
 		this.setupMap()
+		var tilesWide = this.map.width
+		var tilesHigh = this.map.height
 
 		// Background Music
 		this.backingMusic = this.sound.add('level_backing_track', {
@@ -207,22 +223,45 @@ export default class GameScene extends Phaser.Scene {
 		})
 		this.backingMusic.play()
 
-
+		// Play Church Bells
+		this.churchBells = this.sound.add('church_bells', {volume: 0.5})
+		this.time.addEvent({
+			delay: 6000,
+			loop: true,
+			callback: this.playChurchBells,
+			callbackScope: this
+		});
 
 		// Setup Truffles
-		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, this.trufflesPosX, this.trufflesPosY, 0.25, 0.25)
+		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 
+			this.player.getX(), this.player.getY(), this.player.getScale(), this.player.getScale())
 		this.truffles.setDepth(2)
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
-		this.canMove = true
-		this.direction = Direction.Down
-
+		// Setup Divers
+		var counter = 0;
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				var tile = this.diverLayer.getTileAt(j, i)
+				if (tile != null) {
+					if (tile.index === DIVER.START) {
+						this.divers.push(this.createSpineObject(IDLE_KEY, DIVER_KEY, j * this.tileSize, i * this.tileSize, 0.25, 0.25))
+						this.diverMove.push(DIVER.SPEED)
+						this.divers[counter].setDepth(2)
+						counter++
+					}
+				}
+			}
+		}
+		// Init diver animations
+		for (let i = 0; i < this.divers.length; i++) {
+			this.initializeAnimationsState(this.divers[i], this.diverAnimationNames)
+		}
 
 		// Cannon Ball Setup
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[0], this.cannonballPosY[0], 1.2, 1.2))
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[1], this.cannonballPosY[1], 1.2, 1.2))
 		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[2], this.cannonballPosY[2], 1.2, 1.2))
-
 
 		// Setup Cannon ball animations
 		for (let i = 0; i < this.cannonball.length; i++) {
@@ -232,31 +271,32 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		// Add Windmill
+		// TODO: This needs to be from tiled
 		this.windmill = this.createSpineObject(IDLE_KEY, WINDMILL_KEY, 50, 0, 1, 1)
 		this.windmill.setDepth(1)
 
 		// Keyboard Setup
 		this.cursors = this.input.keyboard.createCursorKeys()
-		this.keys = this.input.keyboard.addKeys("I,E,Q,W,A,S,D,R,T");
+		// Add WASD
+		//this.keys = this.input.keyboard.addKeys("W,A,S,D")
+		this.keys = this.input.keyboard.addKeys('W,A,S,D')
 
 		//Multitouch
 		this.input.addPointer(2);
 
 
 		// Setup Fruits
-		var tilesWide = 40
-		var tilesHigh = 23
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.candyLayer.getTileAt(j, i)
 				if (tile != null) {
-					if (tile.index === 674) {
+					if (tile.index === FRUITS.ORANGE_TILE) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
-					} else if (tile.index === 570) {
+					} else if (tile.index === FRUITS.LEMON_TILE) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
-					} else if (tile.index === 622) {
+					} else if (tile.index === FRUITS.GRAPE_TILE) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[2], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
 						this.fruitMarked.push(false)
 					}
@@ -269,16 +309,7 @@ export default class GameScene extends Phaser.Scene {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
 
-		// Initialise Player State
-		this.playerState = new PlayerState(this, this.truffles, 0, 0);
-		this.playerState.init()
-
-		this.time.addEvent({
-			delay: this.soundDelay,
-			callback: this.resetSounds,
-			callbackScope: this
-		})
-
+		// TODO : This needs total refactoring
 		muteBtn = this.add.text(20, 20, 'Mute', {
 				fontFamily: 'gamefont',
 				color: '#EC00D7',
@@ -295,21 +326,20 @@ export default class GameScene extends Phaser.Scene {
 			}))
 
 
-		this.time.addEvent({
-			delay: this.soundDelay,
-			callback: this.resetSounds,
-			callbackScope: this
-		})
+
+		// Initialise Player State
+		this.playerState = new PlayerState(this, this.truffles, 0, 0)
+		this.playerState.getState()?.enter(0, 0, this.player) // Activate Idle
+		this.player.setState(this.playerState)
 	}
 
 	// Game Update Method
 
 	update(time: number, delta: number): void {
 
-		//console.log("Time:" + time + " Delta:" + delta)
-
-		// TODO BETTER Game State Management
-		//If level Playable Update
+		// TODO: BETTER Game State Management
+		this.setCurrentLevel()
+		
 		if (this.gameState === GSM.PLAY) {
 			this.elapsedLevelTime = time;
 
@@ -324,89 +354,118 @@ export default class GameScene extends Phaser.Scene {
 				this.newRecordTime = this.bestRecordedTime
 			}
 
+			//this.setupMap()
+
+			//Phaser.Scene.call(this, this.player.getCurrentArtifact());
+			//this.scene.sendToBack(this)
+			//this.scene.stop();
+			//this.scene.start();
+			//this.scene.start(this.player.getCurrentArtifact())
+			//this.scene.launch(this)
 		}
 
+		// Cannon Ball Movement
 		this.cannonballMove()
 
 		const size = this.trufflesAnimationNames.length
 
+		// Handles input
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_RIGHT, time, delta) != null) {
-				this.direction = Direction.Right
-			}
+			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player) 
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_LEFT, time, delta) != null) {
-				this.direction = Direction.Left
-			}
+			this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_UP, time, delta) != null) {
-				this.direction = Direction.Up
-			}
+			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-			if (this.playerState.handleInput(INPUT_TYPES.WALK_DOWN, time, delta) != null) {
-				this.direction = Direction.Down
-			}
+			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.D)) {
+			console.log('D')
+			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.A)) {
+			console.log('A')
+			this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.W)) {
+			console.log('W')
+			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
+		} else if (Phaser.Input.Keyboard.JustDown(this.keys.S)) {
+			console.log('S')
+			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
 		}
 
-		if (this.canMove) {
+		// Can player move
+		if (this.player.getMove()) {
 			if (this.cursors.right.isDown) {
-				const x = this.map.worldToTileX(this.trufflesPosX - this.tileSize / 2)
-				const y = this.map.worldToTileY(this.trufflesPosY)
+				let x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				let y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.collisionLayer.getTileAt(x + 1, y)
 
-
 				if (this.tile == null) {
-					this.trufflesPosX += this.trufflesSpeed
-					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+					this.player.moveRight()
+					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
+				
+				// TODO: Check is Goal Reached on other keys
+				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.goalLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === GOAL.TILE){
+						// Reached Goal
+						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.gsmUpdate(time, delta)
+					}
+				}
+
 			}
 
 			if (this.cursors.left.isDown) {
-				const x = this.map.worldToTileX(this.trufflesPosX + this.tileSize / 2)
-				const y = this.map.worldToTileY(this.trufflesPosY)
+				const x = this.map.worldToTileX(this.player.getX() + this.tileSize / 2)
+				const y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.collisionLayer.getTileAt(x - 1, y)
 
 				if (this.tile == null) {
-					this.trufflesPosX -= this.trufflesSpeed
-					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+					this.player.moveLeft()
+					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
 			}
 
 			if (this.cursors.up.isDown) {
-				const x = this.map.worldToTileX(this.trufflesPosX)
-				const y = this.map.worldToTileY(this.trufflesPosY + this.tileSize / 4)
+				const x = this.map.worldToTileX(this.player.getX())
+				const y = this.map.worldToTileY(this.player.getY() + this.tileSize / 4)
 
 				this.tile = this.collisionLayer.getTileAt(x, y - 1)
 
 				if (this.tile == null) {
-					this.trufflesPosY -= this.trufflesSpeed
-					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+					this.player.moveUp()
+					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
 			}
 
 			if (this.cursors.down.isDown) {
 
-				const x = this.map.worldToTileX(this.trufflesPosX)
-				const y = this.map.worldToTileY(this.trufflesPosY + this.trufflesSpeed)
+				const x = this.map.worldToTileX(this.player.getX())
+				const y = this.map.worldToTileY(this.player.getY() + this.player.getVelocityY().y)
 
 				this.tile = this.collisionLayer.getTileAt(x, y)
 
 				if (this.tile == null) {
-					this.trufflesPosY += this.trufflesSpeed
-					this.truffles.setPosition(this.trufflesPosX, this.trufflesPosY)
+					this.player.moveDown()
+					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
 			}
 
 			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
-				this.playerState.handleInput(INPUT_TYPES.IDLE, time, delta)
+				this.player.getState().handleInput(INPUT_TYPES.IDLE, time, delta, this.player)
 			} else {
 				for (let i = 0; i < this.fruit.length; i++) {
 
 					if (!this.fruitMarked[i] && this.trufflesAABB(this.truffles, this.fruit[i])) {
+						console.log('Fruit Collision ' + i)
 						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
-						this.canMove = false
 						this.time.addEvent({
 							delay: 480,
 							callback: this.fruitAnimate,
@@ -414,36 +473,48 @@ export default class GameScene extends Phaser.Scene {
 							args: [i, time, delta]
 						})
 						this.fruitMarked[i] = true
-						switch (this.direction) {
-							case Direction.Up:
-								this.setPoints(250)
-								this.playerState.handleInput(INPUT_TYPES.EATING_UP, time, delta)
-								break;
-							case Direction.Down:
-								this.setPoints(350)
-								this.playerState.handleInput(INPUT_TYPES.EATING_DOWN, time, delta)
-								break;
-							case Direction.Left:
-								this.setPoints(100)
-								this.playerState.handleInput(INPUT_TYPES.EATING_LEFT, time, delta)
-								break;
-							case Direction.Right:
-								this.setPoints(250)
-								this.playerState.handleInput(INPUT_TYPES.EATING_RIGHT, time, delta)
-								break;
-						}
+						this.addPoints(250)
+						this.player.getState().handleInput(INPUT_TYPES.EATING, time, delta, this.player)
 					}
 				}
 			}
 		}
-		this.playerState.update(time, delta) // Updates the Player State See PlayerStateMachine*/
-		for (let i = 0; i < this.cannonball.length; i++) {
-			if (this.trufflesAABB(this.truffles, this.cannonball[i])) {
-				this.truffles.setPosition(100, 360)
-				this.trufflesPosX = 100
-				this.trufflesPosY = 360
+
+		// Diver Collision
+		for(let i = 0; i < this.divers.length; i++) {
+			if (this.trufflesAABB(this.truffles, this.divers[i])){
+				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
+				this.addPoints(-150)
 			}
 		}
+
+		// Init fruit animations
+		for (let i = 0; i < this.divers.length; i++) {
+			this.divers[i].y += this.diverMove[i]
+			const x = this.map.worldToTileX(this.divers[i].x)
+			const y = this.map.worldToTileY(this.divers[i].y)
+
+			this.tile = this.diverLayer.getTileAt(x, y)
+
+			if (this.tile.index == DIVER.START) {
+				this.diverMove[i] = DIVER.SPEED
+			}
+			else if(this.tile.index == DIVER.END) {
+				this.diverMove[i] = -DIVER.SPEED
+			}
+		}
+
+		// cannonball collisions
+		for (let i = 0; i < this.cannonball.length; i++) {
+			if (this.trufflesAABB(this.truffles, this.cannonball[i])) {
+				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
+				this.addPoints(-150)
+			}
+		}
+
+		// Updates the Player State See PlayerStateMachine*/
+		this.player.getState().getState()?.update(time, delta, this.player)
+
 		// Display Updated HUD
 		this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.04)
 		this.currentScoreText.update()
@@ -452,12 +523,12 @@ export default class GameScene extends Phaser.Scene {
 
 		this.elapsedTimeText.setPosition(this.screenX * 0.75, this.screenY * 0.04)
 		this.elapsedTimeText.update()
-		this.elapsedTimeText.setText('Timer : ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
+		this.elapsedTimeText.setText(' ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
 		this.elapsedTimeText.setDepth(10)
 
 		this.recordTimeText.setPosition(this.screenX * 0.55, this.screenY * 0.04)
 		this.recordTimeText.update()
-		this.recordTimeText.setText('Record : ' + this.bestRecordedTime + ' ')
+		this.recordTimeText.setText(' ' + this.bestRecordedTime + ' ')
 		this.recordTimeText.setDepth(10)
 	}
 
@@ -465,8 +536,8 @@ export default class GameScene extends Phaser.Scene {
 	private setupMap() {
 		this.map = this.make.tilemap({
 			key: 'level',
-			tileWidth: 32,
-			tileHeight: 32
+			tileWidth: this.tileSize,
+			tileHeight: this.tileSize
 		});
 		this.tileset = this.map.addTilesetImage("truffles_level_1_tileset", 'tileset');
 
@@ -534,9 +605,33 @@ export default class GameScene extends Phaser.Scene {
 		this.collisionLayer.setDepth(2)
 		this.collisionLayer.setVisible(false)
 
-		this.candyLayer = this.map.createLayer('map/collectables/candies_level1_depth_02', this.tileset, 0, 0);
+		if(this.player.getCurrentLevel() === LEVELS.LEVEL_01){
+			this.candyLayer = this.map.createLayer('map/collectables/candies_level1_depth_02', this.tileset, 0, 0);
+			this.diverLayer = this.map.createLayer('map/patrol/level1', this.tileset, 0, 0);
+
+		} else if(this.player.getCurrentLevel() === LEVELS.LEVEL_02){
+			this.candyLayer = this.map.createLayer('map/collectables/candies_level2_depth_02', this.tileset, 0, 0);
+			this.diverLayer = this.map.createLayer('map/patrol/level2', this.tileset, 0, 0);
+		} else if(this.player.getCurrentLevel() === LEVELS.LEVEL_03){
+			this.candyLayer = this.map.createLayer('map/collectables/candies_level3_depth_02', this.tileset, 0, 0);
+			this.diverLayer = this.map.createLayer('map/patrol/level3', this.tileset, 0, 0);
+		} else if(this.player.getCurrentLevel() === LEVELS.LEVEL_04){
+			this.candyLayer = this.map.createLayer('map/collectables/candies_level4_depth_02', this.tileset, 0, 0);
+			this.diverLayer = this.map.createLayer('map/patrol/level4', this.tileset, 0, 0);
+		}  else{
+			this.candyLayer = this.map.createLayer('map/collectables/candies_level1_depth_02', this.tileset, 0, 0);
+			this.diverLayer = this.map.createLayer('map/patrol/level1', this.tileset, 0, 0);
+		}
+
 		this.candyLayer.setDepth(2);
-		this.candyLayer.setVisible(false)
+		this.candyLayer.setVisible(true)
+
+		this.diverLayer.setDepth(2)
+		this.diverLayer.setVisible(true)
+
+		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
+		this.goalLayer.setDepth(2)
+		this.goalLayer.setVisible(true)
 	}
 
 	private toggleMute() {
@@ -580,28 +675,27 @@ export default class GameScene extends Phaser.Scene {
 		spine.play(animation, true)
 	}
 
-	private resetSounds(time: number, delta: number) {
-		this.playerState.playSound(time, delta)
-		this.time.addEvent({
-			delay: this.soundDelay,
-			callback: this.resetSounds,
-			callbackScope: this
-		})
-	}
-
 	//Truffles to Object Collision
 	private trufflesAABB(truffles: SpineGameObject, collidable: SpineGameObject) {
 
 		var collision = false;
 
-		if (this.trufflesPosX - this.tileSize / 2 < collidable.x + collidable.scaleX * collidable.width &&
-			this.trufflesPosX + this.tileSize / 2 > collidable.x &&
-			this.trufflesPosY - this.tileSize < collidable.y + collidable.scaleY * collidable.height &&
-			this.trufflesPosY > collidable.y) {
+		if (this.player.getX() - this.tileSize / 2 < collidable.x + collidable.scaleX * collidable.width &&
+			this.player.getX() + this.tileSize / 2 > collidable.x &&
+			this.player.getY() - this.tileSize < collidable.y + collidable.scaleY * collidable.height &&
+			this.player.getY() > collidable.y) {
 			collision = true;
 		}
 
 		return collision
+	}
+
+	// Play Church Bells
+	private playChurchBells(index: number, time: number, delta: number) {
+		let chance = Phaser.Math.Between(0, 24)
+		if(chance === 12 || chance === 6){
+			this.churchBells.play()
+		}
 	}
 
 	// Fruit Animations
@@ -613,20 +707,6 @@ export default class GameScene extends Phaser.Scene {
 			callbackScope: this,
 			args: [index, time, delta]
 		})
-		switch (this.direction) {
-			case Direction.Up:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_UP, time, delta)
-				break;
-			case Direction.Down:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_DOWN, time, delta)
-				break;
-			case Direction.Left:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_LEFT, time, delta)
-				break;
-			case Direction.Right:
-				this.playerState.handleInput(INPUT_TYPES.MUNCHING_RIGHT, time, delta)
-				break;
-		}
 	}
 
 	// Delete fruits
@@ -637,16 +717,12 @@ export default class GameScene extends Phaser.Scene {
 		this.tile = this.candyLayer.getTileAt(x, y)
 		this.map.removeTile(this.tile)
 		this.fruit[index].removeFromDisplayList()
-
-		this.playerState.handleInput(INPUT_TYPES.IDLE, time, delta)
-		this.canMove = true
 	}
 
 	// Reset Cannon Balls
 	private cannonballReset(index: number) {
 		this.cannonball[index].setPosition(this.cannonballPosX[index], this.cannonballPosY[index] = 40)
 		this.changeAnimation(this.cannonball[index], this.cannonballAnimationNames, 1)
-		//console.log(this.cannonballAnimationNames)
 		this.cannonballMoving[index] = true
 
 	}
@@ -657,28 +733,19 @@ export default class GameScene extends Phaser.Scene {
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.cannonballMoving[i]) {
 				this.cannonballPosY[i] += this.cannonballSpeed;
-
 				this.cannonball[i].setPosition(this.cannonballPosX[i], this.cannonballPosY[i])
-
 			}
-
 			if (this.cannonballPosY[i] >= 655) {
-
 				this.time.addEvent({
-
 					delay: 600,
 					callback: this.cannonballReset,
 					callbackScope: this,
 					args: [i]
-
 				})
-
 				if (this.cannonballMoving[i]) {
 					this.changeAnimation(this.cannonball[i], this.cannonballAnimationNames, 2)
 				}
-
 				this.cannonballMoving[i] = false
-
 			}
 		}
 	}
@@ -689,7 +756,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	// Add Points
-	private setPoints(points: number) {
+	private addPoints(points: number) {
 		if (points > 0) {
 			this.collectablePoints += points
 		}
@@ -697,7 +764,7 @@ export default class GameScene extends Phaser.Scene {
 
 	// Fetch Recorded Time
 	private fetchRecordedTime() {
-		let temp = window.localStorage.getItem('time')
+		let temp = window.localStorage.getItem('time_' + this.loadCurrentLevel())
 		if (temp !== null) {
 			this.bestRecordedTime = parseInt(temp) || 0
 			if (this.bestRecordedTime === 0) {
@@ -707,12 +774,12 @@ export default class GameScene extends Phaser.Scene {
 			this.bestRecordedTime = 0
 		}
 
-		window.localStorage.setItem('time', this.newRecordTime.toString())
+		window.localStorage.setItem('time_' + this.loadCurrentLevel(), this.newRecordTime.toString())
 	}
 
 	// Fetch Recorded Score
 	private fetchRecordedScore() {
-		let temp = window.localStorage.getItem('score')
+		let temp = window.localStorage.getItem('score_' + this.loadCurrentLevel())
 		if (temp !== null) {
 			this.levelScore = parseInt(temp) || 0
 		} else {
@@ -720,10 +787,45 @@ export default class GameScene extends Phaser.Scene {
 		}
 		this.levelScore += this.collectablePoints
 		this.collectablePoints = 0 // Reset Points
-		window.localStorage.setItem('score', this.levelScore.toString())
+		window.localStorage.setItem('score_' + this.loadCurrentLevel(), this.levelScore.toString())
 	}
 
-	private gsmUpdate() {
+	// Fetch Current Level
+	private loadCurrentLevel() : string {
+		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
+		if (temp !== null) {
+			this.player.setCurrentLevel(temp)
+		} else {
+			this.player.setCurrentLevel(LEVELS.LEVEL_01)
+		}
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
+		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT, this.player.getNextLevel())
+		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
+		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
+
+		return this.player.getCurrentLevel()
+	}
+
+	// Set Current Level to a New Level
+	private setCurrentLevel() : string {
+		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
+		let current_level: string
+		if (temp !== null) {
+			current_level = temp
+		} else {
+			current_level = LEVELS.LEVEL_01
+		}
+		// Check if there the same and if not set the new level
+		if(this.player.getCurrentLevel() !== current_level){
+			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
+			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT, this.player.getNextLevel())
+			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
+			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
+		}
+		return this.player.getCurrentLevel()
+	}
+
+	private gsmUpdate(time: number, delta: number): void {
 		this.gameState = GSM.LEVEL_COMPLETE
 		console.log('level complete')
 	}
