@@ -1,0 +1,97 @@
+
+pig.png
+size: 189,262
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+alter
+  rotate: true
+  xy: 95, 48
+  size: 66, 71
+  orig: 68, 73
+  offset: 1, 1
+  index: -1
+alter copy
+  rotate: true
+  xy: 102, 186
+  size: 74, 79
+  orig: 76, 81
+  offset: 1, 1
+  index: -1
+pig
+  rotate: false
+  xy: 2, 134
+  size: 91, 58
+  orig: 93, 60
+  offset: 1, 1
+  index: -1
+pig copy
+  rotate: false
+  xy: 2, 194
+  size: 98, 66
+  orig: 100, 68
+  offset: 1, 1
+  index: -1
+pot
+  rotate: true
+  xy: 2, 15
+  size: 63, 60
+  orig: 65, 62
+  offset: 1, 1
+  index: -1
+pot copy
+  rotate: false
+  xy: 95, 116
+  size: 71, 68
+  orig: 73, 70
+  offset: 1, 1
+  index: -1
+star
+  rotate: false
+  xy: 168, 166
+  size: 19, 18
+  orig: 21, 20
+  offset: 1, 1
+  index: -1
+star copy
+  rotate: false
+  xy: 168, 166
+  size: 19, 18
+  orig: 21, 20
+  offset: 1, 1
+  index: -1
+star copy 2
+  rotate: false
+  xy: 168, 166
+  size: 19, 18
+  orig: 21, 20
+  offset: 1, 1
+  index: -1
+star copy 3
+  rotate: false
+  xy: 168, 166
+  size: 19, 18
+  orig: 21, 20
+  offset: 1, 1
+  index: -1
+star copy 4
+  rotate: false
+  xy: 168, 166
+  size: 19, 18
+  orig: 21, 20
+  offset: 1, 1
+  index: -1
+weddingvase
+  rotate: true
+  xy: 64, 2
+  size: 44, 83
+  orig: 46, 85
+  offset: 1, 1
+  index: -1
+weddingvase copy
+  rotate: true
+  xy: 2, 80
+  size: 52, 91
+  orig: 54, 93
+  offset: 1, 1
+  index: -1
