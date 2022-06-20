@@ -47,7 +47,7 @@ export default class Credits extends Phaser.Scene {
 
   private onEventGame() {
     // Set Level Back to Level 01
-    window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_02)
+    window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_01)
 
     this.backingMusic.stop()
     window.location.reload()
