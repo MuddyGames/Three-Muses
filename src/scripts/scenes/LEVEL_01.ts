@@ -418,7 +418,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
 				
-				// TODO: Check is Goal Reached on other keys
+				// Check is Goal Reached
 				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
 				y = this.map.worldToTileY(this.player.getY())
 
@@ -435,8 +435,8 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 
 			if (this.cursors.left.isDown) {
-				const x = this.map.worldToTileX(this.player.getX() + this.tileSize / 2)
-				const y = this.map.worldToTileY(this.player.getY())
+				let x = this.map.worldToTileX(this.player.getX() + this.tileSize / 2)
+				let y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.collisionLayer.getTileAt(x - 1, y)
 
@@ -444,11 +444,25 @@ export default class LEVEL_01 extends Phaser.Scene {
 					this.player.moveLeft()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
+
+				// Check is Goal Reached
+				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.goalLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === GOAL.TILE){
+						// Reached Goal
+						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.gsmUpdate(time, delta)
+					}
+				}
 			}
 
 			if (this.cursors.up.isDown) {
-				const x = this.map.worldToTileX(this.player.getX())
-				const y = this.map.worldToTileY(this.player.getY() + this.tileSize / 4)
+				let x = this.map.worldToTileX(this.player.getX())
+				let y = this.map.worldToTileY(this.player.getY() + this.tileSize / 4)
 
 				this.tile = this.collisionLayer.getTileAt(x, y - 1)
 
@@ -456,18 +470,46 @@ export default class LEVEL_01 extends Phaser.Scene {
 					this.player.moveUp()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
+
+				// Check is Goal Reached
+				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.goalLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === GOAL.TILE){
+						// Reached Goal
+						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.gsmUpdate(time, delta)
+					}
+				}
 			}
 
 			if (this.cursors.down.isDown) {
 
-				const x = this.map.worldToTileX(this.player.getX())
-				const y = this.map.worldToTileY(this.player.getY() + this.player.getVelocityY().y)
+				let x = this.map.worldToTileX(this.player.getX())
+				let y = this.map.worldToTileY(this.player.getY() + this.player.getVelocityY().y)
 
 				this.tile = this.collisionLayer.getTileAt(x, y)
 
 				if (this.tile == null) {
 					this.player.moveDown()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
+				}
+
+				// Check is Goal Reached
+				x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.goalLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === GOAL.TILE){
+						// Reached Goal
+						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.gsmUpdate(time, delta)
+					}
 				}
 			}
 
@@ -834,6 +876,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	private gsmUpdate(time: number, delta: number): void {
 		this.gameState = GSM.LEVEL_COMPLETE
-		console.log('level complete')
+	}
+
+	private levelComplete(){
+
 	}
 }
