@@ -36,8 +36,8 @@ export default class Credits extends Phaser.Scene {
 
 
   private onEventGame() {
-    this.scene.start('ArtiFactThreeScene')
     this.backingMusic.stop()
+    this.scene.stop('LEVEL_01')
+    this.scene.start('LEVEL_01')
   }
-
 }
