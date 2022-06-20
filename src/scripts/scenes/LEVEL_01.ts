@@ -511,7 +511,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			} else {
 				for (let i = 0; i < this.fruit.length; i++) {
 
-					if (!this.fruitMarked[i] && this.trufflesAABB(this.truffles, this.fruit[i])) {
+					if (!this.fruitMarked[i] && this.trufflesAABB(this.fruit[i])) {
 						console.log('Fruit Collision ' + i)
 						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
 						this.time.addEvent({
@@ -530,7 +530,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		// Diver Collision
 		for(let i = 0; i < this.divers.length; i++) {
-			if (this.trufflesAABB(this.truffles, this.divers[i])){
+			if (this.trufflesEnemyCollision(this.divers[i])){
 				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
 				this.addPoints(-150)
 			}
@@ -556,7 +556,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		// cannonball collisions
 		for (let i = 0; i < this.cannonball.length; i++) {
-			if (this.trufflesAABB(this.truffles, this.cannonball[i])) {
+			if (this.trufflesAABB(this.cannonball[i])) {
 				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
 				this.addPoints(-150)
 			}
@@ -718,7 +718,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	}
 
 	//Truffles to Object Collision
-	private trufflesAABB(truffles: SpineGameObject, collidable: SpineGameObject) {
+	private trufflesAABB(collidable: SpineGameObject) {
 
 		var collision = false;
 
@@ -728,6 +728,18 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.player.getY() > collidable.y) {
 			collision = true;
 		}
+
+		return collision
+	}
+	private trufflesEnemyCollision(enemy: SpineGameObject) {
+
+		var collision = false;
+
+		if((this.map.worldToTileX(this.player.getX()) == this.map.worldToTileX(enemy.x) ||
+			this.map.worldToTileX(this.player.getX()) == this.map.worldToTileX(enemy.x)-1) &&
+			this.map.worldToTileY(this.player.getY()) == this.map.worldToTileY(enemy.y)) {
+				collision = true;
+			}
 
 		return collision
 	}
