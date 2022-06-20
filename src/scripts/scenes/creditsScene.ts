@@ -1,5 +1,15 @@
-import FpsText from '../objects/fpsText'
 import HudText from '../objects/hudText'
+
+// Game State Management
+import {
+	FRUITS,
+	GOAL,
+	GSM,
+	DIVER,
+	LEVELS,
+	LEVEL_DATA_KEY,
+	DIVER_ANIM
+} from '../objects/gameENUMS'
 
 export default class Credits extends Phaser.Scene {
   timedEvents : Phaser.Time.TimerEvent[] = []
@@ -36,6 +46,9 @@ export default class Credits extends Phaser.Scene {
 
 
   private onEventGame() {
+    // Set Level Back to Level 01
+    window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_02)
+
     this.backingMusic.stop()
     window.location.reload()
     this.scene.start('PreloadScene')
