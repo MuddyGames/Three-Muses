@@ -146,6 +146,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.newRecordTime = 0
 		this.screenX = 0
 		this.screenY = 0
+		this.startTime = 0
 	}
 
 	preload(time: number, delta: number): void {
