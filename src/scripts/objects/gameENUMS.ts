@@ -54,3 +54,15 @@ export enum DIVER_ANIM {
     WALK_UP = 'walk_back',
     PUSH = 'attack'
 }
+
+export enum BRIDGE {
+    scaleX = 1,
+    scaleY = 1,
+    OFFSETX = -96,
+    OFFSETY = 0
+}
+
+export enum BRIDGE_ANIMS {
+    TRANSITIONING = 'opening',
+    OPEN = 'open'
+}
