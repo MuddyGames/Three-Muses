@@ -32,6 +32,10 @@ export enum GOAL {
     TILE = 551 // Tile ID on level json
 };
 
+export enum RIVER {
+    TILE = 551 // Tile ID on level json
+};
+
 export enum FRUITS {
     ORANGE = 0,
     ORANGE_TILE = 555, // Tile ID on level json

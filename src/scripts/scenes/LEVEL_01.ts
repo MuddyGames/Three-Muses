@@ -501,6 +501,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
 		} 
 		
+		// Todo multiple hits on Key
 		if (this.key_d.isDown) {
 			console.log('D')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
