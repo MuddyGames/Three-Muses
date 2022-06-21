@@ -660,15 +660,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 		}
-
-		// Diver Collision
-		for(let i = 0; i < this.divers.length; i++) {
-			if (this.trufflesEnemyCollision(this.divers[i])){
-				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
-				this.addPoints(-150)
-			}
-		}
-
+		
 		// Diver Move
 		for (let i = 0; i < this.divers.length; i++) {
 			this.divers[i].y += this.diverMove[i]
@@ -685,6 +677,23 @@ export default class LEVEL_01 extends Phaser.Scene {
 				this.diverMove[i] = -DIVER.SPEED
 				this.divers[i].play(DIVER_ANIM.WALK_UP, true)
 			}
+		}
+
+		// Diver Collision
+		for(let i = 0; i < this.divers.length; i++) {
+			if (this.trufflesEnemyCollision(this.divers[i], i)){
+				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
+				this.addPoints(-150)
+			}
+		}
+		// handle push
+		let x = this.map.worldToTileX(this.player.getX())
+		let y = this.map.worldToTileY(this.player.getY() - this.player.getVelocityY().y)
+
+		this.tile = this.collisionLayer.getTileAt(x, y)
+		if(this.tile == null) {
+			this.player.push()
+			this.truffles.setPosition(this.player.getX(), this.player.getY())
 		}
 
 		// cannonball collisions
@@ -864,7 +873,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		return collision
 	}
-	private trufflesEnemyCollision(enemy: SpineGameObject) {
+	private trufflesEnemyCollision(enemy: SpineGameObject, index: number) {
 
 		var collision = false;
 
@@ -872,9 +881,26 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.map.worldToTileX(this.player.getX()) == this.map.worldToTileX(enemy.x)-1) &&
 			this.map.worldToTileY(this.player.getY()) == this.map.worldToTileY(enemy.y)) {
 				collision = true;
+				enemy.play(DIVER_ANIM.PUSH, false)
+				this.player.setPushSpeed(DIVER.PUSH_SPEED)
+				this.time.addEvent({
+					delay: 800,
+					callback: this.resetDiverAnim,
+					callbackScope: this,
+					args: [index]
+				})
 			}
 
 		return collision
+	}
+	private resetDiverAnim(index: number) {
+		if(this.diverMove[index] > 0) {
+			this.divers[index].play(DIVER_ANIM.WALK_DOWN, true)
+		}
+		else {
+			this.divers[index].play(DIVER_ANIM.WALK_UP, true)
+		}
+		this.player.setPushSpeed(0)
 	}
 
 	// Play Church Bells

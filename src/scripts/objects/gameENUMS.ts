@@ -45,10 +45,12 @@ export enum DIVER {
     START = 500,
     END = 552,
     SPEED = 0.5,
-    SCALE = 0.2
+    SCALE = 0.2,
+    PUSH_SPEED = 1
 }
 
 export enum DIVER_ANIM {
     WALK_DOWN = 'walk_front',
-    WALK_UP = 'walk_back'
+    WALK_UP = 'walk_back',
+    PUSH = 'attack'
 }

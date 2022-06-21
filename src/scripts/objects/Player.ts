@@ -22,6 +22,7 @@ export default class Player {
     private current_artifact!: string
     private next_artifact!: string
     private scale!: number
+    private pushSpeed!: Phaser.Math.Vector2
 
     constructor(position: Phaser.Math.Vector2) {
         this.move = true
@@ -38,6 +39,7 @@ export default class Player {
         this.goalDelay = 2000
         this.idiomDelay = 200
         this.scale = 0.25
+        this.pushSpeed = new Phaser.Math.Vector2(0, 0)
     }
 
     getCurrentLevel(): string{
@@ -92,6 +94,10 @@ export default class Player {
 
     getMove(): boolean {
         return this.move
+    }
+
+    setPushSpeed(speed: number): void {
+        this.pushSpeed.x = -speed
     }
 
     respawn(): void {
@@ -193,5 +199,8 @@ export default class Player {
         if (this.move) {
             this.position.add(this.velocityY)
         }
+    }
+    push(): void {
+        this.position.add(this.pushSpeed)
     }
 }
