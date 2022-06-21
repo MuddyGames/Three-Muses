@@ -54,6 +54,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private screenX!: number
 	private screenY!: number
 	private elapsedLevelTime!: number
+	private startTime!: number
 	private hudtimer!: SpineGameObject
 
 	// Level Music
@@ -145,6 +146,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.newRecordTime = 0
 		this.screenX = 0
 		this.screenY = 0
+		this.startTime = 0
 	}
 
 	preload(time: number, delta: number): void {
@@ -425,11 +427,16 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	update(time: number, delta: number): void {
 
+		// Start time
+		if(this.startTime === 0){
+			this.startTime = time
+		}
+
 		// TODO: BETTER Game State Management
 		this.setCurrentLevel()
 		
 		if (this.gameState === GSM.PLAY) {
-			this.elapsedLevelTime = time;
+			this.elapsedLevelTime = time - this.startTime
 
 		} else if (this.gameState === GSM.LEVEL_COMPLETE) {
 
