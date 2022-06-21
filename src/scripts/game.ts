@@ -22,7 +22,7 @@ const config = {
   dom: {
     createContainer: true
   },
-  backgroundColor: '#ffffff',
+  backgroundColor: '#FFFFFF',
   scale: {
     parent: 'three_muses_game',
     dom: {

@@ -40,23 +40,23 @@ export default class ArtiFactOneScene extends Phaser.Scene {
     // Move to next Level
     this.nextLevel = new HudText(this)
     this.nextLevel.setShadow(3, 3)
-    this.nextLevel.setStroke('#fff', 16)
+    this.nextLevel.setStroke('#414141', 3)
     this.nextLevel.setShadow(2, 2, "#333333", 2, true, true)
-    this.nextLevel.setPosition(width * 0.25, height * 0.80)
+    this.nextLevel.setPosition(width * 0.32, height * 0.85)
     this.nextLevel.on('pointerdown', () => this.onClickNextLevel())
 
-    let div = document.getElementById('three_muses_game');
-
-    if (div !== null) {
-      div.style.backgroundColor = "#333333";
+    let div_background = document.getElementById('three_muses_game')
+    if (div_background !== null) {
+      div_background.style.backgroundColor = "#333333";
     }
-
+    
   }
 
   update() {
     this.nextLevel.update()
     this.nextLevel.setText('Next Level')
     this.nextLevel.setInteractive()
+    this.nextLevel.setColor('#749DAD')
   }
 
 
