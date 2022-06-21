@@ -164,6 +164,7 @@ export class Idle extends PlayerStateMachine {
 // WalkingRight -> Eating Right
 // WalkingRight -> Under Attack
 // WalkingRight -> Reached Goal
+// WalkingRight -> Splash
 // WalkingRight -> Expired
 export class WalkingRight extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
@@ -186,6 +187,8 @@ export class WalkingRight extends PlayerStateMachine {
             return new Expired(this.scene, this.spine)
         } else if (input === INPUT_TYPES.REACHED_GOAL) {
             return new ReachedGoal(this.scene, this.spine)
+        } else if (input === INPUT_TYPES.SPLASH) {
+            return new Splash(this.scene, this.spine)
         } else {
             return undefined
         }
@@ -256,6 +259,7 @@ export class WalkingRight extends PlayerStateMachine {
 // WalkingLeft -> Eating Left
 // WalkingLeft -> Under Attack
 // WalkingLeft -> Reached Goal
+// WalkingLeft -> Splash
 // WalkingLeft -> Expired
 export class WalkingLeft extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
@@ -278,7 +282,9 @@ export class WalkingLeft extends PlayerStateMachine {
             return new Expired(this.scene, this.spine)
         } else if (input === INPUT_TYPES.REACHED_GOAL) {
             return new ReachedGoal(this.scene, this.spine)
-        }  else {
+        } else if (input === INPUT_TYPES.SPLASH) {
+            return new Splash(this.scene, this.spine)
+        } else {
             return undefined
         }
     }
@@ -348,6 +354,7 @@ export class WalkingLeft extends PlayerStateMachine {
 // WalkingUp -> Eating Up
 // WalkingUp -> Under Attack
 // WalkingUp -> Reached Goal
+// WalkingUp -> Splash
 // WalkingUp -> Expired
 export class WalkingUp extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
@@ -370,6 +377,8 @@ export class WalkingUp extends PlayerStateMachine {
             return new Expired(this.scene, this.spine)
         } else if (input === INPUT_TYPES.REACHED_GOAL) {
             return new ReachedGoal(this.scene, this.spine)
+        } else if (input === INPUT_TYPES.SPLASH) {
+            return new Splash(this.scene, this.spine)
         } else {
             return undefined
         }
@@ -443,6 +452,7 @@ export class WalkingUp extends PlayerStateMachine {
 // WalkingDown -> Eating Up
 // WalkingDown -> Under Attack
 // WalkingDown -> Reached Goal
+// WalkingDown -> Splash
 // WalkingDown -> Expired
 export class WalkingDown extends PlayerStateMachine {
     constructor(scene: Phaser.Scene, spine: SpineGameObject) {
@@ -465,6 +475,8 @@ export class WalkingDown extends PlayerStateMachine {
             return new Expired(this.scene, this.spine)
         } else if (input === INPUT_TYPES.REACHED_GOAL) {
             return new ReachedGoal(this.scene, this.spine)
+        } else if (input === INPUT_TYPES.SPLASH) {
+            return new Splash(this.scene, this.spine)
         } else {
             return undefined
         }
@@ -1549,6 +1561,14 @@ export class Splash extends PlayerStateMachine {
     update(time: number, delta: number, player: Player) {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
+
+        if (this.animationElapsed >= player.getSplashDelay()) {
+            let temp = player.getState()
+            let state = new Revive(this.scene, this.spine)
+            player.getState().getState() ?.exit(time, delta, player)
+            player.getState().setState(state)
+            player.getState().getState() ?.enter(time, delta, player)
+        }
 
         if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()

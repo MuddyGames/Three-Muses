@@ -17,6 +17,6 @@ export enum INPUT_TYPES {
         EXPIRED = 'expired', 
         REVIVE = 'revive', 
         REVIVED = 'revived', 
-        SPLASH = 'splash',
+        SPLASH = 'splash', // TODO Splash Animation
         REACHED_GOAL = 'revived' // TODO Reached Goal Animation
 }
