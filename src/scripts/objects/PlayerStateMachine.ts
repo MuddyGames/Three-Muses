@@ -72,7 +72,7 @@ export class Idle extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        let selection = Phaser.Math.Between(0, 20)
+        let selection = Phaser.Math.Between(0, 39)
         switch (selection) {
             case 1:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -84,7 +84,7 @@ export class Idle extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 4:
-                this.idiomSound = this.scene.sound.add('well_sham_any_sca')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -117,7 +117,7 @@ export class Idle extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 15:
-                this.idiomSound = this.scene.sound.add('well_sham_any_sca')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 16:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -568,7 +568,7 @@ export class EatingLeft extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.idiomSound = this.scene.sound.add('well_kid')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 8:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -732,7 +732,7 @@ export class EatingRight extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 8:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -889,7 +889,7 @@ export class EatingUp extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 6:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -964,7 +964,7 @@ export class MunchingUp extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.idiomSound = this.scene.sound.add('decent')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 4:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -1121,7 +1121,7 @@ export class MunchingDown extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.idiomSound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('silent')
                 break
             case 2:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -1139,7 +1139,7 @@ export class MunchingDown extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.idiomSound = this.scene.sound.add('unreal')
+                this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 8:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -1210,7 +1210,42 @@ export class UnderAttack extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.idiomSound = this.scene.sound.add('head_like_a_chewed_toffee')
+        let selection = Phaser.Math.Between(0, 20)
+        switch (selection) {
+            case 1:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 2:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 3:
+                this.idiomSound = this.scene.sound.add('head_like_a_chewed_toffee')
+                break
+            case 4:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 5:
+                this.idiomSound = this.scene.sound.add('head_like_a_chewed_toffee')
+                break
+            case 6:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 7:
+                this.idiomSound = this.scene.sound.add('silent')
+                break;
+            case 8:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 9:
+                this.idiomSound = this.scene.sound.add('head_like_a_chewed_toffee')
+                break;
+            case 10:
+                this.idiomSound = this.scene.sound.add('silent')
+                break;
+            default:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+        }
         this.spine.play(INPUT_TYPES.UNDER_ATTACK, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -1241,7 +1276,42 @@ export class Expired extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.idiomSound = this.scene.sound.add('took_a_hopper')
+        let selection = Phaser.Math.Between(0, 20)
+        switch (selection) {
+            case 1:
+                this.idiomSound = this.scene.sound.add('took_a_hopper')
+                break
+            case 2:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 3:
+                this.idiomSound = this.scene.sound.add('took_a_hopper')
+                break
+            case 4:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 5:
+                this.idiomSound = this.scene.sound.add('took_a_hopper')
+                break
+            case 6:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 7:
+                this.idiomSound = this.scene.sound.add('took_a_hopper')
+                break;
+            case 8:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 9:
+                this.idiomSound = this.scene.sound.add('took_a_hopper')
+                break;
+            case 10:
+                this.idiomSound = this.scene.sound.add('silent')
+                break;
+            default:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+        }
         this.punishmentSound = this.scene.sound.add('punish_one',{volume:0.5})
         this.punishmentSound.play()
         this.spine.play(INPUT_TYPES.EXPIRED, true)
@@ -1285,7 +1355,42 @@ export class Revive extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.idiomSound = this.scene.sound.add('dose')
+        let selection = Phaser.Math.Between(0, 20)
+        switch (selection) {
+            case 1:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 2:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 3:
+                this.idiomSound = this.scene.sound.add('dose')
+                break
+            case 4:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 5:
+                this.idiomSound = this.scene.sound.add('dose')
+                break
+            case 6:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 7:
+                this.idiomSound = this.scene.sound.add('silent')
+                break;
+            case 8:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 9:
+                this.idiomSound = this.scene.sound.add('dose')
+                break;
+            case 10:
+                this.idiomSound = this.scene.sound.add('silent')
+                break;
+            default:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+        }
         this.spine.play(INPUT_TYPES.REVIVE, true)
     }
     update(time: number, delta: number, player: Player) {
@@ -1325,7 +1430,42 @@ export class Revived extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.idiomSound = this.scene.sound.add('well_boi_whats_the_craic')
+        let selection = Phaser.Math.Between(0, 20)
+        switch (selection) {
+            case 1:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 2:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 3:
+                this.idiomSound = this.scene.sound.add('well_boi_whats_the_craic')
+                break
+            case 4:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 5:
+                this.idiomSound = this.scene.sound.add('well_boi_whats_the_craic')
+                break
+            case 6:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 7:
+                this.idiomSound = this.scene.sound.add('silent')
+                break;
+            case 8:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 9:
+                this.idiomSound = this.scene.sound.add('well_boi_whats_the_craic')
+                break;
+            case 10:
+                this.idiomSound = this.scene.sound.add('silent')
+                break;
+            default:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+        }
         this.punishmentSound = this.scene.sound.add('revived',{volume:0.5})
         this.punishmentSound.play()
         this.spine.play(INPUT_TYPES.REVIVED, true)
@@ -1366,7 +1506,42 @@ export class Splash extends PlayerStateMachine {
         player.setMove(false)
         this.animationTime = time
         this.idiomTime = time
-        this.idiomSound = this.scene.sound.add('state_of_ya')
+        let selection = Phaser.Math.Between(0, 20)
+        switch (selection) {
+            case 1:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 2:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 3:
+                this.idiomSound = this.scene.sound.add('state_of_ya')
+                break
+            case 4:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 5:
+                this.idiomSound = this.scene.sound.add('state_of_ya')
+                break
+            case 6:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 7:
+                this.idiomSound = this.scene.sound.add('silent')
+                break;
+            case 8:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+            case 9:
+                this.idiomSound = this.scene.sound.add('state_of_ya')
+                break;
+            case 10:
+                this.idiomSound = this.scene.sound.add('silent')
+                break;
+            default:
+                this.idiomSound = this.scene.sound.add('silent')
+                break
+        }
         this.punishmentSound = this.scene.sound.add('punish_two',{volume:0.5})
         this.punishmentSound.play()
         this.spine.play(INPUT_TYPES.SPLASH, true)
