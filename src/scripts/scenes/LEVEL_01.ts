@@ -555,6 +555,19 @@ export default class LEVEL_01 extends Phaser.Scene {
 					}
 				}
 
+				// Check if River Splash
+				x = this.map.worldToTileX(this.player.getX())
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.waterLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === RIVER.TILE){
+						// Reached River
+						this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
+					}
+				}
+
 			}
 
 			if (this.cursors.left.isDown) {
@@ -579,6 +592,19 @@ export default class LEVEL_01 extends Phaser.Scene {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
 						this.gsmUpdate(time, delta)
+					}
+				}
+
+				// Check if River Splash
+				x = this.map.worldToTileX(this.player.getX())
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.waterLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === RIVER.TILE){
+						// Reached River
+						this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
 					}
 				}
 			}
@@ -645,6 +671,19 @@ export default class LEVEL_01 extends Phaser.Scene {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
 						this.gsmUpdate(time, delta)
+					}
+				}
+
+				// Check if River Splash
+				x = this.map.worldToTileX(this.player.getX())
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.waterLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === RIVER.TILE){
+						// Reached River
+						this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
 					}
 				}
 			}
@@ -760,15 +799,19 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		this.groundLayer = this.map.createLayer('map/ground/ground_depth_00', this.tileset, 0, 0);
 		this.groundLayer.setDepth(-10); //SET DEPTH 00 TO -10
+		this.groundLayer.setVisible(false)
 
 		this.ground2Layer = this.map.createLayer('map/shadow/shadow_depth_01', this.tileset, 0, 0);
 		this.ground2Layer.setDepth(-9); //SET DEPTH 1 TO -9
+		this.groundLayer.setVisible(false)
 
 		this.house2Layer = this.map.createLayer('map/buildings/foreground/house_depth_01/house_layer_2', this.tileset, 0, 0);
 		this.house2Layer.setDepth(-9); //SET DEPTH 1 TO -9
+		this.house2Layer.setVisible(true)
 
 		this.house1Layer = this.map.createLayer('map/buildings/foreground/house_depth_01/house_layer_1', this.tileset, 0, 0);
 		this.house1Layer.setDepth(-9); //SET DEPTH 1 TO -9
+		this.house1Layer.setVisible(true)
 
 		this.wall1Layer = this.map.createLayer('map/castle/walls/walls_depth_01', this.tileset, 0, 0);
 		this.wall1Layer.setDepth(-9); //SET DEPTH 1 TO -9
