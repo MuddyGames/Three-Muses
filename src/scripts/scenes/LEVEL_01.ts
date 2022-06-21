@@ -807,11 +807,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		this.house2Layer = this.map.createLayer('map/buildings/foreground/house_depth_01/house_layer_2', this.tileset, 0, 0);
 		this.house2Layer.setDepth(-9); //SET DEPTH 1 TO -9
-		this.house2Layer.setVisible(true)
 
 		this.house1Layer = this.map.createLayer('map/buildings/foreground/house_depth_01/house_layer_1', this.tileset, 0, 0);
 		this.house1Layer.setDepth(-9); //SET DEPTH 1 TO -9
-		this.house1Layer.setVisible(true)
 
 		this.wall1Layer = this.map.createLayer('map/castle/walls/walls_depth_01', this.tileset, 0, 0);
 		this.wall1Layer.setDepth(-9); //SET DEPTH 1 TO -9
