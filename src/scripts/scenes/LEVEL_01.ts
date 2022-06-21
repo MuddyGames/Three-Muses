@@ -505,42 +505,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		// DOES NOT WORK, can't feed new player input into the PlayerStateMachine.
 		// if (this.dpadAnimationIndex === this.dpadAnimationNames.indexOf('Up')){
-
-		switch(this.dpadAnimationIndex){
-			case 0:
-				console.log('INDEX 0')
-				break
-			case 1:
-				console.log('INDEX 1')
-				break
-			case 2:
-				console.log('INDEX 2')
-				break
-			case 3:
-				console.log('INDEX 3')
-				break
-			case 4:
-				console.log('INDEX 4')
-				break
-			case 5:
-				console.log('INDEX 5')
-				break
-			case 6:
-				console.log('INDEX 6')
-				break
-			case 7:
-				console.log('INDEX 7')
-				break
-			case 8:
-				console.log('INDEX 8')
-				break
-			case 9:
-				console.log('INDEX 9')
-				break
-			default:
-				console.log('INDEX DEFAULT')
-				break;
-		}
 		//if (this.dpadAnimationIndex === 0){
 		//	console.log('INDEX 0')
 		 	//this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
