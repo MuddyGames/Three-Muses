@@ -28,6 +28,22 @@ export enum ARTIFACTS{
     CREDITS = 'Credits'
 }
 
+export enum POINTS{
+    CANNON_BALL_COLLISION = -150,
+    DIVER_COLLISION = -150,
+    FRUIT_0 = 250,
+    FRUIT_1 = 300,
+    FRUIT_2 = 350,
+}
+
+export enum ANIMATION_DELAY{
+    FRUIT = 480
+}
+
+export enum NEXT_LEVEL{
+    DELAY = 3000 //Delay until next level
+}
+
 export enum GOAL {
     TILE = 551 // Tile ID on level json
 };

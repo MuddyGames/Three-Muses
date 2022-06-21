@@ -20,7 +20,10 @@ import {
 	DIVER_ANIM,
 	BRIDGE,
 	BRIDGE_ANIMS,
-	RIVER
+	RIVER,
+	NEXT_LEVEL,
+	ANIMATION_DELAY,
+	POINTS
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -479,7 +482,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 
 			this.time.addEvent({
-				delay: 6000,
+				delay: NEXT_LEVEL.DELAY,
 				loop: true,
 				callback: this.levelComplete,
 				callbackScope: this
@@ -696,13 +699,19 @@ export default class LEVEL_01 extends Phaser.Scene {
 					if (!this.fruitMarked[i] && this.trufflesAABB(this.fruit[i])) {
 						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
 						this.time.addEvent({
-							delay: 480,
+							delay: ANIMATION_DELAY.FRUIT,
 							callback: this.fruitAnimate,
 							callbackScope: this,
 							args: [i, time, delta]
 						})
 						this.fruitMarked[i] = true
-						this.addPoints(250)
+						if(i === 0){
+							this.addPoints(POINTS.FRUIT_0)
+						}else if(i == 1){
+							this.addPoints(POINTS.FRUIT_1)
+						} else if(i === 2){
+							this.addPoints(POINTS.FRUIT_2)
+						}
 						this.player.getState().handleInput(INPUT_TYPES.EATING, time, delta, this.player)
 					}
 				}
@@ -744,7 +753,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		for(let i = 0; i < this.divers.length; i++) {
 			if (this.trufflesEnemyCollision(this.divers[i], i)){
 				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
-				this.addPoints(-150)
+				this.addPoints(POINTS.DIVER_COLLISION)
 			}
 		}
 		// handle push
@@ -761,7 +770,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.trufflesAABB(this.cannonball[i])) {
 				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
-				this.addPoints(-150)
+				this.addPoints(POINTS.CANNON_BALL_COLLISION)
 			}
 		}
 
