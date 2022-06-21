@@ -140,7 +140,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private playerState!: PlayerState
 
 	// WASD
-	private keys
+	private key_w!: Phaser.Input.Keyboard.Key
+	private key_a!: Phaser.Input.Keyboard.Key
+	private key_s!: Phaser.Input.Keyboard.Key
+	private key_d!: Phaser.Input.Keyboard.Key
 
 	constructor() {
 		super({
@@ -306,7 +309,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 		// Keyboard Setup
 		this.cursors = this.input.keyboard.createCursorKeys()
 		// Add WASD
-		this.keys = this.input.keyboard.addKeys('W,A,S,D')
+		this.key_w = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
+		this.key_a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
+		this.key_s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
+		this.key_d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
 
 		//Multitouch: the below sets the amount of concurrent touches can happen
 		this.input.addPointer(2);
@@ -489,7 +495,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.D)) {
+		} /*else if (Phaser.Input.Keyboard.JustDown(this.keys.D)) {
 			console.log('D')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
 		} else if (Phaser.Input.Keyboard.JustDown(this.keys.A)) {
@@ -501,7 +507,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		} else if (Phaser.Input.Keyboard.JustDown(this.keys.S)) {
 			console.log('S')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
-		}
+		}*/
 
 		// DOES NOT WORK, can't feed new player input into the PlayerStateMachine.
 		// if (this.dpadAnimationIndex === this.dpadAnimationNames.indexOf('Up')){
