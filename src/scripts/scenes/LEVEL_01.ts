@@ -246,7 +246,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		// Setup Truffles
 		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 
 			this.player.getX(), this.player.getY(), this.player.getScale(), this.player.getScale())
-		this.truffles.setDepth(2)
+		this.truffles.setDepth(0)
 		this.initializeAnimationsState(this.truffles, this.trufflesAnimationNames)
 
 		// Setup Divers
@@ -734,37 +734,37 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.tileset = this.map.addTilesetImage("truffles_level_1_tileset", 'tileset');
 
 		this.waterLayer = this.map.createLayer('map/water/water_depth_00', this.tileset, 0, 0);
-		this.waterLayer.setDepth(0);
+		this.waterLayer.setDepth(-10); //SET DEPTH 00 TO -10
 
 		this.groundLayer = this.map.createLayer('map/ground/ground_depth_00', this.tileset, 0, 0);
-		this.groundLayer.setDepth(0);
+		this.groundLayer.setDepth(-10); //SET DEPTH 00 TO -10
 
 		this.ground2Layer = this.map.createLayer('map/shadow/shadow_depth_01', this.tileset, 0, 0);
-		this.ground2Layer.setDepth(1);
+		this.ground2Layer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.house2Layer = this.map.createLayer('map/buildings/foreground/house_depth_01/house_layer_2', this.tileset, 0, 0);
-		this.house2Layer.setDepth(1);
+		this.house2Layer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.house1Layer = this.map.createLayer('map/buildings/foreground/house_depth_01/house_layer_1', this.tileset, 0, 0);
-		this.house1Layer.setDepth(1);
+		this.house1Layer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.wall1Layer = this.map.createLayer('map/castle/walls/walls_depth_01', this.tileset, 0, 0);
-		this.wall1Layer.setDepth(1);
+		this.wall1Layer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.wall2Layer = this.map.createLayer('map/castle/walls/walls_depth_03', this.tileset, 0, 0);
 		this.wall2Layer.setDepth(3);
 
 		this.churchLayer = this.map.createLayer('map/buildings/foreground/church_depth_01/church_01', this.tileset, 0, 0);
-		this.churchLayer.setDepth(1);
+		this.churchLayer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.castleLayer = this.map.createLayer('map/castle/castle/castle_depth_01', this.tileset, 0, 0);
-		this.castleLayer.setDepth(1);
+		this.castleLayer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.miscLayer = this.map.createLayer('map/environment_objects/miscellaneous_depth_01', this.tileset, 0, 0);
-		this.miscLayer.setDepth(1);
+		this.miscLayer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.wallTop1Layer = this.map.createLayer('map/castle/walls/wall_top_depth_01', this.tileset, 0, 0);
-		this.wallTop1Layer.setDepth(1);
+		this.wallTop1Layer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.wallTop2Layer = this.map.createLayer('map/castle/walls/wall_top_depth_04', this.tileset, 0, 0);
 		this.wallTop2Layer.setDepth(4);
@@ -776,19 +776,19 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.houseRoofLayer.setDepth(3);
 
 		this.towerTop1Layer = this.map.createLayer('map/castle/tower/tower_top_depth_01', this.tileset, 0, 0);
-		this.towerTop1Layer.setDepth(1);
+		this.towerTop1Layer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.towerTop2Layer = this.map.createLayer('map/castle/tower/tower_top_depth_04', this.tileset, 0, 0);
 		this.towerTop2Layer.setDepth(4);
 
 		this.churchRoofLayer = this.map.createLayer('map/buildings/background/church_depth_03/church_roof_03', this.tileset, 0, 0);
-		this.churchRoofLayer.setDepth(1);
+		this.churchRoofLayer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.castleRoofLayer = this.map.createLayer('map/castle/castle/castle_roof_depth_02', this.tileset, 0, 0);
 		this.castleRoofLayer.setDepth(2);
 
 		this.miscTop1Layer = this.map.createLayer('map/environment_objects/tree_01', this.tileset, 0, 0);
-		this.miscTop1Layer.setDepth(1);
+		this.miscTop1Layer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.miscTop2Layer = this.map.createLayer('map/environment_objects/tree_top_04', this.tileset, 0, 0);
 		this.miscTop2Layer.setDepth(4);
@@ -824,7 +824,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.diverLayer = this.map.createLayer('map/patrol/level1', this.tileset, 0, 0);
 		}
 
-		this.candyLayer.setDepth(2);
+		this.candyLayer.setDepth(2); 
 		this.candyLayer.setVisible(false)
 
 		this.diverLayer.setDepth(2)
