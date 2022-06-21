@@ -265,7 +265,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		// Init diver animations
 		for (let i = 0; i < this.divers.length; i++) {
 			this.initializeAnimationsState(this.divers[i], this.diverAnimationNames)
-			this.divers[i].setDepth(2)
+			this.divers[i].setDepth(-1)
 		}
 
 		// Cannon Ball Setup
@@ -275,15 +275,14 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		// Setup Cannon ball animations
 		for (let i = 0; i < this.cannonball.length; i++) {
-			this.cannonball[i].setDepth(2)
 			this.initializeAnimationsState(this.cannonball[i], this.cannonballAnimationNames)
-			this.cannonball[i].setDepth(0)
+			this.cannonball[i].setDepth(-1)
 		}
 
 		// Add Windmill
 		// TODO: This needs to be from tiled
 		this.windmill = this.createSpineObject(IDLE_KEY, WINDMILL_KEY, 50, 0, 1, 1)
-		this.windmill.setDepth(1)
+		this.windmill.setDepth(-1)
 
 		// Keyboard Setup
 		this.cursors = this.input.keyboard.createCursorKeys()
@@ -870,6 +869,12 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.player.getY() > collidable.y) {
 			collision = true;
 		}
+		if(collidable.y > this.player.getY()){
+			collidable.setDepth(1)
+		}
+		else {
+			collidable.setDepth(-1)
+		}
 
 		return collision
 	}
@@ -890,6 +895,12 @@ export default class LEVEL_01 extends Phaser.Scene {
 					args: [index]
 				})
 			}
+		if(enemy.y > this.player.getY()){
+			enemy.setDepth(1)
+		}
+		else {
+			enemy.setDepth(-1)
+		}
 
 		return collision
 	}
