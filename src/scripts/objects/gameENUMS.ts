@@ -59,7 +59,9 @@ export enum BRIDGE {
     scaleX = 1,
     scaleY = 1,
     OFFSETX = -96,
-    OFFSETY = 0
+    OFFSETY = 0,
+    PLACE = 553,
+    WALKWAY = 396
 }
 
 export enum BRIDGE_ANIMS {

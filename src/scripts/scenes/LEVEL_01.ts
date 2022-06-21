@@ -290,9 +290,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.bridgeLayer.getTileAt(j, i)
-				if(tile != null) {
-					this.bridge = this.createSpineObject(IDLE_KEY, BRIDGE_KEY, j * this.tileSize + BRIDGE.OFFSETX, 
-						i * this.tileSize + BRIDGE.OFFSETY, BRIDGE.scaleX, BRIDGE.scaleY )
+				if (tile != null) {
+					if(tile.index == BRIDGE.PLACE) {
+						this.bridge = this.createSpineObject(IDLE_KEY, BRIDGE_KEY, j * this.tileSize + BRIDGE.OFFSETX, 
+							i * this.tileSize + BRIDGE.OFFSETY, BRIDGE.scaleX, BRIDGE.scaleY )
+					}
 				}
 			}
 		}
@@ -684,6 +686,14 @@ export default class LEVEL_01 extends Phaser.Scene {
 		if(this.fruitRemaining <= 0 && !this.bridgeOpen) {
 			this.bridge.play(BRIDGE_ANIMS.TRANSITIONING, false)
 			this.bridgeOpen = true
+			for (let i = 0; i < this.map.height; i++) {
+				for (let j = 0; j < this.map.width; j++) {
+					var tile = this.bridgeLayer.getTileAt(j, i)
+					if (tile != null) {
+						this.collisionLayer.removeTileAt(j, i)
+					}
+				}
+			}
 		}
 		
 		// Diver Move
