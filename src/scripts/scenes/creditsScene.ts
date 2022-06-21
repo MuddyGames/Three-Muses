@@ -62,7 +62,7 @@ export default class Credits extends Phaser.Scene {
 
   update() {
     this.nextLevel.update()
-    this.nextLevel.setText('Next Level')
+    this.nextLevel.setText('Replay')
     this.nextLevel.setInteractive()
     this.nextLevel.setColor('#749DAD')
   }
