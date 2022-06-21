@@ -1,48 +1,29 @@
-h1 {
-    font-family: 'gamefont';
-    font-size: 120%;
-    background-color: #4A4A4A;
-    position: absolute;
-    left: 20%;
-    bottom: 44%;
-    padding: 1%;
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 25%;
-    position: relative;
-    margin-top: 22%;
-    margin-left: 20%;
-    background-color: #f9d877;
-}
-
-th {
-    font-family: 'gamefont';
-    text-align: left;
-
-    display: flex;
-    flex-direction: column;
-    font-size: 200%;
-    padding: 0% 5%;
-
-}
-
-td {
-    text-align: left;
-    font-size: 120%;
-    padding: 5% 5%;
-}
-
-.sketchfab-embed-wrapper {
+.sketchfab-embed-wrapper1 {
     position: absolute;
     left: 53%;
     top: 78%;
 }
 
-img {
+.sketchfab-embed-wrapper2 {
+    position: absolute;
+    left: 53%;
+    top: 78%;
+}
 
+.sketchfab-embed-wrapper3 {
+    position: absolute;
+    left: 53%;
+    top: 78%;
+}
+
+.sketchfab-embed-wrapper4 {
+    position: absolute;
+    left: 53%;
+    top: 78%;
+}
+
+
+div.image1 img{
     max-width: 25%;
     max-height: 25%;
     position: absolute;
@@ -50,6 +31,76 @@ img {
     top: 52%;
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2
+div.image2 img{
+    max-width: 25%;
+    max-height: 25%;
+    position: absolute;
+    left: 53%;
+    top: 52%;
 }
+
+div.image3 img{
+    max-width: 25%;
+    max-height: 25%;
+    position: absolute;
+    left: 53%;
+    top: 52%;
+}
+
+div.image4 img{
+    max-width: 25%;
+    max-height: 25%;
+    position: absolute;
+    left: 53%;
+    top: 52%;
+}
+
+.column1{
+    
+    position: relative;
+    margin-top: 25%;
+    margin-left: 15%;
+    width:30%;
+    font-family: 'gamefont';
+    font-size: 18px;
+    background-color: #f9d877;
+    padding: .5%;
+    opacity: 0.6;
+}
+
+.column2{
+    
+    position: relative;
+    margin-top: 15%;
+    margin-left: 15%;
+    width:30%;
+    font-family: 'gamefont';
+    font-size: 18px;
+    background-color: #f9d877;
+    padding:1%;
+}
+
+.column3{
+    
+    position: relative;
+    margin-top: 15%;
+    margin-left: 15%;
+    width:30%;
+    font-family: 'gamefont';
+    font-size: 18px;
+    background-color: #f9d877;
+    padding:1%;
+}
+
+.column4{
+    
+    position: relative;
+    margin-top: 15%;
+    margin-left: 15%;
+    width:30%;
+    font-family: 'gamefont';
+    font-size: 18px;
+    background-color:#f9d877;
+    padding:1%;
+}
+
