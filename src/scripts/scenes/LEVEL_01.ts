@@ -799,11 +799,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		this.groundLayer = this.map.createLayer('map/ground/ground_depth_00', this.tileset, 0, 0);
 		this.groundLayer.setDepth(-10); //SET DEPTH 00 TO -10
-		this.groundLayer.setVisible(false)
+		//this.groundLayer.setVisible(false) // TODO  Special Game of Thrones Level
 
 		this.ground2Layer = this.map.createLayer('map/shadow/shadow_depth_01', this.tileset, 0, 0);
 		this.ground2Layer.setDepth(-9); //SET DEPTH 1 TO -9
-		this.groundLayer.setVisible(false)
+		//this.groundLayer.setVisible(false) // TODO  Special Game of Thrones Level
 
 		this.house2Layer = this.map.createLayer('map/buildings/foreground/house_depth_01/house_layer_2', this.tileset, 0, 0);
 		this.house2Layer.setDepth(-9); //SET DEPTH 1 TO -9
