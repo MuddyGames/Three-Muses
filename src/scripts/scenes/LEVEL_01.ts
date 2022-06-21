@@ -19,7 +19,8 @@ import {
 	LEVEL_DATA_KEY,
 	DIVER_ANIM,
 	BRIDGE,
-	BRIDGE_ANIMS
+	BRIDGE_ANIMS,
+	RIVER
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -604,6 +605,19 @@ export default class LEVEL_01 extends Phaser.Scene {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
 						this.gsmUpdate(time, delta)
+					}
+				}
+
+				// Check if River Splash
+				x = this.map.worldToTileX(this.player.getX())
+				y = this.map.worldToTileY(this.player.getY())
+
+				this.tile = this.waterLayer.getTileAt(x, y)
+
+				if(this.tile !== null){
+					if(this.tile.index === RIVER.TILE){
+						// Reached River
+						this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
 					}
 				}
 			}
