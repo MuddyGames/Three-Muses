@@ -17,11 +17,14 @@ import {
 	DIVER,
 	LEVELS,
 	LEVEL_DATA_KEY,
-	DIVER_ANIM
+	DIVER_ANIM,
+	BRIDGE,
+	BRIDGE_ANIMS
 } from '../objects/gameENUMS'
 
 // Player holds player data
 import Player from '../objects/Player'
+import { PairsFactory } from 'matter'
 
 // TODO Move Magic Data to KEYs
 const TRUFFLES_KEY = 'truffles'
@@ -31,6 +34,7 @@ const WINDMILL_KEY = 'windmill'
 const DPAD_KEY = 'dpad'
 const KEYS = ['orange', 'lemon', 'grape']
 const DIVER_KEY = 'diver'
+const BRIDGE_KEY = 'bridge'
 const SOUND_KEY = 'soundbtn'
 const TIMER_KEY = 'hudtimer'
 
@@ -68,6 +72,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private divers: SpineGameObject[] = []
 	private cannonball: SpineGameObject[] = []
 	private windmill!: SpineGameObject
+	private bridge!: SpineGameObject
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 
 	private fruit: SpineGameObject[] = []
@@ -129,6 +134,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
 	private goalLayer!: Phaser.Tilemaps.TilemapLayer
 	private diverLayer!: Phaser.Tilemaps.TilemapLayer
+	private bridgeLayer!: Phaser.Tilemaps.TilemapLayer
 
 	// Player Data
 	private playerState!: PlayerState
@@ -164,6 +170,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.load.spine(DPAD_KEY, 'dpad/DPad_02.json', 'dpad/DPad_02.atlas')
 		this.load.spine(SOUND_KEY, 'sound/sound.json', 'sound/sound.atlas')
 		this.load.spine(TIMER_KEY, 'timer/timer.json', 'timer/timer.atlas')
+		this.load.spine(BRIDGE_KEY, 'drawbridge/drawbridge.json', 'drawbridge/drawbridge.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -278,6 +285,18 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.initializeAnimationsState(this.cannonball[i], this.cannonballAnimationNames)
 			this.cannonball[i].setDepth(-1)
 		}
+
+		// setup drawbridge
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				var tile = this.bridgeLayer.getTileAt(j, i)
+				if(tile != null) {
+					this.bridge = this.createSpineObject(IDLE_KEY, BRIDGE_KEY, j * this.tileSize + BRIDGE.OFFSETX, 
+						i * this.tileSize + BRIDGE.OFFSETY, BRIDGE.scaleX, BRIDGE.scaleY )
+				}
+			}
+		}
+		this.bridge.setDepth(-1)
 
 		// Add Windmill
 		// TODO: This needs to be from tiled
@@ -832,6 +851,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(2)
 		this.goalLayer.setVisible(true)
+
+		this.bridgeLayer = this.map.createLayer('map/environment_objects/animated/drawbridge_01', this.tileset, 0, 0);
+		this.bridgeLayer.setVisible(false)
 	}
 
 
