@@ -495,19 +495,21 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
 		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
-		} /*else if (Phaser.Input.Keyboard.JustDown(this.keys.D)) {
+		} 
+		
+		if (this.key_d.isDown) {
 			console.log('D')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.A)) {
+		} else if (this.key_a.isDown) {
 			console.log('A')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.W)) {
+		} else if (this.key_w.isDown) {
 			console.log('W')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
-		} else if (Phaser.Input.Keyboard.JustDown(this.keys.S)) {
+		} else if (this.key_s.isDown) {
 			console.log('S')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
-		}*/
+		}
 
 		// DOES NOT WORK, can't feed new player input into the PlayerStateMachine.
 		// if (this.dpadAnimationIndex === this.dpadAnimationNames.indexOf('Up')){
