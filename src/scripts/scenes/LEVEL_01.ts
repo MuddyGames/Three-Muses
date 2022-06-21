@@ -86,11 +86,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private diverAnimationIndex = 0 // TODO : Remove this magic num of 0
 	private diverMove: number[] = []
 
+	private bridgeOpen: boolean
+
 	private fruitAnimationNames: string[] = []
 	private fruitMarked: boolean[] = []
-	private orangeAnimationIndex = 0
-	private grapeAnimationIndex = 0
-	private lemonAnimationIndex = 0
+	private fruitRemaining: number
 	private dpadAnimationIndex = 0
 	private dpadAnimationNames = []
 
@@ -297,6 +297,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 		}
 		this.bridge.setDepth(-1)
+		this.bridgeOpen = false
 
 		// Add Windmill
 		// TODO: This needs to be from tiled
@@ -401,6 +402,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 		}
+		this.fruitRemaining = this.fruit.length
 
 		// Init fruit animations
 		for (let o = 0; o < this.fruit.length; o++) {
@@ -677,6 +679,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 					}
 				}
 			}
+		}
+		//check fruit
+		if(this.fruitRemaining <= 0 && !this.bridgeOpen) {
+			this.bridge.play(BRIDGE_ANIMS.TRANSITIONING, false)
+			this.bridgeOpen = true
 		}
 		
 		// Diver Move
@@ -963,6 +970,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.tile = this.candyLayer.getTileAt(x, y)
 		this.map.removeTile(this.tile)
 		this.fruit[index].removeFromDisplayList()
+		this.fruitRemaining--
 	}
 
 	// Reset Cannon Balls
