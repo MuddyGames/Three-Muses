@@ -31,7 +31,7 @@ export default class ArtiFactFourScene extends Phaser.Scene {
 
     this.element = this.add.dom(this.cameras.main.width / 2, 100).createFromCache('artifact_four')
 
-    this.backingMusic = this.sound.add('splash_screen_track',{ loop: true })
+    this.backingMusic = this.sound.add('artifact_background',{ loop: true })
 		this.backingMusic.play()
     
     // Move to next Level

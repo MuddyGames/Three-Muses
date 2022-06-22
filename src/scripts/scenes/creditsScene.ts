@@ -42,7 +42,7 @@ export default class Credits extends Phaser.Scene {
     this.element = this.add.dom(this.cameras.main.width / 2, 100).createFromCache('credits');
 
 
-    this.backingMusic = this.sound.add('splash_screen_track',{ loop: true })
+    this.backingMusic = this.sound.add('artifact_background',{ loop: true })
 		this.backingMusic.play()
 
     // Move to next Level
