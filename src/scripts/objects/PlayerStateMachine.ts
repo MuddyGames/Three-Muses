@@ -1580,7 +1580,7 @@ export class Splash extends PlayerStateMachine {
         }
         this.punishmentSound = this.scene.sound.add('punish_two',{volume:0.5})
         this.punishmentSound.play()
-        this.spine.play(INPUT_TYPES.SPLASH, true)
+        this.spine.play(INPUT_TYPES.SPLASH, false)
     }
     update(time: number, delta: number, player: Player) {
         this.animationElapsed = time - this.animationTime
