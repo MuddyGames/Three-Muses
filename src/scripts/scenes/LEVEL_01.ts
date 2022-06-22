@@ -948,6 +948,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	}
 
 	private updateNewRecordAnimation(){
+		console.log('New record Stuff')
 		//this.changeAnimation(this.hudrecord,[],1)
 	}
 
