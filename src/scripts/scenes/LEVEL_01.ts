@@ -109,8 +109,8 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private fruitRemaining: number
 
 	// Artifacts
-	private artifactAnimationNames: string[] = []
 	private artifact: SpineGameObject[] = []
+	private artifactAnimationNames: string[] = []
 
 	// Windmill
 	private windmill!: SpineGameObject
@@ -211,7 +211,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
 		this.load.spine(CANNONBALL_KEY, 'cannonball/cannonball.json', 'cannonball/cannonball.atlas')
 		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
-		this.load.spine(DPAD_KEY, 'dpad/DPad_02.json', 'dpad/DPad_02.atlas')
+		this.load.spine(DPAD_KEY, 'dpad/DPad_Final_merge.json', 'dpad/DPad_Final_merge.atlas')
 		this.load.spine(SOUND_KEY, 'sound/sound.json', 'sound/sound.atlas')
 		this.load.spine(TIMER_KEY, 'timer/timer.json', 'timer/timer.atlas')
 		this.load.spine(BRIDGE_KEY, 'drawbridge/drawbridge.json', 'drawbridge/drawbridge.atlas')
