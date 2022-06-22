@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "KeCG6JE+R5kie3rnSLbea5qE/L4",
+	"hash": "FhZLYtuo2FD4p5QsV/a4+1GqrCc",
 	"spine": "3.8.72",
-	"x": -112.38,
-	"y": -18.63,
-	"width": 574.91,
-	"height": 357.03,
+	"x": -218.05,
+	"y": -20.75,
+	"width": 556.07,
+	"height": 359.15,
 	"images": "./images/",
 	"audio": "C:/Users/jaysi/OneDrive/Desktop/truffles_all/truffles_side"
 },
@@ -58,9 +58,17 @@
 	{ "name": "bone14", "parent": "head_front", "rotation": -89.96, "x": 64.3, "y": -50.34 },
 	{ "name": "bone15", "parent": "head_front", "rotation": -89.96, "x": 67, "y": 51.44 },
 	{ "name": "bone16", "parent": "head_front", "rotation": -90.17, "x": 60.26, "y": -13.45 },
-	{ "name": "bone17", "parent": "head_front", "rotation": -90.17, "x": 40.51, "y": -5.57 }
+	{ "name": "bone17", "parent": "head_front", "rotation": -90.17, "x": 43.51, "y": 0.56 },
+	{ "name": "bone18", "parent": "belly_body", "rotation": -102.49, "x": -31.15, "y": -97.17 },
+	{ "name": "bone19", "parent": "belly_body", "rotation": -102.49, "x": 16.6, "y": -148.38 },
+	{ "name": "bone20", "parent": "belly_body", "rotation": -102.49, "x": -24.46, "y": -126.24 },
+	{ "name": "bone21", "parent": "belly_body", "rotation": -102.49, "x": 125.17, "y": 121.5 },
+	{ "name": "bone22", "parent": "belly_body", "rotation": -102.49, "x": -58.8, "y": -126.83 },
+	{ "name": "bone23", "parent": "belly_body", "rotation": -102.49, "x": -38.33, "y": -55.64 },
+	{ "name": "bone24", "parent": "belly_body", "rotation": -125.11, "x": 6.7, "y": 168.16 }
 ],
 "slots": [
+	{ "name": "water", "bone": "root", "attachment": "water" },
 	{ "name": "shadow", "bone": "shadow", "attachment": "shadow" },
 	{ "name": "ear_back", "bone": "back_ear", "attachment": "ear_back" },
 	{ "name": "leg_back", "bone": "root", "attachment": "leg_back" },
@@ -104,26 +112,24 @@
 	{ "name": "eye2", "bone": "eye", "attachment": "closed_eyes_side" },
 	{ "name": "bone16", "bone": "bone16", "attachment": "closed_eyes" },
 	{ "name": "head_front4", "bone": "head_front" },
-	{ "name": "body_front3", "bone": "body_front", "attachment": "body_small" }
+	{ "name": "body_front3", "bone": "body_front", "attachment": "body_small" },
+	{ "name": "drop1", "bone": "bone24", "attachment": "drop1" },
+	{ "name": "drop2", "bone": "bone23", "attachment": "drop2" },
+	{ "name": "drop3", "bone": "bone20", "attachment": "drop3" },
+	{ "name": "drop4", "bone": "bone19", "attachment": "drop4" },
+	{ "name": "drop5", "bone": "bone21", "attachment": "drop5" },
+	{ "name": "drop6", "bone": "bone22", "attachment": "drop6" },
+	{ "name": "drop7", "bone": "bone18", "attachment": "drop7" }
 ],
 "skins": [
 	{
 		"name": "default",
 		"attachments": {
+			"drop2": {
+				"drop2": { "y": 0.5, "width": 36, "height": 33 }
+			},
 			"front_ear": {
 				"front_ear": { "x": 40.72, "y": -5.63, "rotation": -39.81, "width": 120, "height": 104 }
-			},
-			"tail": {
-				"tail": {
-					"type": "mesh",
-					"uvs": [ 0.64716, 0.06076, 0.76976, 0.06536, 0.86856, 0.11758, 0.92529, 0.21893, 0.82099, 0.2389, 0.66912, 0.20358, 0.65265, 0.24043, 0.84112, 0.29879, 0.91797, 0.38018, 0.96188, 0.49843, 0.91431, 0.61054, 0.99848, 0.72879, 0.9198, 0.8885, 0.65448, 0.99139, 0.43674, 1, 0.24461, 0.88082, 0.08542, 0.78868, 0.01406, 0.68118, 0.01772, 0.48308, 0.22448, 0.46004, 0.25376, 0.53375, 0.30865, 0.44161, 0.33793, 0.34486, 0.45869, 0.27576, 0.47882, 0.14829, 0.57946, 0.08226 ],
-					"triangles": [ 5, 0, 1, 4, 5, 1, 25, 0, 5, 24, 25, 5, 2, 4, 1, 3, 4, 2, 6, 24, 5, 23, 24, 6, 10, 7, 8, 10, 8, 9, 18, 19, 20, 20, 17, 18, 16, 17, 20, 15, 16, 20, 10, 23, 6, 12, 10, 11, 22, 23, 21, 7, 10, 6, 13, 10, 12, 23, 10, 21, 10, 20, 21, 13, 20, 10, 15, 20, 13, 14, 15, 13 ],
-					"vertices": [ 13.74, 37.06, 19.21, 38.89, 24.6, 37.83, 29.12, 33.49, 24.95, 30.69, 17.58, 29.97, 17.6, 27.77, 27.04, 27.9, 32.04, 24.94, 36.35, 19.5, 36.51, 12.84, 42.58, 8.08, 42.34, -1.6, 32.77, -11.45, 23.39, -15.58, 12.57, -12.59, 3.73, -10.46, -1.56, -6.05, -5.38, 4.37, 3.23, 9.06, 5.99, 5.7, 6.55, 11.45, 5.89, 17, 9.8, 22.65, 8.12, 29.65, 11.2, 34.8 ],
-					"hull": 26,
-					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18, 20, 20, 22, 22, 24, 24, 26, 26, 28, 28, 30, 30, 32, 32, 34, 34, 36, 36, 38, 38, 40, 40, 42, 42, 44, 44, 46, 46, 48, 48, 50, 0, 50 ],
-					"width": 47,
-					"height": 56
-				}
 			},
 			"leg_left_front": {
 				"leg_left_front": {
@@ -137,16 +143,16 @@
 					"height": 105
 				}
 			},
-			"head": {
-				"head": {
+			"back_arm": {
+				"back_arm": {
 					"type": "mesh",
-					"uvs": [ 0.57433, 0.00825, 0.65754, 0.02353, 0.7351, 0.05409, 0.80985, 0.1118, 0.88741, 0.20686, 0.9551, 0.32739, 0.99741, 0.50902, 0.99459, 0.60918, 0.98331, 0.71273, 0.92126, 0.85193, 0.85074, 0.94529, 0.70549, 1, 0.32049, 1, 0.16959, 0.90625, 0.09062, 0.81628, 0.06382, 0.75517, 0, 0.71782, 0, 0.48865, 0.09344, 0.46489, 0.16818, 0.22724, 0.28382, 0.08804, 0.47139, 0, 0.15982, 0.5738, 0.18007, 0.65736, 0.17645, 0.74266 ],
-					"triangles": [ 11, 9, 10, 4, 11, 12, 2, 3, 1, 1, 3, 23, 1, 23, 0, 13, 24, 12, 24, 23, 12, 4, 12, 23, 20, 0, 22, 7, 9, 11, 3, 4, 23, 20, 21, 0, 13, 14, 24, 8, 9, 7, 6, 7, 11, 14, 15, 24, 24, 15, 23, 22, 23, 15, 15, 16, 22, 22, 17, 18, 22, 16, 17, 4, 5, 11, 0, 23, 22, 20, 22, 19, 6, 11, 5, 22, 18, 19 ],
-					"vertices": [ 1, 3, 150.8, -7.28, 1, 1, 3, 149.93, -23.67, 1, 1, 3, 146.48, -39.2, 1, 1, 3, 138.6, -54.62, 1, 1, 3, 124.75, -71.18, 1, 1, 3, 106.61, -86.23, 1, 1, 3, 78.13, -97.31, 1, 1, 3, 61.93, -98.35, 1, 1, 3, 45.02, -97.8, 1, 1, 3, 21.4, -87.97, 1, 1, 3, 5, -75.76, 1, 1, 3, -6.59, -48.44, 1, 1, 3, -13.93, 26.28, 1, 1, 3, -1.69, 57.05, 1, 1, 3, 11.31, 73.8, 1, 1, 3, 20.65, 79.96, 1, 1, 3, 25.45, 92.94, 1, 1, 3, 62.4, 96.57, 1, 1, 3, 68.01, 78.81, 1, 1, 3, 107.76, 68.07, 1, 1, 3, 132.4, 47.84, 1, 1, 3, 150.17, 12.83, 1, 1, 3, 51.72, 64.21, 1, 1, 3, 38.64, 58.95, 1, 1, 3, 24.81, 58.3, 1 ],
-					"hull": 22,
-					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18, 20, 20, 22, 22, 24, 24, 26, 26, 28, 28, 30, 30, 32, 32, 34, 34, 36, 36, 38, 38, 40, 40, 42, 0, 42, 36, 44, 44, 46, 46, 48, 48, 30 ],
-					"width": 195,
-					"height": 162
+					"uvs": [ 0.33976, 0, 0.45123, 0.02027, 0.5228, 0.07111, 0.64244, 0.19103, 0.77684, 0.36183, 0.93812, 0.60263, 1, 0.72863, 0.98012, 0.91903, 0.90116, 1, 0.66764, 1, 0.44007, 0.94459, 0.26612, 0.90223, 0.083, 0.70343, 0, 0.49903, 0.06956, 0.15183, 0.1502, 0, 0.53828, 0.54383 ],
+					"triangles": [ 16, 2, 3, 16, 3, 4, 7, 5, 6, 16, 4, 5, 7, 16, 5, 10, 11, 16, 9, 10, 16, 16, 8, 9, 7, 8, 16, 1, 2, 16, 0, 1, 16, 14, 15, 0, 16, 14, 0, 12, 14, 16, 13, 14, 12, 11, 12, 16 ],
+					"vertices": [ 2, 16, 10.26, 18.09, 0.99215, 17, -19.39, 19.11, 0.00785, 2, 16, 18.34, 20.4, 0.92788, 17, -11.2, 21, 0.07212, 2, 16, 24.18, 20.3, 0.8199, 17, -5.37, 20.61, 0.1801, 2, 16, 34.52, 18.69, 0.44076, 17, 4.88, 18.47, 0.55924, 2, 16, 46.76, 15.38, 0.06112, 17, 16.92, 14.53, 0.93888, 1, 17, 31.91, 8.28, 1, 1, 17, 38.16, 4.45, 1, 1, 17, 39.57, -4.13, 1, 1, 17, 35.18, -9.52, 1, 2, 16, 50.01, -14.3, 0.01223, 17, 18.64, -15.29, 0.98777, 2, 16, 33.27, -18.44, 0.46762, 17, 1.71, -18.55, 0.53238, 2, 16, 20.47, -21.6, 0.89254, 17, -11.24, -21.04, 0.10746, 2, 16, 4.37, -18.5, 0.99969, 17, -27.15, -17.12, 3.1E-4, 1, 16, -4.86, -12.33, 1, 1, 16, -5.93, 4.11, 1, 1, 16, -2.91, 12.72, 1, 2, 16, 33.28, 1.04, 0.00939, 17, 2.72, 0.9, 0.99061 ],
+					"hull": 16,
+					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 22, 24, 24, 26, 26, 28, 28, 30, 0, 30, 14, 32, 32, 28, 32, 6, 18, 20, 20, 22, 32, 20 ],
+					"width": 75,
+					"height": 45
 				}
 			},
 			"eyebrow_right": {
@@ -170,6 +176,18 @@
 					"height": 50
 				}
 			},
+			"tail": {
+				"tail": {
+					"type": "mesh",
+					"uvs": [ 0.64716, 0.06076, 0.76976, 0.06536, 0.86856, 0.11758, 0.92529, 0.21893, 0.82099, 0.2389, 0.66912, 0.20358, 0.65265, 0.24043, 0.84112, 0.29879, 0.91797, 0.38018, 0.96188, 0.49843, 0.91431, 0.61054, 0.99848, 0.72879, 0.9198, 0.8885, 0.65448, 0.99139, 0.43674, 1, 0.24461, 0.88082, 0.08542, 0.78868, 0.01406, 0.68118, 0.01772, 0.48308, 0.22448, 0.46004, 0.25376, 0.53375, 0.30865, 0.44161, 0.33793, 0.34486, 0.45869, 0.27576, 0.47882, 0.14829, 0.57946, 0.08226 ],
+					"triangles": [ 5, 0, 1, 4, 5, 1, 25, 0, 5, 24, 25, 5, 2, 4, 1, 3, 4, 2, 6, 24, 5, 23, 24, 6, 10, 7, 8, 10, 8, 9, 18, 19, 20, 20, 17, 18, 16, 17, 20, 15, 16, 20, 10, 23, 6, 12, 10, 11, 22, 23, 21, 7, 10, 6, 13, 10, 12, 23, 10, 21, 10, 20, 21, 13, 20, 10, 15, 20, 13, 14, 15, 13 ],
+					"vertices": [ 13.74, 37.06, 19.21, 38.89, 24.6, 37.83, 29.12, 33.49, 24.95, 30.69, 17.58, 29.97, 17.6, 27.77, 27.04, 27.9, 32.04, 24.94, 36.35, 19.5, 36.51, 12.84, 42.58, 8.08, 42.34, -1.6, 32.77, -11.45, 23.39, -15.58, 12.57, -12.59, 3.73, -10.46, -1.56, -6.05, -5.38, 4.37, 3.23, 9.06, 5.99, 5.7, 6.55, 11.45, 5.89, 17, 9.8, 22.65, 8.12, 29.65, 11.2, 34.8 ],
+					"hull": 26,
+					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18, 20, 20, 22, 22, 24, 24, 26, 26, 28, 28, 30, 30, 32, 32, 34, 34, 36, 36, 38, 38, 40, 40, 42, 42, 44, 44, 46, 46, 48, 48, 50, 0, 50 ],
+					"width": 47,
+					"height": 56
+				}
+			},
 			"birthmark": {
 				"birthmark": { "x": -22.05, "y": -19.28, "rotation": -49.07, "width": 72, "height": 76 }
 			},
@@ -187,6 +205,18 @@
 			},
 			"eyebrow_left": {
 				"eyebrow_right_front": { "x": 2.09, "y": -1.19, "width": 19, "height": 15 }
+			},
+			"arm": {
+				"arm": {
+					"type": "mesh",
+					"uvs": [ 0.20538, 0, 0.43794, 0.00722, 0.63706, 0.18456, 0.86202, 0.47589, 0.98514, 0.69376, 1, 0.84322, 0.96082, 0.94456, 0.77538, 1, 0.43946, 0.94709, 0.19626, 0.83056, 0.05642, 0.65069, 0.01386, 0.42522, 0.03546, 0.17963, 0.0397, 0.13136, 0.52154, 0.54682 ],
+					"triangles": [ 5, 6, 7, 7, 8, 14, 8, 9, 14, 5, 7, 14, 14, 3, 5, 3, 4, 5, 14, 2, 3, 14, 1, 2, 9, 10, 14, 10, 11, 14, 14, 11, 12, 14, 12, 0, 12, 13, 0, 0, 1, 14 ],
+					"vertices": [ 1, 4, -1.87, 14.56, 1, 2, 4, 14.35, 20.99, 0.90785, 5, -8.6, 21.45, 0.09215, 2, 4, 31.21, 19.39, 0.31624, 5, 8.16, 19.01, 0.68376, 2, 4, 51.83, 13.81, 1.6E-4, 5, 28.48, 12.41, 0.99984, 1, 5, 40.49, 6.32, 1, 1, 5, 43.82, 0.37, 1, 1, 5, 42.61, -4.92, 1, 1, 5, 30.37, -11.98, 1, 2, 4, 30.78, -17.98, 0.07933, 5, 5.86, -18.3, 0.92067, 2, 4, 11.93, -20.18, 0.75552, 5, -13.07, -19.56, 0.24448, 2, 4, -0.87, -16.76, 0.96314, 5, -25.69, -15.5, 0.03686, 2, 4, -7.73, -8.64, 0.99861, 5, -32.13, -7.04, 0.00139, 1, 4, -10.5, 2.18, 1, 1, 4, -11.05, 4.31, 1, 2, 4, 29.5, 1.01, 0.00744, 5, 5.54, 0.74, 0.99256 ],
+					"hull": 14,
+					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18, 20, 20, 22, 0, 26, 10, 28, 22, 24, 24, 26, 28, 24, 28, 16, 28, 4 ],
+					"width": 75,
+					"height": 45
+				}
 			},
 			"leg": {
 				"leg": {
@@ -212,9 +242,6 @@
 					"height": 153
 				}
 			},
-			"ear_left_front": {
-				"ear_left_front": { "x": 44.45, "y": 1.55, "rotation": -37.57, "width": 106, "height": 102 }
-			},
 			"leg_right_front": {
 				"leg_right_front": {
 					"type": "mesh",
@@ -227,20 +254,32 @@
 					"height": 105
 				}
 			},
-			"body_front3": {
-				"body_small": { "x": 66.77, "y": -0.37, "rotation": -90.32, "width": 126, "height": 153 }
-			},
-			"arm": {
-				"arm": {
-					"type": "mesh",
-					"uvs": [ 0.20538, 0, 0.43794, 0.00722, 0.63706, 0.18456, 0.86202, 0.47589, 0.98514, 0.69376, 1, 0.84322, 0.96082, 0.94456, 0.77538, 1, 0.43946, 0.94709, 0.19626, 0.83056, 0.05642, 0.65069, 0.01386, 0.42522, 0.03546, 0.17963, 0.0397, 0.13136, 0.52154, 0.54682 ],
-					"triangles": [ 5, 6, 7, 7, 8, 14, 8, 9, 14, 5, 7, 14, 14, 3, 5, 3, 4, 5, 14, 2, 3, 14, 1, 2, 9, 10, 14, 10, 11, 14, 14, 11, 12, 14, 12, 0, 12, 13, 0, 0, 1, 14 ],
-					"vertices": [ 1, 4, -1.87, 14.56, 1, 2, 4, 14.35, 20.99, 0.90785, 5, -8.6, 21.45, 0.09215, 2, 4, 31.21, 19.39, 0.31624, 5, 8.16, 19.01, 0.68376, 2, 4, 51.83, 13.81, 1.6E-4, 5, 28.48, 12.41, 0.99984, 1, 5, 40.49, 6.32, 1, 1, 5, 43.82, 0.37, 1, 1, 5, 42.61, -4.92, 1, 1, 5, 30.37, -11.98, 1, 2, 4, 30.78, -17.98, 0.07933, 5, 5.86, -18.3, 0.92067, 2, 4, 11.93, -20.18, 0.75552, 5, -13.07, -19.56, 0.24448, 2, 4, -0.87, -16.76, 0.96314, 5, -25.69, -15.5, 0.03686, 2, 4, -7.73, -8.64, 0.99861, 5, -32.13, -7.04, 0.00139, 1, 4, -10.5, 2.18, 1, 1, 4, -11.05, 4.31, 1, 2, 4, 29.5, 1.01, 0.00744, 5, 5.54, 0.74, 0.99256 ],
-					"hull": 14,
-					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18, 20, 20, 22, 0, 26, 10, 28, 22, 24, 24, 26, 28, 24, 28, 16, 28, 4 ],
-					"width": 75,
-					"height": 45
+			"water": {
+				"water": {
+					"type": "clipping",
+					"end": "water",
+					"vertexCount": 4,
+					"vertices": [ 324.6, 508.1, -290.75, 499.77, -290.61, -21.48, 338.02, -15.56 ],
+					"color": "ce3a3aff"
 				}
+			},
+			"leg_left_back": {
+				"leg_left_back": {
+					"type": "mesh",
+					"uvs": [ 0.75499, 0.99036, 0.85912, 0.95296, 0.88674, 0.86909, 0.89737, 0.65489, 0.92499, 0.48603, 0.97387, 0.29223, 0.98662, 0.1381, 0.86124, 0.04063, 0.72631, 0, 0.44088, 2.6E-4, 0.15809, 0.11866, 0.05564, 0.2503, 0.01064, 0.3743, 0.05747, 0.54562, 0.16275, 0.70653, 0.34818, 0.86493, 0.50979, 0.96213, 0.70023, 1, 0.57535, 0.63363, 0.5151, 0.21353 ],
+					"triangles": [ 3, 18, 4, 14, 13, 18, 15, 14, 18, 2, 18, 3, 18, 16, 15, 16, 18, 0, 0, 18, 2, 1, 0, 2, 17, 16, 0, 19, 9, 8, 19, 8, 7, 19, 7, 6, 10, 9, 19, 11, 10, 19, 5, 19, 6, 4, 19, 5, 19, 12, 11, 19, 18, 12, 18, 13, 12, 4, 18, 19 ],
+					"vertices": [ 1, 24, 40.79, 3.88, 1, 1, 24, 37.9, 10.29, 1, 1, 24, 29.49, 13.31, 1, 2, 23, 40.33, 18.4, 0.29779, 24, 7.42, 17.7, 0.70221, 2, 23, 22.73, 21.06, 0.91569, 24, -9.79, 22.23, 0.08431, 1, 23, 2.59, 25.07, 1, 1, 23, -13.52, 26.8, 1, 1, 23, -24.17, 20.44, 1, 1, 23, -28.91, 13.17, 1, 1, 23, -29.89, -2.78, 1, 1, 23, -18.48, -19.37, 1, 1, 23, -5.04, -25.97, 1, 2, 23, 7.79, -29.3, 0.99776, 24, -30.03, -26.24, 0.00224, 2, 23, 25.91, -27.82, 0.86798, 24, -11.86, -26.71, 0.13202, 2, 23, 43.14, -23, 0.35749, 24, 5.79, -23.76, 0.64251, 2, 23, 60.4, -13.69, 0.00565, 24, 23.95, -16.34, 0.99435, 1, 24, 35.54, -9.15, 1, 1, 24, 41.26, 0.68, 1, 1, 24, 2.17, 0.31, 1, 1, 23, -7.28, -0.05, 1 ],
+					"hull": 18,
+					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18, 20, 20, 22, 22, 24, 24, 26, 26, 28, 28, 30, 30, 32, 32, 34, 0, 34, 0, 36, 36, 38, 38, 18 ],
+					"width": 56,
+					"height": 105
+				}
+			},
+			"drop6": {
+				"drop6": { "x": 0.5, "width": 19, "height": 18 }
+			},
+			"bone14": {
+				"pupil_left_front": { "x": 0.79, "y": 0.31, "width": 34, "height": 35 }
 			},
 			"ear_right_front": {
 				"ear_right_front": { "x": 42.79, "y": -3.79, "rotation": -143.69, "width": 106, "height": 103 }
@@ -248,8 +287,17 @@
 			"eyes_front": {
 				"eyes_front": { "x": 68.87, "y": 0.63, "rotation": -89.96, "width": 157, "height": 60 }
 			},
-			"shadow": {
-				"shadow": { "width": 140, "height": 28 }
+			"head": {
+				"head": {
+					"type": "mesh",
+					"uvs": [ 0.57433, 0.00825, 0.65754, 0.02353, 0.7351, 0.05409, 0.80985, 0.1118, 0.88741, 0.20686, 0.9551, 0.32739, 0.99741, 0.50902, 0.99459, 0.60918, 0.98331, 0.71273, 0.92126, 0.85193, 0.85074, 0.94529, 0.70549, 1, 0.32049, 1, 0.16959, 0.90625, 0.09062, 0.81628, 0.06382, 0.75517, 0, 0.71782, 0, 0.48865, 0.09344, 0.46489, 0.16818, 0.22724, 0.28382, 0.08804, 0.47139, 0, 0.15982, 0.5738, 0.18007, 0.65736, 0.17645, 0.74266 ],
+					"triangles": [ 11, 9, 10, 4, 11, 12, 2, 3, 1, 1, 3, 23, 1, 23, 0, 13, 24, 12, 24, 23, 12, 4, 12, 23, 20, 0, 22, 7, 9, 11, 3, 4, 23, 20, 21, 0, 13, 14, 24, 8, 9, 7, 6, 7, 11, 14, 15, 24, 24, 15, 23, 22, 23, 15, 15, 16, 22, 22, 17, 18, 22, 16, 17, 4, 5, 11, 0, 23, 22, 20, 22, 19, 6, 11, 5, 22, 18, 19 ],
+					"vertices": [ 1, 3, 150.8, -7.28, 1, 1, 3, 149.93, -23.67, 1, 1, 3, 146.48, -39.2, 1, 1, 3, 138.6, -54.62, 1, 1, 3, 124.75, -71.18, 1, 1, 3, 106.61, -86.23, 1, 1, 3, 78.13, -97.31, 1, 1, 3, 61.93, -98.35, 1, 1, 3, 45.02, -97.8, 1, 1, 3, 21.4, -87.97, 1, 1, 3, 5, -75.76, 1, 1, 3, -6.59, -48.44, 1, 1, 3, -13.93, 26.28, 1, 1, 3, -1.69, 57.05, 1, 1, 3, 11.31, 73.8, 1, 1, 3, 20.65, 79.96, 1, 1, 3, 25.45, 92.94, 1, 1, 3, 62.4, 96.57, 1, 1, 3, 68.01, 78.81, 1, 1, 3, 107.76, 68.07, 1, 1, 3, 132.4, 47.84, 1, 1, 3, 150.17, 12.83, 1, 1, 3, 51.72, 64.21, 1, 1, 3, 38.64, 58.95, 1, 1, 3, 24.81, 58.3, 1 ],
+					"hull": 22,
+					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18, 20, 20, 22, 22, 24, 24, 26, 26, 28, 28, 30, 30, 32, 32, 34, 34, 36, 36, 38, 38, 40, 40, 42, 0, 42, 36, 44, 44, 46, 46, 48, 48, 30 ],
+					"width": 195,
+					"height": 162
+				}
 			},
 			"eye2": {
 				"closed_eyes_side": { "x": -16.4, "y": 7.3, "rotation": -53.93, "width": 58, "height": 32 }
@@ -266,23 +314,35 @@
 					"height": 154
 				}
 			},
+			"head_front2": {
+				"head_front": { "x": 68.38, "y": 0.04, "rotation": -89.96, "width": 200, "height": 158 }
+			},
+			"drop3": {
+				"drop3": { "width": 18, "height": 20 }
+			},
 			"bone15": {
 				"pupil_right_front": { "x": 1.14, "y": -2.3, "width": 34, "height": 35 }
 			},
 			"body_front2": {
 				"tail_back": { "x": 9.07, "y": -13.41, "rotation": 129.61, "width": 44, "height": 53 }
 			},
-			"bone14": {
-				"pupil_left_front": { "x": 0.79, "y": 0.31, "width": 34, "height": 35 }
+			"body_front3": {
+				"body_small": { "x": 66.77, "y": -0.37, "rotation": -90.32, "width": 126, "height": 153 }
 			},
-			"head_front2": {
-				"head_front": { "x": 68.38, "y": 0.04, "rotation": -89.96, "width": 200, "height": 158 }
+			"drop7": {
+				"drop7": { "y": 0.5, "width": 72, "height": 99 }
 			},
 			"eyebrow": {
 				"eyebrow": { "x": 28.57, "y": 28.08, "rotation": -53.56, "width": 19, "height": 14 }
 			},
+			"drop5": {
+				"drop5": { "x": 0.5, "y": 0.5, "width": 51, "height": 97 }
+			},
 			"pupil": {
 				"pupil": { "x": -0.56, "y": -3.49, "rotation": -49.07, "width": 35, "height": 34 }
+			},
+			"shadow": {
+				"shadow": { "width": 140, "height": 28 }
 			},
 			"ear_back": {
 				"ear_back": { "x": 28.34, "y": -9.23, "rotation": -49.07, "width": 116, "height": 89 }
@@ -299,17 +359,8 @@
 			"bone9": {
 				"tail_front": { "x": 12.66, "y": -13.32, "rotation": 131.52, "width": 44, "height": 53 }
 			},
-			"leg_left_back": {
-				"leg_left_back": {
-					"type": "mesh",
-					"uvs": [ 0.75499, 0.99036, 0.85912, 0.95296, 0.88674, 0.86909, 0.89737, 0.65489, 0.92499, 0.48603, 0.97387, 0.29223, 0.98662, 0.1381, 0.86124, 0.04063, 0.72631, 0, 0.44088, 2.6E-4, 0.15809, 0.11866, 0.05564, 0.2503, 0.01064, 0.3743, 0.05747, 0.54562, 0.16275, 0.70653, 0.34818, 0.86493, 0.50979, 0.96213, 0.70023, 1, 0.57535, 0.63363, 0.5151, 0.21353 ],
-					"triangles": [ 3, 18, 4, 14, 13, 18, 15, 14, 18, 2, 18, 3, 18, 16, 15, 16, 18, 0, 0, 18, 2, 1, 0, 2, 17, 16, 0, 19, 9, 8, 19, 8, 7, 19, 7, 6, 10, 9, 19, 11, 10, 19, 5, 19, 6, 4, 19, 5, 19, 12, 11, 19, 18, 12, 18, 13, 12, 4, 18, 19 ],
-					"vertices": [ 1, 24, 40.79, 3.88, 1, 1, 24, 37.9, 10.29, 1, 1, 24, 29.49, 13.31, 1, 2, 23, 40.33, 18.4, 0.29779, 24, 7.42, 17.7, 0.70221, 2, 23, 22.73, 21.06, 0.91569, 24, -9.79, 22.23, 0.08431, 1, 23, 2.59, 25.07, 1, 1, 23, -13.52, 26.8, 1, 1, 23, -24.17, 20.44, 1, 1, 23, -28.91, 13.17, 1, 1, 23, -29.89, -2.78, 1, 1, 23, -18.48, -19.37, 1, 1, 23, -5.04, -25.97, 1, 2, 23, 7.79, -29.3, 0.99776, 24, -30.03, -26.24, 0.00224, 2, 23, 25.91, -27.82, 0.86798, 24, -11.86, -26.71, 0.13202, 2, 23, 43.14, -23, 0.35749, 24, 5.79, -23.76, 0.64251, 2, 23, 60.4, -13.69, 0.00565, 24, 23.95, -16.34, 0.99435, 1, 24, 35.54, -9.15, 1, 1, 24, 41.26, 0.68, 1, 1, 24, 2.17, 0.31, 1, 1, 23, -7.28, -0.05, 1 ],
-					"hull": 18,
-					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 18, 20, 20, 22, 22, 24, 24, 26, 26, 28, 28, 30, 30, 32, 32, 34, 0, 34, 0, 36, 36, 38, 38, 18 ],
-					"width": 56,
-					"height": 105
-				}
+			"drop4": {
+				"drop4": { "x": 0.5, "width": 27, "height": 26 }
 			},
 			"leg_back": {
 				"leg_back": {
@@ -335,17 +386,8 @@
 					"height": 51
 				}
 			},
-			"back_arm": {
-				"back_arm": {
-					"type": "mesh",
-					"uvs": [ 0.33976, 0, 0.45123, 0.02027, 0.5228, 0.07111, 0.64244, 0.19103, 0.77684, 0.36183, 0.93812, 0.60263, 1, 0.72863, 0.98012, 0.91903, 0.90116, 1, 0.66764, 1, 0.44007, 0.94459, 0.26612, 0.90223, 0.083, 0.70343, 0, 0.49903, 0.06956, 0.15183, 0.1502, 0, 0.53828, 0.54383 ],
-					"triangles": [ 16, 2, 3, 16, 3, 4, 7, 5, 6, 16, 4, 5, 7, 16, 5, 10, 11, 16, 9, 10, 16, 16, 8, 9, 7, 8, 16, 1, 2, 16, 0, 1, 16, 14, 15, 0, 16, 14, 0, 12, 14, 16, 13, 14, 12, 11, 12, 16 ],
-					"vertices": [ 2, 16, 10.26, 18.09, 0.99215, 17, -19.39, 19.11, 0.00785, 2, 16, 18.34, 20.4, 0.92788, 17, -11.2, 21, 0.07212, 2, 16, 24.18, 20.3, 0.8199, 17, -5.37, 20.61, 0.1801, 2, 16, 34.52, 18.69, 0.44076, 17, 4.88, 18.47, 0.55924, 2, 16, 46.76, 15.38, 0.06112, 17, 16.92, 14.53, 0.93888, 1, 17, 31.91, 8.28, 1, 1, 17, 38.16, 4.45, 1, 1, 17, 39.57, -4.13, 1, 1, 17, 35.18, -9.52, 1, 2, 16, 50.01, -14.3, 0.01223, 17, 18.64, -15.29, 0.98777, 2, 16, 33.27, -18.44, 0.46762, 17, 1.71, -18.55, 0.53238, 2, 16, 20.47, -21.6, 0.89254, 17, -11.24, -21.04, 0.10746, 2, 16, 4.37, -18.5, 0.99969, 17, -27.15, -17.12, 3.1E-4, 1, 16, -4.86, -12.33, 1, 1, 16, -5.93, 4.11, 1, 1, 16, -2.91, 12.72, 1, 2, 16, 33.28, 1.04, 0.00939, 17, 2.72, 0.9, 0.99061 ],
-					"hull": 16,
-					"edges": [ 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 14, 14, 16, 16, 18, 22, 24, 24, 26, 26, 28, 28, 30, 0, 30, 14, 32, 32, 28, 32, 6, 18, 20, 20, 22, 32, 20 ],
-					"width": 75,
-					"height": 45
-				}
+			"ear_left_front": {
+				"ear_left_front": { "x": 44.45, "y": 1.55, "rotation": -37.57, "width": 106, "height": 102 }
 			},
 			"leg_right_back": {
 				"leg_right_back": {
@@ -360,7 +402,10 @@
 				}
 			},
 			"snout_front": {
-				"snout_front": { "x": -5.59, "y": -2.45, "rotation": 0.28, "width": 64, "height": 41 }
+				"snout_front": { "x": 0.55, "y": -2.44, "rotation": 0.28, "width": 64, "height": 41 }
+			},
+			"drop1": {
+				"drop1": { "y": 0.5, "width": 72, "height": 99 }
 			}
 		}
 	}
@@ -368,12 +413,17 @@
 "animations": {
 	"dance": {
 		"slots": {
-			"bone15": {
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_right_back": {
+			"eyebrow": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone15": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -383,12 +433,47 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg": {
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone14": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -398,7 +483,32 @@
 					{ "name": null }
 				]
 			},
-			"eyebrow": {
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -413,22 +523,7 @@
 					{ "name": null }
 				]
 			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -443,7 +538,7 @@
 					{ "name": null }
 				]
 			},
-			"bone7": {
+			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -453,37 +548,22 @@
 					{ "name": null }
 				]
 			},
-			"bone14": {
+			"drop6": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"head": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -632,16 +712,32 @@
 					{ "x": -304.09, "y": 9.43 }
 				]
 			}
+		},
+		"deform": {
+			"default": {
+				"water": {
+					"water": [
+						{
+							"vertices": [ 122.65488, 90.35501, -92.76598, 126.48694, -44.58794, -0.36494, 80.47597, 2.62 ]
+						}
+					]
+				}
+			}
 		}
 	},
 	"eating_down": {
 		"slots": {
-			"bone15": {
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_right_back": {
+			"eyebrow": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone15": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -651,22 +747,93 @@
 					{ "name": null }
 				]
 			},
+			"bone7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
+				"attachment": [
+					{ "name": null },
+					{ "time": 0.6667, "name": "eyes_front" }
+				]
+			},
+			"bone14": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"leg_left_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg": {
+			"eye2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"front_ear": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow": {
+			"drop2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -681,27 +848,6 @@
 					{ "name": null }
 				]
 			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null },
-					{ "time": 0.6667, "name": "eyes_front" }
-				]
-			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"body_front3": {
 				"attachment": [
 					{ "name": null }
@@ -712,7 +858,7 @@
 					{ "name": null }
 				]
 			},
-			"bone7": {
+			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -722,42 +868,22 @@
 					{ "name": null }
 				]
 			},
-			"bone14": {
+			"front_ear": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm_left": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"head": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_right": {
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -887,87 +1013,22 @@
 	},
 	"eating_left": {
 		"slots": {
-			"bone15": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone9": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone16": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_right": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"leg_right_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"ear_left_front": {
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone15": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -977,7 +1038,37 @@
 					{ "name": null }
 				]
 			},
-			"bone14": {
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -987,12 +1078,57 @@
 					{ "name": null }
 				]
 			},
-			"body_front3": {
+			"leg_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone8": {
+			"bone14": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1002,7 +1138,32 @@
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone9": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1139,7 +1300,17 @@
 	},
 	"eating_right": {
 		"slots": {
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"bone15": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1149,37 +1320,7 @@
 					{ "name": null }
 				]
 			},
-			"body_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone9": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
+			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1189,22 +1330,7 @@
 					{ "name": null }
 				]
 			},
-			"bone16": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
+			"ear_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1214,7 +1340,7 @@
 					{ "name": null }
 				]
 			},
-			"eyebrow_right": {
+			"snout_front": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1224,17 +1350,7 @@
 					{ "name": null }
 				]
 			},
-			"ear_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone14": {
+			"drop1": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1244,12 +1360,67 @@
 					{ "name": null }
 				]
 			},
-			"body_front3": {
+			"leg_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone8": {
+			"bone14": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"birthmark": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1259,7 +1430,32 @@
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone9": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1406,52 +1602,7 @@
 	},
 	"eating_up": {
 		"slots": {
-			"bone15": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"front_ear": {
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1461,12 +1612,112 @@
 					{ "name": null }
 				]
 			},
-			"cheek": {
+			"bone15": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front3": {
+				"attachment": [
+					{ "name": "head_back" }
+				]
+			},
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"bone14": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"cheek": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1481,27 +1732,12 @@
 					{ "name": null }
 				]
 			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"eyebrow_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1511,47 +1747,42 @@
 					{ "name": null }
 				]
 			},
-			"ear_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front3": {
-				"attachment": [
-					{ "name": "head_back" }
-				]
-			},
-			"arm_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"tail": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone16": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"back_arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"birthmark": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1614,12 +1845,17 @@
 	},
 	"expired": {
 		"slots": {
-			"bone15": {
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_right_back": {
+			"eyebrow": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone15": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1629,12 +1865,47 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg": {
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone14": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1644,7 +1915,32 @@
 					{ "name": null }
 				]
 			},
-			"eyebrow": {
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1659,23 +1955,7 @@
 					{ "name": null }
 				]
 			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null },
-					{ "time": 1.6667, "name": null }
-				]
-			},
-			"eye": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1690,7 +1970,7 @@
 					{ "name": null }
 				]
 			},
-			"bone7": {
+			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1700,37 +1980,23 @@
 					{ "name": null }
 				]
 			},
-			"bone14": {
+			"drop6": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"head": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"birthmark": {
 				"attachment": [
-					{ "name": null }
+					{ "name": null },
+					{ "time": 1.6667, "name": null }
 				]
 			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1879,14 +2145,14 @@
 			}
 		]
 	},
-	"idle": {
+	"idle_neutral": {
 		"slots": {
-			"leg_right_back": {
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone8": {
+			"drop3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1896,17 +2162,72 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg": {
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1921,17 +2242,7 @@
 					{ "name": null }
 				]
 			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1946,7 +2257,7 @@
 					{ "name": null }
 				]
 			},
-			"bone7": {
+			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -1956,32 +2267,22 @@
 					{ "name": null }
 				]
 			},
-			"head": {
+			"drop6": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone16": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2105,9 +2406,14 @@
 			}
 		}
 	},
-	"munching_down": {
+	"idle_nose": {
 		"slots": {
-			"leg_right_back": {
+			"head": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2117,12 +2423,37 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg": {
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2132,12 +2463,37 @@
 					{ "name": null }
 				]
 			},
-			"eyebrow": {
+			"drop4": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone16": {
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"cheek": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2152,6 +2508,31 @@
 					{ "name": null }
 				]
 			},
+			"body_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"back_arm": {
 				"attachment": [
 					{ "name": null }
@@ -2162,7 +2543,269 @@
 					{ "name": null }
 				]
 			},
+			"leg": {
+				"attachment": [
+					{ "name": null }
+				]
+			}
+		},
+		"bones": {
+			"body_front": {
+				"translate": [
+					{ "x": 76.4, "y": 293.27 }
+				]
+			},
+			"bone2": {
+				"rotate": [
+					{ "angle": -4.7 }
+				]
+			},
+			"bone": {
+				"rotate": [
+					{ "angle": 5.6 }
+				],
+				"translate": [
+					{ "x": -2.22, "y": -1.51 }
+				]
+			},
+			"body_front3": {
+				"rotate": [
+					{ "angle": 4 }
+				]
+			},
+			"body_front2": {
+				"rotate": [
+					{ "angle": -3.8 }
+				],
+				"translate": [
+					{ "x": -2.44, "y": 2.06 }
+				]
+			},
+			"bone4": {
+				"rotate": [
+					{ "angle": 0.59 }
+				]
+			},
+			"bone3": {
+				"rotate": [
+					{ "angle": -7.08 },
+					{ "time": 0.8333, "angle": -1.72 },
+					{ "time": 1.6667, "angle": -7.08 }
+				],
+				"translate": [
+					{ "x": -2.89, "y": 0.33 },
+					{ "time": 0.8333, "x": 1.02, "y": 3.09 },
+					{ "time": 1.6667, "x": -2.89, "y": 0.33 }
+				]
+			},
+			"bone5": {
+				"rotate": [
+					{ "angle": 6.01 },
+					{ "time": 0.8333, "angle": -1.46 },
+					{ "time": 1.6667, "angle": 6.01 }
+				],
+				"translate": [
+					{ "x": -0.64, "y": -1.3 },
+					{ "time": 0.8333, "x": 0.76, "y": -0.75 },
+					{ "time": 1.6667, "x": -0.64, "y": -1.3 }
+				]
+			},
+			"bone6": {
+				"rotate": [
+					{ "angle": 0.77 },
+					{ "time": 0.8333, "angle": 3.95 },
+					{ "time": 1.6667, "angle": 0.77 }
+				]
+			},
+			"head_front": {
+				"translate": [
+					{ "x": -6.49, "y": 0.04 },
+					{ "time": 0.8333, "x": -0.34 },
+					{ "time": 1.6667, "x": -4.43, "y": 0.02 }
+				]
+			},
+			"chest_front": {
+				"scale": [
+					{},
+					{ "time": 0.8333, "y": 0.937 },
+					{ "time": 1.6667 }
+				]
+			},
+			"bone7": {
+				"rotate": [
+					{},
+					{ "time": 0.8333, "angle": -19.52 },
+					{ "time": 1.6667 }
+				]
+			},
+			"bone8": {
+				"rotate": [
+					{},
+					{ "time": 0.8333, "angle": 11.69 },
+					{ "time": 1.6667 }
+				]
+			},
+			"bone9": {
+				"translate": [
+					{ "x": -305.89 }
+				]
+			},
+			"shadow": {
+				"translate": [
+					{ "x": -304.09, "y": 9.43 }
+				],
+				"scale": [
+					{},
+					{ "time": 0.8333, "x": 1.143 },
+					{ "time": 1.6667 }
+				]
+			},
+			"bone14": {
+				"translate": [
+					{},
+					{ "time": 0.3333, "x": -3.59, "y": 4.33, "curve": "stepped" },
+					{ "time": 1.1667, "x": -3.59, "y": 4.33 },
+					{ "time": 1.6667 }
+				]
+			},
+			"bone15": {
+				"translate": [
+					{},
+					{ "time": 0.3333, "x": -4.03, "y": -5.89, "curve": "stepped" },
+					{ "time": 1.1667, "x": -4.03, "y": -5.89 },
+					{ "time": 1.6667 }
+				]
+			},
+			"bone17": {
+				"rotate": [
+					{ "time": 0.5 },
+					{ "time": 0.6667, "angle": 7.59 },
+					{ "time": 0.8333, "angle": -6.92 },
+					{ "time": 1, "angle": 7.59 },
+					{ "time": 1.1667 }
+				]
+			}
+		}
+	},
+	"idle_wave": {
+		"slots": {
+			"head": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone15": {
+				"attachment": [
+					{ "time": 0.5333, "name": null },
+					{ "time": 1, "name": "pupil_right_front" }
+				]
+			},
+			"leg_back": {
+				"attachment": [
+					{ "name": null },
+					{ "time": 1.6667, "name": null }
+				]
+			},
+			"bone7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null },
+					{ "time": 0.5333, "name": "closed_eyes" },
+					{ "time": 1, "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
+				"attachment": [
+					{ "time": 0.5333, "name": null },
+					{ "time": 1, "name": "eyes_front" }
+				]
+			},
+			"bone14": {
+				"attachment": [
+					{ "time": 0.5333, "name": null },
+					{ "time": 1, "name": "pupil_left_front" }
+				]
+			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"cheek": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2177,12 +2820,7 @@
 					{ "name": null }
 				]
 			},
-			"cheek": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
+			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2192,17 +2830,169 @@
 					{ "name": null }
 				]
 			},
-			"arm_left": {
+			"drop6": {
 				"attachment": [
-					{ "time": 0.3333, "name": null }
+					{ "name": null }
 				]
 			},
+			"back_arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"birthmark": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg": {
+				"attachment": [
+					{ "name": null }
+				]
+			}
+		},
+		"bones": {
+			"body_front": {
+				"translate": [
+					{ "x": 76.4, "y": 293.27 }
+				]
+			},
+			"bone2": {
+				"rotate": [
+					{ "angle": -4.7 }
+				]
+			},
+			"bone": {
+				"rotate": [
+					{ "angle": 5.6 }
+				],
+				"translate": [
+					{ "x": -2.22, "y": -1.51 }
+				]
+			},
+			"body_front3": {
+				"rotate": [
+					{ "angle": 4 }
+				]
+			},
+			"body_front2": {
+				"rotate": [
+					{ "angle": -3.8 }
+				],
+				"translate": [
+					{ "x": -2.44, "y": 2.06 }
+				]
+			},
+			"bone4": {
+				"rotate": [
+					{ "angle": 0.59 }
+				]
+			},
+			"bone3": {
+				"rotate": [
+					{ "angle": -7.08 }
+				],
+				"translate": [
+					{ "x": -2.89, "y": 0.33 }
+				]
+			},
+			"bone5": {
+				"rotate": [
+					{ "angle": 6.01, "curve": "stepped" },
+					{ "time": 0.5333, "angle": 6.01 },
+					{ "time": 0.6667, "angle": -67.06 },
+					{ "time": 0.8, "angle": 6.01 },
+					{ "time": 0.9333, "angle": -67.06 },
+					{ "time": 1.3333, "angle": 6.01 }
+				],
+				"translate": [
+					{ "x": -0.64, "y": -1.3, "curve": "stepped" },
+					{ "time": 0.5333, "x": -0.64, "y": -1.3 },
+					{ "time": 0.6667, "x": 4.61, "y": -1.33 },
+					{ "time": 0.8, "x": -0.64, "y": -1.3 },
+					{ "time": 0.9333, "x": 4.61, "y": -1.33 },
+					{ "time": 1.3333, "x": -0.64, "y": -1.3 }
+				]
+			},
+			"bone6": {
+				"rotate": [
+					{ "angle": 0.77 },
+					{ "time": 0.6667, "angle": 6.3 },
+					{ "time": 1.3333, "angle": 0.77 }
+				]
+			},
+			"head_front": {
+				"rotate": [
+					{},
+					{ "time": 0.5333, "angle": -15.29, "curve": "stepped" },
+					{ "time": 1, "angle": -15.29 },
+					{ "time": 1.3333 }
+				],
+				"translate": [
+					{ "x": -6.49, "y": 0.04 }
+				]
+			},
+			"chest_front": {
+				"scale": [
+					{},
+					{ "time": 0.6667, "y": 0.925 },
+					{ "time": 1.3333 }
+				]
+			},
+			"bone7": {
+				"rotate": [
+					{},
+					{ "time": 0.5333, "angle": -15.45 },
+					{ "time": 1.3333 }
+				]
+			},
+			"bone8": {
+				"rotate": [
+					{},
+					{ "time": 0.5333, "angle": 11.85 },
+					{ "time": 1.3333 }
+				]
+			},
+			"bone9": {
+				"rotate": [
+					{},
+					{ "time": 0.5333, "angle": -30.98 },
+					{ "time": 1.3333 }
+				],
+				"translate": [
+					{ "x": -305.89 }
+				]
+			},
+			"shadow": {
+				"translate": [
+					{ "x": -304.09, "y": 9.43 }
+				]
+			},
+			"bone19": {
+				"rotate": [
+					{ "angle": 1.2 }
+				]
+			}
+		}
+	},
+	"munching_down": {
+		"slots": {
 			"head": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"eyebrow": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2212,7 +3002,102 @@
 					{ "name": null }
 				]
 			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_right": {
+				"attachment": [
+					{ "time": 0.3333, "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"cheek": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
+				"attachment": [
+					{ "time": 0.3333, "name": null }
+				]
+			},
+			"body_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2222,9 +3107,29 @@
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"ear_back": {
 				"attachment": [
-					{ "time": 0.3333, "name": null }
+					{ "name": null }
+				]
+			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"back_arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"birthmark": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg": {
+				"attachment": [
+					{ "name": null }
 				]
 			}
 		},
@@ -2367,42 +3272,37 @@
 	},
 	"munching_left": {
 		"slots": {
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"bone15": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_right_back": {
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body_front": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"head_front2": {
+			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"ear_right_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone9": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_left": {
+			"ear_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2412,7 +3312,57 @@
 					{ "name": null }
 				]
 			},
-			"ear_right_front": {
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone14": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2427,47 +3377,7 @@
 					{ "name": null }
 				]
 			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"eyebrow_right": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone14": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2477,12 +3387,42 @@
 					{ "name": null }
 				]
 			},
-			"eye2": {
+			"body_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"leg_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone9": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2672,7 +3612,12 @@
 	},
 	"munching_right": {
 		"slots": {
-			"cheek": {
+			"arm_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2682,77 +3627,7 @@
 					{ "name": null }
 				]
 			},
-			"leg_right_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone9": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone16": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_right": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_left_front": {
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2762,22 +3637,67 @@
 					{ "name": null }
 				]
 			},
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"bone14": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm_left": {
+			"drop4": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body_front3": {
+			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone8": {
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2787,7 +3707,62 @@
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"cheek": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone9": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -2980,52 +3955,7 @@
 	},
 	"munching_up": {
 		"slots": {
-			"bone15": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front": {
-				"attachment": [
-					{ "time": 0.3333, "name": null }
-				]
-			},
-			"head_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"front_ear": {
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3035,12 +3965,117 @@
 					{ "name": null }
 				]
 			},
-			"eyebrow_right": {
+			"bone15": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_left_front": {
+				"attachment": [
+					{ "time": 0.6667, "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front3": {
+				"attachment": [
+					{ "name": "head_back" }
+				]
+			},
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
+				"attachment": [
+					{ "time": 0.1333, "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"bone14": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_right": {
+				"attachment": [
+					{ "time": 0.1333, "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"cheek": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3055,22 +4090,7 @@
 					{ "name": null }
 				]
 			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
+			"eyebrow_right": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3081,52 +4101,12 @@
 					{ "time": 0.3333, "name": "body_small" }
 				]
 			},
+			"body_front": {
+				"attachment": [
+					{ "time": 0.3333, "name": null }
+				]
+			},
 			"body": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"cheek": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_left_front": {
-				"attachment": [
-					{ "time": 0.6667, "name": null }
-				]
-			},
-			"ear_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front3": {
-				"attachment": [
-					{ "name": "head_back" }
-				]
-			},
-			"arm_left": {
-				"attachment": [
-					{ "time": 0.1333, "name": null }
-				]
-			},
-			"head": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"tail": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone16": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3136,9 +4116,39 @@
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"ear_back": {
 				"attachment": [
-					{ "time": 0.1333, "name": null }
+					{ "name": null }
+				]
+			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"back_arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"birthmark": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg": {
+				"attachment": [
+					{ "name": null }
 				]
 			}
 		},
@@ -3304,15 +4314,20 @@
 	},
 	"revive": {
 		"slots": {
+			"head": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"bone15": {
 				"attachment": [
 					{ "name": null },
 					{ "time": 0.6667, "name": "pupil_right_front" }
-				]
-			},
-			"leg_right_back": {
-				"attachment": [
-					{ "name": null }
 				]
 			},
 			"leg_back": {
@@ -3320,22 +4335,27 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg": {
+			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"front_ear": {
+			"tail": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eyebrow": {
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3346,12 +4366,12 @@
 					{ "time": 0.8667, "name": null }
 				]
 			},
-			"arm": {
+			"drop2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"back_arm": {
+			"eye": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3362,12 +4382,58 @@
 					{ "time": 0.6667, "name": "eyes_front" }
 				]
 			},
-			"birthmark": {
+			"bone14": {
+				"attachment": [
+					{ "name": null },
+					{ "time": 0.6667, "name": "pupil_left_front" }
+				]
+			},
+			"front_ear": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eye": {
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"cheek": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3382,12 +4448,7 @@
 					{ "name": null }
 				]
 			},
-			"cheek": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
+			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3397,38 +4458,22 @@
 					{ "name": null }
 				]
 			},
-			"bone14": {
-				"attachment": [
-					{ "name": null },
-					{ "time": 0.6667, "name": "pupil_left_front" }
-				]
-			},
-			"head": {
+			"drop6": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone8": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3595,13 +4640,28 @@
 	},
 	"revived": {
 		"slots": {
+			"head": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"bone15": {
 				"attachment": [
 					{ "time": 0.2667, "name": null },
 					{ "time": 1, "name": "pupil_right_front" }
 				]
 			},
-			"leg_right_back": {
+			"leg_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3611,7 +4671,61 @@
 					{ "name": null }
 				]
 			},
-			"leg_back": {
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null },
+					{ "time": 0.2667, "name": "closed_eyes" },
+					{ "time": 1, "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
+				"attachment": [
+					{ "time": 0.2667, "name": null },
+					{ "time": 1, "name": "eyes_front" }
+				]
+			},
+			"bone14": {
+				"attachment": [
+					{ "time": 0.2667, "name": null },
+					{ "time": 1, "name": "pupil_left_front" }
+				]
+			},
+			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3621,12 +4735,12 @@
 					{ "name": null }
 				]
 			},
-			"leg": {
+			"eye2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"front_ear": {
+			"drop1": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3641,23 +4755,7 @@
 					{ "name": null }
 				]
 			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "time": 0.2667, "name": null },
-					{ "time": 1, "name": "eyes_front" }
-				]
-			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3672,7 +4770,7 @@
 					{ "name": null }
 				]
 			},
-			"bone7": {
+			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3682,40 +4780,22 @@
 					{ "name": null }
 				]
 			},
-			"bone14": {
-				"attachment": [
-					{ "time": 0.2667, "name": null },
-					{ "time": 1, "name": "pupil_left_front" }
-				]
-			},
-			"head": {
+			"drop6": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone16": {
-				"attachment": [
-					{ "name": null },
-					{ "time": 0.2667, "name": "closed_eyes" },
-					{ "time": 1, "name": null }
-				]
-			},
-			"eye2": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3833,12 +4913,17 @@
 	},
 	"splash": {
 		"slots": {
-			"bone15": {
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_right_back": {
+			"eyebrow": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone15": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3848,17 +4933,52 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg": {
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone14": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3873,27 +4993,12 @@
 					{ "name": null }
 				]
 			},
-			"back_arm": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow": {
+			"body_front3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3903,7 +5008,7 @@
 					{ "name": null }
 				]
 			},
-			"bone7": {
+			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3913,37 +5018,22 @@
 					{ "name": null }
 				]
 			},
-			"bone14": {
+			"shadow": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"head": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -3952,7 +5042,8 @@
 		"bones": {
 			"body_front": {
 				"translate": [
-					{ "x": 76.4, "y": 293.27 }
+					{ "x": 76.4, "y": 293.27 },
+					{ "time": 0.5, "x": -299.25, "y": 376.46 }
 				]
 			},
 			"bone2": {
@@ -3983,55 +5074,202 @@
 			},
 			"bone4": {
 				"rotate": [
-					{ "angle": -7.08 }
+					{ "angle": 0.59 },
+					{ "time": 0.0333, "angle": -10.88 },
+					{ "time": 0.1333, "angle": -4.64 }
 				]
 			},
 			"bone3": {
 				"rotate": [
-					{ "angle": 29.72 }
+					{ "angle": -7.08 },
+					{ "time": 0.1333, "angle": 47.49 },
+					{ "time": 0.5, "angle": 50.64 }
 				],
 				"translate": [
-					{ "x": -2.89, "y": 0.33 }
+					{ "x": -2.89, "y": 0.33 },
+					{ "time": 0.1333, "x": 13.06, "y": -0.09 },
+					{ "time": 0.5, "x": 8.52, "y": 0.27 }
 				]
 			},
 			"bone5": {
 				"rotate": [
-					{ "angle": -27.2 }
+					{ "angle": 6.01 },
+					{ "time": 0.1333, "angle": -48.16 },
+					{ "time": 0.5, "angle": -50.49 }
 				],
 				"translate": [
-					{ "x": -0.64, "y": -1.3 }
+					{ "x": -0.64, "y": -1.3 },
+					{ "time": 0.1333, "x": 11.13, "y": -1.64 },
+					{ "time": 0.5, "x": 8.29, "y": -1.35 }
 				]
 			},
 			"bone6": {
 				"rotate": [
-					{ "angle": 0.77 }
+					{ "angle": 0.77 },
+					{ "time": 0.0333, "angle": 9 }
 				]
 			},
 			"head_front": {
 				"translate": [
-					{ "x": -6.49, "y": 0.04 }
+					{ "x": -6.49, "y": 0.04 },
+					{ "time": 0.1333, "x": 7.08, "y": -0.37 },
+					{ "time": 0.5, "x": 5.91, "y": -0.03 }
+				]
+			},
+			"bone7": {
+				"rotate": [
+					{},
+					{ "time": 0.1333, "angle": 33.16 },
+					{ "time": 0.5, "angle": 36.2 }
+				]
+			},
+			"bone8": {
+				"rotate": [
+					{},
+					{ "time": 0.1333, "angle": -41.55 },
+					{ "time": 0.5, "angle": -39.75 }
 				]
 			},
 			"bone9": {
 				"translate": [
-					{ "x": -305.89 }
+					{ "x": -305.89 },
+					{ "time": 0.5, "x": -305.89, "y": -393.64 }
 				]
 			},
 			"shadow": {
 				"translate": [
 					{ "x": -304.09, "y": 9.43 }
 				]
+			},
+			"bone13": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": -57.85 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.1333, "x": -23.87, "y": -3.52 },
+					{ "time": 0.5, "x": -25.72, "y": -9.28 }
+				]
+			},
+			"bone12": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 57.03 }
+				],
+				"translate": [
+					{},
+					{ "time": 0.1333, "x": -26.61, "y": 5.93 },
+					{ "time": 0.5, "x": -30.51, "y": 10.95 }
+				]
+			},
+			"bone18": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": -37.79 },
+					{ "time": 0.6667, "angle": -87.72 },
+					{ "time": 0.8, "angle": -110.93 }
+				],
+				"translate": [
+					{ "x": -127.36, "y": 7.21 },
+					{ "time": 0.3, "x": -27.92, "y": -32.05 },
+					{ "time": 0.5, "x": 27.88, "y": -100.32 },
+					{ "time": 0.6667, "x": -43, "y": -141.65 },
+					{ "time": 0.8, "x": -130.63, "y": -160.29 }
+				]
+			},
+			"bone22": {
+				"translate": [
+					{ "x": -85.98, "y": -12.45 },
+					{ "time": 0.4, "x": 76.05, "y": 8.82 },
+					{ "time": 0.5, "x": 85.26, "y": -30.28 },
+					{ "time": 0.6667, "x": 8.7, "y": -57.42 },
+					{ "time": 0.8, "x": -46.66, "y": -83.74 }
+				]
+			},
+			"bone20": {
+				"translate": [
+					{ "x": -75.21, "y": 36.15 },
+					{ "time": 0.3, "x": -87.91, "y": 31.91 }
+				]
+			},
+			"bone19": {
+				"translate": [
+					{ "x": -194.89, "y": -43.81 },
+					{ "time": 0.4, "x": 67.52, "y": 222.55 },
+					{ "time": 0.5, "x": 83.21, "y": 232.92 },
+					{ "time": 0.6667, "x": 29.98, "y": 316.44 },
+					{ "time": 0.8, "x": -22.24, "y": 379.61 }
+				]
+			},
+			"bone23": {
+				"rotate": [
+					{},
+					{ "time": 0.4, "angle": -131.97 },
+					{ "time": 0.5, "angle": -164.96 }
+				],
+				"translate": [
+					{ "x": -77.03, "y": 17.81 },
+					{ "time": 0.4, "x": 30.82, "y": 8.06 },
+					{ "time": 0.5, "x": 26.56, "y": -53.52 },
+					{ "time": 0.6667, "x": -28.89, "y": -94.15 },
+					{ "time": 0.8, "x": -61.13, "y": -98.48 }
+				]
+			},
+			"bone21": {
+				"rotate": [
+					{},
+					{ "time": 0.3, "angle": 20.64 },
+					{ "time": 0.5, "angle": 59.49 },
+					{ "time": 0.6667, "angle": 95.08 },
+					{ "time": 0.8, "angle": 129.04 }
+				],
+				"translate": [
+					{ "x": -226.43, "y": -6.83 },
+					{ "time": 0.3, "x": -122.05, "y": -2.52 },
+					{ "time": 0.5, "x": -50.99, "y": 23.93 },
+					{ "time": 0.6667, "x": -121.83, "y": 94.29 },
+					{ "time": 0.8, "x": -161.06, "y": 147.82 }
+				]
+			},
+			"bone24": {
+				"rotate": [
+					{},
+					{ "time": 0.3, "angle": 5.37 },
+					{ "time": 0.5, "angle": 41.91 },
+					{ "time": 0.6667, "angle": 130.11 },
+					{ "time": 0.8, "angle": 140.4 }
+				],
+				"translate": [
+					{ "x": -97.83, "y": 25.42 },
+					{ "time": 0.3, "x": -6.39, "y": -157.51 },
+					{ "time": 0.5, "x": 60.23, "y": -163.5 },
+					{ "time": 0.6667, "x": -18.78, "y": -74.28 },
+					{ "time": 0.8, "x": -74.17, "y": -16.56 }
+				]
+			}
+		},
+		"deform": {
+			"default": {
+				"water": {
+					"water": [
+						{
+							"offset": 4,
+							"vertices": [ 1.20798, 21.49199, -12.64359, 15.60196 ]
+						}
+					]
+				}
 			}
 		}
 	},
 	"under_attack": {
 		"slots": {
-			"leg_right_back": {
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone8": {
+			"drop3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4041,17 +5279,73 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg": {
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null },
+					{ "time": 0.7667, "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4066,17 +5360,7 @@
 					{ "name": null }
 				]
 			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4091,7 +5375,7 @@
 					{ "name": null }
 				]
 			},
-			"bone7": {
+			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4101,33 +5385,22 @@
 					{ "name": null }
 				]
 			},
-			"head": {
+			"drop6": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone16": {
-				"attachment": [
-					{ "name": null },
-					{ "time": 0.7667, "name": null }
-				]
-			},
-			"eye2": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4305,12 +5578,12 @@
 	},
 	"walk_down": {
 		"slots": {
-			"leg_right_back": {
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone8": {
+			"drop3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4320,17 +5593,72 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg": {
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"tail": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"front_ear": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4345,17 +5673,7 @@
 					{ "name": null }
 				]
 			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"birthmark": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eye": {
+			"body_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4370,7 +5688,7 @@
 					{ "name": null }
 				]
 			},
-			"bone7": {
+			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4380,32 +5698,22 @@
 					{ "name": null }
 				]
 			},
-			"head": {
+			"drop6": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone16": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eye2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pupil": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4564,7 +5872,12 @@
 	},
 	"walk_four_left": {
 		"slots": {
-			"cheek": {
+			"arm_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4574,77 +5887,7 @@
 					{ "name": null }
 				]
 			},
-			"leg_right_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_back": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone9": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"snout_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone16": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_right": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_left_front": {
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4654,22 +5897,67 @@
 					{ "name": null }
 				]
 			},
+			"bone8": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"ear_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"snout_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"bone14": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm_left": {
+			"drop4": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body_front3": {
+			"leg_right_back": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone8": {
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4679,7 +5967,62 @@
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"cheek": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_right": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone9": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4872,42 +6215,37 @@
 	},
 	"walk_left": {
 		"slots": {
+			"drop3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"bone15": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_right_back": {
+			"arm_right": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"body_front": {
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"head_front2": {
+			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"ear_right_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone9": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_left": {
+			"ear_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4917,7 +6255,57 @@
 					{ "name": null }
 				]
 			},
-			"ear_right_front": {
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"arm_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone14": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4932,47 +6320,7 @@
 					{ "name": null }
 				]
 			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"eyebrow_right": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone8": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"leg_right_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"ear_left_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone14": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_left": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body_front3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -4982,12 +6330,42 @@
 					{ "name": null }
 				]
 			},
-			"eye2": {
+			"body_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arm_right": {
+			"leg_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_front2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body_front3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone9": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyebrow_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -5146,7 +6524,7 @@
 	},
 	"walk_right": {
 		"slots": {
-			"bone15": {
+			"arm_left": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -5156,32 +6534,38 @@
 					{ "name": null }
 				]
 			},
-			"body_front": {
+			"bone15": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"head_front2": {
+			"arm_right": {
+				"attachment": [
+					{ "name": null },
+					{ "time": 1, "name": "arm-right_front" }
+				]
+			},
+			"bone7": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"bone8": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone9": {
+			"ear_right_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_left_front": {
+			"ear_left_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eyebrow_left": {
+			"drop3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -5191,7 +6575,57 @@
 					{ "name": null }
 				]
 			},
-			"ear_right_front": {
+			"leg_right_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_front": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone14": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -5206,42 +6640,27 @@
 					{ "name": null }
 				]
 			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"eyebrow_right": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone8": {
+			"body_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg_right_front": {
+			"eyes_front": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"ear_left_front": {
+			"drop6": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone7": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone14": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"arm_left": {
+			"head_front2": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -5251,20 +6670,14 @@
 					{ "name": null }
 				]
 			},
-			"bone16": {
+			"bone9": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eye2": {
+			"eyebrow_left": {
 				"attachment": [
 					{ "name": null }
-				]
-			},
-			"arm_right": {
-				"attachment": [
-					{ "name": null },
-					{ "time": 1, "name": "arm-right_front" }
 				]
 			}
 		},
@@ -5440,17 +6853,12 @@
 	},
 	"walk_up": {
 		"slots": {
-			"leg_right_back": {
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone9": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_front2": {
+			"eyebrow": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -5460,19 +6868,45 @@
 					{ "name": null }
 				]
 			},
-			"leg_left_back": {
+			"tail": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"leg": {
+			"drop3": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eyebrow_left": {
+			"head_front3": {
+				"attachment": [
+					{ "name": "head_back" }
+				]
+			},
+			"drop5": {
 				"attachment": [
 					{ "name": null }
+				]
+			},
+			"bone16": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eyes_front": {
+				"attachment": [
+					{ "name": null },
+					{ "time": 0.0667, "name": "eyes_front" }
 				]
 			},
 			"front_ear": {
@@ -5480,7 +6914,37 @@
 					{ "name": null }
 				]
 			},
-			"eyebrow": {
+			"drop4": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_right_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone9": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg_left_back": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"eye2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"drop1": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -5495,18 +6959,7 @@
 					{ "name": null }
 				]
 			},
-			"back_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyes_front": {
-				"attachment": [
-					{ "name": null },
-					{ "time": 0.0667, "name": "eyes_front" }
-				]
-			},
-			"birthmark": {
+			"eyebrow_right": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -5516,17 +6969,12 @@
 					{ "name": null }
 				]
 			},
-			"eye": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"eyebrow_right": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"body": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pupil": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -5536,32 +6984,32 @@
 					{ "name": null }
 				]
 			},
-			"head_front3": {
-				"attachment": [
-					{ "name": "head_back" }
-				]
-			},
-			"head": {
+			"drop6": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"tail": {
+			"head_front2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone16": {
+			"back_arm": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"eye2": {
+			"birthmark": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"pupil": {
+			"eyebrow_left": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"leg": {
 				"attachment": [
 					{ "name": null }
 				]
