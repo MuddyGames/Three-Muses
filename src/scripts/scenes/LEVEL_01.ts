@@ -995,7 +995,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Set Record Time
 	private setRecord(time: number) {
 		this.newRecordTime = time
-		window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
 	}
 
 	// Add Points
