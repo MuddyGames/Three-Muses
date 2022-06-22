@@ -548,7 +548,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		// Can player move
 		if (this.player.getMove()) {
-			if (this.cursors.right.isDown) {
+			if (this.cursors.right.isDown || this.key_d.isDown) {
 				let x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
 				let y = this.map.worldToTileY(this.player.getY())
 
@@ -574,7 +574,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 
-			if (this.cursors.left.isDown) {
+			if (this.cursors.left.isDown || this.key_a.isDown) {
 				let x = this.map.worldToTileX(this.player.getX() + this.tileSize / 2)
 				let y = this.map.worldToTileY(this.player.getY())
 
@@ -600,7 +600,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 
-			if (this.cursors.up.isDown) {
+			if (this.cursors.up.isDown || this.key_w.isDown) {
 				let x = this.map.worldToTileX(this.player.getX())
 				let y = this.map.worldToTileY(this.player.getY() + this.tileSize / 4)
 
@@ -626,7 +626,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 
-			if (this.cursors.down.isDown) {
+			if (this.cursors.down.isDown || this.key_s.isDown) {
 
 				let x = this.map.worldToTileX(this.player.getX())
 				let y = this.map.worldToTileY(this.player.getY() + this.player.getVelocityY().y)
@@ -668,7 +668,8 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 
-			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
+			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown &&
+				!this.key_w.isDown && !this.key_a.isDown && !this.key_s.isDown && !this.key_d.isDown) {
 				this.player.getState().handleInput(INPUT_TYPES.IDLE_NEUTRAL, time, delta, this.player)
 			} else {
 				for (let i = 0; i < this.fruit.length; i++) {
