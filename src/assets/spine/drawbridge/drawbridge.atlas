@@ -1,6 +1,6 @@
 
 drawbridge.png
-size: 217,68
+size: 299,68
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -13,28 +13,35 @@ Background
   index: -1
 Layer 5
   rotate: false
-  xy: 101, 2
+  xy: 183, 2
   size: 79, 64
   orig: 81, 66
   offset: 1, 1
   index: -1
 Layer 6
   rotate: false
-  xy: 182, 2
+  xy: 264, 2
   size: 8, 64
   orig: 11, 66
   offset: 2, 1
   index: -1
-turn - Copy
+shadow
   rotate: false
-  xy: 192, 43
-  size: 23, 23
-  orig: 25, 25
+  xy: 101, 2
+  size: 80, 64
+  orig: 82, 66
   offset: 1, 1
   index: -1
 turn
   rotate: false
-  xy: 192, 43
+  xy: 274, 43
+  size: 23, 23
+  orig: 25, 25
+  offset: 1, 1
+  index: -1
+turn - Copy
+  rotate: false
+  xy: 274, 43
   size: 23, 23
   orig: 25, 25
   offset: 1, 1
