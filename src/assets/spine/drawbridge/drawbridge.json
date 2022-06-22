@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "x4g2nTfu9UBI89b26RITP2GmMy8",
+	"hash": "5PM3W/FHFsZgEP1SP6MCtEZGIE8",
 	"spine": "3.8.72",
 	"x": 17,
 	"y": -75.82,
@@ -53,8 +53,7 @@
 	}
 ],
 "animations": {
-	"animation": {},
-	"closed": {
+	"idle": {
 		"bones": {
 			"bone": {
 				"scale": [
