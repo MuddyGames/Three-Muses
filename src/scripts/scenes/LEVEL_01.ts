@@ -513,7 +513,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		} 
 		
 		// Todo multiple hits on Key
-		if (this.key_d.isDown) {
+		if (Phaser.Input.Keyboard.JustDown(this.key_d!)) {
 			console.log('D')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
 		} else if (this.key_a.isDown) {
@@ -525,16 +525,15 @@ export default class LEVEL_01 extends Phaser.Scene {
 		} else if (this.key_s.isDown) {
 			console.log('S')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
-		} else if (this.key_g.isDown) {
-			console.log('G')
+		} /* else if (Phaser.Input.Keyboard.JustDown(this.key_g!)) {
 			if(this.GoT){
-				this.GoT = true
+				this.GoT = false
 				this.groundLayer.setVisible(false)
 			}else{
-				this.GoT = false
+				this.GoT = true
 				this.groundLayer.setVisible(true)
 			}
-		}
+		}*/
 
 		// DOES NOT WORK, can't feed new player input into the PlayerStateMachine.
 		// if (this.dpadAnimationIndex === this.dpadAnimationNames.indexOf('Up')){
