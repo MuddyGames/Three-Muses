@@ -25,7 +25,8 @@ import {
 	ANIMATION_DELAY,
 	POINTS,
 	TILE,
-	ARTIFACTS
+	ARTIFACTS,
+	RECORD
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -67,8 +68,17 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private screenY!: number
 	private elapsedLevelTime!: number
 	private startTime!: number
-	private hudtimer!: SpineGameObject
-	private hudrecord!: SpineGameObject
+
+	// Hud Animations
+	private soundMuteUnmuteButton!: SpineGameObject
+
+	private hudTimer!: SpineGameObject
+	private hudTimerAnimationNames: string[] = []
+	private hudTimerAnimationIndex = 0
+
+	private hudRecord!: SpineGameObject
+	private hudRecordAnimationNames: string[] = []
+	private hudRecordAnimationIndex = 0
 
 	// Level Music
 	private backingMusic!: Phaser.Sound.BaseSound
@@ -82,6 +92,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 	// Level Objects
 	// Truffles
 	private truffles!: SpineGameObject
+	private trufflesAnimationNames: string[] = []
+	private trufflesAnimationIndex = 0 // TODO : Remove this magic num of 0
 
 	// Cannon Balls
 	private cannonball: SpineGameObject[] = []
@@ -98,8 +110,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private fruitRemaining: number
 
 	// Artifacts
-	private artifactAnimationNames: string[] = []
 	private artifact: SpineGameObject[] = []
+	private artifactAnimationNames: string[] = []
 
 	// Windmill
 	private windmill!: SpineGameObject
@@ -120,11 +132,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private key_g!: Phaser.Input.Keyboard.Key
 	
 	private fruit: SpineGameObject[] = []
-	private soundbtn!: SpineGameObject
-
-	// Truffles
-	private trufflesAnimationNames: string[] = []
-	private trufflesAnimationIndex = 0 // TODO : Remove this magic num of 0
 
 	// Diver
 	private divers: SpineGameObject[] = []
@@ -205,7 +212,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.load.spine(KEYS[2], 'fruits/lemon/lemon.json', 'fruits/lemon/lemon.atlas')
 		this.load.spine(CANNONBALL_KEY, 'cannonball/cannonball.json', 'cannonball/cannonball.atlas')
 		this.load.spine(WINDMILL_KEY, 'windmill/windmill.json', 'windmill/windmill.atlas')
-		this.load.spine(DPAD_KEY, 'dpad/DPad_02.json', 'dpad/DPad_02.atlas')
+		this.load.spine(DPAD_KEY, 'dpad/DPad_Final_merge.json', 'dpad/DPad_Final_merge.atlas')
 		this.load.spine(SOUND_KEY, 'sound/sound.json', 'sound/sound.atlas')
 		this.load.spine(TIMER_KEY, 'timer/timer.json', 'timer/timer.atlas')
 		this.load.spine(BRIDGE_KEY, 'drawbridge/drawbridge.json', 'drawbridge/drawbridge.atlas')
@@ -256,17 +263,17 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
 
 		// TODO : Remove magic numbers
-		this.hudtimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
+		this.hudTimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
 		.setDepth(5)
 		.setScale( 0.75, 0.75 )
-		let hudTimerAnimationStates = this.hudtimer.getAnimationList()
-		this.hudtimer.play(hudTimerAnimationStates[1], true)
+		let hudTimerAnimationStates = this.hudTimer.getAnimationList()
+		this.hudTimer.play(hudTimerAnimationStates[1], true)
 
-		this.hudrecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.44, this.screenY * 0.001, 1, 1)
+		this.hudRecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.44, this.screenY * 0.001, 1, 1)
 		.setDepth(5)
 		.setScale(0.75, 0.74)
-		let hudRecordAnimationStates = this.hudrecord.getAnimationList()
-		this.hudrecord.play(hudRecordAnimationStates[0],true)
+		let hudRecordAnimationStates = this.hudRecord.getAnimationList()
+		this.hudRecord.play(hudRecordAnimationStates[0],true)
 
 
 		// Update Score Frequency
@@ -399,28 +406,28 @@ export default class LEVEL_03 extends Phaser.Scene {
 		}
 		
 		// Mute button
-		this.soundbtn = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.001, this.screenY * 0.001, 1, 1)
+		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.001, this.screenY * 0.001, 1, 1)
 		.setScale(0.8, 0.8)
 		.setDepth(5)
 		.setInteractive()
-		let soundStates = this.soundbtn.getAnimationList()
+		let soundStates = this.soundMuteUnmuteButton.getAnimationList()
 		let savedSoundState = window.localStorage.getItem('soundState')
 		let soundState = true
 		if (window.localStorage.getItem('soundState') === "false"){
 			this.game.sound.mute = true
-			this.soundbtn.play(soundStates[1], true)
+			this.soundMuteUnmuteButton.play(soundStates[1], true)
 		}
-		this.soundbtn.on('pointerdown', () => {
+		this.soundMuteUnmuteButton.on('pointerdown', () => {
 			if (soundState == true){
 				soundState = false
-				this.soundbtn.play(soundStates[1], true)
+				this.soundMuteUnmuteButton.play(soundStates[1], true)
 				window.localStorage.setItem('soundState', soundState.toString())
 				this.game.sound.mute = true
 				return
 			} if (soundState == false){
 				soundState = true
 				this.game.sound.mute = false
-				this.soundbtn.play(soundStates[0], true)
+				this.soundMuteUnmuteButton.play(soundStates[0], true)
 				window.localStorage.setItem('soundState', soundState.toString())
 				return
 			}
@@ -455,6 +462,14 @@ export default class LEVEL_03 extends Phaser.Scene {
 				this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
 				this.fetchRecordedTime()
 
+				// Update Score Frequency
+				this.time.addEvent({
+					delay: 500,
+					loop: true,
+					callback: this.updateNewRecordAnimation,
+					callbackScope: this
+				});
+
 			} else {
 				this.newRecordTime = this.bestRecordedTime
 			}
@@ -485,16 +500,12 @@ export default class LEVEL_03 extends Phaser.Scene {
 		
 		// Todo multiple hits on Key
 		if (Phaser.Input.Keyboard.JustDown(this.key_d!)) {
-			console.log('D')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
 		} else if (this.key_a.isDown) {
-			console.log('A')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
 		} else if (this.key_w.isDown) {
-			console.log('W')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
 		} else if (this.key_s.isDown) {
-			console.log('S')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
 		} 
 
@@ -521,6 +532,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 					if(this.tile.index === GOAL.TILE){
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
 				}
@@ -547,6 +559,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 					if(this.tile.index === GOAL.TILE){
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
 				}
@@ -573,6 +586,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 					if(this.tile.index === GOAL.TILE){
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
 				}
@@ -600,6 +614,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 					if(this.tile.index === GOAL.TILE){
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
 				}
@@ -721,7 +736,11 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 		this.recordTimeText.setPosition(this.screenX * 0.55, this.screenY * 0.04)
 		this.recordTimeText.update()
-		this.recordTimeText.setText(' ' + this.bestRecordedTime + ' ')
+		if(this.bestRecordedTime < RECORD.TIME){
+			this.recordTimeText.setText(' ' + this.bestRecordedTime + ' ')
+		}else{
+			this.recordTimeText.setText(' ' + '--:--' + ' ')
+		}
 		this.recordTimeText.setDepth(10)
 	}
 
@@ -933,6 +952,11 @@ export default class LEVEL_03 extends Phaser.Scene {
 		}
 	}
 
+	private updateNewRecordAnimation(){
+		console.log('New record Stuff')
+		//this.changeAnimation(this.hudrecord,[],1)
+	}
+
 	// Fruit Animations
 	private fruitAnimate(index: number, time: number, delta: number) {
 		this.changeAnimation(this.fruit[index], this.fruitAnimationNames, 2)
@@ -1004,13 +1028,17 @@ export default class LEVEL_03 extends Phaser.Scene {
 		if (temp !== null) {
 			this.bestRecordedTime = parseInt(temp) || 0
 			if (this.bestRecordedTime === 0) {
-				this.bestRecordedTime = 1000
+				this.bestRecordedTime = RECORD.TIME
 			}
 		} else {
-			this.bestRecordedTime = 0
+			this.bestRecordedTime = RECORD.TIME
 		}
 
-		window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
+		if(this.newRecordTime < RECORD.TIME){
+			window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
+		} else{
+			window.localStorage.setItem('time_' + this.sys.settings.key, RECORD.TIME.toString())
+		}
 	}
 
 	// Fetch Recorded Score
