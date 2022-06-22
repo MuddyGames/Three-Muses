@@ -23,7 +23,9 @@ import {
 	RIVER,
 	NEXT_LEVEL,
 	ANIMATION_DELAY,
-	POINTS
+	POINTS,
+	TILE,
+	ARTIFACTS
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -73,42 +75,64 @@ export default class LEVEL_04 extends Phaser.Scene {
 	// Church Bells
 	private churchBells!: Phaser.Sound.BaseSound
 
+	// Bridge Opening
+	private bridgeOpening!: Phaser.Sound.BaseSound
+
 	// Level Objects
+	// Truffles
 	private truffles!: SpineGameObject
-	private divers: SpineGameObject[] = []
+
+	// Cannon Balls
 	private cannonball: SpineGameObject[] = []
-	private windmill!: SpineGameObject
-	private bridge!: SpineGameObject
-	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-
-	private fruit: SpineGameObject[] = []
-	private dpad!: SpineGameObject
-	private soundbtn!: SpineGameObject
-
-	private trufflesAnimationNames: string[] = []
-	private trufflesAnimationIndex = 0 // TODO : Remove this magic num of 0
-
-	private diverAnimationNames: string[] = []
-	private diverAnimationIndex = 0 // TODO : Remove this magic num of 0
-	private diverMove: number[] = []
-
-	private bridgeOpen: boolean
-
-	private fruitAnimationNames: string[] = []
-	private fruitMarked: boolean[] = []
-	private fruitRemaining: number
-	private dpadAnimationIndex = 0
-	private dpadAnimationNames = []
-
-	private tileSize: number = 32
-
-	// TODO : Rework so that is in screen space
 	private cannonballAnimationNames: string[] = []
 	private cannonballAnimationIndex = 0
 	private cannonballPosX: number[] = [269, 525, 781]
 	private cannonballPosY: number[] = [60, 60, 60]
 	private cannonballSpeed = 2
 	private cannonballMoving: boolean[] = [true, true, true]
+
+	// Fruit
+	private fruitAnimationNames: string[] = []
+	private fruitMarked: boolean[] = []
+	private fruitRemaining: number
+
+	// Windmill
+	private windmill!: SpineGameObject
+
+	// Input Cursors
+	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
+	
+	// Input D-Pad
+	private dpad!: SpineGameObject
+	private dpadAnimationIndex = 0
+	private dpadAnimationNames = []
+
+	// Input WASD
+	private key_w!: Phaser.Input.Keyboard.Key
+	private key_a!: Phaser.Input.Keyboard.Key
+	private key_s!: Phaser.Input.Keyboard.Key
+	private key_d!: Phaser.Input.Keyboard.Key
+	private key_g!: Phaser.Input.Keyboard.Key
+	
+	private fruit: SpineGameObject[] = []
+	private soundbtn!: SpineGameObject
+
+	// Truffles
+	private trufflesAnimationNames: string[] = []
+	private trufflesAnimationIndex = 0 // TODO : Remove this magic num of 0
+
+	// Diver
+	private divers: SpineGameObject[] = []
+	private diverAnimationNames: string[] = []
+	private diverAnimationIndex = 0 // TODO : Remove this magic num of 0
+	private diverMove: number[] = []
+
+	// Bridge
+	private bridgeOpen!: boolean
+	private bridge!: SpineGameObject
+
+	// Tile Size
+	private tileSize: number = TILE.SIZE
 
 	// TileMap Data
 	private map!: Phaser.Tilemaps.Tilemap
@@ -141,6 +165,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 	private goalLayer!: Phaser.Tilemaps.TilemapLayer
 	private diverLayer!: Phaser.Tilemaps.TilemapLayer
 	private bridgeLayer!: Phaser.Tilemaps.TilemapLayer
+	private riverLayer!: Phaser.Tilemaps.TilemapLayer
 
 	// Game of Thrones Level
 	private GoT!: boolean
@@ -148,13 +173,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 	// Player Data
 	private playerState!: PlayerState
 
-	// WASD
-	private key_w!: Phaser.Input.Keyboard.Key
-	private key_a!: Phaser.Input.Keyboard.Key
-	private key_s!: Phaser.Input.Keyboard.Key
-	private key_d!: Phaser.Input.Keyboard.Key
-	private key_g!: Phaser.Input.Keyboard.Key
-
+	// Scene Constuctor
 	constructor() {
 		super({
 			key: 'LEVEL_04'
@@ -243,6 +262,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 		let hudRecordAnimationStates = this.hudrecord.getAnimationList()
 		this.hudrecord.play(hudRecordAnimationStates[0],true)
 
+
 		// Update Score Frequency
 		this.time.addEvent({
 			delay: 500,
@@ -270,6 +290,9 @@ export default class LEVEL_04 extends Phaser.Scene {
 			callback: this.playChurchBells,
 			callbackScope: this
 		});
+
+		// Bridge Opening Sound
+		this.bridgeOpening = this.sound.add('bridge_open')
 
 		// Setup Truffles
 		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 
@@ -339,78 +362,6 @@ export default class LEVEL_04 extends Phaser.Scene {
 		//Multitouch: the below sets the amount of concurrent touches can happen
 		this.input.addPointer(2);
 
-		// Add dpad
-		this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, 1180, 630, 1, 1)
-		.setScale(0.9)
-		.setDepth(5)
-		let dpad_bones = this.dpad.getBoneList()
-		let dpadAnimationNames = this.dpad.getAnimationList()
-		for (var i = 0; i < dpad_bones.length; i++){
-			let bone = this.dpad.findBone(dpad_bones[i])
-			// The line below creates touch-zones over the top of the dpad buttons. These are the touch-reactive elements.
-			// To make them visible, remove the last parameter of the function which sets the alpha to 0 - transparency full.
-			// When testing, it might be needed to make these touch-zones bigger or smaller, the third argument sets the size of the circle. 
-			let controls = this.add.circle(bone.worldX, 720 - (bone.worldY), 15, 0x00000000, 0)
-			controls['bone'] = bone.data.name
-			controls.setDepth(5)
-			controls.setInteractive()
-			controls.on('pointerdown', function dpadInput(this, dpad){
-				let dinput = this['bone']
-				switch (dinput){
-					case "Up":
-						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
-						console.log("dpad up")
-						//this.player.moveUp()
-						break
-					case "Down":
-						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
-						console.log("dpad down")
-						//this.player.moveDown()
-						break
-					case "Left":
-						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
-						console.log("dpad left")
-						//this.player.moveLeft()
-						break
-					case "Right":
-						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
-						console.log("dpad right")
-						//this.player.moveRight()
-						break
-					case "LeftDown":
-						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
-						console.log("dpad Left Down")
-						//this.player.moveRight()
-						break
-					case "LeftUp":
-						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
-						console.log("dpad Left Up")
-						//this.player.moveRight()
-						break
-					case "RightDown":
-						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
-						console.log("dpad Right Down")
-						//this.player.moveRight()
-						break
-					case "RightUp":
-						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
-						console.log("dpad Right Up")
-						//this.player.moveRight()
-						break
-					case "Static":
-						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
-						break
-					default:
-						this.dpadAnimationIndex = dpadAnimationNames.indexOf("Static")
-						break
-				}
-			})
-			controls.on('pointerup', function(this){
-				this.dpadAnimationIndex = dpadAnimationNames.indexOf("Static")
-			})
-		}
-		
-
 		// Setup Fruits
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
@@ -474,13 +425,15 @@ export default class LEVEL_04 extends Phaser.Scene {
 
 	update(time: number, delta: number): void {
 
+		console.log('SCENE ' + this.sys.settings.key)
+		
 		// Start time
 		if(this.startTime === 0){
 			this.startTime = time
 		}
 
 		// TODO: BETTER Game State Management
-		this.setCurrentLevel()
+		// this.setCurrentLevel()
 		
 		if (this.gameState === GSM.PLAY) {
 			this.elapsedLevelTime = time - this.startTime
@@ -521,7 +474,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 		} 
 		
 		// Todo multiple hits on Key
-		if (this.key_d.isDown) {
+		if (Phaser.Input.Keyboard.JustDown(this.key_d!)) {
 			console.log('D')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
 		} else if (this.key_a.isDown) {
@@ -533,31 +486,11 @@ export default class LEVEL_04 extends Phaser.Scene {
 		} else if (this.key_s.isDown) {
 			console.log('S')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
-		} else if (this.key_g.isDown) {
-			console.log('G')
-			if(this.GoT){
-				this.GoT = true
-				this.groundLayer.setVisible(false)
-			}else{
-				this.GoT = false
-				this.groundLayer.setVisible(true)
-			}
-		}
-
-		// DOES NOT WORK, can't feed new player input into the PlayerStateMachine.
-		// if (this.dpadAnimationIndex === this.dpadAnimationNames.indexOf('Up')){
-		//if (this.dpadAnimationIndex === 0){
-		//	console.log('INDEX 0')
-		 	//this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
-		//} else if (this.dpadAnimationIndex === this.dpadAnimationNames.indexOf('Down')){
-		//} else if (this.dpadAnimationIndex === 1){
-		//	console.log('INDEX 1')
-		// 	//this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
-		//}
+		} 
 
 		// Can player move
 		if (this.player.getMove()) {
-			if (this.cursors.right.isDown) {
+			if (this.cursors.right.isDown || this.key_d.isDown) {
 				let x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
 				let y = this.map.worldToTileY(this.player.getY())
 
@@ -581,23 +514,9 @@ export default class LEVEL_04 extends Phaser.Scene {
 						this.gsmUpdate(time, delta)
 					}
 				}
-
-				// Check if River Splash
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
-
-				this.tile = this.waterLayer.getTileAt(x, y)
-
-				if(this.tile !== null){
-					if(this.tile.index === RIVER.TILE){
-						// Reached River
-						this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
-					}
-				}
-
 			}
 
-			if (this.cursors.left.isDown) {
+			if (this.cursors.left.isDown || this.key_a.isDown) {
 				let x = this.map.worldToTileX(this.player.getX() + this.tileSize / 2)
 				let y = this.map.worldToTileY(this.player.getY())
 
@@ -621,22 +540,9 @@ export default class LEVEL_04 extends Phaser.Scene {
 						this.gsmUpdate(time, delta)
 					}
 				}
-
-				// Check if River Splash
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
-
-				this.tile = this.waterLayer.getTileAt(x, y)
-
-				if(this.tile !== null){
-					if(this.tile.index === RIVER.TILE){
-						// Reached River
-						this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
-					}
-				}
 			}
 
-			if (this.cursors.up.isDown) {
+			if (this.cursors.up.isDown || this.key_w.isDown) {
 				let x = this.map.worldToTileX(this.player.getX())
 				let y = this.map.worldToTileY(this.player.getY() + this.tileSize / 4)
 
@@ -660,22 +566,9 @@ export default class LEVEL_04 extends Phaser.Scene {
 						this.gsmUpdate(time, delta)
 					}
 				}
-
-				// Check if River Splash
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
-
-				this.tile = this.waterLayer.getTileAt(x, y)
-
-				if(this.tile !== null){
-					if(this.tile.index === RIVER.TILE){
-						// Reached River
-						this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
-					}
-				}
 			}
 
-			if (this.cursors.down.isDown) {
+			if (this.cursors.down.isDown || this.key_s.isDown) {
 
 				let x = this.map.worldToTileX(this.player.getX())
 				let y = this.map.worldToTileY(this.player.getY() + this.player.getVelocityY().y)
@@ -700,13 +593,15 @@ export default class LEVEL_04 extends Phaser.Scene {
 						this.gsmUpdate(time, delta)
 					}
 				}
+			}
 
-				// Check if River Splash
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
+			// Check if River Splash
+			if(!this.bridgeOpen) {
+				let x = this.map.worldToTileX(this.player.getX())
+				let y = this.map.worldToTileY(this.player.getY())
 
-				this.tile = this.waterLayer.getTileAt(x, y)
-
+				this.tile = this.riverLayer.getTileAt(x, y)
+			
 				if(this.tile !== null){
 					if(this.tile.index === RIVER.TILE){
 						// Reached River
@@ -715,7 +610,8 @@ export default class LEVEL_04 extends Phaser.Scene {
 				}
 			}
 
-			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
+			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown &&
+				!this.key_w.isDown && !this.key_a.isDown && !this.key_s.isDown && !this.key_d.isDown) {
 				this.player.getState().handleInput(INPUT_TYPES.IDLE_NEUTRAL, time, delta, this.player)
 			} else {
 				for (let i = 0; i < this.fruit.length; i++) {
@@ -745,11 +641,12 @@ export default class LEVEL_04 extends Phaser.Scene {
 		if(this.fruitRemaining <= 0 && !this.bridgeOpen) {
 			this.bridge.play(BRIDGE_ANIMS.TRANSITIONING, false)
 			this.bridgeOpen = true
+			this.bridgeOpening.play()
 			for (let i = 0; i < this.map.height; i++) {
 				for (let j = 0; j < this.map.width; j++) {
 					var tile = this.bridgeLayer.getTileAt(j, i)
 					if (tile != null) {
-						this.collisionLayer.removeTileAt(j, i)
+						this.riverLayer.removeTileAt(j, i)
 					}
 				}
 			}
@@ -780,7 +677,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 				this.addPoints(POINTS.DIVER_COLLISION)
 			}
 		}
-		// handle push
+		// Handle Push
 		let x = this.map.worldToTileX(this.player.getX())
 		let y = this.map.worldToTileY(this.player.getY() - this.player.getVelocityY().y)
 
@@ -790,7 +687,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 			this.truffles.setPosition(this.player.getX(), this.player.getY())
 		}
 
-		// cannonball collisions
+		// Cannonball collisions
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.trufflesAABB(this.cannonball[i])) {
 				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
@@ -820,6 +717,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 
 	//Setup Map Data
 	private setupMap() {
+
 		this.map = this.make.tilemap({
 			key: 'level',
 			tileWidth: this.tileSize,
@@ -932,9 +830,12 @@ export default class LEVEL_04 extends Phaser.Scene {
 
 		this.bridgeLayer = this.map.createLayer('map/environment_objects/animated/drawbridge_01', this.tileset, 0, 0);
 		this.bridgeLayer.setVisible(false)
+
+		this.riverLayer = this.map.createLayer('map/water/river_00', this.tileset, 0, 0);
+		this.riverLayer.setVisible(false)
 	}
 
-
+	// Create Spine Objects
 	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {
 		let object = this.add.spine(x, y, key, startAnim, true)
 		object.scaleX = scaleX
@@ -942,6 +843,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 		return object
 	}
 
+	// Init Animations
 	private initializeAnimationsState(spine: SpineGameObject, animationNames: string[]) {
 		const startAnim = spine.getCurrentAnimation().name
 
@@ -953,6 +855,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 		})
 	}
 
+	// Change Animations
 	private changeAnimation(spine: SpineGameObject, animationNames: string[], index: number) {
 		const animation = animationNames[index]
 		spine.play(animation, true)
@@ -978,6 +881,8 @@ export default class LEVEL_04 extends Phaser.Scene {
 
 		return collision
 	}
+
+	// Truffles Enemy Collisions
 	private trufflesEnemyCollision(enemy: SpineGameObject, index: number) {
 
 		var collision = false;
@@ -1004,6 +909,8 @@ export default class LEVEL_04 extends Phaser.Scene {
 
 		return collision
 	}
+
+	// Reset Diver
 	private resetDiverAnim(index: number) {
 		if(this.diverMove[index] > 0) {
 			this.divers[index].play(DIVER_ANIM.WALK_DOWN, true)
@@ -1099,12 +1006,12 @@ export default class LEVEL_04 extends Phaser.Scene {
 			this.bestRecordedTime = 0
 		}
 
-		window.localStorage.setItem('time_' + this.loadCurrentLevel(), this.newRecordTime.toString())
+		window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
 	}
 
 	// Fetch Recorded Score
 	private fetchRecordedScore() {
-		let temp = window.localStorage.getItem('score_' + this.loadCurrentLevel())
+		let temp = window.localStorage.getItem('score_' + this.sys.settings.key)
 		if (temp !== null) {
 			this.levelScore = parseInt(temp) || 0
 		} else {
@@ -1112,12 +1019,12 @@ export default class LEVEL_04 extends Phaser.Scene {
 		}
 		this.levelScore += this.collectablePoints
 		this.collectablePoints = 0 // Reset Points
-		window.localStorage.setItem('score_' + this.loadCurrentLevel(), this.levelScore.toString())
+		window.localStorage.setItem('score_' + this.sys.settings.key, this.levelScore.toString())
 	}
 
 	// Fetch Current Level
 	private loadCurrentLevel() : string {
-		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
+		/* let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
 		if (temp !== null) {
 			this.player.setCurrentLevel(temp)
 		} else {
@@ -1128,10 +1035,11 @@ export default class LEVEL_04 extends Phaser.Scene {
 		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
 		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
 
-		return this.player.getCurrentLevel()
+		return this.player.getCurrentLevel() */
+		return ''
 	}
 
-	// Set Current Level to a New Level
+	/* // Set Current Level to a New Level
 	private setCurrentLevel() : string {
 		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
 		let current_level: string
@@ -1148,19 +1056,33 @@ export default class LEVEL_04 extends Phaser.Scene {
 			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
 		}
 		return this.player.getCurrentLevel()
-	}
+	} */
 
+	// Game State Management
 	private gsmUpdate(time: number, delta: number): void {
 		this.gameState = GSM.LEVEL_COMPLETE
 	}
 
+	// Complete Level
 	private levelComplete(){
 		// Change Levels
 		// NOTE IMPORTANT
 		// LEVEL NEXTS TO BE SET TO NEXT LEVEL AND SCENE TO NEXT ARTIFACT
-		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.CREDITS)
 		this.backingMusic.stop()
-		this.scene.start('ArtiFactFourScene')
+
+		let level = this.sys.settings.key // Gets the name of the current scene
+		
+		if(level === LEVELS.LEVEL_01){
+			this.scene.start(ARTIFACTS.ArtiFactOneScene)
+		} else if(level === LEVELS.LEVEL_02){
+			this.scene.start(ARTIFACTS.ArtiFactTwoScene)
+		} else if(level === LEVELS.LEVEL_03){
+			this.scene.start(ARTIFACTS.ArtiFactThreeScene)
+		} else if(level === LEVELS.LEVEL_04){
+			this.scene.start(ARTIFACTS.ArtiFactFourScene)
+		} else if(level === LEVELS.CREDITS){
+			this.scene.start(ARTIFACTS.CREDITS)
+		}
 		// ENDS: Change Levels
 
 	}

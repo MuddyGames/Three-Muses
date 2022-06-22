@@ -1645,7 +1645,7 @@ export class ReachedGoal extends PlayerStateMachine {
         this.animationTime = 0
         this.idiomTime = 0
 
-        // Game State Management
+        /* // Game State Management
         if(player.getCurrentLevel() === LEVELS.LEVEL_01){
             player.setCurrentLevel(LEVELS.LEVEL_02)
         }else if(player.getCurrentLevel() === LEVELS.LEVEL_02){
@@ -1656,6 +1656,6 @@ export class ReachedGoal extends PlayerStateMachine {
             player.setCurrentLevel(LEVELS.CREDITS)
         } else{
             player.setCurrentLevel(LEVELS.LEVEL_01)
-        }
+        } */
     }
 }

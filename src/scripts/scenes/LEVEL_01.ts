@@ -433,7 +433,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 
 		// TODO: BETTER Game State Management
-		this.setCurrentLevel()
+		// this.setCurrentLevel()
 		
 		if (this.gameState === GSM.PLAY) {
 			this.elapsedLevelTime = time - this.startTime
@@ -1024,7 +1024,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	// Fetch Current Level
 	private loadCurrentLevel() : string {
-		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
+		/* let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
 		if (temp !== null) {
 			this.player.setCurrentLevel(temp)
 		} else {
@@ -1035,10 +1035,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
 		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
 
-		return this.player.getCurrentLevel()
+		return this.player.getCurrentLevel() */
+		return ''
 	}
 
-	// Set Current Level to a New Level
+	/* // Set Current Level to a New Level
 	private setCurrentLevel() : string {
 		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
 		let current_level: string
@@ -1055,7 +1056,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
 		}
 		return this.player.getCurrentLevel()
-	}
+	} */
 
 	// Game State Management
 	private gsmUpdate(time: number, delta: number): void {

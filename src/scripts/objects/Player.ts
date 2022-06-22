@@ -19,10 +19,10 @@ export default class Player {
     private splashDelay!: number
     private idiomDelay!: number
     private goalDelay!: number
-    private current_level!: string
-    private next_level!: string
-    private current_artifact!: string
-    private next_artifact!: string
+    //private current_level!: string
+    //private next_level!: string
+    //private current_artifact!: string
+    //private next_artifact!: string
     private scale!: number
     private pushSpeed!: Phaser.Math.Vector2
     private pushXSpeed!: Phaser.Math.Vector2
@@ -48,7 +48,7 @@ export default class Player {
         this.pushXSpeed = new Phaser.Math.Vector2(-TILE.SIZE,0) //TODO : Make magic numbers enum
     }
 
-    getCurrentLevel(): string{
+    /* getCurrentLevel(): string{
         if(this.current_level === LEVELS.LEVEL_01){
             this.next_level = LEVELS.LEVEL_02
             this.current_artifact = ARTIFACTS.ArtiFactOneScene
@@ -75,24 +75,24 @@ export default class Player {
             this.next_artifact = ARTIFACTS.ArtiFactTwoScene
         }
         return this.current_level
-    }
+    } */
 
-    getNextLevel(): string{
+   /*  getNextLevel(): string{
         return this.next_level
-    }
+    } */
 
-    getCurrentArtifact(): string{
+    /* getCurrentArtifact(): string{
         return this.current_artifact
-    }
+    } */
 
-    getNextArtifact(): string{
+    /* getNextArtifact(): string{
         return this.next_artifact
-    }
+    } */
 
-    setCurrentLevel(level: string): string{
+    /* setCurrentLevel(level: string): string{
         this.current_level = level
         return this.current_level
-    }
+    } */
 
     setMove(move: boolean): void {
         this.move = move
