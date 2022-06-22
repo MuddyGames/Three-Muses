@@ -24,7 +24,8 @@ import {
 	NEXT_LEVEL,
 	ANIMATION_DELAY,
 	POINTS,
-	TILE
+	TILE,
+	ARTIFACTS
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -424,7 +425,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	update(time: number, delta: number): void {
 
-		console.log('SCENE' + this.scene.getIndex())
+		console.log('SCENE ' + this.sys.settings.key)
 		
 		// Start time
 		if(this.startTime === 0){
@@ -1005,12 +1006,12 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.bestRecordedTime = 0
 		}
 
-		window.localStorage.setItem('time_' + this.loadCurrentLevel(), this.newRecordTime.toString())
+		window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
 	}
 
 	// Fetch Recorded Score
 	private fetchRecordedScore() {
-		let temp = window.localStorage.getItem('score_' + this.loadCurrentLevel())
+		let temp = window.localStorage.getItem('score_' + this.sys.settings.key)
 		if (temp !== null) {
 			this.levelScore = parseInt(temp) || 0
 		} else {
@@ -1018,7 +1019,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 		this.levelScore += this.collectablePoints
 		this.collectablePoints = 0 // Reset Points
-		window.localStorage.setItem('score_' + this.loadCurrentLevel(), this.levelScore.toString())
+		window.localStorage.setItem('score_' + this.sys.settings.key, this.levelScore.toString())
 	}
 
 	// Fetch Current Level
@@ -1066,10 +1067,21 @@ export default class LEVEL_01 extends Phaser.Scene {
 		// Change Levels
 		// NOTE IMPORTANT
 		// LEVEL NEXTS TO BE SET TO NEXT LEVEL AND SCENE TO NEXT ARTIFACT
-		console.log(this.scene.getIndex())
-		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_02)
 		this.backingMusic.stop()
-		this.scene.start('ArtiFactOneScene')
+
+		let level = this.sys.settings.key // Gets the name of the current scene
+		
+		if(level === LEVELS.LEVEL_01){
+			this.scene.start(ARTIFACTS.ArtiFactOneScene)
+		} else if(level === LEVELS.LEVEL_02){
+			this.scene.start(ARTIFACTS.ArtiFactTwoScene)
+		} else if(level === LEVELS.LEVEL_03){
+			this.scene.start(ARTIFACTS.ArtiFactThreeScene)
+		} else if(level === LEVELS.LEVEL_04){
+			this.scene.start(ARTIFACTS.ArtiFactFourScene)
+		} else if(level === LEVELS.CREDITS){
+			this.scene.start(ARTIFACTS.CREDITS)
+		}
 		// ENDS: Change Levels
 
 	}
