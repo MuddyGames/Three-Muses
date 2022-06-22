@@ -176,7 +176,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Scene Constuctor
 	constructor() {
 		super({
-			key: 'LEVEL_01'
+			key: LEVELS.LEVEL_01
 		})
 		// Heads up Display Data
 		this.collectablePoints = 0
@@ -228,9 +228,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 		// Retrieve Recorded Score and Time from LocalStorage
 		this.fetchRecordedScore()
 		this.fetchRecordedTime()
-		
-		// Load Current Level
-		this.loadCurrentLevel()
 
 		// Setup HUD
 		// Score
@@ -422,7 +419,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 	}
 
 	// Game Update Method
-
 	update(time: number, delta: number): void {
 
 		console.log('SCENE ' + this.sys.settings.key)
@@ -996,7 +992,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	// Fetch Recorded Time
 	private fetchRecordedTime() {
-		let temp = window.localStorage.getItem('time_' + this.loadCurrentLevel())
+		let temp = window.localStorage.getItem('time_' + this.sys.settings.key)
 		if (temp !== null) {
 			this.bestRecordedTime = parseInt(temp) || 0
 			if (this.bestRecordedTime === 0) {
@@ -1021,42 +1017,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.collectablePoints = 0 // Reset Points
 		window.localStorage.setItem('score_' + this.sys.settings.key, this.levelScore.toString())
 	}
-
-	// Fetch Current Level
-	private loadCurrentLevel() : string {
-		/* let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
-		if (temp !== null) {
-			this.player.setCurrentLevel(temp)
-		} else {
-			this.player.setCurrentLevel(LEVELS.LEVEL_01)
-		}
-		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
-		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT, this.player.getNextLevel())
-		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
-		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
-
-		return this.player.getCurrentLevel() */
-		return ''
-	}
-
-	/* // Set Current Level to a New Level
-	private setCurrentLevel() : string {
-		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
-		let current_level: string
-		if (temp !== null) {
-			current_level = temp
-		} else {
-			current_level = LEVELS.LEVEL_01
-		}
-		// Check if there the same and if not set the new level
-		if(this.player.getCurrentLevel() !== current_level){
-			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
-			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT, this.player.getNextLevel())
-			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
-			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
-		}
-		return this.player.getCurrentLevel()
-	} */
 
 	// Game State Management
 	private gsmUpdate(time: number, delta: number): void {

@@ -19,10 +19,6 @@ export default class Player {
     private splashDelay!: number
     private idiomDelay!: number
     private goalDelay!: number
-    //private current_level!: string
-    //private next_level!: string
-    //private current_artifact!: string
-    //private next_artifact!: string
     private scale!: number
     private pushSpeed!: Phaser.Math.Vector2
     private pushXSpeed!: Phaser.Math.Vector2
@@ -47,52 +43,6 @@ export default class Player {
         this.pushSpeed = new Phaser.Math.Vector2(0, 0)
         this.pushXSpeed = new Phaser.Math.Vector2(-TILE.SIZE,0) //TODO : Make magic numbers enum
     }
-
-    /* getCurrentLevel(): string{
-        if(this.current_level === LEVELS.LEVEL_01){
-            this.next_level = LEVELS.LEVEL_02
-            this.current_artifact = ARTIFACTS.ArtiFactOneScene
-            this.next_artifact = ARTIFACTS.ArtiFactTwoScene
-        }else if(this.current_level === LEVELS.LEVEL_02){
-            this.next_level = LEVELS.LEVEL_03
-            this.current_artifact = ARTIFACTS.ArtiFactTwoScene
-            this.next_artifact = ARTIFACTS.ArtiFactThreeScene
-        }else if(this.current_level === LEVELS.LEVEL_03){
-            this.next_level = LEVELS.LEVEL_04
-            this.current_artifact = ARTIFACTS.ArtiFactThreeScene
-            this.next_artifact = ARTIFACTS.ArtiFactFourScene
-        }else if(this.current_level === LEVELS.LEVEL_04){
-            this.next_level = LEVELS.CREDITS
-            this.current_artifact = ARTIFACTS.ArtiFactOneScene
-            this.next_artifact = ARTIFACTS.ArtiFactOneScene
-        }else if(this.current_level === LEVELS.CREDITS){
-            this.next_level = LEVELS.LEVEL_01
-            this.current_artifact = ARTIFACTS.ArtiFactOneScene
-            this.next_artifact = ARTIFACTS.ArtiFactOneScene
-        }else{
-            this.next_level = LEVELS.LEVEL_02
-            this.current_artifact = ARTIFACTS.ArtiFactOneScene
-            this.next_artifact = ARTIFACTS.ArtiFactTwoScene
-        }
-        return this.current_level
-    } */
-
-   /*  getNextLevel(): string{
-        return this.next_level
-    } */
-
-    /* getCurrentArtifact(): string{
-        return this.current_artifact
-    } */
-
-    /* getNextArtifact(): string{
-        return this.next_artifact
-    } */
-
-    /* setCurrentLevel(level: string): string{
-        this.current_level = level
-        return this.current_level
-    } */
 
     setMove(move: boolean): void {
         this.move = move
