@@ -5,7 +5,7 @@ export enum GSM {
 }
 
 export enum RECORD{
-    TIME = 10000
+    TIME = 1000000
 }
 
 // Used for local storage keys
@@ -42,11 +42,12 @@ export enum POINTS{
 }
 
 export enum ANIMATION_DELAY{
-    FRUIT = 480
+    FRUIT = 480,
+    RECORD = 200
 }
 
 export enum NEXT_LEVEL{
-    DELAY = 3000 //Delay until next level
+    DELAY = 6000 //Delay until next level
 }
 
 export enum GOAL {
