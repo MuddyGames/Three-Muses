@@ -139,6 +139,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private goalLayer!: Phaser.Tilemaps.TilemapLayer
 	private diverLayer!: Phaser.Tilemaps.TilemapLayer
 	private bridgeLayer!: Phaser.Tilemaps.TilemapLayer
+	private riverLayer!: Phaser.Tilemaps.TilemapLayer
 
 	// Game of Thrones Level
 	private GoT!: boolean
@@ -420,7 +421,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 		}
-		this.fruitRemaining = 1//this.fruit.length
+		this.fruitRemaining = this.fruit.length
 
 		// Init fruit animations
 		for (let o = 0; o < this.fruit.length; o++) {
@@ -658,7 +659,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				let x = this.map.worldToTileX(this.player.getX())
 				let y = this.map.worldToTileY(this.player.getY())
 
-				this.tile = this.waterLayer.getTileAt(x, y)
+				this.tile = this.riverLayer.getTileAt(x, y)
 			
 				if(this.tile !== null){
 					if(this.tile.index === RIVER.TILE){
@@ -702,7 +703,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				for (let j = 0; j < this.map.width; j++) {
 					var tile = this.bridgeLayer.getTileAt(j, i)
 					if (tile != null) {
-						this.waterLayer.removeTileAt(j, i)
+						this.riverLayer.removeTileAt(j, i)
 					}
 				}
 			}
@@ -885,6 +886,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		this.bridgeLayer = this.map.createLayer('map/environment_objects/animated/drawbridge_01', this.tileset, 0, 0);
 		this.bridgeLayer.setVisible(false)
+
+		this.riverLayer = this.map.createLayer('map/water/river_00', this.tileset, 0, 0);
+		this.riverLayer.setVisible(false)
 	}
 
 
