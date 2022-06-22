@@ -25,7 +25,8 @@ import {
 	ANIMATION_DELAY,
 	POINTS,
 	TILE,
-	ARTIFACTS
+	ARTIFACTS,
+	RECORD
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -499,16 +500,12 @@ export default class LEVEL_01 extends Phaser.Scene {
 		
 		// Todo multiple hits on Key
 		if (Phaser.Input.Keyboard.JustDown(this.key_d!)) {
-			console.log('D')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
 		} else if (this.key_a.isDown) {
-			console.log('A')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
 		} else if (this.key_w.isDown) {
-			console.log('W')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
 		} else if (this.key_s.isDown) {
-			console.log('S')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
 		} 
 
@@ -535,6 +532,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 					if(this.tile.index === GOAL.TILE){
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
 				}
@@ -561,6 +559,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 					if(this.tile.index === GOAL.TILE){
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
 				}
@@ -587,6 +586,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 					if(this.tile.index === GOAL.TILE){
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
 				}
@@ -614,6 +614,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 					if(this.tile.index === GOAL.TILE){
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
 				}
@@ -1023,13 +1024,17 @@ export default class LEVEL_01 extends Phaser.Scene {
 		if (temp !== null) {
 			this.bestRecordedTime = parseInt(temp) || 0
 			if (this.bestRecordedTime === 0) {
-				this.bestRecordedTime = 1000
+				this.bestRecordedTime = RECORD.TIME
 			}
 		} else {
-			this.bestRecordedTime = 0
+			this.bestRecordedTime = RECORD.TIME
 		}
 
-		window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
+		if(this.newRecordTime < RECORD.TIME){
+			window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
+		} else{
+			window.localStorage.setItem('time_' + this.sys.settings.key, RECORD.TIME.toString())
+		}
 	}
 
 	// Fetch Recorded Score

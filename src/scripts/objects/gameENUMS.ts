@@ -2,7 +2,11 @@ export enum GSM {
     PLAY = 'play',
     LEVEL_COMPLETE = 'level_complete',
     GAME_COMPLETE = 'game_complete'
-};
+}
+
+export enum RECORD{
+    TIME = 10000
+}
 
 // Used for local storage keys
 export enum LEVEL_DATA_KEY{
@@ -34,6 +38,7 @@ export enum POINTS{
     FRUIT_0 = 250,
     FRUIT_1 = 300,
     FRUIT_2 = 350,
+    REACHED_GOAL = 1500
 }
 
 export enum ANIMATION_DELAY{
