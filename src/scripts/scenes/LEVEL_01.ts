@@ -157,6 +157,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private key_d!: Phaser.Input.Keyboard.Key
 	private key_g!: Phaser.Input.Keyboard.Key
 
+	// D-PAD Fixes
+	private dpad_up!: boolean
+
 	constructor() {
 		super({
 			key: 'LEVEL_01'
@@ -169,6 +172,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.screenY = 0
 		this.startTime = 0
 		this.GoT = false
+
+		// D-Pad Members
+		this.dpad_up = false;
 	}
 
 	preload(time: number, delta: number): void {
@@ -358,6 +364,8 @@ export default class LEVEL_01 extends Phaser.Scene {
 					case "Up":
 						this.dpadAnimationIndex = dpadAnimationNames.indexOf(dinput)
 						console.log("dpad up")
+						this.dpad_up = true
+						console.log(this.dpad_up)
 						//this.player.moveUp()
 						break
 					case "Down":
@@ -471,6 +479,12 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Game Update Method
 
 	update(time: number, delta: number): void {
+		console.log('Update')
+		console.log('Update' + this.dpad_up)
+		if(this.dpad_up){
+			console.log("Dpad Up ->>>>>>> ")
+			this.dpad_up = false
+		}
 
 		// Start time
 		if(this.startTime === 0){
@@ -917,6 +931,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 		})
 	}
 
+	private dpadMove(){
+		console.log("Testing .......... ")
+	}
+
+	// Change Animations
 	private changeAnimation(spine: SpineGameObject, animationNames: string[], index: number) {
 		const animation = animationNames[index]
 		spine.play(animation, true)
