@@ -41,6 +41,7 @@ const DIVER_KEY = 'diver'
 const BRIDGE_KEY = 'bridge'
 const SOUND_KEY = 'soundbtn'
 const TIMER_KEY = 'hudtimer'
+const RECORD_KEY = 'hudrecord'
 
 // NEED TO CREATE LEVEL_01 to LEVEL_04 for final build 
 export default class LEVEL_03 extends Phaser.Scene {
@@ -64,6 +65,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private elapsedLevelTime!: number
 	private startTime!: number
 	private hudtimer!: SpineGameObject
+	private hudrecord!: SpineGameObject
 
 	// Level Music
 	private backingMusic!: Phaser.Sound.BaseSound
@@ -183,6 +185,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.load.spine(SOUND_KEY, 'sound/sound.json', 'sound/sound.atlas')
 		this.load.spine(TIMER_KEY, 'timer/timer.json', 'timer/timer.atlas')
 		this.load.spine(BRIDGE_KEY, 'drawbridge/drawbridge.json', 'drawbridge/drawbridge.atlas')
+		this.load.spine(RECORD_KEY, 'record/record.json','record/record.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -233,6 +236,12 @@ export default class LEVEL_03 extends Phaser.Scene {
 		.setScale( 0.75, 0.75 )
 		let hudTimerAnimationStates = this.hudtimer.getAnimationList()
 		this.hudtimer.play(hudTimerAnimationStates[1], true)
+
+		this.hudrecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.44, this.screenY * 0.001, 1, 1)
+		.setDepth(5)
+		.setScale(0.75, 0.74)
+		let hudRecordAnimationStates = this.hudrecord.getAnimationList()
+		this.hudrecord.play(hudRecordAnimationStates[0],true)
 
 		// Update Score Frequency
 		this.time.addEvent({
