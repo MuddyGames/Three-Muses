@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "Xk/TFrD+m9krPQHGmvtUndl5VXM",
+	"hash": "SpAv+CEtUciJNVSsofP7RFt8BZs",
 	"spine": "3.8.72",
-	"x": 29,
-	"y": -74,
-	"width": 53,
-	"height": 67,
+	"x": 25.96,
+	"y": -76.93,
+	"width": 56,
+	"height": 64,
 	"images": "./images/",
 	"audio": "C:/Users/kinga/Desktop/timer"
 },
@@ -15,7 +15,7 @@
 ],
 "slots": [
 	{ "name": "Background", "bone": "root" },
-	{ "name": "Layer 10", "bone": "root", "attachment": "Layer 10" },
+	{ "name": "Layer 10", "bone": "root", "attachment": "outline" },
 	{ "name": "Layer 9", "bone": "root", "attachment": "Layer 9" },
 	{ "name": "Layer 11", "bone": "bone", "attachment": "Layer 11" }
 ],
@@ -30,7 +30,7 @@
 				"Background": { "x": 54.5, "y": -54.5, "width": 111, "height": 111 }
 			},
 			"Layer 10": {
-				"Layer 10": { "x": 55.5, "y": -40.5, "width": 53, "height": 67 }
+				"outline": { "x": 53.96, "y": -44.93, "width": 56, "height": 64 }
 			},
 			"Layer 11": {
 				"Layer 11": { "x": 5.31, "y": -0.45, "rotation": 0.37, "width": 18, "height": 7 }

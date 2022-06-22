@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "6wf+eD2VGKsFGkw8yHw0DBv2Ya8",
+	"hash": "FJGTQDavgeRW8w1Hc9eTC6yePPk",
 	"spine": "3.8.72",
 	"x": 13,
 	"y": -92,
@@ -34,7 +34,7 @@
 		"name": "default",
 		"attachments": {
 			"outline": {
-				"outline": { "x": 55.5, "y": -40.5, "width": 53, "height": 67 }
+				"outline": { "x": 54.03, "y": -45.38, "width": 56, "height": 64 }
 			},
 			"arrow": {
 				"arrow": { "x": 60, "y": -47.5, "width": 18, "height": 7 }
@@ -72,12 +72,12 @@
 "animations": {
 	"idle": {
 		"slots": {
-			"new": {
+			"star4": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"arrow": {
+			"new": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -87,7 +87,7 @@
 					{ "name": null }
 				]
 			},
-			"star4": {
+			"arrow": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -96,7 +96,7 @@
 	},
 	"record_new": {
 		"slots": {
-			"arrow": {
+			"star4": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -106,7 +106,7 @@
 					{ "name": null }
 				]
 			},
-			"star4": {
+			"arrow": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -160,7 +160,7 @@
 	},
 	"record_red": {
 		"slots": {
-			"arrow": {
+			"star4": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -170,7 +170,7 @@
 					{ "name": null }
 				]
 			},
-			"star4": {
+			"arrow": {
 				"attachment": [
 					{ "name": null }
 				]
