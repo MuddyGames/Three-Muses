@@ -1,97 +1,118 @@
 
 vase.png
-size: 189,262
+size: 371,143
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 alter
-  rotate: true
-  xy: 95, 48
+  rotate: false
+  xy: 216, 70
   size: 66, 71
   orig: 68, 73
   offset: 1, 1
   index: -1
 alter copy
-  rotate: true
-  xy: 102, 186
+  rotate: false
+  xy: 70, 62
   size: 74, 79
   orig: 76, 81
   offset: 1, 1
   index: -1
+lock
+  rotate: true
+  xy: 2, 7
+  size: 34, 28
+  orig: 37, 30
+  offset: 1, 1
+  index: -1
+open
+  rotate: true
+  xy: 32, 15
+  size: 26, 23
+  orig: 28, 25
+  offset: 1, 1
+  index: -1
 pig
   rotate: false
-  xy: 2, 134
+  xy: 77, 2
   size: 91, 58
   orig: 93, 60
   offset: 1, 1
   index: -1
 pig copy
-  rotate: false
-  xy: 2, 194
+  rotate: true
+  xy: 2, 43
   size: 98, 66
   orig: 100, 68
   offset: 1, 1
   index: -1
 pot
   rotate: true
-  xy: 2, 15
+  xy: 263, 5
   size: 63, 60
   orig: 65, 62
   offset: 1, 1
   index: -1
 pot copy
-  rotate: false
-  xy: 95, 116
+  rotate: true
+  xy: 146, 70
   size: 71, 68
   orig: 73, 70
   offset: 1, 1
   index: -1
 star
-  rotate: false
-  xy: 168, 166
+  rotate: true
+  xy: 57, 22
   size: 19, 18
   orig: 21, 20
   offset: 1, 1
   index: -1
 star copy
-  rotate: false
-  xy: 168, 166
+  rotate: true
+  xy: 57, 22
   size: 19, 18
   orig: 21, 20
   offset: 1, 1
   index: -1
 star copy 2
-  rotate: false
-  xy: 168, 166
+  rotate: true
+  xy: 57, 22
   size: 19, 18
   orig: 21, 20
   offset: 1, 1
   index: -1
 star copy 3
-  rotate: false
-  xy: 168, 166
+  rotate: true
+  xy: 57, 22
   size: 19, 18
   orig: 21, 20
   offset: 1, 1
   index: -1
 star copy 4
-  rotate: false
-  xy: 168, 166
+  rotate: true
+  xy: 57, 22
   size: 19, 18
   orig: 21, 20
   offset: 1, 1
   index: -1
 weddingvase
-  rotate: true
-  xy: 64, 2
+  rotate: false
+  xy: 325, 12
   size: 44, 83
   orig: 46, 85
   offset: 1, 1
   index: -1
 weddingvase copy
   rotate: true
-  xy: 2, 80
+  xy: 170, 16
   size: 52, 91
   orig: 54, 93
+  offset: 1, 1
+  index: -1
+weddingvase shadow
+  rotate: true
+  xy: 284, 97
+  size: 44, 83
+  orig: 46, 85
   offset: 1, 1
   index: -1
