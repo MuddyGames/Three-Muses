@@ -71,6 +71,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Church Bells
 	private churchBells!: Phaser.Sound.BaseSound
 
+	// Bridge Opening
+	private bridgeOpening!: Phaser.Sound.BaseSound
+
 	// Level Objects
 	private truffles!: SpineGameObject
 	private divers: SpineGameObject[] = []
@@ -90,7 +93,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private diverAnimationIndex = 0 // TODO : Remove this magic num of 0
 	private diverMove: number[] = []
 
-	private bridgeOpen: boolean
+	private bridgeOpen!: boolean
 
 	private fruitAnimationNames: string[] = []
 	private fruitMarked: boolean[] = []
@@ -262,6 +265,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 			callback: this.playChurchBells,
 			callbackScope: this
 		});
+
+		// Bridge Opening Sound
+		this.bridgeOpening = this.sound.add('bridge_open')
 
 		// Setup Truffles
 		this.truffles = this.createSpineObject(IDLE_KEY, TRUFFLES_KEY, 
@@ -699,6 +705,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		if(this.fruitRemaining <= 0 && !this.bridgeOpen) {
 			this.bridge.play(BRIDGE_ANIMS.TRANSITIONING, false)
 			this.bridgeOpen = true
+			this.bridgeOpening.play()
 			for (let i = 0; i < this.map.height; i++) {
 				for (let j = 0; j < this.map.width; j++) {
 					var tile = this.bridgeLayer.getTileAt(j, i)
@@ -882,7 +889,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(2)
-		this.goalLayer.setVisible(true)
+		this.goalLayer.setVisible(false)
 
 		this.bridgeLayer = this.map.createLayer('map/environment_objects/animated/drawbridge_01', this.tileset, 0, 0);
 		this.bridgeLayer.setVisible(false)

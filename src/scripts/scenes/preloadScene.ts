@@ -37,6 +37,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio('revived', ['assets/audio/level/revived.mp3', 'assets/audio/level/revived.ogg']);
     this.load.audio('under_attack', ['assets/audio/level/under_attack.mp3', 'assets/audio/level/under_attack.ogg']);
     this.load.audio('reached_goal', ['assets/audio/level/reached_goal.mp3', 'assets/audio/level/reached_goal.ogg']);
+    this.load.audio('bridge_open', ['assets/audio/level/bridge_opening.mp3', 'assets/audio/level/bridge_opening.ogg']);
 
     // Idioms
     this.load.audio('a_boy_the_kid', ['assets/audio/idioms/a_boy_the_kid.mp3', 'assets/audio/idioms/a_boy_the_kid.ogg']);
