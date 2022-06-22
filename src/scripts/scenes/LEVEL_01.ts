@@ -1007,7 +1007,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				this.bestRecordedTime = 1000
 			}
 		} else {
-			this.bestRecordedTime = 1000
+			this.bestRecordedTime = 0
 		}
 
 		window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
