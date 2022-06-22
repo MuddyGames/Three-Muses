@@ -1,12 +1,12 @@
 
 truffles_all.png
-size: 1219,269
+size: 1291,269
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 arm
-  rotate: false
-  xy: 1108, 69
+  rotate: true
+  xy: 1227, 117
   size: 74, 45
   orig: 75, 45
   offset: 1, 0
@@ -27,14 +27,14 @@ arm_left_front
   index: -1
 back_arm
   rotate: true
-  xy: 1153, 116
+  xy: 1180, 93
   size: 75, 45
   orig: 75, 45
   offset: 0, 0
   index: -1
 birthmark
   rotate: false
-  xy: 1147, 193
+  xy: 1219, 193
   size: 70, 74
   orig: 72, 76
   offset: 1, 1
@@ -81,6 +81,55 @@ closed_eyes_side
   orig: 58, 32
   offset: 7, 1
   index: -1
+drop1
+  rotate: false
+  xy: 1147, 170
+  size: 70, 97
+  orig: 72, 99
+  offset: 1, 1
+  index: -1
+drop2
+  rotate: true
+  xy: 957, 11
+  size: 34, 31
+  orig: 36, 33
+  offset: 1, 1
+  index: -1
+drop3
+  rotate: true
+  xy: 856, 131
+  size: 16, 18
+  orig: 18, 20
+  offset: 1, 1
+  index: -1
+drop4
+  rotate: true
+  xy: 1180, 66
+  size: 25, 24
+  orig: 27, 26
+  offset: 1, 1
+  index: -1
+drop5
+  rotate: true
+  xy: 1152, 13
+  size: 49, 95
+  orig: 51, 97
+  offset: 1, 1
+  index: -1
+drop6
+  rotate: true
+  xy: 796, 130
+  size: 17, 16
+  orig: 19, 18
+  offset: 1, 1
+  index: -1
+drop7
+  rotate: false
+  xy: 1108, 64
+  size: 70, 97
+  orig: 72, 99
+  offset: 1, 1
+  index: -1
 ear_back
   rotate: true
   xy: 900, 153
@@ -125,21 +174,21 @@ eye
   index: -1
 eyebrow
   rotate: true
-  xy: 796, 130
+  xy: 814, 130
   size: 17, 12
   orig: 19, 14
   offset: 1, 1
   index: -1
 eyebrow_left_front
   rotate: true
-  xy: 810, 130
+  xy: 828, 130
   size: 17, 12
   orig: 19, 15
   offset: 1, 2
   index: -1
 eyebrow_right_front
   rotate: true
-  xy: 824, 130
+  xy: 842, 130
   size: 17, 12
   orig: 19, 15
   offset: 1, 1
@@ -188,7 +237,7 @@ leg
   index: -1
 leg_back
   rotate: true
-  xy: 1074, 4
+  xy: 1073, 4
   size: 51, 77
   orig: 51, 77
   offset: 0, 0
@@ -223,21 +272,21 @@ leg_right_front
   index: -1
 pupil
   rotate: true
-  xy: 957, 12
+  xy: 990, 12
   size: 33, 32
   orig: 35, 34
   offset: 1, 1
   index: -1
 pupil_left_front
   rotate: false
-  xy: 991, 12
+  xy: 1227, 82
   size: 32, 33
   orig: 34, 35
   offset: 1, 1
   index: -1
 pupil_right_front
-  rotate: true
-  xy: 1108, 129
+  rotate: false
+  xy: 1249, 47
   size: 32, 33
   orig: 34, 35
   offset: 1, 1
@@ -258,7 +307,7 @@ snout_front
   index: -1
 tail
   rotate: false
-  xy: 1025, 2
+  xy: 1024, 2
   size: 47, 53
   orig: 47, 56
   offset: 0, 0
