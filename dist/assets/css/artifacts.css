@@ -1,0 +1,192 @@
+.sketchfab-embed-wrapper1 {
+    position: absolute;
+    left: 60%;
+    top: 122%;
+}
+
+.sketchfab-embed-wrapper2 {
+    position: absolute;
+    left: 60%;
+    top: 122%;
+}
+
+.sketchfab-embed-wrapper3 {
+    position: absolute;
+    left: 60%;
+    top: 122%;
+}
+
+.sketchfab-embed-wrapper4 {
+    position: absolute;
+    left: 60%;
+    top: 122%;
+}
+
+
+div.image1 img{
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    left: 17%;
+    top: 95%;
+}
+
+div.image2 img{
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    left: 18%;
+    top: 95%;
+}
+
+div.image3 img{
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    left: 16%;
+    top: 95%;
+}
+
+div.image4 img{
+    max-width: 90%;
+    max-height: 90%;
+    position: absolute;
+    left: 18.5%;
+    top: 97%;
+}
+
+.column1{
+    
+    position: relative;
+    margin-top: 7%;
+    margin-left: 15%;
+    width:75%;
+    font-family: 'gamefont';
+    font-size: 20px;
+    background-color: #f9d877;
+    padding: .5%;
+    opacity: 0.6;
+    text-align: center;
+    letter-spacing: 3px;
+}
+
+.column2{
+    
+    position: relative;
+    margin-top: 7%;
+    margin-left: 15%;
+    width:75%;
+    font-family: 'gamefont';
+    font-size: 20px;
+    background-color: #f9d877;
+    padding: .5%;
+    opacity: 0.6;
+    text-align: center;
+    letter-spacing: 3px;
+}
+
+.column3{
+    
+    position: relative;
+    margin-top: 7%;
+    margin-left: 15%;
+    width:75%;
+    font-family: 'gamefont';
+    font-size: 20px;
+    background-color: #f9d877;
+    padding: .5%;
+    opacity: 0.6;
+    text-align: center;
+    letter-spacing: 3px;
+}
+
+.column4{
+    
+    position: relative;
+    margin-top: 7%;
+    margin-left: 15%;
+    width:75%;
+    font-family: 'gamefont';
+    font-size: 20px;
+    background-color: #f9d877;
+    padding: .5%;
+    opacity: 0.6;
+    text-align: center;
+    letter-spacing: 3px;
+    
+}
+
+div.header1 h1{
+    position: absolute;
+    left: 33%;
+    top: 36%;
+    font-family: 'gamefont';
+    color: #ff4d4d;
+    text-shadow: 1px 1px black;
+    font-size: 45px;
+    letter-spacing: 3px;
+    
+}
+
+div.header2 h1{
+    position: absolute;
+    left: 24%;
+    top: 36%;
+    font-family: 'gamefont';
+    color:yellow;
+    text-shadow: 1px 1px black;
+    font-size: 45px;
+    letter-spacing: 3px;
+}
+
+div.header3 h1{
+    position: absolute;
+    left: 28%;
+    top: 36%;
+    font-family: 'gamefont';
+    color: green;
+    text-shadow: 1px 1px black;
+    font-size: 45px;
+}
+
+div.header4 h1{
+    position: absolute;
+    left: 38.7%;
+    top: 36%;
+    font-family: 'gamefont';
+    color: pink;
+    text-shadow: 1px 1px black;
+    font-size: 45px;
+}
+
+div.redKey img{
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    left: 66.5%;
+    top: 45%;
+}
+
+div.yellowKey img{
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    left: 80%;
+    top: 45%;
+}
+
+div.greenKey img{
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    left: 74%;
+    top: 45%;
+}
+
+div.pinkKey img{
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    left: 60.5%;
+    top: 45%;
+}
