@@ -44,6 +44,7 @@ const BRIDGE_KEY = 'bridge'
 const SOUND_KEY = 'soundbtn'
 const TIMER_KEY = 'hudtimer'
 const RECORD_KEY = 'hudrecord'
+const ARTIFACTS_KEY = ['pig','vase','pot','alter']
 
 // NEED TO CREATE LEVEL_01 to LEVEL_04 for final build 
 export default class LEVEL_01 extends Phaser.Scene {
@@ -95,6 +96,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private fruitAnimationNames: string[] = []
 	private fruitMarked: boolean[] = []
 	private fruitRemaining: number
+
+	// Artifacts
+	private artifactAnimationNames: string[] = []
+	private artifact: SpineGameObject[] = []
 
 	// Windmill
 	private windmill!: SpineGameObject
@@ -205,6 +210,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.load.spine(TIMER_KEY, 'timer/timer.json', 'timer/timer.atlas')
 		this.load.spine(BRIDGE_KEY, 'drawbridge/drawbridge.json', 'drawbridge/drawbridge.atlas')
 		this.load.spine(RECORD_KEY, 'record/record.json','record/record.atlas')
+		this.load.spine(ARTIFACTS_KEY[0], 'collectibles_ui/pig/pig.json', 'collectibles_ui/pig/pig.atlas')
+		this.load.spine(ARTIFACTS_KEY[1], 'collectibles_ui/vase/vase.json', 'collectibles_ui/vase/vase.atlas')
+		this.load.spine(ARTIFACTS_KEY[2], 'collectibles_ui/pot/pot.json', 'collectibles_ui/pot/pot.atlas')
+		this.load.spine(ARTIFACTS_KEY[3], 'collectibles_ui/alter/alter.json','collectibles_ui/alter/alter.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -378,6 +387,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 		}
 		this.fruitRemaining = this.fruit.length
+
+		this.artifact[0] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[0], 100, 20, 1, 1)
+		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], 120, 20, 1, 1)
+		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], 140, 20, 1, 1)
+		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], 100, 50, 1, 1)
 
 		// Init fruit animations
 		for (let o = 0; o < this.fruit.length; o++) {
