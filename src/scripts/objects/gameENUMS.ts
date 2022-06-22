@@ -9,12 +9,12 @@ export enum RECORD{
 }
 
 // Used for local storage keys
-export enum LEVEL_DATA_KEY{
-    CURRENT = 'level_current',
-    NEXT = 'level_next',
-    CURRENT_ARTIFACT = 'artifact_current',
-    NEXT_ARTIFACT = 'artifact_next'
-}
+//export enum LEVEL_DATA_KEY{
+//    CURRENT = 'level_current',
+//    NEXT = 'level_next',
+//    CURRENT_ARTIFACT = 'artifact_current',
+ //   NEXT_ARTIFACT = 'artifact_next'
+//}
 
 export enum LEVELS{
     LEVEL_01 = 'LEVEL_01',

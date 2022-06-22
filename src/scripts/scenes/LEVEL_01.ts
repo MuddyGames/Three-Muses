@@ -16,7 +16,6 @@ import {
 	GSM,
 	DIVER,
 	LEVELS,
-	LEVEL_DATA_KEY,
 	DIVER_ANIM,
 	BRIDGE,
 	BRIDGE_ANIMS,
@@ -264,10 +263,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		// TODO : Remove magic numbers
 		this.hudTimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
-		.setDepth(5)
-		.setScale( 0.75, 0.75 )
-		let hudTimerAnimationStates = this.hudTimer.getAnimationList()
-		this.hudTimer.play(hudTimerAnimationStates[1], true)
+		this.hudTimer.setDepth(5)
+		this.hudTimer.setScale( 0.75, 0.75 )
+		this.hudRecordAnimationNames = this.hudTimer.getAnimationList()
 
 		this.hudRecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.44, this.screenY * 0.001, 1, 1)
 		.setDepth(5)
@@ -441,8 +439,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	// Game Update Method
 	update(time: number, delta: number): void {
-
-		console.log('SCENE ' + this.sys.settings.key)
 		
 		// Start time
 		if(this.startTime === 0){
@@ -454,6 +450,8 @@ export default class LEVEL_01 extends Phaser.Scene {
 		
 		if (this.gameState === GSM.PLAY) {
 			this.elapsedLevelTime = time - this.startTime
+			console.log(this.hudRecordAnimationNames[0])
+			this.hudTimer.play(this.hudRecordAnimationNames[0], true)
 
 		} else if (this.gameState === GSM.LEVEL_COMPLETE) {
 
@@ -461,6 +459,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
 				this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
 				this.fetchRecordedTime()
+				this.hudTimer.play(this.hudRecordAnimationNames[0], true) // Stop the stopwatch
 
 				// Update Score Frequency
 				this.time.addEvent({
