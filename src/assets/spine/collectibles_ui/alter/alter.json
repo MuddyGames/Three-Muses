@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "2k3s0JxZgzRehyMPO3OAjQPE/rI",
+	"hash": "uMTNaBuKIVHavsYpjh+xxAEIOzk",
 	"spine": "3.8.72",
 	"x": 51.63,
 	"y": -101,
@@ -19,7 +19,10 @@
 	{ "name": "bone6", "parent": "root", "length": 7.33, "rotation": -99.78, "x": 61.98, "y": -58.18 },
 	{ "name": "bone7", "parent": "root", "length": 8.47, "rotation": -91.68, "x": 93.09, "y": -60.88 },
 	{ "name": "bone8", "parent": "root", "length": 7.86, "rotation": -100.95, "x": 71.5, "y": -81.45 },
-	{ "name": "bone9", "parent": "root", "length": 7.62, "rotation": -101.31, "x": 119.78, "y": -63.69 }
+	{ "name": "bone9", "parent": "root", "length": 7.62, "rotation": -101.31, "x": 119.78, "y": -63.69 },
+	{ "name": "bone10", "parent": "root", "length": 29.46, "rotation": 91.2, "x": 191.67, "y": -59.03 },
+	{ "name": "bone11", "parent": "root", "length": 8.4, "rotation": -90, "x": 192.63, "y": -68.25 },
+	{ "name": "bone12", "parent": "root", "length": 9.52, "rotation": -3.96, "x": 195.77, "y": -53.78 }
 ],
 "slots": [
 	{ "name": "pot copy", "bone": "root", "attachment": "pot copy" },
@@ -34,7 +37,10 @@
 	{ "name": "star copy", "bone": "bone8", "attachment": "star copy" },
 	{ "name": "star copy 2", "bone": "bone7", "attachment": "star copy 2" },
 	{ "name": "star copy 3", "bone": "bone5", "attachment": "star copy 3" },
-	{ "name": "star copy 4", "bone": "bone6", "attachment": "star copy 4" }
+	{ "name": "star copy 4", "bone": "bone6", "attachment": "star copy 4" },
+	{ "name": "alter shadow", "bone": "bone10", "attachment": "alter shadow" },
+	{ "name": "open", "bone": "bone12", "attachment": "open" },
+	{ "name": "lock", "bone": "bone11", "attachment": "lock" }
 ],
 "skins": [
 	{
@@ -48,6 +54,9 @@
 			},
 			"pig copy": {
 				"pig copy": { "x": 82, "y": -67, "width": 100, "height": 68 }
+			},
+			"open": {
+				"open": { "x": -3.42, "y": 1.03, "rotation": 3.96, "width": 28, "height": 25 }
 			},
 			"pig": {
 				"pig": { "x": -9.36, "y": 9.48, "rotation": -87.71, "width": 93, "height": 60 }
@@ -76,6 +85,12 @@
 			"star copy 2": {
 				"star copy 2": { "x": 0.86, "y": 0.66, "rotation": 91.68, "width": 21, "height": 20 }
 			},
+			"alter shadow": {
+				"alter shadow": { "x": -1.25, "y": -0.41, "rotation": -91.2, "width": 68, "height": 73 }
+			},
+			"lock": {
+				"lock": { "x": -2.43, "y": 0.14, "rotation": 90, "width": 37, "height": 30 }
+			},
 			"alter copy": {
 				"alter copy": { "x": 192, "y": -60.5, "width": 76, "height": 81 }
 			}
@@ -85,9 +100,19 @@
 "animations": {
 	"alter_fill": {
 		"slots": {
-			"pot": {
+			"alter shadow": {
+				"attachment": [
+					{ "time": 0.1667, "name": null }
+				]
+			},
+			"pig copy": {
 				"attachment": [
 					{ "name": null }
+				]
+			},
+			"open": {
+				"attachment": [
+					{ "time": 0.8333, "name": null }
 				]
 			},
 			"weddingvase": {
@@ -95,7 +120,7 @@
 					{ "name": null }
 				]
 			},
-			"pig copy": {
+			"pot": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -114,6 +139,11 @@
 				"attachment": [
 					{ "name": null }
 				]
+			},
+			"lock": {
+				"attachment": [
+					{ "time": 0.8333, "name": null }
+				]
 			}
 		},
 		"bones": {
@@ -127,7 +157,6 @@
 			},
 			"bone2": {
 				"scale": [
-					{ "x": 0.01, "y": 0.01 },
 					{ "time": 0.6667 },
 					{ "time": 0.8333, "x": 1.5, "y": 1.5 },
 					{ "time": 1 }
@@ -232,42 +261,24 @@
 					{ "time": 1.1667, "x": 0.5, "y": 0.5 },
 					{ "time": 1.3333, "x": 0.01, "y": 0.01 }
 				]
+			},
+			"bone10": {
+				"scale": [
+					{ "time": 0.0667 },
+					{ "time": 0.1667, "x": 0.5, "y": 0.5 }
+				]
+			},
+			"bone12": {
+				"rotate": [
+					{},
+					{ "time": 0.5, "angle": 79.21 }
+				]
 			}
 		}
 	},
 	"alter_filled": {
 		"slots": {
-			"pot": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"star copy": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"weddingvase": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"star copy 2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"star": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"star copy 3": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"star copy 4": {
+			"alter shadow": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -277,7 +288,42 @@
 					{ "name": null }
 				]
 			},
+			"open": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"weddingvase": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"star copy": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"star copy 3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pot": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"pig": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"star": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"star copy 4": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -288,6 +334,16 @@
 				]
 			},
 			"pot copy": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"star copy 2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"lock": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -296,17 +352,7 @@
 	},
 	"idle": {
 		"slots": {
-			"alter": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"pot": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"star copy": {
+			"pig copy": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -316,12 +362,22 @@
 					{ "name": null }
 				]
 			},
-			"pig": {
+			"star copy": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"star copy 2": {
+			"star copy 3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pot": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"pig": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -336,22 +392,17 @@
 					{ "name": null }
 				]
 			},
-			"pig copy": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"star copy 3": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"weddingvase copy": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"pot copy": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"star copy 2": {
 				"attachment": [
 					{ "name": null }
 				]
