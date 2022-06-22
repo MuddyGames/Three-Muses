@@ -138,17 +138,35 @@ export class Idle extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
         }
-        //this.spine.play(INPUT_TYPES.IDLE_NEUTRAL, true)
-        //this.spine.play(INPUT_TYPES.IDLE_NOSE, true)
-        this.spine.play(INPUT_TYPES.IDLE_WAVE, true)
+
+        selection = Phaser.Math.Between(0, 9)
+        switch (selection) {
+            case 1:
+                this.spine.play(INPUT_TYPES.IDLE_NEUTRAL, true)
+                break
+            case 2:
+                this.spine.play(INPUT_TYPES.IDLE_NOSE, true)
+                break
+            case 3:
+                this.spine.play(INPUT_TYPES.IDLE_WAVE, true)
+                break
+            case 4:
+                this.spine.play(INPUT_TYPES.IDLE_NEUTRAL, true)
+                break
+            case 5:
+                this.spine.play(INPUT_TYPES.IDLE_NOSE, true)
+                break
+            case 6:
+                this.spine.play(INPUT_TYPES.IDLE_WAVE, true)
+                break
+            default:
+                this.spine.play(INPUT_TYPES.IDLE_NEUTRAL, true)
+                break
+        }
     }
     update(time: number, delta: number, player: Player) {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
-
-        if (this.animationElapsed >= player.getIdleDelay()) {
-            //this.spine.play(INPUT_TYPES.IDLE_WAVE, true)
-        }
 
         if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
