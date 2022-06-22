@@ -9,6 +9,7 @@ export default class Player {
     private position!: Phaser.Math.Vector2
     private velocityX!: Phaser.Math.Vector2
     private velocityY!: Phaser.Math.Vector2
+    private idleDelay!: number
     private eatingDelay!: number
     private munchingDelay!: number
     private underAttackDelay!: number
@@ -31,6 +32,7 @@ export default class Player {
         this.position = position
         this.velocityX = new Phaser.Math.Vector2(0, 0)
         this.velocityY = new Phaser.Math.Vector2(0, 0)
+        this.idleDelay = 1000
         this.eatingDelay = 1000
         this.munchingDelay = 1000
         this.underAttackDelay = 1000
@@ -104,6 +106,10 @@ export default class Player {
 
     respawn(): void {
         this.position = this.reSpawnPosition
+    }
+
+    getIdleDelay() : number{
+        return this.idleDelay
     }
 
     getEatingDelay(): number {

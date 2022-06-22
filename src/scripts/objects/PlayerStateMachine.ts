@@ -138,11 +138,17 @@ export class Idle extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
         }
-        this.spine.play(INPUT_TYPES.IDLE, true)
+        //this.spine.play(INPUT_TYPES.IDLE_NEUTRAL, true)
+        //this.spine.play(INPUT_TYPES.IDLE_NOSE, true)
+        this.spine.play(INPUT_TYPES.IDLE_WAVE, true)
     }
     update(time: number, delta: number, player: Player) {
         this.animationElapsed = time - this.animationTime
         this.idiomElapsed = time - this.idiomTime
+
+        if (this.animationElapsed >= player.getIdleDelay()) {
+            //this.spine.play(INPUT_TYPES.IDLE_WAVE, true)
+        }
 
         if (this.idiomElapsed >= player.getIdiomDelay() && !this.idiomPlayed) {
             this.idiomSound.play()
@@ -171,7 +177,7 @@ export class WalkingRight extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        if (input === INPUT_TYPES.IDLE) {
+        if (input === INPUT_TYPES.IDLE_NEUTRAL) {
             return new Idle(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_LEFT) {
             return new WalkingLeft(this.scene, this.spine)
@@ -266,7 +272,7 @@ export class WalkingLeft extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        if (input === INPUT_TYPES.IDLE) {
+        if (input === INPUT_TYPES.IDLE_NEUTRAL) {
             return new Idle(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_RIGHT) {
             return new WalkingRight(this.scene, this.spine)
@@ -361,7 +367,7 @@ export class WalkingUp extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        if (input === INPUT_TYPES.IDLE) {
+        if (input === INPUT_TYPES.IDLE_NEUTRAL) {
             return new Idle(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_LEFT) {
             return new WalkingLeft(this.scene, this.spine)
@@ -459,7 +465,7 @@ export class WalkingDown extends PlayerStateMachine {
         super(scene, spine)
     }
     handleInput(input: string): PlayerStateMachine | undefined {
-        if (input === INPUT_TYPES.IDLE) {
+        if (input === INPUT_TYPES.IDLE_NEUTRAL) {
             return new Idle(this.scene, this.spine)
         } else if (input === INPUT_TYPES.WALK_LEFT) {
             return new WalkingLeft(this.scene, this.spine)

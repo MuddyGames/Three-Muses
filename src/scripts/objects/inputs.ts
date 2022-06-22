@@ -1,5 +1,7 @@
 export enum INPUT_TYPES {
-    IDLE = 'idle',
+    IDLE_NEUTRAL = 'idle',
+        IDLE_NOSE = 'idle_nose',
+        IDLE_WAVE = 'idle_wave',
         WALK_RIGHT = 'walk_right',
         WALK_LEFT = 'walk_left',
         WALK_UP = 'walk_up',
@@ -14,9 +16,9 @@ export enum INPUT_TYPES {
         MUNCHING_RIGHT = 'munching_right',
         MUNCHING_UP = 'munching_up',
         MUNCHING_DOWN = 'munching_down',
-        EXPIRED = 'expired', 
-        REVIVE = 'revive', 
-        REVIVED = 'revived', 
+        EXPIRED = 'expired',
+        REVIVE = 'revive',
+        REVIVED = 'revived',
         SPLASH = 'splash', // TODO Splash Animation
         REACHED_GOAL = 'revived' // TODO Reached Goal Animation
 }

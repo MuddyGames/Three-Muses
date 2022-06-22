@@ -32,7 +32,7 @@ import { PairsFactory } from 'matter'
 
 // TODO Move Magic Data to KEYs
 const TRUFFLES_KEY = 'truffles'
-const IDLE_KEY = 'idle'
+const IDLE_KEY = INPUT_TYPES.IDLE_NEUTRAL
 const CANNONBALL_KEY = 'cannonball'
 const WINDMILL_KEY = 'windmill'
 const DPAD_KEY = 'dpad'
@@ -707,7 +707,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 			}
 
 			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
-				this.player.getState().handleInput(INPUT_TYPES.IDLE, time, delta, this.player)
+				this.player.getState().handleInput(INPUT_TYPES.IDLE_NEUTRAL, time, delta, this.player)
 			} else {
 				for (let i = 0; i < this.fruit.length; i++) {
 
