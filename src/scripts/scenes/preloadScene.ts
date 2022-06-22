@@ -27,7 +27,7 @@ export default class PreloadScene extends Phaser.Scene {
     // Backing Tracks
     this.load.audio('splash_screen_track', ['assets/audio/splash/splash_screen_track.mp3', 'assets/audio/splash/splash_screen_track.ogg']);
     this.load.audio('level_backing_track', ['assets/audio/level/level_backing_track.mp3', 'assets/audio/level/level_backing_track.ogg']);
-    this.load.audio('artifact_background', ['assets/audio/level/artifact_background.mp3', 'assets/audio/level/artifact_background.ogg']);
+    this.load.audio('artifact_background', ['assets/audio/artifacts/artifact_background.mp3', 'assets/audio/artifacts/artifact_background.ogg']);
 
 
     //Rewards and Punishment

@@ -140,6 +140,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private diverLayer!: Phaser.Tilemaps.TilemapLayer
 	private bridgeLayer!: Phaser.Tilemaps.TilemapLayer
 
+	// Game of Thrones Level
+	private GoT!: boolean
+
 	// Player Data
 	private playerState!: PlayerState
 
@@ -148,6 +151,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private key_a!: Phaser.Input.Keyboard.Key
 	private key_s!: Phaser.Input.Keyboard.Key
 	private key_d!: Phaser.Input.Keyboard.Key
+	private key_g!: Phaser.Input.Keyboard.Key
 
 	constructor() {
 		super({
@@ -160,6 +164,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.screenX = 0
 		this.screenY = 0
 		this.startTime = 0
+		this.GoT = false
 	}
 
 	preload(time: number, delta: number): void {
@@ -320,6 +325,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.key_a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
 		this.key_s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
 		this.key_d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
+		this.key_g = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G)
 
 		//Multitouch: the below sets the amount of concurrent touches can happen
 		this.input.addPointer(2);
@@ -518,6 +524,15 @@ export default class LEVEL_01 extends Phaser.Scene {
 		} else if (this.key_s.isDown) {
 			console.log('S')
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
+		} else if (this.key_g.isDown) {
+			console.log('G')
+			if(this.GoT){
+				this.GoT = true
+				this.groundLayer.setVisible(false)
+			}else{
+				this.GoT = false
+				this.groundLayer.setVisible(true)
+			}
 		}
 
 		// DOES NOT WORK, can't feed new player input into the PlayerStateMachine.
@@ -900,7 +915,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.candyLayer.setVisible(false)
 
 		this.diverLayer.setDepth(2)
-		this.diverLayer.setVisible(true)
+		this.diverLayer.setVisible(false)
 
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(2)
