@@ -1,327 +1,334 @@
 
 truffles_all.png
-size: 1291,269
+size: 1696,205
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 arm
-  rotate: true
-  xy: 1227, 117
+  rotate: false
+  xy: 676, 2
   size: 74, 45
   orig: 75, 45
   offset: 1, 0
   index: -1
 arm-right_front
   rotate: true
-  xy: 353, 4
+  xy: 943, 4
   size: 66, 47
   orig: 66, 51
   offset: 0, 0
   index: -1
 arm_left_front
-  rotate: true
-  xy: 402, 4
+  rotate: false
+  xy: 752, 2
   size: 66, 46
   orig: 66, 50
   offset: 0, 0
   index: -1
 back_arm
-  rotate: true
-  xy: 1180, 93
+  rotate: false
+  xy: 599, 2
   size: 75, 45
   orig: 75, 45
   offset: 0, 0
   index: -1
 birthmark
   rotate: false
-  xy: 1219, 193
+  xy: 1156, 13
   size: 70, 74
   orig: 72, 76
   offset: 1, 1
   index: -1
 body
   rotate: false
-  xy: 482, 113
+  xy: 542, 49
   size: 124, 154
   orig: 124, 154
   offset: 0, 0
   index: -1
 body_front
   rotate: false
-  xy: 640, 114
+  xy: 700, 50
   size: 126, 153
   orig: 126, 153
   offset: 0, 0
   index: -1
 body_small
-  rotate: true
-  xy: 771, 3
+  rotate: false
+  xy: 856, 72
   size: 125, 131
   orig: 126, 153
   offset: 0, 1
   index: -1
 cheek
   rotate: false
-  xy: 482, 75
+  xy: 820, 12
   size: 21, 36
   orig: 37, 36
   offset: 16, 0
   index: -1
 closed_eyes
   rotate: true
-  xy: 608, 113
+  xy: 668, 49
   size: 154, 30
   orig: 156, 32
   offset: 1, 1
   index: -1
 closed_eyes_side
   rotate: false
-  xy: 505, 82
+  xy: 1612, 12
   size: 50, 29
   orig: 58, 32
   offset: 7, 1
   index: -1
 drop1
-  rotate: false
-  xy: 1147, 170
+  rotate: true
+  xy: 1228, 26
   size: 70, 97
   orig: 72, 99
   offset: 1, 1
   index: -1
 drop2
   rotate: true
-  xy: 957, 11
+  xy: 1477, 3
   size: 34, 31
   orig: 36, 33
   offset: 1, 1
   index: -1
 drop3
-  rotate: true
-  xy: 856, 131
+  rotate: false
+  xy: 1228, 6
   size: 16, 18
   orig: 18, 20
   offset: 1, 1
   index: -1
 drop4
   rotate: true
-  xy: 1180, 66
+  xy: 1664, 17
   size: 25, 24
   orig: 27, 26
   offset: 1, 1
   index: -1
 drop5
-  rotate: true
-  xy: 1152, 13
+  rotate: false
+  xy: 1327, 2
   size: 49, 95
   orig: 51, 97
   offset: 1, 1
   index: -1
 drop6
   rotate: true
-  xy: 796, 130
+  xy: 1246, 7
   size: 17, 16
   orig: 19, 18
   offset: 1, 1
   index: -1
 drop7
-  rotate: false
-  xy: 1108, 64
+  rotate: true
+  xy: 1378, 27
   size: 70, 97
   orig: 72, 99
   offset: 1, 1
   index: -1
 ear_back
   rotate: true
-  xy: 900, 153
+  xy: 1087, 89
   size: 114, 87
   orig: 116, 89
   offset: 1, 1
   index: -1
 ear_left_back
   rotate: true
-  xy: 904, 47
+  xy: 1390, 99
   size: 104, 100
   orig: 106, 102
   offset: 1, 1
   index: -1
 ear_left_front
   rotate: true
-  xy: 989, 163
+  xy: 1492, 99
   size: 104, 100
   orig: 106, 102
   offset: 1, 1
   index: -1
 ear_right_back
   rotate: true
-  xy: 1006, 57
+  xy: 1594, 99
   size: 104, 100
   orig: 106, 103
   offset: 0, 2
   index: -1
 ear_right_front
   rotate: true
-  xy: 668, 8
+  xy: 1287, 99
   size: 104, 101
   orig: 106, 103
   offset: 1, 1
   index: -1
 eye
   rotate: false
-  xy: 300, 9
+  xy: 1477, 39
   size: 51, 58
   orig: 54, 60
   offset: 1, 1
   index: -1
 eyebrow
   rotate: true
-  xy: 814, 130
+  xy: 1264, 7
   size: 17, 12
   orig: 19, 14
   offset: 1, 1
   index: -1
 eyebrow_left_front
   rotate: true
-  xy: 828, 130
+  xy: 1278, 7
   size: 17, 12
   orig: 19, 15
   offset: 1, 2
   index: -1
 eyebrow_right_front
   rotate: true
-  xy: 842, 130
+  xy: 1292, 7
   size: 17, 12
   orig: 19, 15
   offset: 1, 1
   index: -1
 eyes_front
-  rotate: false
-  xy: 143, 9
+  rotate: true
+  xy: 482, 48
   size: 155, 58
   orig: 157, 60
   offset: 1, 1
   index: -1
 front_ear
   rotate: true
-  xy: 796, 149
+  xy: 983, 85
   size: 118, 102
   orig: 120, 104
   offset: 1, 1
   index: -1
 head
   rotate: true
-  xy: 318, 72
+  xy: 318, 8
   size: 195, 162
   orig: 195, 162
   offset: 0, 0
   index: -1
 head_back
   rotate: true
-  xy: 2, 69
+  xy: 2, 5
   size: 198, 156
   orig: 200, 158
   offset: 1, 1
   index: -1
 head_front
   rotate: true
-  xy: 160, 69
+  xy: 160, 5
   size: 198, 156
   orig: 200, 158
   offset: 1, 1
   index: -1
 leg
   rotate: true
-  xy: 2, 5
+  xy: 843, 2
   size: 62, 98
   orig: 64, 98
   offset: 1, 0
   index: -1
 leg_back
-  rotate: true
-  xy: 1073, 4
+  rotate: false
+  xy: 1103, 10
   size: 51, 77
   orig: 51, 77
   offset: 0, 0
   index: -1
 leg_left_back
   rotate: true
-  xy: 450, 14
+  xy: 992, 15
   size: 56, 105
   orig: 56, 105
   offset: 0, 0
   index: -1
 leg_left_front
-  rotate: false
-  xy: 1091, 163
+  rotate: true
+  xy: 1530, 43
   size: 54, 104
   orig: 54, 105
   offset: 0, 0
   index: -1
 leg_right_back
   rotate: false
-  xy: 557, 6
+  xy: 1176, 98
   size: 54, 105
   orig: 55, 105
   offset: 1, 0
   index: -1
 leg_right_front
   rotate: false
-  xy: 613, 6
+  xy: 1232, 98
   size: 53, 105
   orig: 53, 105
   offset: 0, 0
   index: -1
 pupil
   rotate: true
-  xy: 990, 12
+  xy: 1510, 4
   size: 33, 32
   orig: 35, 34
   offset: 1, 1
   index: -1
 pupil_left_front
   rotate: false
-  xy: 1227, 82
+  xy: 1544, 8
   size: 32, 33
   orig: 34, 35
   offset: 1, 1
   index: -1
 pupil_right_front
   rotate: false
-  xy: 1249, 47
+  xy: 1578, 8
   size: 32, 33
   orig: 34, 35
   offset: 1, 1
   index: -1
+ripple
+  rotate: false
+  xy: 983, 73
+  size: 118, 10
+  orig: 124, 154
+  offset: 3, 6
+  index: -1
 shadow
   rotate: true
-  xy: 768, 130
+  xy: 828, 66
   size: 137, 26
   orig: 140, 28
   offset: 3, 1
   index: -1
 snout_front
-  rotate: true
-  xy: 102, 5
+  rotate: false
+  xy: 535, 7
   size: 62, 39
   orig: 64, 41
   offset: 1, 1
   index: -1
 tail
   rotate: false
-  xy: 1024, 2
+  xy: 1636, 44
   size: 47, 53
   orig: 47, 56
   offset: 0, 0
   index: -1
 tail_back
   rotate: true
-  xy: 904, 3
+  xy: 482, 4
   size: 42, 51
   orig: 44, 53
   offset: 1, 1
   index: -1
 tail_front
   rotate: true
-  xy: 904, 3
+  xy: 482, 4
   size: 42, 51
   orig: 44, 53
   offset: 1, 1
