@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "nupNq5xWB7GhD8p+lO5TC6Lf8I4",
+	"hash": "woCH1oTQjSKI4I3EQI3Zpkdh/Zc",
 	"spine": "3.8.72",
 	"x": 7,
 	"y": -196,
@@ -49,7 +49,7 @@
 				"Background": { "x": 112, "y": -112, "width": 226, "height": 226 }
 			},
 			"shadow2": {
-				"shadow2": { "x": -0.88, "y": 0.69, "rotation": -4.24, "width": 26, "height": 6 }
+				"shadow2": { "color": "ffffff48", "x": -0.88, "y": 0.69, "rotation": -4.24, "width": 26, "height": 6 }
 			},
 			"secondmask": {
 				"secondmask": {
@@ -61,7 +61,7 @@
 				}
 			},
 			"shadow": {
-				"shadow": { "x": -0.7, "y": -1.17, "rotation": -1.33, "width": 119, "height": 114 }
+				"shadow": { "color": "ffffff55", "x": -0.7, "y": -1.17, "rotation": -1.33, "width": 119, "height": 114 }
 			}
 		}
 	}
