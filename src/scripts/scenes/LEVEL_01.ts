@@ -414,7 +414,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 		}
-		this.fruitRemaining = this.fruit.length
+		this.fruitRemaining = 1//this.fruit.length
 
 		// Init fruit animations
 		for (let o = 0; o < this.fruit.length; o++) {
@@ -557,20 +557,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 						this.gsmUpdate(time, delta)
 					}
 				}
-
-				// Check if River Splash
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
-
-				this.tile = this.waterLayer.getTileAt(x, y)
-
-				if(this.tile !== null){
-					if(this.tile.index === RIVER.TILE){
-						// Reached River
-						this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
-					}
-				}
-
 			}
 
 			if (this.cursors.left.isDown) {
@@ -597,19 +583,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 						this.gsmUpdate(time, delta)
 					}
 				}
-
-				// Check if River Splash
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
-
-				this.tile = this.waterLayer.getTileAt(x, y)
-
-				if(this.tile !== null){
-					if(this.tile.index === RIVER.TILE){
-						// Reached River
-						this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
-					}
-				}
 			}
 
 			if (this.cursors.up.isDown) {
@@ -634,19 +607,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
 						this.gsmUpdate(time, delta)
-					}
-				}
-
-				// Check if River Splash
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
-
-				this.tile = this.waterLayer.getTileAt(x, y)
-
-				if(this.tile !== null){
-					if(this.tile.index === RIVER.TILE){
-						// Reached River
-						this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
 					}
 				}
 			}
@@ -676,13 +636,15 @@ export default class LEVEL_01 extends Phaser.Scene {
 						this.gsmUpdate(time, delta)
 					}
 				}
+			}
 
-				// Check if River Splash
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
+			// Check if River Splash
+			if(!this.bridgeOpen) {
+				let x = this.map.worldToTileX(this.player.getX())
+				let y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.waterLayer.getTileAt(x, y)
-
+			
 				if(this.tile !== null){
 					if(this.tile.index === RIVER.TILE){
 						// Reached River
@@ -725,7 +687,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				for (let j = 0; j < this.map.width; j++) {
 					var tile = this.bridgeLayer.getTileAt(j, i)
 					if (tile != null) {
-						this.collisionLayer.removeTileAt(j, i)
+						this.waterLayer.removeTileAt(j, i)
 					}
 				}
 			}
