@@ -25,6 +25,7 @@ export default class Player {
     private next_artifact!: string
     private scale!: number
     private pushSpeed!: Phaser.Math.Vector2
+    private pushXSpeed!: Phaser.Math.Vector2
 
     constructor(position: Phaser.Math.Vector2) {
         this.move = true
@@ -44,6 +45,7 @@ export default class Player {
         this.idiomDelay = 200
         this.scale = 0.25
         this.pushSpeed = new Phaser.Math.Vector2(0, 0)
+        this.pushXSpeed = new Phaser.Math.Vector2(-32,0) //TODO : Make magic numbers enum
     }
 
     getCurrentLevel(): string{
@@ -214,5 +216,9 @@ export default class Player {
     }
     push(): void {
         this.position.add(this.pushSpeed)
+    }
+
+    pushX() : void{
+        this.position.add(this.pushXSpeed)
     }
 }

@@ -1587,6 +1587,8 @@ export class Splash extends PlayerStateMachine {
         this.idiomElapsed = time - this.idiomTime
 
         if (this.animationElapsed >= player.getSplashDelay()) {
+
+            player.pushX()
             let temp = player.getState()
             let state = new Revive(this.scene, this.spine)
             player.getState().getState() ?.exit(time, delta, player)
