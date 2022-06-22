@@ -802,13 +802,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.collisionLayer.setVisible(false)
 
 		// Check the levels to load
-		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
-		let current_level: string
-			if (temp !== null) {
-				current_level = temp
-			} else {
-			current_level = LEVELS.LEVEL_01
-		}
+		let current_level = this.sys.settings.key
 
 		if(current_level === LEVELS.LEVEL_01){
 			this.candyLayer = this.map.createLayer('map/collectables/candies_level1_depth_02', this.tileset, 0, 0);

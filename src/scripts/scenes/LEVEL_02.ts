@@ -44,6 +44,7 @@ const BRIDGE_KEY = 'bridge'
 const SOUND_KEY = 'soundbtn'
 const TIMER_KEY = 'hudtimer'
 const RECORD_KEY = 'hudrecord'
+const ARTIFACTS_KEY = ['pig','vase','pot','alter']
 
 // NEED TO CREATE LEVEL_01 to LEVEL_04 for final build 
 export default class LEVEL_02 extends Phaser.Scene {
@@ -95,6 +96,10 @@ export default class LEVEL_02 extends Phaser.Scene {
 	private fruitAnimationNames: string[] = []
 	private fruitMarked: boolean[] = []
 	private fruitRemaining: number
+
+	// Artifacts
+	private artifactAnimationNames: string[] = []
+	private artifact: SpineGameObject[] = []
 
 	// Windmill
 	private windmill!: SpineGameObject
@@ -176,7 +181,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 	// Scene Constuctor
 	constructor() {
 		super({
-			key: 'LEVEL_02'
+			key: LEVELS.LEVEL_02
 		})
 		// Heads up Display Data
 		this.collectablePoints = 0
@@ -205,6 +210,10 @@ export default class LEVEL_02 extends Phaser.Scene {
 		this.load.spine(TIMER_KEY, 'timer/timer.json', 'timer/timer.atlas')
 		this.load.spine(BRIDGE_KEY, 'drawbridge/drawbridge.json', 'drawbridge/drawbridge.atlas')
 		this.load.spine(RECORD_KEY, 'record/record.json','record/record.atlas')
+		this.load.spine(ARTIFACTS_KEY[0], 'collectibles_ui/pig/pig.json', 'collectibles_ui/pig/pig.atlas')
+		this.load.spine(ARTIFACTS_KEY[1], 'collectibles_ui/vase/vase.json', 'collectibles_ui/vase/vase.atlas')
+		this.load.spine(ARTIFACTS_KEY[2], 'collectibles_ui/pot/pot.json', 'collectibles_ui/pot/pot.atlas')
+		this.load.spine(ARTIFACTS_KEY[3], 'collectibles_ui/alter/alter.json','collectibles_ui/alter/alter.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -228,9 +237,6 @@ export default class LEVEL_02 extends Phaser.Scene {
 		// Retrieve Recorded Score and Time from LocalStorage
 		this.fetchRecordedScore()
 		this.fetchRecordedTime()
-		
-		// Load Current Level
-		this.loadCurrentLevel()
 
 		// Setup HUD
 		// Score
@@ -382,6 +388,11 @@ export default class LEVEL_02 extends Phaser.Scene {
 		}
 		this.fruitRemaining = this.fruit.length
 
+		this.artifact[0] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[0], 100, 20, 1, 1)
+		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], 120, 20, 1, 1)
+		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], 140, 20, 1, 1)
+		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], 100, 50, 1, 1)
+
 		// Init fruit animations
 		for (let o = 0; o < this.fruit.length; o++) {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
@@ -422,7 +433,6 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Game Update Method
-
 	update(time: number, delta: number): void {
 
 		console.log('SCENE ' + this.sys.settings.key)
@@ -792,13 +802,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 		this.collisionLayer.setVisible(false)
 
 		// Check the levels to load
-		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
-		let current_level: string
-			if (temp !== null) {
-				current_level = temp
-			} else {
-			current_level = LEVELS.LEVEL_01
-		}
+		let current_level = this.sys.settings.key
 
 		if(current_level === LEVELS.LEVEL_01){
 			this.candyLayer = this.map.createLayer('map/collectables/candies_level1_depth_02', this.tileset, 0, 0);
@@ -996,14 +1000,14 @@ export default class LEVEL_02 extends Phaser.Scene {
 
 	// Fetch Recorded Time
 	private fetchRecordedTime() {
-		let temp = window.localStorage.getItem('time_' + this.loadCurrentLevel())
+		let temp = window.localStorage.getItem('time_' + this.sys.settings.key)
 		if (temp !== null) {
 			this.bestRecordedTime = parseInt(temp) || 0
 			if (this.bestRecordedTime === 0) {
 				this.bestRecordedTime = 1000
 			}
 		} else {
-			this.bestRecordedTime = 0
+			this.bestRecordedTime = 1000
 		}
 
 		window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
@@ -1021,42 +1025,6 @@ export default class LEVEL_02 extends Phaser.Scene {
 		this.collectablePoints = 0 // Reset Points
 		window.localStorage.setItem('score_' + this.sys.settings.key, this.levelScore.toString())
 	}
-
-	// Fetch Current Level
-	private loadCurrentLevel() : string {
-		/* let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
-		if (temp !== null) {
-			this.player.setCurrentLevel(temp)
-		} else {
-			this.player.setCurrentLevel(LEVELS.LEVEL_01)
-		}
-		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
-		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT, this.player.getNextLevel())
-		window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
-		window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
-
-		return this.player.getCurrentLevel() */
-		return ''
-	}
-
-	/* // Set Current Level to a New Level
-	private setCurrentLevel() : string {
-		let temp = window.localStorage.getItem(LEVEL_DATA_KEY.CURRENT)
-		let current_level: string
-		if (temp !== null) {
-			current_level = temp
-		} else {
-			current_level = LEVELS.LEVEL_01
-		}
-		// Check if there the same and if not set the new level
-		if(this.player.getCurrentLevel() !== current_level){
-			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, this.player.getCurrentLevel())
-			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT, this.player.getNextLevel())
-			window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT_ARTIFACT, this.player.getCurrentArtifact())
-			window.localStorage.setItem(LEVEL_DATA_KEY.NEXT_ARTIFACT, this.player.getNextArtifact())
-		}
-		return this.player.getCurrentLevel()
-	} */
 
 	// Game State Management
 	private gsmUpdate(time: number, delta: number): void {
