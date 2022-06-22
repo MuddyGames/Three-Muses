@@ -736,7 +736,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		this.recordTimeText.setPosition(this.screenX * 0.55, this.screenY * 0.04)
 		this.recordTimeText.update()
-		this.recordTimeText.setText(' ' + this.bestRecordedTime + ' ')
+		if(this.bestRecordedTime < RECORD.TIME){
+			this.recordTimeText.setText(' ' + this.bestRecordedTime + ' ')
+		}else{
+			this.recordTimeText.setText(' ' + '--:--' + ' ')
+		}
 		this.recordTimeText.setDepth(10)
 	}
 
