@@ -67,8 +67,17 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private screenY!: number
 	private elapsedLevelTime!: number
 	private startTime!: number
-	private hudtimer!: SpineGameObject
-	private hudrecord!: SpineGameObject
+
+	// Hud Animations
+	private soundMuteUnmuteButton!: SpineGameObject
+
+	private hudTimer!: SpineGameObject
+	private hudTimerAnimationNames: string[] = []
+	private hudTimerAnimationIndex = 0
+
+	private hudRecord!: SpineGameObject
+	private hudRecordAnimationNames: string[] = []
+	private hudRecordAnimationIndex = 0
 
 	// Level Music
 	private backingMusic!: Phaser.Sound.BaseSound
@@ -82,6 +91,8 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Level Objects
 	// Truffles
 	private truffles!: SpineGameObject
+	private trufflesAnimationNames: string[] = []
+	private trufflesAnimationIndex = 0 // TODO : Remove this magic num of 0
 
 	// Cannon Balls
 	private cannonball: SpineGameObject[] = []
@@ -120,11 +131,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private key_g!: Phaser.Input.Keyboard.Key
 	
 	private fruit: SpineGameObject[] = []
-	private soundbtn!: SpineGameObject
-
-	// Truffles
-	private trufflesAnimationNames: string[] = []
-	private trufflesAnimationIndex = 0 // TODO : Remove this magic num of 0
 
 	// Diver
 	private divers: SpineGameObject[] = []
@@ -256,17 +262,17 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
 
 		// TODO : Remove magic numbers
-		this.hudtimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
+		this.hudTimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
 		.setDepth(5)
 		.setScale( 0.75, 0.75 )
-		let hudTimerAnimationStates = this.hudtimer.getAnimationList()
-		this.hudtimer.play(hudTimerAnimationStates[1], true)
+		let hudTimerAnimationStates = this.hudTimer.getAnimationList()
+		this.hudTimer.play(hudTimerAnimationStates[1], true)
 
-		this.hudrecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.44, this.screenY * 0.001, 1, 1)
+		this.hudRecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.44, this.screenY * 0.001, 1, 1)
 		.setDepth(5)
 		.setScale(0.75, 0.74)
-		let hudRecordAnimationStates = this.hudrecord.getAnimationList()
-		this.hudrecord.play(hudRecordAnimationStates[0],true)
+		let hudRecordAnimationStates = this.hudRecord.getAnimationList()
+		this.hudRecord.play(hudRecordAnimationStates[0],true)
 
 
 		// Update Score Frequency
@@ -399,28 +405,28 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 		
 		// Mute button
-		this.soundbtn = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.001, this.screenY * 0.001, 1, 1)
+		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.001, this.screenY * 0.001, 1, 1)
 		.setScale(0.8, 0.8)
 		.setDepth(5)
 		.setInteractive()
-		let soundStates = this.soundbtn.getAnimationList()
+		let soundStates = this.soundMuteUnmuteButton.getAnimationList()
 		let savedSoundState = window.localStorage.getItem('soundState')
 		let soundState = true
 		if (window.localStorage.getItem('soundState') === "false"){
 			this.game.sound.mute = true
-			this.soundbtn.play(soundStates[1], true)
+			this.soundMuteUnmuteButton.play(soundStates[1], true)
 		}
-		this.soundbtn.on('pointerdown', () => {
+		this.soundMuteUnmuteButton.on('pointerdown', () => {
 			if (soundState == true){
 				soundState = false
-				this.soundbtn.play(soundStates[1], true)
+				this.soundMuteUnmuteButton.play(soundStates[1], true)
 				window.localStorage.setItem('soundState', soundState.toString())
 				this.game.sound.mute = true
 				return
 			} if (soundState == false){
 				soundState = true
 				this.game.sound.mute = false
-				this.soundbtn.play(soundStates[0], true)
+				this.soundMuteUnmuteButton.play(soundStates[0], true)
 				window.localStorage.setItem('soundState', soundState.toString())
 				return
 			}
@@ -454,6 +460,14 @@ export default class LEVEL_01 extends Phaser.Scene {
 			if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
 				this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
 				this.fetchRecordedTime()
+
+				// Update Score Frequency
+				this.time.addEvent({
+					delay: 500,
+					loop: true,
+					callback: this.updateNewRecordAnimation,
+					callbackScope: this
+				});
 
 			} else {
 				this.newRecordTime = this.bestRecordedTime
@@ -931,6 +945,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 		if(chance === 12 || chance === 6){
 			this.churchBells.play()
 		}
+	}
+
+	private updateNewRecordAnimation(){
+		//this.changeAnimation(this.hudrecord,[],1)
 	}
 
 	// Fruit Animations
