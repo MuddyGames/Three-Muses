@@ -88,3 +88,7 @@ export enum BRIDGE_ANIMS {
     TRANSITIONING = 'opening',
     OPEN = 'open'
 }
+
+export enum TILE{
+    SIZE = 32
+}

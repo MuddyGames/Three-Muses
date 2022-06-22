@@ -1,5 +1,5 @@
 // Player State
-import { ARTIFACTS, LEVELS } from './gameENUMS'
+import { ARTIFACTS, LEVELS, TILE } from './gameENUMS'
 import PlayerState from './PlayerState'
 
 export default class Player {
@@ -45,7 +45,7 @@ export default class Player {
         this.idiomDelay = 200
         this.scale = 0.25
         this.pushSpeed = new Phaser.Math.Vector2(0, 0)
-        this.pushXSpeed = new Phaser.Math.Vector2(-32,0) //TODO : Make magic numbers enum
+        this.pushXSpeed = new Phaser.Math.Vector2(-TILE.SIZE,0) //TODO : Make magic numbers enum
     }
 
     getCurrentLevel(): string{
