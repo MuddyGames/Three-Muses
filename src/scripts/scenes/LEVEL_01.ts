@@ -995,6 +995,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Set Record Time
 	private setRecord(time: number) {
 		this.newRecordTime = time
+		window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
 	}
 
 	// Add Points
@@ -1013,7 +1014,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				this.bestRecordedTime = 1000
 			}
 		} else {
-			this.bestRecordedTime = 0
+			this.bestRecordedTime = 1000
 		}
 
 		window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
