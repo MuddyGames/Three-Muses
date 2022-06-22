@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "QdyCoEwxISTjXMwWulZAMJKtVEA",
+	"hash": "nupNq5xWB7GhD8p+lO5TC6Lf8I4",
 	"spine": "3.8.72",
 	"x": 7,
 	"y": -196,
@@ -11,17 +11,34 @@
 },
 "bones": [
 	{ "name": "root" },
-	{ "name": "bone", "parent": "root", "length": 17.37, "rotation": 1.18, "x": 66.83, "y": -112.28 }
+	{ "name": "bone", "parent": "root", "length": 17.37, "rotation": 1.18, "x": 66.83, "y": -112.28 },
+	{ "name": "bone2", "parent": "root", "length": 19.44, "rotation": 1.33, "x": 67.2, "y": -112.07 },
+	{ "name": "clipping", "parent": "root", "color": "ff0000ff" },
+	{ "name": "secondmask", "parent": "root", "color": "59ffedff" },
+	{ "name": "bone3", "parent": "root", "length": 10.13, "rotation": 4.24, "x": 70.06, "y": -191.81 }
 ],
 "slots": [
 	{ "name": "Background", "bone": "root" },
 	{ "name": "Layer 3", "bone": "root", "attachment": "Layer 3" },
-	{ "name": "Layer 4", "bone": "bone", "attachment": "Layer 4" }
+	{ "name": "secondmask", "bone": "secondmask", "attachment": "secondmask" },
+	{ "name": "shadow", "bone": "bone2", "attachment": "shadow" },
+	{ "name": "clipping", "bone": "clipping", "attachment": "clipping" },
+	{ "name": "Layer 4", "bone": "bone", "attachment": "Layer 4" },
+	{ "name": "shadow2", "bone": "bone3", "attachment": "shadow2" }
 ],
 "skins": [
 	{
 		"name": "default",
 		"attachments": {
+			"clipping": {
+				"clipping": {
+					"type": "clipping",
+					"end": "Layer 4",
+					"vertexCount": 21,
+					"vertices": [ 12.06, -82.41, 51.39, -43.08, 70.56, -33.98, 87.46, -48.28, 97.21, -55.76, 138.81, -46.98, 154.74, -45.68, 179.11, -59.66, 188.21, -72.33, 186.91, -80.78, 182.36, -83.38, 182.36, -137.01, 118.34, -168.53, 87.14, -193.23, 48.79, -193.88, 15.31, -160.73, 7.51, -145.46, 6.86, -134.08, 6.21, -109.71, 8.49, -98.33, 9.79, -90.86 ],
+					"color": "ce3a3aff"
+				}
+			},
 			"Layer 3": {
 				"Layer 3": { "x": 100, "y": -104, "width": 176, "height": 184 }
 			},
@@ -30,6 +47,21 @@
 			},
 			"Background": {
 				"Background": { "x": 112, "y": -112, "width": 226, "height": 226 }
+			},
+			"shadow2": {
+				"shadow2": { "x": -0.88, "y": 0.69, "rotation": -4.24, "width": 26, "height": 6 }
+			},
+			"secondmask": {
+				"secondmask": {
+					"type": "clipping",
+					"end": "shadow",
+					"vertexCount": 13,
+					"vertices": [ 18.62, -160.84, 19.28, -135.02, 19.28, -88.02, 14.98, -83.71, 40.09, -97.45, 67.08, -99.95, 99.28, -98.72, 110.23, -85.87, 115.9, -84.8, 117.38, -155.45, 116.63, -164.32, 86.34, -190.96, 49.23, -189.29 ],
+					"color": "00fff4ff"
+				}
+			},
+			"shadow": {
+				"shadow": { "x": -0.7, "y": -1.17, "rotation": -1.33, "width": 119, "height": 114 }
 			}
 		}
 	}
@@ -49,6 +81,28 @@
 					{ "time": 1.4, "angle": 93.05 },
 					{ "time": 1.6333, "angle": 56.01 },
 					{ "time": 1.8667, "angle": -0.18 }
+				]
+			},
+			"bone2": {
+				"rotate": [
+					{ "angle": 23.87 },
+					{ "time": 0.2333, "angle": -28.43 },
+					{ "time": 0.4667, "angle": -71.39 },
+					{ "time": 0.7, "angle": -117.94 },
+					{ "time": 0.9333, "angle": -156.09 },
+					{ "time": 1.1667, "angle": 146.3 },
+					{ "time": 1.4, "angle": 115.79 },
+					{ "time": 1.6333, "angle": 78.2 },
+					{ "time": 1.8667, "angle": 23.87 }
+				]
+			},
+			"bone3": {
+				"scale": [
+					{ "x": 1.4 },
+					{ "time": 0.5, "x": 0.01, "y": 0.01 },
+					{ "time": 0.9667, "x": 1.4 },
+					{ "time": 1.4, "x": 0.01, "y": 0.01 },
+					{ "time": 1.8667, "x": 1.4 }
 				]
 			}
 		}
