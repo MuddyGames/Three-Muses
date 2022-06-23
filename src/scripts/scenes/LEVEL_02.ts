@@ -48,8 +48,8 @@ const TIMER_KEY = 'hudtimer'
 const RECORD_KEY = 'hudrecord'
 const ARTIFACTS_KEY = ['pig', 'vase', 'pot', 'alter']
 
-// NEED TO CREATE LEVEL_02 to LEVEL_04 for final build 
-export default class LEVEL_01 extends Phaser.Scene {
+// NEED TO CREATE LEVEL_01 to LEVEL_04 for final build 
+export default class LEVEL_02 extends Phaser.Scene {
 
 	// Player Class
 	private player!: Player
@@ -82,6 +82,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private hudRecord!: SpineGameObject
 	private hudRecordAnimationNames: string[] = []
 	private hudRecordAnimationIndex = 0
+	private hudCurrentRecordTimerTime: number
+	private hudElapsedRecordTimerTime: number
+	private hudRecordTimeAchievement: boolean
 
 	// Level Music
 	private backingMusic!: Phaser.Sound.BaseSound
@@ -201,6 +204,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.screenX = 0
 		this.screenY = 0
 		this.startTime = 0
+		this.hudRecordTimeAchievement = false
 		this.GoT = false
 	}
 
@@ -921,6 +925,14 @@ export default class LEVEL_01 extends Phaser.Scene {
 		spine.play(animation, true)
 	}
 
+	// Record Timer Animations
+	private recordTimeAnimations(index: number, time: number, delta: number): void {
+		if(this.hudRecordTimeAchievement){
+			console.log('New Record -- >>')
+			this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Stop the stopwatch
+		}
+	}
+
 	//Truffles to Object Collision
 	private trufflesAABB(collidable: SpineGameObject) {
 
@@ -1042,6 +1054,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Set Record Time
 	private setRecord(time: number) {
 		this.newRecordTime = time
+		this.hudRecordTimeAchievement = true
 	}
 
 	// Add Points

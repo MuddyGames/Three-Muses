@@ -82,6 +82,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private hudRecord!: SpineGameObject
 	private hudRecordAnimationNames: string[] = []
 	private hudRecordAnimationIndex = 0
+	private hudCurrentRecordTimerTime: number
+	private hudElapsedRecordTimerTime: number
+	private hudRecordTimeAchievement: boolean
 
 	// Level Music
 	private backingMusic!: Phaser.Sound.BaseSound
@@ -201,6 +204,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.screenX = 0
 		this.screenY = 0
 		this.startTime = 0
+		this.hudRecordTimeAchievement = false
 		this.GoT = false
 	}
 
@@ -411,9 +415,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 			move_on_x += move_on_x
 		} */
 		this.artifact[0] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[0], 100, 20, 1, 1)
-		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], 120, 20, 1, 1)
-		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], 140, 20, 1, 1)
-		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], 160, 20, 1, 1)
+		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], 140, 20, 1, 1)
+		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], 180, 20, 1, 1)
+		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], 220, 20, 1, 1)
 
 		console.log(this.artifact[2].getAnimationList())
 
@@ -503,7 +507,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				// Update Record Animations
 				this.time.addEvent({
 					delay: ANIMATION_DELAY.RECORD,
-					callback: this.changeAnimation,
+					callback: this.recordTimeAnimations,
 					callbackScope: this,
 					args: [this.hudRecord, this.hudRecordAnimationNames, 2]
 				});
@@ -921,6 +925,14 @@ export default class LEVEL_01 extends Phaser.Scene {
 		spine.play(animation, true)
 	}
 
+	// Record Timer Animations
+	private recordTimeAnimations(index: number, time: number, delta: number): void {
+		if(this.hudRecordTimeAchievement){
+			console.log('New Record -- >>')
+			this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Stop the stopwatch
+		}
+	}
+
 	//Truffles to Object Collision
 	private trufflesAABB(collidable: SpineGameObject) {
 
@@ -1042,6 +1054,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Set Record Time
 	private setRecord(time: number) {
 		this.newRecordTime = time
+		this.hudRecordTimeAchievement = true
 	}
 
 	// Add Points
