@@ -141,7 +141,7 @@ div.header2 h1{
 
 div.header3 h1{
     position: absolute;
-    left: 28%;
+    left: 35%;
     top: 36%;
     font-family: 'gamefont';
     color: green;
@@ -179,7 +179,7 @@ div.greenKey img{
     max-width: 100%;
     max-height: 100%;
     position: absolute;
-    left: 74%;
+    left: 65%;
     top: 45%;
 }
 
