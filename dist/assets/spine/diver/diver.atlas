@@ -1,19 +1,19 @@
 
 diver.png
-size: 1113,544
+size: 1114,544
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 body
   rotate: true
-  xy: 614, 312
+  xy: 615, 312
   size: 230, 216
   orig: 230, 216
   offset: 0, 0
   index: -1
 body_back
   rotate: false
-  xy: 832, 328
+  xy: 833, 328
   size: 228, 214
   orig: 230, 216
   offset: 1, 1
@@ -34,35 +34,35 @@ head
   index: -1
 head_back
   rotate: true
-  xy: 461, 7
+  xy: 461, 15
   size: 251, 236
   orig: 253, 238
   offset: 1, 1
   index: -1
 head_side
   rotate: true
-  xy: 322, 260
-  size: 282, 236
+  xy: 322, 268
+  size: 274, 237
   orig: 284, 238
   offset: 1, 1
   index: -1
 left_arm_back
   rotate: true
-  xy: 832, 187
+  xy: 833, 187
   size: 139, 172
   orig: 139, 172
   offset: 0, 0
   index: -1
 left_arm
   rotate: true
-  xy: 832, 187
+  xy: 833, 187
   size: 139, 172
   orig: 139, 172
   offset: 0, 0
   index: -1
 left_leg
   rotate: false
-  xy: 1006, 176
+  xy: 1007, 176
   size: 105, 150
   orig: 105, 150
   offset: 0, 0
@@ -118,7 +118,7 @@ right_leg
   index: -1
 shadow
   rotate: true
-  xy: 560, 268
+  xy: 561, 268
   size: 274, 52
   orig: 276, 54
   offset: 1, 1

@@ -2,15 +2,19 @@ export enum GSM {
     PLAY = 'play',
     LEVEL_COMPLETE = 'level_complete',
     GAME_COMPLETE = 'game_complete'
-};
+}
+
+export enum RECORD{
+    TIME = 1000000
+}
 
 // Used for local storage keys
-export enum LEVEL_DATA_KEY{
-    CURRENT = 'level_current',
-    NEXT = 'level_next',
-    CURRENT_ARTIFACT = 'artifact_current',
-    NEXT_ARTIFACT = 'artifact_next'
-}
+//export enum LEVEL_DATA_KEY{
+//    CURRENT = 'level_current',
+//    NEXT = 'level_next',
+//    CURRENT_ARTIFACT = 'artifact_current',
+ //   NEXT_ARTIFACT = 'artifact_next'
+//}
 
 export enum LEVELS{
     LEVEL_01 = 'LEVEL_01',
@@ -34,14 +38,16 @@ export enum POINTS{
     FRUIT_0 = 250,
     FRUIT_1 = 300,
     FRUIT_2 = 350,
+    REACHED_GOAL = 1500
 }
 
 export enum ANIMATION_DELAY{
-    FRUIT = 480
+    FRUIT = 480,
+    RECORD = 200
 }
 
 export enum NEXT_LEVEL{
-    DELAY = 3000 //Delay until next level
+    DELAY = 6000 //Delay until next level
 }
 
 export enum GOAL {
@@ -87,4 +93,8 @@ export enum BRIDGE {
 export enum BRIDGE_ANIMS {
     TRANSITIONING = 'opening',
     OPEN = 'open'
+}
+
+export enum TILE{
+    SIZE = 32
 }

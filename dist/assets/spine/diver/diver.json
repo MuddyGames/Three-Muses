@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "N/H+ZZ7LsIpQ4Ft5oYi+koylZnU",
+	"hash": "IbCE/7IGFxZp6ZlhDnbRSR5BePs",
 	"spine": "3.8.72",
 	"x": -170.54,
 	"y": -26.27,
@@ -228,37 +228,12 @@
 "animations": {
 	"attack": {
 		"slots": {
-			"left_leg": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"neck2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"right_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"left_arm": {
 				"attachment": [
 					{ "time": 0.6667, "name": null }
 				]
 			},
-			"right_leg": {
+			"bone4": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -268,12 +243,37 @@
 					{ "name": null }
 				]
 			},
-			"bone4": {
+			"right_leg": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"bone2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"right_arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"neck2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"left_leg": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -283,7 +283,7 @@
 			"bone18": {
 				"rotate": [
 					{},
-					{ "time": 0.3, "angle": 18.38 },
+					{ "time": 0.3, "angle": 31.21 },
 					{ "time": 0.6667 }
 				],
 				"translate": [
@@ -391,42 +391,7 @@
 	},
 	"too_violent": {
 		"slots": {
-			"left_leg": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"neck2": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"right_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"body": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"left_arm": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"right_leg": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone3": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -436,7 +401,42 @@
 					{ "name": null }
 				]
 			},
+			"bone3": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"right_leg": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"bone2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"right_arm": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"neck2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"body": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"left_leg": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -564,7 +564,7 @@
 	},
 	"walk_back": {
 		"slots": {
-			"bone19": {
+			"bone21": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -574,22 +574,22 @@
 					{ "name": null }
 				]
 			},
+			"bone22": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone19": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
 			"head_side2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone21": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
 			"bone20": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone22": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -779,17 +779,7 @@
 	},
 	"walk_front": {
 		"slots": {
-			"bone19": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"bone18": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"head_side2": {
+			"bone4": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -804,12 +794,12 @@
 					{ "name": null }
 				]
 			},
-			"bone4": {
+			"bone2": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"bone20": {
+			"bone18": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -819,7 +809,17 @@
 					{ "name": null }
 				]
 			},
-			"bone2": {
+			"bone19": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"head_side2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"bone20": {
 				"attachment": [
 					{ "name": null }
 				]

@@ -7,7 +7,6 @@ import {
 	GSM,
 	DIVER,
 	LEVELS,
-	LEVEL_DATA_KEY,
 	DIVER_ANIM
 } from '../objects/gameENUMS'
 
@@ -24,8 +23,9 @@ export default class Credits extends Phaser.Scene {
   }
 
   preload() {
-    this.load.script('fractals', 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.0.js');
-    this.load.html('credits', 'assets/credits/credits.html');
+    this.load.script('fractals', 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.0.js')
+    this.load.html('credits', 'assets/credits/credits.html')
+    this.load.css('artifact_css', './assets/css/artifacts.css')
   }
 
   create() {
@@ -50,7 +50,7 @@ export default class Credits extends Phaser.Scene {
     this.nextLevel.setShadow(3, 3)
     this.nextLevel.setStroke('#414141', 3)
     this.nextLevel.setShadow(2, 2, "#333333", 2, true, true)
-    this.nextLevel.setPosition(width * 0.32, height * 0.85)
+    this.nextLevel.setPosition(width * 0.21, height * 0.85)
     this.nextLevel.on('pointerdown', () => this.onClickNextLevel())
 
     let div_background = document.getElementById('three_muses_game')
@@ -68,9 +68,7 @@ export default class Credits extends Phaser.Scene {
   }
 
   private onClickNextLevel() {
-    // Set Level Back to Level 01
-    window.localStorage.setItem(LEVEL_DATA_KEY.CURRENT, LEVELS.LEVEL_01)
-
+    // Set Level Back to Level Preload Scene
     this.backingMusic.stop()
     window.location.reload()
     this.scene.start('PreloadScene')
