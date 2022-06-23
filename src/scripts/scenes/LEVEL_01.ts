@@ -964,7 +964,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(2)
-		this.goalLayer.setVisible(true)
+		this.goalLayer.setVisible(false)
 
 		this.bridgeLayer = this.map.createLayer('map/environment_objects/animated/drawbridge_01', this.tileset, 0, 0);
 		this.bridgeLayer.setVisible(false)
