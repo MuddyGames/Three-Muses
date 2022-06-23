@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "PY+NqcN4xNol50Tk1vA2UCmd+nY",
+	"hash": "de+mnyBd0buj6qthjb1QuAJcXSw",
 	"spine": "3.8.72",
 	"x": 3.52,
-	"y": -29.37,
+	"y": -26,
 	"width": 30.16,
-	"height": 34.17,
+	"height": 30.81,
 	"images": "./images/",
 	"audio": "C:/Users/kinga/Desktop/cannonball"
 },
@@ -78,7 +78,7 @@
 				"Ellipse 2": { "x": 2.23, "y": -0.09, "rotation": -90.71, "width": 18, "height": 18 }
 			},
 			"shadow": {
-				"shadow": { "x": 15.75, "y": -22.87, "width": 14, "height": 13 }
+				"shadow": { "x": 22.86, "y": -16.13, "rotation": 124.68, "width": 14, "height": 13 }
 			},
 			"Layer 10": {
 				"Layer 10": { "x": 1.02, "y": 0.31, "rotation": -44.16, "width": 5, "height": 4 }
@@ -111,17 +111,7 @@
 	"animation": {},
 	"idle": {
 		"slots": {
-			"Layer 5": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"Layer 17": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"Layer 11": {
+			"Layer 16": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -131,12 +121,47 @@
 					{ "name": null }
 				]
 			},
-			"Layer 6": {
+			"Layer 11": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"Layer 17": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"Layer 5": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"Layer 13": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
 			"Layer 7": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"Layer 12": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"Layer 6": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"Layer 18": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"Layer 10": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -147,31 +172,6 @@
 				]
 			},
 			"Layer 9": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"Layer 12": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"Layer 16": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"Layer 10": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"Layer 18": {
-				"attachment": [
-					{ "name": null }
-				]
-			},
-			"Layer 13": {
 				"attachment": [
 					{ "name": null }
 				]
@@ -202,12 +202,12 @@
 	},
 	"splash": {
 		"slots": {
-			"Layer 3": {
+			"shadow": {
 				"attachment": [
 					{ "name": null }
 				]
 			},
-			"shadow": {
+			"Layer 3": {
 				"attachment": [
 					{ "name": null }
 				]
