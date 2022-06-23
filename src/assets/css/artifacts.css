@@ -190,3 +190,45 @@ div.pinkKey img{
     left: 60.5%;
     top: 45%;
 }
+
+
+
+ div.header5 h1{
+    width: 350%;
+    position: absolute;
+    left: -50%;
+    top: 70%;
+    font-family: 'gamefont';
+    color: black;
+    font-size: 13px;
+    background-color: #f9d877;
+    opacity: 0.6;
+    padding: 5%;
+   
+}
+div.header6 h1{
+    
+    position: absolute;
+    left: -176%;
+    top: 70%;
+    font-family: 'gamefont';
+    color: black;
+    font-size: 13px;
+    background-color: #f9d877;
+    opacity: 0.6;
+    padding: 5%;
+}
+div.header7 h1{
+
+    position: relative;
+    text-align: center;
+    font-family: 'gamefont';
+    color: rgb(119, 169, 240);
+    text-shadow: 1px 1px rgb(0, 0, 0);
+    font-size: 45px;
+    opacity: 0.7;
+   
+   
+   
+}
+

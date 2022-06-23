@@ -23,8 +23,9 @@ export default class Credits extends Phaser.Scene {
   }
 
   preload() {
-    this.load.script('fractals', 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.0.js');
-    this.load.html('credits', 'assets/credits/credits.html');
+    this.load.script('fractals', 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.0.js')
+    this.load.html('credits', 'assets/credits/credits.html')
+    this.load.css('artifact_css', './assets/css/artifacts.css')
   }
 
   create() {
