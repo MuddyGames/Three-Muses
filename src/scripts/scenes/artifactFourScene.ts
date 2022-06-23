@@ -53,7 +53,7 @@ export default class ArtiFactFourScene extends Phaser.Scene {
     this.nextLevel.update()
     this.nextLevel.setText('Credits')
     this.nextLevel.setInteractive()
-    this.nextLevel.setColor('#749DAD')
+    this.nextLevel.setColor('#FFC0CB')
   }
   
   private onClickNextLevel() {
