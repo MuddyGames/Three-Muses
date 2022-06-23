@@ -607,7 +607,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.dpad_up = false
 			this.dpad_left = false
 			this.dpad_right = false
-			this.player.setMove(false)
 		};
 		// Cannon Ball Movement
 		this.cannonballMove()
