@@ -14,6 +14,9 @@ export default class PreloadScene extends Phaser.Scene {
     //Artifact Pages and Scene Background
     this.load.image('artifact_scene_background', 'assets/artifacts/img/background.png')
 
+    // Screen Vinnette
+    this.load.image('vinnette', 'assets/level/vinnette.png')
+
     // Game Logos
     this.load.image('the_hunt_museum', 'assets/logos/the_hunt_museum.png')
     this.load.image('limerick_museum', 'assets/logos/limerick_city.png')
