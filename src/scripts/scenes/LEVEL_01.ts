@@ -322,7 +322,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.hudTimerAnimationNames = this.hudTimer.getAnimationList()
 		this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Run Timer
 
-		this.hudRecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.44, this.screenY * 0.001, 1, 1)
+		this.hudRecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.46, this.screenY * 0.001, 1, 1)
 		this.hudRecord.setDepth(10)
 		this.hudRecord.setScale(0.75, 0.74)
 		this.hudRecordAnimationNames = this.hudRecord.getAnimationList()
@@ -865,7 +865,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.currentScoreText.setDepth(10)
 		this.currentScoreText.setFontSize(40)
 		
-		this.elapsedTimeText.setPosition(this.screenX * 0.75, this.screenY * 0.048)
+		this.elapsedTimeText.setPosition(this.screenX * 0.76, this.screenY * 0.048)
 		this.elapsedTimeText.update()
 		this.elapsedTimeText.setText(' ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
 		this.elapsedTimeText.setDepth(10)
