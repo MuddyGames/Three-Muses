@@ -587,19 +587,27 @@ export default class LEVEL_01 extends Phaser.Scene {
 			
 			if(touchX < dpadX - dpadWidth/6 && touchX > dpadX - dpadWidth/2) {
 				this.dpad_left = true
-				this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
 			}
 			if(touchX > dpadX + dpadWidth/6 && touchX < dpadX + dpadWidth/2) {
 				this.dpad_right = true
-				this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
 			}
 			if(touchY < dpadY - dpadHeight/6 && touchY > dpadY - dpadHeight/2) {
 				this.dpad_up = true
-				this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
 			}
 			if(touchY > dpadY + dpadHeight/6 && touchY < dpadY + dpadHeight/2) {
 				this.dpad_down = true
+			}
+			if(this.dpad_down) {
 				this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
+			}
+			else if(this.dpad_up) {
+				this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
+			}
+			else if(this.dpad_left) {
+				this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+			}
+			else if(this.dpad_right) {
+				this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
 			}
 		}
 		else {
