@@ -63,6 +63,12 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Game State Management
 	private gameState!: GSM
 
+	// Screen vinnette
+	private vinnette!: Phaser.GameObjects.Image
+
+	// HUD Background
+	private hud_background!: Phaser.GameObjects.Image
+
 	// Hud Text
 	private collectablePoints!: number
 	private levelScore!: number
@@ -263,6 +269,18 @@ export default class LEVEL_01 extends Phaser.Scene {
 		} = this.sys.game.canvas;
 		this.screenX = width
 		this.screenY = height
+
+		// Screen Vinnette
+		this.vinnette = this.add.image(width / 2, height / 2, 'vinnette')
+    	this.vinnette.setDisplaySize(width, height);
+    	this.vinnette.setOrigin(0.5, 0.5)
+		this.vinnette.setDepth(9)
+
+		// Hud Background
+		this.hud_background = this.add.image(width / 2, height * 0.1, 'hud_background')
+    	this.vinnette.setDisplaySize(width, height);
+    	this.vinnette.setOrigin(0.5, 0.5)
+		this.vinnette.setDepth(10)
 
 		//Setup the Player
 		// The X Y needs to come from tiles spawn points
