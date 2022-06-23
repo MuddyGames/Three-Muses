@@ -274,13 +274,13 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.vinnette = this.add.image(width / 2, height / 2, 'vinnette')
     	this.vinnette.setDisplaySize(width, height);
     	this.vinnette.setOrigin(0.5, 0.5)
-		this.vinnette.setDepth(9)
+		this.vinnette.setDepth(10)
 
 		// Hud Background
 		this.hud_background = this.add.image(width / 2, height * 0.1, 'hud_background')
     	this.vinnette.setDisplaySize(width, height);
     	this.vinnette.setOrigin(0.5, 0.5)
-		this.vinnette.setDepth(10)
+		this.vinnette.setDepth(9)
 
 		//Setup the Player
 		// The X Y needs to come from tiles spawn points

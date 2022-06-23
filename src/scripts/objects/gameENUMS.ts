@@ -47,7 +47,7 @@ export enum ANIMATION_DELAY{
 }
 
 export enum NEXT_LEVEL{
-    DELAY = 6000 //Delay until next level
+    DELAY = 3000 //Delay until next level
 }
 
 export enum GOAL {
