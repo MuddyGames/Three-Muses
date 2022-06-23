@@ -104,3 +104,15 @@ export enum DPAD{
     Y_TILES = 18,
     SCALE = 1.45
 }
+
+export enum DPAD_ANIMS {
+    IDLE = "idle",
+    UP = "up",
+    UP_LEFT = "up_left",
+    UP_RIGHT = "up_right",
+    DOWN = "down",
+    DOWN_LEFT = "down_left",
+    DOWN_RIGHT = "down_right",
+    LEFT = "left",
+    RIGHT = "right"
+}
