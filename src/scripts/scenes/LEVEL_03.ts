@@ -25,7 +25,9 @@ import {
 	POINTS,
 	TILE,
 	ARTIFACTS,
-	RECORD
+	RECORD,
+	DPAD,
+	DPAD_ANIMS
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -50,6 +52,8 @@ const ARTIFACTS_KEY = ['pig', 'vase', 'pot', 'alter']
 const KEYS_KEY = ['red', 'yellow', 'green', 'pink']
 //const TREE_KEY = 'tree'
 
+
+
 // NEED TO CREATE LEVEL_01 to LEVEL_04 for final build 
 export default class LEVEL_03 extends Phaser.Scene {
 
@@ -58,6 +62,12 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 	// Game State Management
 	private gameState!: GSM
+
+	// Screen vinnette
+	private vinnette!: Phaser.GameObjects.Image
+
+	// HUD Background
+	private hud_background!: Phaser.GameObjects.Image
 
 	// Hud Text
 	private collectablePoints!: number
@@ -139,6 +149,10 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private dpad!: SpineGameObject
 	private dpadAnimationIndex = 0
 	private dpadAnimationNames = []
+	private dpad_up: boolean = false
+	private dpad_down: boolean = false
+	private dpad_left: boolean = false
+	private dpad_right: boolean = false
 
 	// Input WASD
 	private key_w!: Phaser.Input.Keyboard.Key
@@ -244,6 +258,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.load.spine(KEYS_KEY[2],'keys/green/green_key.json','keys/green/green_key.atlas')
 		this.load.spine(KEYS_KEY[3],'keys/pink/pink_key.json','keys/pink/pink_key.atlas')
 		//this.load.spine(TREE_KEY,'tree/tree.json', 'tree/tree.atlas')
+		this.load.spine(DPAD_KEY, 'dpad/DPad_Final_merge.json', 'dpad/DPad_Final_merge.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -254,6 +269,18 @@ export default class LEVEL_03 extends Phaser.Scene {
 		} = this.sys.game.canvas;
 		this.screenX = width
 		this.screenY = height
+
+		// Screen Vinnette
+		this.vinnette = this.add.image(width / 2, height / 2, 'vinnette')
+    	this.vinnette.setDisplaySize(width, height);
+    	this.vinnette.setOrigin(0.5, 0.5)
+		this.vinnette.setDepth(10)
+
+		// Hud Background
+		this.hud_background = this.add.image(width / 2, height * 0.1, 'hud_background')
+    	this.vinnette.setDisplaySize(width, height);
+    	this.vinnette.setOrigin(0.5, 0.5)
+		this.vinnette.setDepth(9)
 
 		//Setup the Player
 		// The X Y needs to come from tiles spawn points
@@ -397,7 +424,13 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.key_g = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G)
 
 		//Multitouch: the below sets the amount of concurrent touches can happen
-		this.input.addPointer(2);
+		if(this.game.device.input.touch)
+		{
+			this.input.addPointer(2);
+			this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, this.tileSize * DPAD.X_TILES, 
+				this.tileSize * DPAD.Y_TILES, DPAD.SCALE, DPAD.SCALE)
+			this.dpad.setDepth(10)
+		}
 
 		// Setup Fruits
 		for (let i = 0; i < tilesHigh; i++) {
@@ -446,12 +479,14 @@ export default class LEVEL_03 extends Phaser.Scene {
 				var tile = this.keyLayer.getTileAt(j, i)
 				if (tile != null){
 					if (tile.index === 395){
-						this.key.push(this.createSpineObject(IDLE_KEY, KEYS_KEY[2] ,j * this.tileSize - 80 , i * this.tileSize - 60 , 0.8, 0.8))
+						this.key.push(this.createSpineObject(IDLE_KEY, KEYS_KEY[0] ,j * this.tileSize - 80 , i * this.tileSize - 60 , 0.8, 0.8))
 						this.key[0].setDepth(4)	
 					}
 				}
 			}
 		}
+
+		
 
 		/*for (let i = 0; i < tilesHigh; i++){
 			for(let j = 0; j <tilesWide; j++){
@@ -505,16 +540,16 @@ export default class LEVEL_03 extends Phaser.Scene {
 			//Play no Collectables
 		} else if (level === LEVELS.LEVEL_02) {
 			//Play Animations
-			this.artifact[0].play('pig_fill', true)
+			this.artifact[0].play('pig_fill', false)
 		} else if (level === LEVELS.LEVEL_03) {
 			//Play Animations
-			this.artifact[0].play('pig_filled', true)
+			this.artifact[0].play('pig_filled', false)
 			this.artifact[1].play('vase_fill', false)
 		} else if (level === LEVELS.LEVEL_04) {
 			//Play Animations
-			this.artifact[0].play('pig_fill', true)
-			this.artifact[1].play('vase_fill', true)
-			this.artifact[2].play('pot_fill', true)
+			this.artifact[0].play('pig_filled', true)
+			this.artifact[1].play('vase_filled', true)
+			this.artifact[2].play('pot_fill', false)
 		} else if (level === LEVELS.CREDITS) {
 			// No Artifact Animations
 		}
@@ -562,6 +597,10 @@ export default class LEVEL_03 extends Phaser.Scene {
 			});
 		}
 
+		if(this.game.device.input.touch) {
+			this.handleDPad(time, delta)
+		}
+
 		// Cannon Ball Movement
 		this.cannonballMove()
 
@@ -591,7 +630,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 		// Can player move
 		if (this.player.getMove()) {
-			if (this.cursors.right.isDown || this.key_d.isDown) {
+			if (this.cursors.right.isDown || this.key_d.isDown || this.dpad_right) {
 				let x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
 				let y = this.map.worldToTileY(this.player.getY())
 
@@ -612,6 +651,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 					if (this.tile.index === GOAL.TILE) {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 						this.key[0].play("collected",true)
@@ -619,7 +659,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				}
 			}
 
-			if (this.cursors.left.isDown || this.key_a.isDown) {
+			if (this.cursors.left.isDown || this.key_a.isDown || this.dpad_left) {
 				let x = this.map.worldToTileX(this.player.getX() + this.tileSize / 2)
 				let y = this.map.worldToTileY(this.player.getY())
 
@@ -640,6 +680,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 					if (this.tile.index === GOAL.TILE) {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 						this.key[0].play("collected",true)
@@ -647,7 +688,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				}
 			}
 
-			if (this.cursors.up.isDown || this.key_w.isDown) {
+			if (this.cursors.up.isDown || this.key_w.isDown || this.dpad_up) {
 				let x = this.map.worldToTileX(this.player.getX())
 				let y = this.map.worldToTileY(this.player.getY() + this.tileSize / 4)
 
@@ -668,6 +709,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 					if (this.tile.index === GOAL.TILE) {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 						this.key[0].play("collected",true)
@@ -675,7 +717,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				}
 			}
 
-			if (this.cursors.down.isDown || this.key_s.isDown) {
+			if (this.cursors.down.isDown || this.key_s.isDown || this.dpad_down) {
 
 				let x = this.map.worldToTileX(this.player.getX())
 				let y = this.map.worldToTileY(this.player.getY() + this.player.getVelocityY().y)
@@ -697,6 +739,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 					if (this.tile.index === GOAL.TILE) {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 						this.key[0].play("collected",true)
@@ -720,7 +763,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 			}
 
 			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown &&
-				!this.key_w.isDown && !this.key_a.isDown && !this.key_s.isDown && !this.key_d.isDown) {
+				!this.key_w.isDown && !this.key_a.isDown && !this.key_s.isDown && !this.key_d.isDown && 
+				!this.dpad_up && !this.dpad_down && !this.dpad_left && !this.dpad_right) {
 				this.player.getState().handleInput(INPUT_TYPES.IDLE_NEUTRAL, time, delta, this.player)
 			} else {
 				for (let i = 0; i < this.fruit.length; i++) {
@@ -938,7 +982,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(2)
-		this.goalLayer.setVisible(true)
+		this.goalLayer.setVisible(false)
 
 		this.bridgeLayer = this.map.createLayer('map/environment_objects/animated/drawbridge_01', this.tileset, 0, 0);
 		this.bridgeLayer.setVisible(false)
@@ -1171,5 +1215,76 @@ export default class LEVEL_03 extends Phaser.Scene {
 		}
 		// ENDS: Change Levels
 
+	}
+	private handleDPad(time: number, delta: number) {
+		var pointer = this.input.activePointer;
+			if (pointer.isDown) {
+				var touchX = pointer.x;
+				var touchY = pointer.y;
+				var dpadX = this.dpad.x
+				var dpadWidth = this.dpad.width
+				var dpadY = this.dpad.y
+				var dpadHeight = this.dpad.height
+				this.dpad_down = false
+				this.dpad_up = false
+				this.dpad_left = false
+				this.dpad_right = false
+				
+				if(touchX < dpadX - dpadWidth/6 && touchX > dpadX - DPAD.SCALE * dpadWidth/2) {
+					this.dpad_left = true
+				}
+				if(touchX > dpadX + dpadWidth/6 && touchX < dpadX + DPAD.SCALE * dpadWidth/2) {
+					this.dpad_right = true
+				}
+				if(touchY < dpadY - dpadHeight/6 && touchY > dpadY - DPAD.SCALE * dpadHeight/2) {
+					this.dpad_up = true
+				}
+				if(touchY > dpadY + dpadHeight/6 && touchY < dpadY + DPAD.SCALE * dpadHeight/2) {
+					this.dpad_down = true
+				}
+				if(this.dpad_down) {
+					if(this.dpad_left) {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.DOWN_LEFT, true)
+					}
+					else if(this.dpad_right) {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.DOWN_RIGHT, true)
+					}
+					else {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.DOWN, true)
+					}
+				}
+				else if(this.dpad_up) {
+					if(this.dpad_left) {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.UP_LEFT, true)
+					}
+					else if(this.dpad_right) {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.UP_RIGHT, true)
+					}
+					else {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.UP, true)
+					}
+				}
+				else if(this.dpad_left) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.LEFT, true)
+				}
+				else if(this.dpad_right) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.RIGHT, true)
+				}
+			}
+			else {
+				this.dpad_down = false
+				this.dpad_up = false
+				this.dpad_left = false
+				this.dpad_right = false
+				this.dpad.play(DPAD_ANIMS.IDLE, true)
+			};
 	}
 }
