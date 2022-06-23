@@ -301,26 +301,29 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.currentScoreText.setShadow(3, 3)
 		this.currentScoreText.setStroke('#fff', 16);
 		this.currentScoreText.setShadow(2, 2, "#333333", 2, true, true);
+		this.currentScoreText.setDepth(10)
 		// Elapsed Time
 		this.elapsedTimeText = new HudText(this)
 		this.elapsedTimeText.setShadow(3, 3)
 		this.elapsedTimeText.setStroke('#fff', 16);
 		this.elapsedTimeText.setShadow(2, 2, "#333333", 2, true, true);
+		this.elapsedTimeText.setDepth(10)
 		// Record Time
 		this.recordTimeText = new HudText(this)
 		this.recordTimeText.setShadow(3, 3)
 		this.recordTimeText.setStroke('#fff', 16);
 		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
+		this.recordTimeText.setDepth(10)
 
 		// TODO : Remove magic numbers
 		this.hudTimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
-		this.hudTimer.setDepth(5)
+		this.hudTimer.setDepth(10)
 		this.hudTimer.setScale(0.75, 0.75)
 		this.hudTimerAnimationNames = this.hudTimer.getAnimationList()
 		this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Run Timer
 
 		this.hudRecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.44, this.screenY * 0.001, 1, 1)
-		this.hudRecord.setDepth(5)
+		this.hudRecord.setDepth(10)
 		this.hudRecord.setScale(0.75, 0.74)
 		this.hudRecordAnimationNames = this.hudRecord.getAnimationList()
 		this.hudRecord.play(this.hudRecordAnimationNames[0], true) // No Record Set
@@ -467,6 +470,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], 195, 23, 0.6, 0.6)
 		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], 256, 30, 0.6, 0.6)
 
+		this.artifact[0].setDepth(10)
+		this.artifact[1].setDepth(10)
+		this.artifact[2].setDepth(10)
+		this.artifact[3].setDepth(10)
+
 		console.log(this.artifact[2].getAnimationList())
 
 		// Init fruit animations
@@ -480,7 +488,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				if (tile != null){
 					if (tile.index === 395){
 						this.key.push(this.createSpineObject(IDLE_KEY, KEYS_KEY[0] ,j * this.tileSize - 80 , i * this.tileSize - 60 , 0.8, 0.8))
-						this.key[0].setDepth(4)	
+						this.key[0].setDepth(10)	
 					}
 				}
 			}
@@ -502,7 +510,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		// Mute button
 		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.001, this.screenY * 0.001, 1, 1)
 			.setScale(0.8, 0.8)
-			.setDepth(5)
+			.setDepth(10)
 			.setInteractive()
 		let soundStates = this.soundMuteUnmuteButton.getAnimationList()
 		let savedSoundState = window.localStorage.getItem('soundState')
