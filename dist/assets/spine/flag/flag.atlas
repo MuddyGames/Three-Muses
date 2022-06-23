@@ -1,0 +1,48 @@
+
+flag.png
+size: 36,36
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 2
+  rotate: true
+  xy: 2, 2
+  size: 27, 32
+  orig: 29, 34
+  offset: 1, 1
+  index: -1
+flag1
+  rotate: true
+  xy: 20, 31
+  size: 3, 5
+  orig: 5, 7
+  offset: 1, 1
+  index: -1
+flag2
+  rotate: true
+  xy: 27, 31
+  size: 3, 5
+  orig: 5, 7
+  offset: 1, 1
+  index: -1
+flag3
+  rotate: true
+  xy: 2, 32
+  size: 2, 5
+  orig: 4, 7
+  offset: 1, 1
+  index: -1
+flag4
+  rotate: true
+  xy: 9, 32
+  size: 2, 4
+  orig: 4, 6
+  offset: 1, 1
+  index: -1
+flag5
+  rotate: true
+  xy: 15, 32
+  size: 2, 3
+  orig: 4, 5
+  offset: 1, 1
+  index: -1
