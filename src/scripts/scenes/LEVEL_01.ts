@@ -299,19 +299,19 @@ export default class LEVEL_01 extends Phaser.Scene {
 		// Score
 		this.currentScoreText = new HudText(this)
 		this.currentScoreText.setShadow(3, 3)
-		this.currentScoreText.setStroke('#fff', 16);
+		this.currentScoreText.setStroke('#fff', 12);
 		this.currentScoreText.setShadow(2, 2, "#333333", 2, true, true);
 		this.currentScoreText.setDepth(10)
 		// Elapsed Time
 		this.elapsedTimeText = new HudText(this)
 		this.elapsedTimeText.setShadow(3, 3)
-		this.elapsedTimeText.setStroke('#fff', 16);
+		this.elapsedTimeText.setStroke('#fff', 12);
 		this.elapsedTimeText.setShadow(2, 2, "#333333", 2, true, true);
 		this.elapsedTimeText.setDepth(10)
 		// Record Time
 		this.recordTimeText = new HudText(this)
 		this.recordTimeText.setShadow(3, 3)
-		this.recordTimeText.setStroke('#fff', 16);
+		this.recordTimeText.setStroke('#fff', 12);
 		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
 		this.recordTimeText.setDepth(10)
 
@@ -465,10 +465,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 			move_on_x += move_on_x
 		} */
-		this.artifact[0] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[0], 60, 28, 0.6, 0.6)
-		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], 140, 17, 0.6, 0.6)
-		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], 195, 23, 0.6, 0.6)
-		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], 256, 30, 0.6, 0.6)
+		this.artifact[0] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[0], this.screenX * 0.114, this.screenY * 0.045, 0.6, 0.6)
+		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], this.screenX * 0.185, this.screenY * 0.03, 0.6, 0.6)
+		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], this.screenX * 0.24, this.screenY * 0.04, 0.6, 0.6)
+		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], this.screenX * 0.295, this.screenY * 0.05, 0.6, 0.6)
 
 		this.artifact[0].setDepth(10)
 		this.artifact[1].setDepth(10)
@@ -508,7 +508,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}*/
 
 		// Mute button
-		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.001, this.screenY * 0.001, 1, 1)
+		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.022, this.screenY * 0.014, 1, 1)
 			.setScale(0.8, 0.8)
 			.setDepth(10)
 			.setInteractive()
@@ -859,17 +859,19 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.player.getState().getState() ?.update(time, delta, this.player)
 
 		// Display Updated HUD
-		this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.04)
+		this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.048)
 		this.currentScoreText.update()
 		this.currentScoreText.setText(' ' + this.levelScore + ' ')
 		this.currentScoreText.setDepth(10)
-
-		this.elapsedTimeText.setPosition(this.screenX * 0.75, this.screenY * 0.04)
+		this.currentScoreText.setFontSize(40)
+		
+		this.elapsedTimeText.setPosition(this.screenX * 0.75, this.screenY * 0.048)
 		this.elapsedTimeText.update()
 		this.elapsedTimeText.setText(' ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
 		this.elapsedTimeText.setDepth(10)
+		this.elapsedTimeText.setFontSize(40)
 
-		this.recordTimeText.setPosition(this.screenX * 0.55, this.screenY * 0.04)
+		this.recordTimeText.setPosition(this.screenX * 0.55, this.screenY * 0.048)
 		this.recordTimeText.update()
 		if (this.bestRecordedTime < RECORD.TIME) {
 			this.recordTimeText.setText(' ' + this.bestRecordedTime + ' ')
@@ -877,6 +879,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.recordTimeText.setText(' ' + '--:--' + ' ')
 		}
 		this.recordTimeText.setDepth(10)
+		this.recordTimeText.setFontSize(40)
 	}
 
 	//Setup Map Data
