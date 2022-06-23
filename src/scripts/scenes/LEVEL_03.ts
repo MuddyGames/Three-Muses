@@ -47,6 +47,8 @@ const SOUND_KEY = 'soundbtn'
 const TIMER_KEY = 'hudtimer'
 const RECORD_KEY = 'hudrecord'
 const ARTIFACTS_KEY = ['pig', 'vase', 'pot', 'alter']
+const KEYS_KEY = ['red', 'yellow', 'green', 'pink']
+const TREE_KEY = 'tree'
 
 // NEED TO CREATE LEVEL_01 to LEVEL_04 for final build 
 export default class LEVEL_03 extends Phaser.Scene {
@@ -120,6 +122,13 @@ export default class LEVEL_03 extends Phaser.Scene {
 	// Windmill
 	private windmill!: SpineGameObject
 
+	// Keys
+	private key: SpineGameObject[] = []
+	private keyAnimationNames: string[] = []
+
+	// Tree
+	private tree: SpineGameObject[] = []
+
 	// Input Cursors
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 
@@ -182,6 +191,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private diverLayer!: Phaser.Tilemaps.TilemapLayer
 	private bridgeLayer!: Phaser.Tilemaps.TilemapLayer
 	private riverLayer!: Phaser.Tilemaps.TilemapLayer
+	private keyLayer!: Phaser.Tilemaps.TilemapLayer
 
 	// Game of Thrones Level
 	private GoT!: boolean
@@ -225,6 +235,11 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.load.spine(ARTIFACTS_KEY[1], 'collectibles_ui/vase/vase.json', 'collectibles_ui/vase/vase.atlas')
 		this.load.spine(ARTIFACTS_KEY[2], 'collectibles_ui/pot/pot.json', 'collectibles_ui/pot/pot.atlas')
 		this.load.spine(ARTIFACTS_KEY[3], 'collectibles_ui/alter/alter.json', 'collectibles_ui/alter/alter.atlas')
+		this.load.spine(KEYS_KEY[0],'keys/red/red_key.json','keys/red/red_key.atlas')
+		this.load.spine(KEYS_KEY[1],'keys/yellow/yellow_key.json','keys/yellow/yellow_key.atlas')
+		this.load.spine(KEYS_KEY[2],'keys/green/green_key.json','keys/green/green_key.atlas')
+		this.load.spine(KEYS_KEY[3],'keys/pink/pink_key.json','keys/pink/pink_key.atlas')
+		this.load.spine(TREE_KEY,'tree/tree.json', 'tree/tree.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -410,10 +425,10 @@ export default class LEVEL_03 extends Phaser.Scene {
 			}
 			move_on_x += move_on_x
 		} */
-		this.artifact[0] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[0], 100, 20, 1, 1)
-		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], 120, 20, 1, 1)
-		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], 140, 20, 1, 1)
-		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], 160, 20, 1, 1)
+		this.artifact[0] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[0], 60, 50, 1, 1)
+		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], 180, 30, 1, 1)
+		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], 260, 40, 1, 1)
+		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], 350, 49, 1, 1)
 
 		console.log(this.artifact[2].getAnimationList())
 
@@ -421,6 +436,29 @@ export default class LEVEL_03 extends Phaser.Scene {
 		for (let o = 0; o < this.fruit.length; o++) {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
+		
+		for (let i = 0; i < tilesHigh; i++){
+			for(let j = 0; j <tilesWide; j++){
+				var tile = this.keyLayer.getTileAt(j, i)
+				if (tile != null){
+					if (tile.index === 395){
+						this.key.push(this.createSpineObject(IDLE_KEY, KEYS_KEY[2] ,j * this.tileSize - 90 , i * this.tileSize - 70 , 1, 1))
+						}
+				}
+			}
+		}
+
+		/*for (let i = 0; i < tilesHigh; i++){
+			for(let j = 0; j <tilesWide; j++){
+				var tile = this.miscTop1Layer.getTileAt(j, i)
+				if (tile != null){
+					if (tile.index === 656){
+						this.tree.push(this.createSpineObject(IDLE_KEY, TREE_KEY ,j * this.tileSize - 33, i * this.tileSize - 84 , 0.5, 0.5))
+					}
+				}
+			}
+		}*/
+
 
 		// Mute button
 		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.001, this.screenY * 0.001, 1, 1)
@@ -849,13 +887,19 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 		this.miscTop1Layer = this.map.createLayer('map/environment_objects/tree_01', this.tileset, 0, 0);
 		this.miscTop1Layer.setDepth(-9); //SET DEPTH 1 TO -9
+		this.miscTop1Layer.setVisible(true)
 
 		this.miscTop2Layer = this.map.createLayer('map/environment_objects/tree_top_04', this.tileset, 0, 0);
 		this.miscTop2Layer.setDepth(4);
+		this.miscTop2Layer.setVisible(true)
 
 		this.collisionLayer = this.map.createLayer('map/environment_collision/collide_depth_02', this.tileset, 0, 0);
 		this.collisionLayer.setDepth(2)
 		this.collisionLayer.setVisible(false)
+
+		this.keyLayer = this.map.createLayer('map/environment_objects/animated/key', this.tileset, 0, 0);
+		this.keyLayer.setDepth(9)
+		this.keyLayer.setVisible(false)
 
 		// Check the levels to load
 		let current_level = this.sys.settings.key
