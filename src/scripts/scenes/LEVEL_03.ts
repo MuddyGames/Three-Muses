@@ -48,7 +48,7 @@ const TIMER_KEY = 'hudtimer'
 const RECORD_KEY = 'hudrecord'
 const ARTIFACTS_KEY = ['pig', 'vase', 'pot', 'alter']
 const KEYS_KEY = ['red', 'yellow', 'green', 'pink']
-const TREE_KEY = 'tree'
+//const TREE_KEY = 'tree'
 
 // NEED TO CREATE LEVEL_01 to LEVEL_04 for final build 
 export default class LEVEL_03 extends Phaser.Scene {
@@ -84,6 +84,9 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private hudRecord!: SpineGameObject
 	private hudRecordAnimationNames: string[] = []
 	private hudRecordAnimationIndex = 0
+	private hudCurrentRecordTimerTime: number
+	private hudElapsedRecordTimerTime: number
+	private hudRecordTimeAchievement: boolean
 
 	// Level Music
 	private backingMusic!: Phaser.Sound.BaseSound
@@ -127,7 +130,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private keyAnimationNames: string[] = []
 
 	// Tree
-	private tree: SpineGameObject[] = []
+	//private tree: SpineGameObject[] = []
 
 	// Input Cursors
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -211,6 +214,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.screenX = 0
 		this.screenY = 0
 		this.startTime = 0
+		this.hudRecordTimeAchievement = false
 		this.GoT = false
 	}
 
@@ -239,7 +243,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.load.spine(KEYS_KEY[1],'keys/yellow/yellow_key.json','keys/yellow/yellow_key.atlas')
 		this.load.spine(KEYS_KEY[2],'keys/green/green_key.json','keys/green/green_key.atlas')
 		this.load.spine(KEYS_KEY[3],'keys/pink/pink_key.json','keys/pink/pink_key.atlas')
-		this.load.spine(TREE_KEY,'tree/tree.json', 'tree/tree.atlas')
+		//this.load.spine(TREE_KEY,'tree/tree.json', 'tree/tree.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -442,7 +446,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				var tile = this.keyLayer.getTileAt(j, i)
 				if (tile != null){
 					if (tile.index === 395){
-						this.key.push(this.createSpineObject(IDLE_KEY, KEYS_KEY[2] ,j * this.tileSize - 90 , i * this.tileSize - 70 , 1, 1))
+						this.key.push(this.createSpineObject(IDLE_KEY, KEYS_KEY[0] ,j * this.tileSize - 90 , i * this.tileSize - 70 , 1, 1))
 						}
 				}
 			}
@@ -458,7 +462,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 				}
 			}
 		}*/
-
 
 		// Mute button
 		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.001, this.screenY * 0.001, 1, 1)
@@ -541,7 +544,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				// Update Record Animations
 				this.time.addEvent({
 					delay: ANIMATION_DELAY.RECORD,
-					callback: this.changeAnimation,
+					callback: this.recordTimeAnimations,
 					callbackScope: this,
 					args: [this.hudRecord, this.hudRecordAnimationNames, 2]
 				});
@@ -965,6 +968,14 @@ export default class LEVEL_03 extends Phaser.Scene {
 		spine.play(animation, true)
 	}
 
+	// Record Timer Animations
+	private recordTimeAnimations(index: number, time: number, delta: number): void {
+		if(this.hudRecordTimeAchievement){
+			console.log('New Record -- >>')
+			this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Stop the stopwatch
+		}
+	}
+
 	//Truffles to Object Collision
 	private trufflesAABB(collidable: SpineGameObject) {
 
@@ -1086,6 +1097,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 	// Set Record Time
 	private setRecord(time: number) {
 		this.newRecordTime = time
+		this.hudRecordTimeAchievement = true
 	}
 
 	// Add Points
