@@ -406,10 +406,13 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.key_g = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G)
 
 		//Multitouch: the below sets the amount of concurrent touches can happen
-		this.input.addPointer(2);
-		this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, this.tileSize * DPAD.X_TILES, 
-			this.tileSize * DPAD.Y_TILES, DPAD.SCALE, DPAD.SCALE)
-		this.dpad.setDepth(10)
+		if(this.game.device.input.touch)
+		{
+			this.input.addPointer(2);
+			this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, this.tileSize * DPAD.X_TILES, 
+				this.tileSize * DPAD.Y_TILES, DPAD.SCALE, DPAD.SCALE)
+			this.dpad.setDepth(10)
+		}
 
 		// Setup Fruits
 		for (let i = 0; i < tilesHigh; i++) {
@@ -536,7 +539,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	// Game Update Method
 	update(time: number, delta: number): void {
-		
+
 		// Start time
 		if (this.startTime === 0) {
 			this.startTime = time
@@ -576,75 +579,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 			});
 		}
 
-		var pointer = this.input.activePointer;
-		if (pointer.isDown) {
-			var touchX = pointer.x;
-			var touchY = pointer.y;
-			var dpadX = this.dpad.x
-			var dpadWidth = this.dpad.width
-			var dpadY = this.dpad.y
-			var dpadHeight = this.dpad.height
-			this.dpad_down = false
-			this.dpad_up = false
-			this.dpad_left = false
-			this.dpad_right = false
-			
-			if(touchX < dpadX - dpadWidth/6 && touchX > dpadX - DPAD.SCALE * dpadWidth/2) {
-				this.dpad_left = true
-			}
-			if(touchX > dpadX + dpadWidth/6 && touchX < dpadX + DPAD.SCALE * dpadWidth/2) {
-				this.dpad_right = true
-			}
-			if(touchY < dpadY - dpadHeight/6 && touchY > dpadY - DPAD.SCALE * dpadHeight/2) {
-				this.dpad_up = true
-			}
-			if(touchY > dpadY + dpadHeight/6 && touchY < dpadY + DPAD.SCALE * dpadHeight/2) {
-				this.dpad_down = true
-			}
-			if(this.dpad_down) {
-				if(this.dpad_left) {
-					this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
-					this.dpad.play(DPAD_ANIMS.DOWN_LEFT, true)
-				}
-				else if(this.dpad_right) {
-					this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
-					this.dpad.play(DPAD_ANIMS.DOWN_RIGHT, true)
-				}
-				else {
-					this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
-					this.dpad.play(DPAD_ANIMS.DOWN, true)
-				}
-			}
-			else if(this.dpad_up) {
-				if(this.dpad_left) {
-					this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
-					this.dpad.play(DPAD_ANIMS.UP_LEFT, true)
-				}
-				else if(this.dpad_right) {
-					this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
-					this.dpad.play(DPAD_ANIMS.UP_RIGHT, true)
-				}
-				else {
-					this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
-					this.dpad.play(DPAD_ANIMS.UP, true)
-				}
-			}
-			else if(this.dpad_left) {
-				this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
-				this.dpad.play(DPAD_ANIMS.LEFT, true)
-			}
-			else if(this.dpad_right) {
-				this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
-				this.dpad.play(DPAD_ANIMS.RIGHT, true)
-			}
+		if(this.game.device.input.touch) {
+			this.handleDPad(time, delta)
 		}
-		else {
-			this.dpad_down = false
-			this.dpad_up = false
-			this.dpad_left = false
-			this.dpad_right = false
-			this.dpad.play(DPAD_ANIMS.IDLE, true)
-		};
+
 		// Cannon Ball Movement
 		this.cannonballMove()
 
@@ -1259,5 +1197,76 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 		// ENDS: Change Levels
 
+	}
+	private handleDPad(time: number, delta: number) {
+		var pointer = this.input.activePointer;
+			if (pointer.isDown) {
+				var touchX = pointer.x;
+				var touchY = pointer.y;
+				var dpadX = this.dpad.x
+				var dpadWidth = this.dpad.width
+				var dpadY = this.dpad.y
+				var dpadHeight = this.dpad.height
+				this.dpad_down = false
+				this.dpad_up = false
+				this.dpad_left = false
+				this.dpad_right = false
+				
+				if(touchX < dpadX - dpadWidth/6 && touchX > dpadX - DPAD.SCALE * dpadWidth/2) {
+					this.dpad_left = true
+				}
+				if(touchX > dpadX + dpadWidth/6 && touchX < dpadX + DPAD.SCALE * dpadWidth/2) {
+					this.dpad_right = true
+				}
+				if(touchY < dpadY - dpadHeight/6 && touchY > dpadY - DPAD.SCALE * dpadHeight/2) {
+					this.dpad_up = true
+				}
+				if(touchY > dpadY + dpadHeight/6 && touchY < dpadY + DPAD.SCALE * dpadHeight/2) {
+					this.dpad_down = true
+				}
+				if(this.dpad_down) {
+					if(this.dpad_left) {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.DOWN_LEFT, true)
+					}
+					else if(this.dpad_right) {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.DOWN_RIGHT, true)
+					}
+					else {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.DOWN, true)
+					}
+				}
+				else if(this.dpad_up) {
+					if(this.dpad_left) {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.UP_LEFT, true)
+					}
+					else if(this.dpad_right) {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.UP_RIGHT, true)
+					}
+					else {
+						this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
+						this.dpad.play(DPAD_ANIMS.UP, true)
+					}
+				}
+				else if(this.dpad_left) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.LEFT, true)
+				}
+				else if(this.dpad_right) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.RIGHT, true)
+				}
+			}
+			else {
+				this.dpad_down = false
+				this.dpad_up = false
+				this.dpad_left = false
+				this.dpad_right = false
+				this.dpad.play(DPAD_ANIMS.IDLE, true)
+			};
 	}
 }
