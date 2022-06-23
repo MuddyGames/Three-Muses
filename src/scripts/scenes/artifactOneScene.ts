@@ -56,7 +56,7 @@ export default class ArtiFactOneScene extends Phaser.Scene {
     this.nextLevel.update()
     this.nextLevel.setText('Next Level')
     this.nextLevel.setInteractive()
-    this.nextLevel.setColor('#dc143c')
+    this.nextLevel.setColor('#ff4d4d')
   }
 
 

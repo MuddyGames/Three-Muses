@@ -446,7 +446,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				var tile = this.keyLayer.getTileAt(j, i)
 				if (tile != null){
 					if (tile.index === 395){
-						this.key.push(this.createSpineObject(IDLE_KEY, KEYS_KEY[2] ,j * this.tileSize - 90 , i * this.tileSize - 70 , 1, 1))
+						this.key.push(this.createSpineObject(IDLE_KEY, KEYS_KEY[2] ,j * this.tileSize - 80 , i * this.tileSize - 60 , 0.8, 0.8))
 						this.key[0].setDepth(4)	
 					}
 				}
