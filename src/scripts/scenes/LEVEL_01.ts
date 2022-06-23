@@ -26,7 +26,8 @@ import {
 	TILE,
 	ARTIFACTS,
 	RECORD,
-	DPAD
+	DPAD,
+	DPAD_ANIMS
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -601,16 +602,40 @@ export default class LEVEL_01 extends Phaser.Scene {
 				this.dpad_down = true
 			}
 			if(this.dpad_down) {
-				this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
+				if(this.dpad_left) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.DOWN_LEFT, true)
+				}
+				else if(this.dpad_right) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.DOWN_RIGHT, true)
+				}
+				else {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.DOWN, true)
+				}
 			}
 			else if(this.dpad_up) {
-				this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
+				if(this.dpad_left) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.UP_LEFT, true)
+				}
+				else if(this.dpad_right) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.UP_RIGHT, true)
+				}
+				else {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.UP, true)
+				}
 			}
 			else if(this.dpad_left) {
 				this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+				this.dpad.play(DPAD_ANIMS.LEFT, true)
 			}
 			else if(this.dpad_right) {
 				this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+				this.dpad.play(DPAD_ANIMS.RIGHT, true)
 			}
 		}
 		else {
@@ -618,6 +643,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.dpad_up = false
 			this.dpad_left = false
 			this.dpad_right = false
+			this.dpad.play(DPAD_ANIMS.IDLE, true)
 		};
 		// Cannon Ball Movement
 		this.cannonballMove()
