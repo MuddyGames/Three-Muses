@@ -50,7 +50,7 @@ export default class Credits extends Phaser.Scene {
     this.nextLevel.setShadow(3, 3)
     this.nextLevel.setStroke('#414141', 3)
     this.nextLevel.setShadow(2, 2, "#333333", 2, true, true)
-    this.nextLevel.setPosition(width * 0.21, height * 0.85)
+    this.nextLevel.setPosition(width * 0.28, height * 0.80)
     this.nextLevel.on('pointerdown', () => this.onClickNextLevel())
 
     let div_background = document.getElementById('three_muses_game')
