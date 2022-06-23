@@ -25,7 +25,8 @@ import {
 	POINTS,
 	TILE,
 	ARTIFACTS,
-	RECORD
+	RECORD,
+	DPAD
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -405,7 +406,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		//Multitouch: the below sets the amount of concurrent touches can happen
 		this.input.addPointer(2);
-		this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, width - this.tileSize * 3, height - this.tileSize * 3, 1, 1)
+		this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, width - this.tileSize * 4, 
+			height - this.tileSize * 4, DPAD.SCALE, DPAD.SCALE)
+		this.dpad.setDepth(10)
 
 		// Setup Fruits
 		for (let i = 0; i < tilesHigh; i++) {
@@ -585,16 +588,16 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.dpad_left = false
 			this.dpad_right = false
 			
-			if(touchX < dpadX - dpadWidth/6 && touchX > dpadX - dpadWidth/2) {
+			if(touchX < dpadX - dpadWidth/6 && touchX > dpadX - DPAD.SCALE * dpadWidth/2) {
 				this.dpad_left = true
 			}
-			if(touchX > dpadX + dpadWidth/6 && touchX < dpadX + dpadWidth/2) {
+			if(touchX > dpadX + dpadWidth/6 && touchX < dpadX + DPAD.SCALE * dpadWidth/2) {
 				this.dpad_right = true
 			}
-			if(touchY < dpadY - dpadHeight/6 && touchY > dpadY - dpadHeight/2) {
+			if(touchY < dpadY - dpadHeight/6 && touchY > dpadY - DPAD.SCALE * dpadHeight/2) {
 				this.dpad_up = true
 			}
-			if(touchY > dpadY + dpadHeight/6 && touchY < dpadY + dpadHeight/2) {
+			if(touchY > dpadY + dpadHeight/6 && touchY < dpadY + DPAD.SCALE * dpadHeight/2) {
 				this.dpad_down = true
 			}
 			if(this.dpad_down) {

@@ -98,3 +98,7 @@ export enum BRIDGE_ANIMS {
 export enum TILE{
     SIZE = 32
 }
+
+export enum DPAD{
+    SCALE = 1.5
+}
