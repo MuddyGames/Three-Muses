@@ -17,6 +17,9 @@ export default class PreloadScene extends Phaser.Scene {
     // Screen Vinnette
     this.load.image('vinnette', 'assets/level/vinnette.png')
 
+    // Screen HUD
+    this.load.image('hud_background', 'assets/level/hud_background.png')
+
     // Game Logos
     this.load.image('the_hunt_museum', 'assets/logos/the_hunt_museum.png')
     this.load.image('limerick_museum', 'assets/logos/limerick_city.png')
