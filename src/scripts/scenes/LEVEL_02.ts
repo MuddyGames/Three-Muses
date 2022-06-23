@@ -429,11 +429,11 @@ export default class LEVEL_02 extends Phaser.Scene {
 			}
 			move_on_x += move_on_x
 		} */
-		this.artifact[0] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[0], 60, 50, 1, 1)
-		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], 180, 30, 1, 1)
-		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], 260, 40, 1, 1)
-		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], 350, 49, 1, 1)
-
+		this.artifact[0] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[0], 60, 28, 0.6, 0.6)
+		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], 140, 17, 0.6, 0.6)
+		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], 195, 23, 0.6, 0.6)
+		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], 256, 30, 0.6, 0.6)
+		
 		console.log(this.artifact[2].getAnimationList())
 
 		// Init fruit animations
@@ -446,8 +446,9 @@ export default class LEVEL_02 extends Phaser.Scene {
 				var tile = this.keyLayer.getTileAt(j, i)
 				if (tile != null){
 					if (tile.index === 395){
-						this.key.push(this.createSpineObject(IDLE_KEY, KEYS_KEY[0] ,j * this.tileSize - 90 , i * this.tileSize - 70 , 1, 1))
-						}
+						this.key.push(this.createSpineObject(IDLE_KEY, KEYS_KEY[1] ,j * this.tileSize - 90 , i * this.tileSize - 70 , 1, 1))
+						this.key[0].setDepth(4)	
+					}
 				}
 			}
 		}
@@ -504,7 +505,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 			//Play no Collectables
 		} else if (level === LEVELS.LEVEL_02) {
 			//Play Animations
-			this.artifact[0].play('pig_fill', true)
+			this.artifact[0].play('pig_fill', false)
 		} else if (level === LEVELS.LEVEL_03) {
 			//Play Animations
 			this.artifact[0].play('pig_fill', true)
@@ -613,6 +614,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
+						this.key[0].play("collected",true)
 					}
 				}
 			}
@@ -640,6 +642,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
+						this.key[0].play("collected",true)
 					}
 				}
 			}
@@ -667,6 +670,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
+						this.key[0].play("collected",true)
 					}
 				}
 			}
@@ -695,6 +699,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
+						this.key[0].play("collected",true)
 					}
 				}
 			}
