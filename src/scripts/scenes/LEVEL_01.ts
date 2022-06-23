@@ -277,7 +277,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.vinnette.setDepth(10)
 
 		// Hud Background
-		this.hud_background = this.add.image(width / 2, height * 0.1, 'hud_background')
+		this.hud_background = this.add.image(width / 2, height * 0.04, 'hud_background')
     	this.vinnette.setDisplaySize(width, height);
     	this.vinnette.setOrigin(0.5, 0.5)
 		this.vinnette.setDepth(9)
