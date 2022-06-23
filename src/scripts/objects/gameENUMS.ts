@@ -100,5 +100,7 @@ export enum TILE{
 }
 
 export enum DPAD{
-    SCALE = 1.5
+    X_TILES = 4.5,
+    Y_TILES = 4.5,
+    SCALE = 1.45
 }

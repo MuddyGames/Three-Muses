@@ -406,8 +406,8 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		//Multitouch: the below sets the amount of concurrent touches can happen
 		this.input.addPointer(2);
-		this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, width - this.tileSize * 4, 
-			height - this.tileSize * 4, DPAD.SCALE, DPAD.SCALE)
+		this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, width - this.tileSize * DPAD.X_TILES, 
+			height - this.tileSize * DPAD.Y_TILES, DPAD.SCALE, DPAD.SCALE)
 		this.dpad.setDepth(10)
 
 		// Setup Fruits
