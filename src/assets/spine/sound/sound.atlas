@@ -1,12 +1,12 @@
 
 sound.png
-size: 91,121
+size: 92,122
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Background
   rotate: false
-  xy: 2, 59
+  xy: 2, 60
   size: 64, 60
   orig: 66, 62
   offset: 1, 1
@@ -14,34 +14,34 @@ Background
 Layer 2
   rotate: false
   xy: 2, 2
-  size: 54, 55
-  orig: 56, 57
+  size: 55, 56
+  orig: 57, 58
   offset: 1, 1
   index: -1
 Layer 21
   rotate: false
-  xy: 58, 15
+  xy: 59, 16
   size: 31, 42
   orig: 34, 45
   offset: 1, 2
   index: -1
 Layer 3
   rotate: false
-  xy: 68, 92
+  xy: 68, 93
   size: 18, 27
   orig: 20, 29
   offset: 1, 1
   index: -1
 Layer 4
   rotate: false
-  xy: 80, 74
+  xy: 80, 75
   size: 8, 16
   orig: 10, 19
   offset: 1, 2
   index: -1
 Layer 5
   rotate: false
-  xy: 68, 64
+  xy: 68, 65
   size: 10, 26
   orig: 12, 28
   offset: 1, 1
