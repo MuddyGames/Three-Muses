@@ -547,14 +547,14 @@ export default class LEVEL_01 extends Phaser.Scene {
 		if (level === LEVELS.LEVEL_01) {
 			//Play no Collectables
 		} else if (level === LEVELS.LEVEL_02) {
-			//Play Animations
+			//Play One already collected animations
 			this.artifact[0].play('pig_fill', false)
 		} else if (level === LEVELS.LEVEL_03) {
-			//Play Animations
+			//Play Two already collected animations
 			this.artifact[0].play('pig_filled', false)
 			this.artifact[1].play('vase_fill', false)
 		} else if (level === LEVELS.LEVEL_04) {
-			//Play Animations
+			//Play Three already collected animations
 			this.artifact[0].play('pig_filled', true)
 			this.artifact[1].play('vase_filled', true)
 			this.artifact[2].play('pot_fill', false)
@@ -775,6 +775,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				!this.dpad_up && !this.dpad_down && !this.dpad_left && !this.dpad_right) {
 				this.player.getState().handleInput(INPUT_TYPES.IDLE_NEUTRAL, time, delta, this.player)
 			} else {
+				// TODO: **** Game Ticks Optimisation ****
 				for (let i = 0; i < this.fruit.length; i++) {
 
 					if (!this.fruitMarked[i] && this.trufflesAABB(this.fruit[i])) {
@@ -799,6 +800,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 		}
 		//check fruit
+		// TODO: **** Game Ticks Optimisation ****
 		if (this.fruitRemaining <= 0 && !this.bridgeOpen) {
 			this.bridge.play(BRIDGE_ANIMS.TRANSITIONING, false)
 			this.bridgeOpen = true
@@ -814,6 +816,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 
 		// Diver Move
+		// TODO: **** Game Ticks Optimisation ****
 		for (let i = 0; i < this.divers.length; i++) {
 			this.divers[i].y += this.diverMove[i]
 			const x = this.map.worldToTileX(this.divers[i].x)
@@ -831,6 +834,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 
 		// Diver Collision
+		// TODO: **** Game Ticks Optimisation ****
 		for (let i = 0; i < this.divers.length; i++) {
 			if (this.trufflesEnemyCollision(this.divers[i], i)) {
 				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
@@ -838,6 +842,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 		}
 		// Handle Push
+		// TODO: **** Game Ticks Optimisation Minimised Fetching Map Tiles ****
 		let x = this.map.worldToTileX(this.player.getX())
 		let y = this.map.worldToTileY(this.player.getY() - this.player.getVelocityY().y)
 
@@ -848,6 +853,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 
 		// Cannonball collisions
+		// TODO: **** Game Ticks Optimisation ****
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.trufflesAABB(this.cannonball[i])) {
 				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
