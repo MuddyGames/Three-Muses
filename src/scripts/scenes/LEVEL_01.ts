@@ -94,7 +94,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private hudRecord!: SpineGameObject
 	private hudRecordAnimationNames: string[] = []
 	private hudRecordAnimationIndex = 0
-	private hudCurrentRecordTimerTime: number
+	private hudCurrentRecordStartTime: number
 	private hudElapsedRecordTimerTime: number
 	private hudRecordTimeAchievement: boolean
 
@@ -228,6 +228,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.screenX = 0
 		this.screenY = 0
 		this.startTime = 0
+		this.hudCurrentRecordStartTime = 0
 		this.hudRecordTimeAchievement = false
 		this.GoT = false
 	}
@@ -326,6 +327,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.hudRecord.setDepth(10)
 		this.hudRecord.setScale(0.75, 0.74)
 		this.hudRecordAnimationNames = this.hudRecord.getAnimationList()
+
+		for(let i = 0; i < 3; i++){
+			console.log(this.hudRecordAnimationNames[i].toString())
+		}
 		this.hudRecord.play(this.hudRecordAnimationNames[0], true) // No Record Set
 
 		// Update Score Frequency
@@ -585,13 +590,19 @@ export default class LEVEL_01 extends Phaser.Scene {
 				this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Stop the stopwatch
 				this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Stop the stopwatch
 
+				if(this.hudCurrentRecordStartTime === 0){
+					this.hudCurrentRecordStartTime = time
+				}
+				// Set the Start Time
+				this.hudElapsedRecordTimerTime = time - this.hudCurrentRecordStartTime
+
 				// Update Record Animations
 				this.time.addEvent({
 					delay: ANIMATION_DELAY.RECORD,
 					callback: this.recordTimeAnimations,
 					callbackScope: this,
-					args: [this.hudRecord, this.hudRecordAnimationNames, 2]
-				});
+					args: [time, delta]
+				})
 
 			} else {
 				this.newRecordTime = this.bestRecordedTime
@@ -1036,9 +1047,23 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	// Record Timer Animations
 	private recordTimeAnimations(index: number, time: number, delta: number): void {
+		console.log('New Record -- >>' + this.hudElapsedRecordTimerTime)
+
 		if(this.hudRecordTimeAchievement){
-			console.log('New Record -- >>')
-			this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Stop the stopwatch
+			if(this.hudElapsedRecordTimerTime >= 100 && this.hudElapsedRecordTimerTime <= 2000){
+				console.log('Play 1')
+				//this.changeAnimation(this.hudRecord, this.hudRecordAnimationNames, 1)
+				this.hudRecord.play(this.hudRecordAnimationNames[1], false) // Spin Record Clock
+			} else if(this.hudElapsedRecordTimerTime >= 2001 && this.hudElapsedRecordTimerTime <= 3000){
+				console.log('Play 2')
+				//this.changeAnimation(this.hudRecord, this.hudRecordAnimationNames, 2)
+				this.hudRecord.play(this.hudRecordAnimationNames[2], false) // Spin Record Clock
+			} else if(this.hudElapsedRecordTimerTime >= 1600){
+				console.log('Idle')
+				//this.changeAnimation(this.hudRecord, this.hudRecordAnimationNames, 0)
+				this.hudCurrentRecordStartTime = time // Reset Start Time
+				//this.hudRecord.play(this.hudRecordAnimationNames[0], true) // Play Idle
+			}
 		}
 	}
 
