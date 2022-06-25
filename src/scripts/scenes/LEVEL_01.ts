@@ -588,13 +588,17 @@ export default class LEVEL_01 extends Phaser.Scene {
 				this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
 				this.fetchRecordedTime()
 				this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Stop the stopwatch
-				this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Stop the stopwatch
-
+				
 				if(this.hudCurrentRecordStartTime === 0){
 					this.hudCurrentRecordStartTime = time
 				}
 				// Set the Start Time
 				this.hudElapsedRecordTimerTime = time - this.hudCurrentRecordStartTime
+
+				if(this.hudElapsedRecordTimerTime >= 1001){
+					console.log('Reset')
+					this.hudCurrentRecordStartTime = time // Reset Start Time
+				}
 
 				// Update Record Animations
 				this.time.addEvent({
@@ -1047,23 +1051,15 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	// Record Timer Animations
 	private recordTimeAnimations(index: number, time: number, delta: number): void {
-		console.log('New Record -- >>' + this.hudElapsedRecordTimerTime)
-
 		if(this.hudRecordTimeAchievement){
-			if(this.hudElapsedRecordTimerTime >= 100 && this.hudElapsedRecordTimerTime <= 2000){
-				console.log('Play 1')
-				//this.changeAnimation(this.hudRecord, this.hudRecordAnimationNames, 1)
-				this.hudRecord.play(this.hudRecordAnimationNames[1], false) // Spin Record Clock
-			} else if(this.hudElapsedRecordTimerTime >= 2001 && this.hudElapsedRecordTimerTime <= 3000){
-				console.log('Play 2')
-				//this.changeAnimation(this.hudRecord, this.hudRecordAnimationNames, 2)
-				this.hudRecord.play(this.hudRecordAnimationNames[2], false) // Spin Record Clock
-			} else if(this.hudElapsedRecordTimerTime >= 1600){
-				console.log('Idle')
-				//this.changeAnimation(this.hudRecord, this.hudRecordAnimationNames, 0)
+			if(this.hudElapsedRecordTimerTime <= 500){ // Play First Animation up to half a second
+				this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Spin Record Clock
+			} else if(this.hudElapsedRecordTimerTime >= 501 && this.hudElapsedRecordTimerTime <= 1000){ // Play next animation between half a second and one second
+				this.hudRecord.play(this.hudRecordAnimationNames[2], true) // Spin Record Clock
+			} /* else if(this.hudElapsedRecordTimerTime >= 1001){ // Reset start time after one second
+				console.log('Reset')
 				this.hudCurrentRecordStartTime = time // Reset Start Time
-				//this.hudRecord.play(this.hudRecordAnimationNames[0], true) // Play Idle
-			}
+			} */
 		}
 	}
 
