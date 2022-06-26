@@ -4,8 +4,8 @@ export enum GSM {
     GAME_COMPLETE = 'game_complete'
 }
 
-export enum RECORD{
-    TIME = 1000000
+export enum HUD_ANIMATIONS_TIME{
+    TIME = 100
 }
 
 // Used for local storage keys

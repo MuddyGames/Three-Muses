@@ -25,7 +25,7 @@ import {
 	POINTS,
 	TILE,
 	ARTIFACTS,
-	RECORD,
+	HUD_ANIMATIONS_TIME,
 	DPAD,
 	DPAD_ANIMS
 } from '../objects/gameENUMS'
@@ -595,14 +595,14 @@ export default class LEVEL_01 extends Phaser.Scene {
 				// Set the Start Time
 				this.hudElapsedRecordTimerTime = time - this.hudCurrentRecordStartTime
 
-				if(this.hudElapsedRecordTimerTime >= 1001){
-					console.log('Reset')
+				if(this.hudElapsedRecordTimerTime >= 4001){
+					console.log('Reset Update')
 					this.hudCurrentRecordStartTime = time // Reset Start Time
 				}
 
 				// Update Record Animations
 				this.time.addEvent({
-					delay: ANIMATION_DELAY.RECORD,
+					delay: 100,
 					callback: this.recordTimeAnimations,
 					callbackScope: this,
 					args: [time, delta]
@@ -894,7 +894,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		this.recordTimeText.setPosition(this.screenX * 0.55, this.screenY * 0.048)
 		this.recordTimeText.update()
-		if (this.bestRecordedTime < RECORD.TIME) {
+		if (this.bestRecordedTime < HUD_ANIMATIONS_TIME.TIME) {
 			this.recordTimeText.setText(' ' + this.bestRecordedTime + ' ')
 		} else {
 			this.recordTimeText.setText(' ' + '--:--' + ' ')
@@ -1051,15 +1051,15 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	// Record Timer Animations
 	private recordTimeAnimations(index: number, time: number, delta: number): void {
+		console.log(Math.round((this.hudElapsedRecordTimerTime * 0.001)))
 		if(this.hudRecordTimeAchievement){
-			if(this.hudElapsedRecordTimerTime <= 500){ // Play First Animation up to half a second
+			if(this.hudElapsedRecordTimerTime <= 2000){ // Play First Animation up to half a second
+				console.log('Play 1')
 				this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Spin Record Clock
-			} else if(this.hudElapsedRecordTimerTime >= 501 && this.hudElapsedRecordTimerTime <= 1000){ // Play next animation between half a second and one second
+			} else if(this.hudElapsedRecordTimerTime >= 2001 && this.hudElapsedRecordTimerTime <= 4000){ // Play next animation between half a second and one second
 				this.hudRecord.play(this.hudRecordAnimationNames[2], true) // Spin Record Clock
-			} /* else if(this.hudElapsedRecordTimerTime >= 1001){ // Reset start time after one second
-				console.log('Reset')
-				this.hudCurrentRecordStartTime = time // Reset Start Time
-			} */
+				console.log('Play 2')
+			}
 		}
 	}
 
@@ -1200,16 +1200,16 @@ export default class LEVEL_01 extends Phaser.Scene {
 		if (temp !== null) {
 			this.bestRecordedTime = parseInt(temp) || 0
 			if (this.bestRecordedTime === 0) {
-				this.bestRecordedTime = RECORD.TIME
+				this.bestRecordedTime = HUD_ANIMATIONS_TIME.TIME
 			}
 		} else {
-			this.bestRecordedTime = RECORD.TIME
+			this.bestRecordedTime = HUD_ANIMATIONS_TIME.TIME
 		}
 
-		if (this.newRecordTime < RECORD.TIME) {
+		if (this.newRecordTime < HUD_ANIMATIONS_TIME.TIME) {
 			window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
 		} else {
-			window.localStorage.setItem('time_' + this.sys.settings.key, RECORD.TIME.toString())
+			window.localStorage.setItem('time_' + this.sys.settings.key, HUD_ANIMATIONS_TIME.TIME.toString())
 		}
 	}
 

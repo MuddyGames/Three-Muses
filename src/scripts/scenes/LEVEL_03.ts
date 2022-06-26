@@ -25,7 +25,7 @@ import {
 	POINTS,
 	TILE,
 	ARTIFACTS,
-	RECORD,
+	HUD_ANIMATIONS_TIME,
 	DPAD,
 	DPAD_ANIMS
 } from '../objects/gameENUMS'
@@ -873,7 +873,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 		this.recordTimeText.setPosition(this.screenX * 0.55, this.screenY * 0.048)
 		this.recordTimeText.update()
-		if (this.bestRecordedTime < RECORD.TIME) {
+		if (this.bestRecordedTime < HUD_ANIMATIONS_TIME.TIME) {
 			this.recordTimeText.setText(' ' + this.bestRecordedTime + ' ')
 		} else {
 			this.recordTimeText.setText(' ' + '--:--' + ' ')
@@ -1173,16 +1173,16 @@ export default class LEVEL_03 extends Phaser.Scene {
 		if (temp !== null) {
 			this.bestRecordedTime = parseInt(temp) || 0
 			if (this.bestRecordedTime === 0) {
-				this.bestRecordedTime = RECORD.TIME
+				this.bestRecordedTime = HUD_ANIMATIONS_TIME.TIME
 			}
 		} else {
-			this.bestRecordedTime = RECORD.TIME
+			this.bestRecordedTime = HUD_ANIMATIONS_TIME.TIME
 		}
 
-		if (this.newRecordTime < RECORD.TIME) {
+		if (this.newRecordTime < HUD_ANIMATIONS_TIME.TIME) {
 			window.localStorage.setItem('time_' + this.sys.settings.key, this.newRecordTime.toString())
 		} else {
-			window.localStorage.setItem('time_' + this.sys.settings.key, RECORD.TIME.toString())
+			window.localStorage.setItem('time_' + this.sys.settings.key, HUD_ANIMATIONS_TIME.TIME.toString())
 		}
 	}
 
