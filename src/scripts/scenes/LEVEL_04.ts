@@ -81,6 +81,10 @@ export default class LEVEL_04 extends Phaser.Scene {
 	private screenY!: number
 	private elapsedLevelTime!: number
 	private startTime!: number
+	private frameTime!: number
+	private newTick!: boolean
+	private delay!: number
+	private fps!: number
 
 	// Hud Animations
 	private soundMuteUnmuteButton!: SpineGameObject
@@ -207,9 +211,6 @@ export default class LEVEL_04 extends Phaser.Scene {
 	private riverLayer!: Phaser.Tilemaps.TilemapLayer
 	private keyLayer!: Phaser.Tilemaps.TilemapLayer
 
-	// Game of Thrones Level
-	private GoT!: boolean
-
 	// Player Data
 	private playerState!: PlayerState
 
@@ -225,7 +226,10 @@ export default class LEVEL_04 extends Phaser.Scene {
 		this.screenX = 0
 		this.screenY = 0
 		this.startTime = 0
-		this.GoT = false
+		this.frameTime = 0
+		this.newTick = false
+		this.fps = 60
+		this.delay = 1000 / this.fps
 	}
 
 	preload(time: number, delta: number): void {
@@ -249,10 +253,10 @@ export default class LEVEL_04 extends Phaser.Scene {
 		this.load.spine(ARTIFACTS_KEY[1], 'collectibles_ui/vase/vase.json', 'collectibles_ui/vase/vase.atlas')
 		this.load.spine(ARTIFACTS_KEY[2], 'collectibles_ui/pot/pot.json', 'collectibles_ui/pot/pot.atlas')
 		this.load.spine(ARTIFACTS_KEY[3], 'collectibles_ui/alter/alter.json', 'collectibles_ui/alter/alter.atlas')
-		this.load.spine(KEYS_KEY[0],'keys/red/red_key.json','keys/red/red_key.atlas')
-		this.load.spine(KEYS_KEY[1],'keys/yellow/yellow_key.json','keys/yellow/yellow_key.atlas')
-		this.load.spine(KEYS_KEY[2],'keys/green/green_key.json','keys/green/green_key.atlas')
-		this.load.spine(KEYS_KEY[3],'keys/pink/pink_key.json','keys/pink/pink_key.atlas')
+		this.load.spine(KEYS_KEY[0], 'keys/red/red_key.json', 'keys/red/red_key.atlas')
+		this.load.spine(KEYS_KEY[1], 'keys/yellow/yellow_key.json', 'keys/yellow/yellow_key.atlas')
+		this.load.spine(KEYS_KEY[2], 'keys/green/green_key.json', 'keys/green/green_key.atlas')
+		this.load.spine(KEYS_KEY[3], 'keys/pink/pink_key.json', 'keys/pink/pink_key.atlas')
 		//this.load.spine(TREE_KEY,'tree/tree.json', 'tree/tree.atlas')
 		this.load.spine(DPAD_KEY, 'dpad/DPad_Final_merge.json', 'dpad/DPad_Final_merge.atlas')
 	}
@@ -268,14 +272,14 @@ export default class LEVEL_04 extends Phaser.Scene {
 
 		// Screen Vinnette
 		this.vinnette = this.add.image(width / 2, height / 2, 'vinnette')
-    	this.vinnette.setDisplaySize(width, height);
-    	this.vinnette.setOrigin(0.5, 0.5)
+		this.vinnette.setDisplaySize(width, height);
+		this.vinnette.setOrigin(0.5, 0.5)
 		this.vinnette.setDepth(10)
 
 		// Hud Background
 		this.hud_background = this.add.image(width / 2, height * 0.04, 'hud_background')
-    	this.vinnette.setDisplaySize(width, height);
-    	this.vinnette.setOrigin(0.5, 0.5)
+		this.vinnette.setDisplaySize(width, height);
+		this.vinnette.setOrigin(0.5, 0.5)
 		this.vinnette.setDepth(9)
 
 		//Setup the Player
@@ -424,10 +428,9 @@ export default class LEVEL_04 extends Phaser.Scene {
 		this.key_g = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G)
 
 		//Multitouch: the below sets the amount of concurrent touches can happen
-		if(this.game.device.input.touch)
-		{
+		if (this.game.device.input.touch) {
 			this.input.addPointer(2);
-			this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, this.tileSize * DPAD.X_TILES, 
+			this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, this.tileSize * DPAD.X_TILES,
 				this.tileSize * DPAD.Y_TILES, DPAD.SCALE, DPAD.SCALE)
 			this.dpad.setDepth(10)
 		}
@@ -467,14 +470,31 @@ export default class LEVEL_04 extends Phaser.Scene {
 		for (let o = 0; o < this.fruit.length; o++) {
 			this.initializeAnimationsState(this.fruit[o], this.fruitAnimationNames)
 		}
-		
-		for (let i = 0; i < tilesHigh; i++){
-			for(let j = 0; j <tilesWide; j++){
+
+		// Play Artifact Animations
+		let level = this.sys.settings.key // Gets the name of the current scene
+
+		// Key Animations Init
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
 				var tile = this.keyLayer.getTileAt(j, i)
-				if (tile != null){
-					if (tile.index === 395){
-						this.key.push(this.createSpineObject(IDLE_KEY, KEYS_KEY[0] ,j * this.tileSize - 80 , i * this.tileSize - 60 , 0.8, 0.8))
-						this.key[0].setDepth(10)	
+				if (tile != null) {
+					if (tile.index === 395) {
+						if (level === LEVELS.LEVEL_01) {
+							this.key[0] = this.createSpineObject(IDLE_KEY, KEYS_KEY[0], j * this.tileSize - 80, i * this.tileSize - 60, 0.8, 0.8)
+							this.key[0].setDepth(10)
+						} else if (level === LEVELS.LEVEL_02) {
+							this.key[1] = this.createSpineObject(IDLE_KEY, KEYS_KEY[1], j * this.tileSize - 80, i * this.tileSize - 60, 0.8, 0.8)
+							this.key[1].setDepth(10)
+						} else if (level === LEVELS.LEVEL_03) {
+							this.key[2] = this.createSpineObject(IDLE_KEY, KEYS_KEY[2], j * this.tileSize - 80, i * this.tileSize - 60, 0.8, 0.8)
+							this.key[2].setDepth(10)
+						} else if (level === LEVELS.LEVEL_04) {
+							this.key[3] = this.createSpineObject(IDLE_KEY, KEYS_KEY[3], j * this.tileSize - 80, i * this.tileSize - 60, 0.8, 0.8)
+							this.key[3].setDepth(10)
+						} else if (level === LEVELS.CREDITS) {
+							// No Artifact Animations
+						}
 					}
 				}
 			}
@@ -514,9 +534,6 @@ export default class LEVEL_04 extends Phaser.Scene {
 		this.playerState.getState() ?.enter(0, 0, this.player) // Activate Idle
 		this.player.setState(this.playerState)
 
-		// Play Artifact Animations
-		let level = this.sys.settings.key // Gets the name of the current scene
-
 		if (level === LEVELS.LEVEL_01) {
 			//Play no Collectables
 		} else if (level === LEVELS.LEVEL_02) {
@@ -544,6 +561,13 @@ export default class LEVEL_04 extends Phaser.Scene {
 			this.startTime = time
 		}
 
+		this.frameTime += delta
+
+		if (this.frameTime > this.delay) {
+			this.frameTime = 0
+			this.newTick = true
+		}
+
 		// TODO: BETTER Game State Management
 		// this.setCurrentLevel()
 
@@ -566,7 +590,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 			});
 		}
 
-		if(this.game.device.input.touch) {
+		if (this.game.device.input.touch) {
 			this.handleDPad(time, delta)
 		}
 
@@ -623,7 +647,6 @@ export default class LEVEL_04 extends Phaser.Scene {
 						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
-						this.key[0].play("collected",true)
 					}
 				}
 			}
@@ -652,7 +675,6 @@ export default class LEVEL_04 extends Phaser.Scene {
 						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
-						this.key[0].play("collected",true)
 					}
 				}
 			}
@@ -681,7 +703,6 @@ export default class LEVEL_04 extends Phaser.Scene {
 						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
-						this.key[0].play("collected",true)
 					}
 				}
 			}
@@ -711,7 +732,6 @@ export default class LEVEL_04 extends Phaser.Scene {
 						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
-						this.key[0].play("collected",true)
 					}
 				}
 			}
@@ -732,11 +752,10 @@ export default class LEVEL_04 extends Phaser.Scene {
 			}
 
 			if (!this.cursors.down.isDown && !this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown &&
-				!this.key_w.isDown && !this.key_a.isDown && !this.key_s.isDown && !this.key_d.isDown && 
+				!this.key_w.isDown && !this.key_a.isDown && !this.key_s.isDown && !this.key_d.isDown &&
 				!this.dpad_up && !this.dpad_down && !this.dpad_left && !this.dpad_right) {
 				this.player.getState().handleInput(INPUT_TYPES.IDLE_NEUTRAL, time, delta, this.player)
-			} else {
-				// TODO: **** Game Ticks Optimisation ****
+			} else if (this.newTick) {
 				for (let i = 0; i < this.fruit.length; i++) {
 
 					if (!this.fruitMarked[i] && this.trufflesAABB(this.fruit[i])) {
@@ -760,8 +779,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 				}
 			}
 		}
-		//check fruit
-		// TODO: **** Game Ticks Optimisation ****
+		//check bridge
 		if (this.fruitRemaining <= 0 && !this.bridgeOpen) {
 			this.bridge.play(BRIDGE_ANIMS.TRANSITIONING, false)
 			this.bridgeOpen = true
@@ -776,49 +794,45 @@ export default class LEVEL_04 extends Phaser.Scene {
 			}
 		}
 
-		// Diver Move
-		// TODO: **** Game Ticks Optimisation ****
-		for (let i = 0; i < this.divers.length; i++) {
-			this.divers[i].y += this.diverMove[i]
-			const x = this.map.worldToTileX(this.divers[i].x)
-			const y = this.map.worldToTileY(this.divers[i].y)
+		if (this.newTick) {
+			for (let i = 0; i < this.divers.length; i++) {
+				this.divers[i].y += this.diverMove[i]
+				const x = this.map.worldToTileX(this.divers[i].x)
+				const y = this.map.worldToTileY(this.divers[i].y)
 
-			this.tile = this.diverLayer.getTileAt(x, y)
+				this.tile = this.diverLayer.getTileAt(x, y)
 
-			if (this.tile.index == DIVER.START) {
-				this.diverMove[i] = DIVER.SPEED
-				this.divers[i].play(DIVER_ANIM.WALK_DOWN, true)
-			} else if (this.tile.index == DIVER.END) {
-				this.diverMove[i] = -DIVER.SPEED
-				this.divers[i].play(DIVER_ANIM.WALK_UP, true)
+				if (this.tile.index == DIVER.START) {
+					this.diverMove[i] = DIVER.SPEED
+					this.divers[i].play(DIVER_ANIM.WALK_DOWN, true)
+				} else if (this.tile.index == DIVER.END) {
+					this.diverMove[i] = -DIVER.SPEED
+					this.divers[i].play(DIVER_ANIM.WALK_UP, true)
+				}
+
+				// Diver Collision
+				if (this.trufflesEnemyCollision(this.divers[i], i)) {
+					this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
+					this.addPoints(POINTS.DIVER_COLLISION)
+				}
 			}
-		}
 
-		// Diver Collision
-		// TODO: **** Game Ticks Optimisation ****
-		for (let i = 0; i < this.divers.length; i++) {
-			if (this.trufflesEnemyCollision(this.divers[i], i)) {
-				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
-				this.addPoints(POINTS.DIVER_COLLISION)
+			// Handle Push
+			let x = this.map.worldToTileX(this.player.getX())
+			let y = this.map.worldToTileY(this.player.getY() - this.player.getVelocityY().y)
+
+			this.tile = this.collisionLayer.getTileAt(x, y)
+			if (this.tile == null) {
+				this.player.push()
+				this.truffles.setPosition(this.player.getX(), this.player.getY())
 			}
-		}
-		// Handle Push
-		// TODO: **** Game Ticks Optimisation Minimised Fetching Map Tiles ****
-		let x = this.map.worldToTileX(this.player.getX())
-		let y = this.map.worldToTileY(this.player.getY() - this.player.getVelocityY().y)
 
-		this.tile = this.collisionLayer.getTileAt(x, y)
-		if (this.tile == null) {
-			this.player.push()
-			this.truffles.setPosition(this.player.getX(), this.player.getY())
-		}
-
-		// Cannonball collisions
-		// TODO: **** Game Ticks Optimisation ****
-		for (let i = 0; i < this.cannonball.length; i++) {
-			if (this.trufflesAABB(this.cannonball[i])) {
-				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
-				this.addPoints(POINTS.CANNON_BALL_COLLISION)
+			// Cannonball collisions
+			for (let i = 0; i < this.cannonball.length; i++) {
+				if (this.trufflesAABB(this.cannonball[i])) {
+					this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
+					this.addPoints(POINTS.CANNON_BALL_COLLISION)
+				}
 			}
 		}
 
@@ -831,7 +845,7 @@ export default class LEVEL_04 extends Phaser.Scene {
 		this.currentScoreText.setText(' ' + this.levelScore + ' ')
 		this.currentScoreText.setDepth(10)
 		this.currentScoreText.setFontSize(40)
-		
+
 		this.elapsedTimeText.setPosition(this.screenX * 0.76, this.screenY * 0.048)
 		this.elapsedTimeText.update()
 		this.elapsedTimeText.setText(' ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
@@ -847,6 +861,8 @@ export default class LEVEL_04 extends Phaser.Scene {
 		}
 		this.recordTimeText.setDepth(10)
 		this.recordTimeText.setFontSize(40)
+
+		this.newTick = false
 	}
 
 	//Setup Map Data
@@ -1116,7 +1132,6 @@ export default class LEVEL_04 extends Phaser.Scene {
 	// Set Record Time
 	private setRecord(time: number) {
 		this.newRecordTime = time
-		this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Stop the stopwatch
 		this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Spin Record Clock
 		this.fetchRecordedTime()
 	}
@@ -1164,21 +1179,27 @@ export default class LEVEL_04 extends Phaser.Scene {
 	private gsmUpdate(time: number, delta: number): void {
 		this.gameState = GSM.LEVEL_COMPLETE
 
+		this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Stop the stopwatch
+
 		// Play Artifact Animations
 		let level = this.sys.settings.key // Gets the name of the current scene
 
 		if (level === LEVELS.LEVEL_01) {
 			//Play Pig is Collected
 			this.artifact[0].play('pig_fill', false)
+			this.key[0].play("collected", true)
 		} else if (level === LEVELS.LEVEL_02) {
 			//Play Vase is Collected
 			this.artifact[1].play('vase_fill', false)
+			this.key[1].play("collected", true)
 		} else if (level === LEVELS.LEVEL_03) {
 			//Play Pot is Collected
 			this.artifact[2].play('pot_fill', false)
+			this.key[2].play("collected", true)
 		} else if (level === LEVELS.LEVEL_04) {
 			//Play Alter is Collected
 			this.artifact[3].play('alter_fill', false)
+			this.key[3].play("collected", true)
 		} else if (level === LEVELS.CREDITS) {
 			// No Artifact Animations
 		}
@@ -1209,73 +1230,65 @@ export default class LEVEL_04 extends Phaser.Scene {
 	}
 	private handleDPad(time: number, delta: number) {
 		var pointer = this.input.activePointer;
-			if (pointer.isDown) {
-				var touchX = pointer.x;
-				var touchY = pointer.y;
-				var dpadX = this.dpad.x
-				var dpadWidth = this.dpad.width
-				var dpadY = this.dpad.y
-				var dpadHeight = this.dpad.height
-				this.dpad_down = false
-				this.dpad_up = false
-				this.dpad_left = false
-				this.dpad_right = false
-				
-				if(touchX < dpadX - dpadWidth/6 && touchX > dpadX - DPAD.SCALE * dpadWidth/2) {
-					this.dpad_left = true
-				}
-				if(touchX > dpadX + dpadWidth/6 && touchX < dpadX + DPAD.SCALE * dpadWidth/2) {
-					this.dpad_right = true
-				}
-				if(touchY < dpadY - dpadHeight/6 && touchY > dpadY - DPAD.SCALE * dpadHeight/2) {
-					this.dpad_up = true
-				}
-				if(touchY > dpadY + dpadHeight/6 && touchY < dpadY + DPAD.SCALE * dpadHeight/2) {
-					this.dpad_down = true
-				}
-				if(this.dpad_down) {
-					if(this.dpad_left) {
-						this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
-						this.dpad.play(DPAD_ANIMS.DOWN_LEFT, true)
-					}
-					else if(this.dpad_right) {
-						this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
-						this.dpad.play(DPAD_ANIMS.DOWN_RIGHT, true)
-					}
-					else {
-						this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
-						this.dpad.play(DPAD_ANIMS.DOWN, true)
-					}
-				}
-				else if(this.dpad_up) {
-					if(this.dpad_left) {
-						this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
-						this.dpad.play(DPAD_ANIMS.UP_LEFT, true)
-					}
-					else if(this.dpad_right) {
-						this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
-						this.dpad.play(DPAD_ANIMS.UP_RIGHT, true)
-					}
-					else {
-						this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
-						this.dpad.play(DPAD_ANIMS.UP, true)
-					}
-				}
-				else if(this.dpad_left) {
-					this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
-					this.dpad.play(DPAD_ANIMS.LEFT, true)
-				}
-				else if(this.dpad_right) {
-					this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
-					this.dpad.play(DPAD_ANIMS.RIGHT, true)
-				}
+		if (pointer.isDown) {
+			var touchX = pointer.x;
+			var touchY = pointer.y;
+			var dpadX = this.dpad.x
+			var dpadWidth = this.dpad.width
+			var dpadY = this.dpad.y
+			var dpadHeight = this.dpad.height
+			this.dpad_down = false
+			this.dpad_up = false
+			this.dpad_left = false
+			this.dpad_right = false
+
+			if (touchX < dpadX - dpadWidth / 6 && touchX > dpadX - DPAD.SCALE * dpadWidth / 2) {
+				this.dpad_left = true
 			}
-			else {
-				this.dpad_down = false
-				this.dpad_up = false
-				this.dpad_left = false
-				this.dpad_right = false
-				this.dpad.play(DPAD_ANIMS.IDLE, true)
-			};
+			if (touchX > dpadX + dpadWidth / 6 && touchX < dpadX + DPAD.SCALE * dpadWidth / 2) {
+				this.dpad_right = true
+			}
+			if (touchY < dpadY - dpadHeight / 6 && touchY > dpadY - DPAD.SCALE * dpadHeight / 2) {
+				this.dpad_up = true
+			}
+			if (touchY > dpadY + dpadHeight / 6 && touchY < dpadY + DPAD.SCALE * dpadHeight / 2) {
+				this.dpad_down = true
+			}
+			if (this.dpad_down) {
+				if (this.dpad_left) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.DOWN_LEFT, true)
+				} else if (this.dpad_right) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.DOWN_RIGHT, true)
+				} else {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.DOWN, true)
+				}
+			} else if (this.dpad_up) {
+				if (this.dpad_left) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.UP_LEFT, true)
+				} else if (this.dpad_right) {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.UP_RIGHT, true)
+				} else {
+					this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
+					this.dpad.play(DPAD_ANIMS.UP, true)
+				}
+			} else if (this.dpad_left) {
+				this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
+				this.dpad.play(DPAD_ANIMS.LEFT, true)
+			} else if (this.dpad_right) {
+				this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
+				this.dpad.play(DPAD_ANIMS.RIGHT, true)
+			}
+		} else {
+			this.dpad_down = false
+			this.dpad_up = false
+			this.dpad_left = false
+			this.dpad_right = false
+			this.dpad.play(DPAD_ANIMS.IDLE, true)
+		};
 	}
 }
