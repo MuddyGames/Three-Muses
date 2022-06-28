@@ -50,7 +50,7 @@ const TIMER_KEY = 'hudtimer'
 const RECORD_KEY = 'hudrecord'
 const ARTIFACTS_KEY = ['pig', 'vase', 'pot', 'alter']
 const KEYS_KEY = ['red', 'yellow', 'green', 'pink']
-//const TREE_KEY = 'tree'
+const TREE_KEY = 'tree'
 
 
 
@@ -141,7 +141,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private keyAnimationNames: string[] = []
 
 	// Tree
-	//private tree: SpineGameObject[] = []
+	private tree: SpineGameObject[] = []
 
 	// Input Cursors
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -257,7 +257,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.load.spine(KEYS_KEY[1], 'keys/yellow/yellow_key.json', 'keys/yellow/yellow_key.atlas')
 		this.load.spine(KEYS_KEY[2], 'keys/green/green_key.json', 'keys/green/green_key.atlas')
 		this.load.spine(KEYS_KEY[3], 'keys/pink/pink_key.json', 'keys/pink/pink_key.atlas')
-		//this.load.spine(TREE_KEY,'tree/tree.json', 'tree/tree.atlas')
+		this.load.spine(TREE_KEY,'tree/tree.json', 'tree/tree.atlas')
 		this.load.spine(DPAD_KEY, 'dpad/DPad_Final_merge.json', 'dpad/DPad_Final_merge.atlas')
 	}
 
@@ -500,6 +500,18 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 		}
 
+		// Setup Trees
+		for (let i = 0; i < tilesHigh; i++){
+			for(let j = 0; j <tilesWide; j++){
+				var tile = this.miscTop1Layer.getTileAt(j, i)
+				if (tile != null){
+					if (tile.index === 656){
+						this.tree.push(this.createSpineObject(IDLE_KEY, TREE_KEY ,j * this.tileSize - 33, i * this.tileSize - 84 , 0.5, 0.5))
+					}
+				}
+			}
+		}
+
 		// Mute button
 		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.022, this.screenY * 0.014, 1, 1)
 			.setScale(0.8, 0.8)
@@ -569,7 +581,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 
 		// TODO: BETTER Game State Management
-		// this.setCurrentLevel()
 
 		if (this.gameState === GSM.PLAY) {
 			this.elapsedLevelTime = time - this.startTime
@@ -646,7 +657,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 					if (this.tile.index === GOAL.TILE) {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
-						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
@@ -674,7 +684,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 					if (this.tile.index === GOAL.TILE) {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
-						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
@@ -702,7 +711,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 					if (this.tile.index === GOAL.TILE) {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
-						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
@@ -731,7 +739,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 					if (this.tile.index === GOAL.TILE) {
 						// Reached Goal
 						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
-						//this.key[0].play("collected",true)
 						this.addPoints(POINTS.REACHED_GOAL)
 						this.gsmUpdate(time, delta)
 					}
