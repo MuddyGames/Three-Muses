@@ -81,6 +81,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private screenY!: number
 	private elapsedLevelTime!: number
 	private startTime!: number
+	private frameTime!: number
+	private newTick!: boolean
+	private delay!: number
+	private fps!: number
 
 	// Hud Animations
 	private soundMuteUnmuteButton!: SpineGameObject
@@ -207,9 +211,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private riverLayer!: Phaser.Tilemaps.TilemapLayer
 	private keyLayer!: Phaser.Tilemaps.TilemapLayer
 
-	// Game of Thrones Level
-	private GoT!: boolean
-
 	// Player Data
 	private playerState!: PlayerState
 
@@ -225,7 +226,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.screenX = 0
 		this.screenY = 0
 		this.startTime = 0
-		this.GoT = false
+		this.frameTime = 0
+		this.newTick = false
+		this.fps = 60
+		this.delay = 1000/this.fps
 	}
 
 	preload(time: number, delta: number): void {
@@ -544,6 +548,13 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.startTime = time
 		}
 
+		this.frameTime += delta
+
+		if (this.frameTime > this.delay) {  
+			this.frameTime = 0
+			this.newTick = true
+		}
+
 		// TODO: BETTER Game State Management
 		// this.setCurrentLevel()
 
@@ -565,7 +576,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				callbackScope: this
 			});
 		}
-
+		
 		if(this.game.device.input.touch) {
 			this.handleDPad(time, delta)
 		}
@@ -735,8 +746,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				!this.key_w.isDown && !this.key_a.isDown && !this.key_s.isDown && !this.key_d.isDown && 
 				!this.dpad_up && !this.dpad_down && !this.dpad_left && !this.dpad_right) {
 				this.player.getState().handleInput(INPUT_TYPES.IDLE_NEUTRAL, time, delta, this.player)
-			} else {
-				// TODO: **** Game Ticks Optimisation ****
+			} else if(this.newTick) {
 				for (let i = 0; i < this.fruit.length; i++) {
 
 					if (!this.fruitMarked[i] && this.trufflesAABB(this.fruit[i])) {
@@ -760,8 +770,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 		}
-		//check fruit
-		// TODO: **** Game Ticks Optimisation ****
+		//check bridge
 		if (this.fruitRemaining <= 0 && !this.bridgeOpen) {
 			this.bridge.play(BRIDGE_ANIMS.TRANSITIONING, false)
 			this.bridgeOpen = true
@@ -775,50 +784,46 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 		}
+		
+		if(this.newTick) {
+			for (let i = 0; i < this.divers.length; i++) {
+				this.divers[i].y += this.diverMove[i]
+				const x = this.map.worldToTileX(this.divers[i].x)
+				const y = this.map.worldToTileY(this.divers[i].y)
 
-		// Diver Move
-		// TODO: **** Game Ticks Optimisation ****
-		for (let i = 0; i < this.divers.length; i++) {
-			this.divers[i].y += this.diverMove[i]
-			const x = this.map.worldToTileX(this.divers[i].x)
-			const y = this.map.worldToTileY(this.divers[i].y)
+				this.tile = this.diverLayer.getTileAt(x, y)
 
-			this.tile = this.diverLayer.getTileAt(x, y)
-
-			if (this.tile.index == DIVER.START) {
-				this.diverMove[i] = DIVER.SPEED
-				this.divers[i].play(DIVER_ANIM.WALK_DOWN, true)
-			} else if (this.tile.index == DIVER.END) {
-				this.diverMove[i] = -DIVER.SPEED
-				this.divers[i].play(DIVER_ANIM.WALK_UP, true)
+				if (this.tile.index == DIVER.START) {
+					this.diverMove[i] = DIVER.SPEED
+					this.divers[i].play(DIVER_ANIM.WALK_DOWN, true)
+				} else if (this.tile.index == DIVER.END) {
+					this.diverMove[i] = -DIVER.SPEED
+					this.divers[i].play(DIVER_ANIM.WALK_UP, true)
+				}
+				
+				// Diver Collision
+				if (this.trufflesEnemyCollision(this.divers[i], i)) {
+					this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
+					this.addPoints(POINTS.DIVER_COLLISION)
+				}
 			}
-		}
 
-		// Diver Collision
-		// TODO: **** Game Ticks Optimisation ****
-		for (let i = 0; i < this.divers.length; i++) {
-			if (this.trufflesEnemyCollision(this.divers[i], i)) {
-				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
-				this.addPoints(POINTS.DIVER_COLLISION)
+			// Handle Push
+			let x = this.map.worldToTileX(this.player.getX())
+			let y = this.map.worldToTileY(this.player.getY() - this.player.getVelocityY().y)
+
+			this.tile = this.collisionLayer.getTileAt(x, y)
+			if (this.tile == null) {
+				this.player.push()
+				this.truffles.setPosition(this.player.getX(), this.player.getY())
 			}
-		}
-		// Handle Push
-		// TODO: **** Game Ticks Optimisation Minimised Fetching Map Tiles ****
-		let x = this.map.worldToTileX(this.player.getX())
-		let y = this.map.worldToTileY(this.player.getY() - this.player.getVelocityY().y)
 
-		this.tile = this.collisionLayer.getTileAt(x, y)
-		if (this.tile == null) {
-			this.player.push()
-			this.truffles.setPosition(this.player.getX(), this.player.getY())
-		}
-
-		// Cannonball collisions
-		// TODO: **** Game Ticks Optimisation ****
-		for (let i = 0; i < this.cannonball.length; i++) {
-			if (this.trufflesAABB(this.cannonball[i])) {
-				this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
-				this.addPoints(POINTS.CANNON_BALL_COLLISION)
+			// Cannonball collisions
+			for (let i = 0; i < this.cannonball.length; i++) {
+				if (this.trufflesAABB(this.cannonball[i])) {
+					this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
+					this.addPoints(POINTS.CANNON_BALL_COLLISION)
+				}
 			}
 		}
 
@@ -847,6 +852,8 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 		this.recordTimeText.setDepth(10)
 		this.recordTimeText.setFontSize(40)
+
+		this.newTick = false
 	}
 
 	//Setup Map Data
