@@ -42,8 +42,7 @@ export enum POINTS{
 }
 
 export enum ANIMATION_DELAY{
-    FRUIT = 480,
-    RECORD = 200
+    FRUIT = 480
 }
 
 export enum NEXT_LEVEL{

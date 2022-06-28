@@ -94,9 +94,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private hudRecord!: SpineGameObject
 	private hudRecordAnimationNames: string[] = []
 	private hudRecordAnimationIndex = 0
-	private hudCurrentRecordStartTime: number
-	private hudElapsedRecordTimerTime: number
-	private hudRecordTimeAchievement: boolean
 
 	// Level Music
 	private backingMusic!: Phaser.Sound.BaseSound
@@ -228,8 +225,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.screenX = 0
 		this.screenY = 0
 		this.startTime = 0
-		this.hudCurrentRecordStartTime = 0
-		this.hudRecordTimeAchievement = false
 		this.GoT = false
 	}
 
@@ -328,9 +323,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.hudRecord.setScale(0.75, 0.74)
 		this.hudRecordAnimationNames = this.hudRecord.getAnimationList()
 
-		for(let i = 0; i < 3; i++){
-			console.log(this.hudRecordAnimationNames[i].toString())
-		}
 		this.hudRecord.play(this.hudRecordAnimationNames[0], true) // No Record Set
 
 		// Update Score Frequency
@@ -460,16 +452,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 		this.fruitRemaining = this.fruit.length
 
-/* 		let x_off_set = 100
-		let y_off_set = 20
-		let move_on_x = 20
-		for(let i = 0; i < this.artifacts; i++){
-			this.artifact[i] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[i], x_off_set + move_on_x, y_off_set, 1, 1)
-			for(let j = 0; j < 3; j++){
-				this.artifactAnimationNames[i][j] = this.artifact[i].getAnimationList()
-			}
-			move_on_x += move_on_x
-		} */
+		// Begin Artifact Animations
 		this.artifact[0] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[0], this.screenX * 0.114, this.screenY * 0.045, 0.6, 0.6)
 		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], this.screenX * 0.185, this.screenY * 0.03, 0.6, 0.6)
 		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], this.screenX * 0.24, this.screenY * 0.04, 0.6, 0.6)
@@ -479,8 +462,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.artifact[1].setDepth(10)
 		this.artifact[2].setDepth(10)
 		this.artifact[3].setDepth(10)
-
-		console.log(this.artifact[2].getAnimationList())
 
 		// Init fruit animations
 		for (let o = 0; o < this.fruit.length; o++) {
@@ -498,19 +479,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 		}
-
-		
-
-		/*for (let i = 0; i < tilesHigh; i++){
-			for(let j = 0; j <tilesWide; j++){
-				var tile = this.miscTop1Layer.getTileAt(j, i)
-				if (tile != null){
-					if (tile.index === 656){
-						this.tree.push(this.createSpineObject(IDLE_KEY, TREE_KEY ,j * this.tileSize - 33, i * this.tileSize - 84 , 0.5, 0.5))
-					}
-				}
-			}
-		}*/
 
 		// Mute button
 		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.022, this.screenY * 0.014, 1, 1)
@@ -553,16 +521,16 @@ export default class LEVEL_01 extends Phaser.Scene {
 			//Play no Collectables
 		} else if (level === LEVELS.LEVEL_02) {
 			//Play One already collected animations
-			this.artifact[0].play('pig_fill', false)
+			this.artifact[0].play('pig_filled', false)
 		} else if (level === LEVELS.LEVEL_03) {
 			//Play Two already collected animations
 			this.artifact[0].play('pig_filled', false)
-			this.artifact[1].play('vase_fill', false)
+			this.artifact[1].play('vase_filled', false)
 		} else if (level === LEVELS.LEVEL_04) {
 			//Play Three already collected animations
 			this.artifact[0].play('pig_filled', true)
 			this.artifact[1].play('vase_filled', true)
-			this.artifact[2].play('pot_fill', false)
+			this.artifact[2].play('pot_filled', false)
 		} else if (level === LEVELS.CREDITS) {
 			// No Artifact Animations
 		}
@@ -586,28 +554,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 			//Store Record Time
 			if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
 				this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
-				this.fetchRecordedTime()
-				this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Stop the stopwatch
-				
-				if(this.hudCurrentRecordStartTime === 0){
-					this.hudCurrentRecordStartTime = time
-				}
-				// Set the Start Time
-				this.hudElapsedRecordTimerTime = time - this.hudCurrentRecordStartTime
-
-				if(this.hudElapsedRecordTimerTime >= 4001){
-					console.log('Reset Update')
-					this.hudCurrentRecordStartTime = time // Reset Start Time
-				}
-
-				// Update Record Animations
-				this.time.addEvent({
-					delay: 100,
-					callback: this.recordTimeAnimations,
-					callbackScope: this,
-					args: [time, delta]
-				})
-
 			} else {
 				this.newRecordTime = this.bestRecordedTime
 			}
@@ -1014,7 +960,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(2)
-		this.goalLayer.setVisible(false)
+		this.goalLayer.setVisible(true)
 
 		this.bridgeLayer = this.map.createLayer('map/environment_objects/animated/drawbridge_01', this.tileset, 0, 0);
 		this.bridgeLayer.setVisible(false)
@@ -1047,20 +993,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private changeAnimation(spine: SpineGameObject, animationNames: string[], index: number) {
 		const animation = animationNames[index]
 		spine.play(animation, true)
-	}
-
-	// Record Timer Animations
-	private recordTimeAnimations(index: number, time: number, delta: number): void {
-		console.log(Math.round((this.hudElapsedRecordTimerTime * 0.001)))
-		if(this.hudRecordTimeAchievement){
-			if(this.hudElapsedRecordTimerTime <= 2000){ // Play First Animation up to half a second
-				console.log('Play 1')
-				this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Spin Record Clock
-			} else if(this.hudElapsedRecordTimerTime >= 2001 && this.hudElapsedRecordTimerTime <= 4000){ // Play next animation between half a second and one second
-				this.hudRecord.play(this.hudRecordAnimationNames[2], true) // Spin Record Clock
-				console.log('Play 2')
-			}
-		}
 	}
 
 	//Truffles to Object Collision
@@ -1184,7 +1116,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Set Record Time
 	private setRecord(time: number) {
 		this.newRecordTime = time
-		this.hudRecordTimeAchievement = true
+		this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Stop the stopwatch
+		this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Spin Record Clock
+		this.fetchRecordedTime()
 	}
 
 	// Add Points
@@ -1229,6 +1163,25 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Game State Management
 	private gsmUpdate(time: number, delta: number): void {
 		this.gameState = GSM.LEVEL_COMPLETE
+
+		// Play Artifact Animations
+		let level = this.sys.settings.key // Gets the name of the current scene
+
+		if (level === LEVELS.LEVEL_01) {
+			//Play Pig is Collected
+			this.artifact[0].play('pig_fill', false)
+		} else if (level === LEVELS.LEVEL_02) {
+			//Play Vase is Collected
+			this.artifact[1].play('vase_fill', false)
+		} else if (level === LEVELS.LEVEL_03) {
+			//Play Pot is Collected
+			this.artifact[2].play('pot_fill', false)
+		} else if (level === LEVELS.LEVEL_04) {
+			//Play Alter is Collected
+			this.artifact[3].play('alter_fill', false)
+		} else if (level === LEVELS.CREDITS) {
+			// No Artifact Animations
+		}
 	}
 
 	// Complete Level
