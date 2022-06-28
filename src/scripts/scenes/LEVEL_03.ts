@@ -575,6 +575,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 			this.elapsedLevelTime = time - this.startTime
 		} else if (this.gameState === GSM.LEVEL_COMPLETE) {
 
+			this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Stop the stopwatch
+
 			//Store Record Time
 			if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
 				this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
@@ -1178,8 +1180,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 	// Game State Management
 	private gsmUpdate(time: number, delta: number): void {
 		this.gameState = GSM.LEVEL_COMPLETE
-
-		this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Stop the stopwatch
 
 		// Play Artifact Animations
 		let level = this.sys.settings.key // Gets the name of the current scene
