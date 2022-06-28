@@ -323,9 +323,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.hudRecord.setScale(0.75, 0.74)
 		this.hudRecordAnimationNames = this.hudRecord.getAnimationList()
 
-		for(let i = 0; i < 3; i++){
-			console.log(this.hudRecordAnimationNames[i].toString())
-		}
 		this.hudRecord.play(this.hudRecordAnimationNames[0], true) // No Record Set
 
 		// Update Score Frequency
@@ -455,16 +452,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		}
 		this.fruitRemaining = this.fruit.length
 
-/* 		let x_off_set = 100
-		let y_off_set = 20
-		let move_on_x = 20
-		for(let i = 0; i < this.artifacts; i++){
-			this.artifact[i] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[i], x_off_set + move_on_x, y_off_set, 1, 1)
-			for(let j = 0; j < 3; j++){
-				this.artifactAnimationNames[i][j] = this.artifact[i].getAnimationList()
-			}
-			move_on_x += move_on_x
-		} */
+		// Begin Artifact Animations
 		this.artifact[0] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[0], this.screenX * 0.114, this.screenY * 0.045, 0.6, 0.6)
 		this.artifact[1] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[1], this.screenX * 0.185, this.screenY * 0.03, 0.6, 0.6)
 		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], this.screenX * 0.24, this.screenY * 0.04, 0.6, 0.6)
@@ -474,8 +462,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.artifact[1].setDepth(10)
 		this.artifact[2].setDepth(10)
 		this.artifact[3].setDepth(10)
-
-		console.log(this.artifact[2].getAnimationList())
 
 		// Init fruit animations
 		for (let o = 0; o < this.fruit.length; o++) {
@@ -493,19 +479,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 				}
 			}
 		}
-
-		
-
-		/*for (let i = 0; i < tilesHigh; i++){
-			for(let j = 0; j <tilesWide; j++){
-				var tile = this.miscTop1Layer.getTileAt(j, i)
-				if (tile != null){
-					if (tile.index === 656){
-						this.tree.push(this.createSpineObject(IDLE_KEY, TREE_KEY ,j * this.tileSize - 33, i * this.tileSize - 84 , 0.5, 0.5))
-					}
-				}
-			}
-		}*/
 
 		// Mute button
 		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.022, this.screenY * 0.014, 1, 1)
