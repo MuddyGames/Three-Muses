@@ -27,7 +27,8 @@ import {
 	ARTIFACTS,
 	HUD_ANIMATIONS_TIME,
 	DPAD,
-	DPAD_ANIMS
+	DPAD_ANIMS,
+	TREE
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -201,7 +202,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private towerTop2Layer!: Phaser.Tilemaps.TilemapLayer
 	private churchRoofLayer!: Phaser.Tilemaps.TilemapLayer
 	private castleRoofLayer!: Phaser.Tilemaps.TilemapLayer
-	private miscTop1Layer!: Phaser.Tilemaps.TilemapLayer
+	private animatedTrees!: Phaser.Tilemaps.TilemapLayer
 	private miscTop2Layer!: Phaser.Tilemaps.TilemapLayer
 	private collisionLayer!: Phaser.Tilemaps.TilemapLayer
 	private candyLayer!: Phaser.Tilemaps.TilemapLayer
@@ -420,6 +421,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		// Keyboard Setup
 		this.cursors = this.input.keyboard.createCursorKeys()
+
 		// Add WASD
 		this.key_w = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
 		this.key_a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
@@ -503,9 +505,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 		// Setup Trees
 		for (let i = 0; i < tilesHigh; i++){
 			for(let j = 0; j <tilesWide; j++){
-				var tile = this.miscTop1Layer.getTileAt(j, i)
+				var tile = this.animatedTrees.getTileAt(j, i)
 				if (tile != null){
-					if (tile.index === 656){
+					if (tile.index === TREE.TILE){
+						console.log('Tree Found')
 						this.tree.push(this.createSpineObject(IDLE_KEY, TREE_KEY ,j * this.tileSize - 33, i * this.tileSize - 84 , 0.5, 0.5))
 					}
 				}
@@ -549,14 +552,14 @@ export default class LEVEL_01 extends Phaser.Scene {
 		if (level === LEVELS.LEVEL_01) {
 			//Play no Collectables
 		} else if (level === LEVELS.LEVEL_02) {
-			//Play One already collected animations
+			//Play the one already collected animations
 			this.artifact[0].play('pig_filled', false)
 		} else if (level === LEVELS.LEVEL_03) {
-			//Play Two already collected animations
+			//Play the two already collected animations
 			this.artifact[0].play('pig_filled', false)
 			this.artifact[1].play('vase_filled', false)
 		} else if (level === LEVELS.LEVEL_04) {
-			//Play Three already collected animations
+			//Play the three already collected animations
 			this.artifact[0].play('pig_filled', true)
 			this.artifact[1].play('vase_filled', true)
 			this.artifact[2].play('pot_filled', false)
@@ -940,9 +943,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.castleRoofLayer = this.map.createLayer('map/castle/castle/castle_roof_depth_02', this.tileset, 0, 0);
 		this.castleRoofLayer.setDepth(2);
 
-		this.miscTop1Layer = this.map.createLayer('map/environment_objects/tree_01', this.tileset, 0, 0);
-		this.miscTop1Layer.setDepth(-9); //SET DEPTH 1 TO -9
-		this.miscTop1Layer.setVisible(true)
+		this.animatedTrees = this.map.createLayer('map/environment_objects/tree_01', this.tileset, 0, 0);
+		this.animatedTrees.setDepth(-9); //SET DEPTH 1 TO -9
+		this.animatedTrees.setVisible(true)
 
 		this.miscTop2Layer = this.map.createLayer('map/environment_objects/tree_top_04', this.tileset, 0, 0);
 		this.miscTop2Layer.setDepth(4);

@@ -1578,7 +1578,7 @@ export class Splash extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
         }
-        this.punishmentSound = this.scene.sound.add('punish_two',{volume:0.5})
+        this.punishmentSound = this.scene.sound.add('water_splash',{volume:0.5})
         this.punishmentSound.play()
         this.spine.play(INPUT_TYPES.SPLASH, false)
     }

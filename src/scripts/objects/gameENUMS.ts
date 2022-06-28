@@ -8,14 +8,6 @@ export enum HUD_ANIMATIONS_TIME{
     TIME = 100
 }
 
-// Used for local storage keys
-//export enum LEVEL_DATA_KEY{
-//    CURRENT = 'level_current',
-//    NEXT = 'level_next',
-//    CURRENT_ARTIFACT = 'artifact_current',
- //   NEXT_ARTIFACT = 'artifact_next'
-//}
-
 export enum LEVELS{
     LEVEL_01 = 'LEVEL_01',
     LEVEL_02 = 'LEVEL_02',
@@ -51,11 +43,15 @@ export enum NEXT_LEVEL{
 
 export enum GOAL {
     TILE = 551 // Tile ID on level json
-};
+}
 
 export enum RIVER {
     TILE = 214 // Tile ID on level json
-};
+}
+
+export enum TREE {
+    TILE = 656 // Tile ID on level json
+}
 
 export enum FRUITS {
     ORANGE = 0,
@@ -64,7 +60,7 @@ export enum FRUITS {
     LEMON_TILE = 503, // Tile ID on level json
     GRAPE = 2,
     GRAPE_TILE = 607 // Tile ID on level json
-};
+}
 
 export enum DIVER {
     START = 500,
