@@ -1218,8 +1218,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 	// Complete Level
 	private levelComplete() {
 		// Change Levels
-		// NOTE IMPORTANT
-		// LEVEL NEXTS TO BE SET TO NEXT LEVEL AND SCENE TO NEXT ARTIFACT
 		this.backingMusic.stop()
 
 		let level = this.sys.settings.key // Gets the name of the current scene
