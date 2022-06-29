@@ -52,6 +52,10 @@ const RECORD_KEY = 'hudrecord'
 const ARTIFACTS_KEY = ['pig', 'vase', 'pot', 'alter']
 const KEYS_KEY = ['red', 'yellow', 'green', 'pink']
 const TREE_KEY = 'tree'
+const APPLE_KEY = 'apple'
+const FISH_KEY = 'fish'
+const FLOWERS_KEY = 'flowers'
+const FLAGS_KEY = 'flags'
 
 
 
@@ -143,6 +147,18 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	// Tree
 	private tree: SpineGameObject[] = []
+
+	// Appple Tree
+	private apple: SpineGameObject[] = []
+
+	// Fish
+	private fish: SpineGameObject
+
+	// Flowers 
+	private flowers: SpineGameObject[] = []
+
+	// FLAGS
+	private flags: SpineGameObject[] = []
 
 	// Input Cursors
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -260,6 +276,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.load.spine(KEYS_KEY[3], 'keys/pink/pink_key.json', 'keys/pink/pink_key.atlas')
 		this.load.spine(TREE_KEY,'tree/tree.json', 'tree/tree.atlas')
 		this.load.spine(DPAD_KEY, 'dpad/DPad_Final_merge.json', 'dpad/DPad_Final_merge.atlas')
+		this.load.spine(APPLE_KEY,'appletree/tree2.json', 'appletree/tree2.atlas') 
+		this.load.spine(FISH_KEY,'fish/fish.json','fish/fish.atlas')
+		this.load.spine(FLOWERS_KEY,'flowers/flowers.json','flowers/flowers.atlas')
+		this.load.spine(FLAGS_KEY,'flags/flags.json', 'flags/flags.atlas')
 	}
 
 	create(time: number, delta: number): void {

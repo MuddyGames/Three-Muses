@@ -1,0 +1,124 @@
+{
+"skeleton": {
+	"hash": "jedZEyiSpIVhQbmtTPCUpAXF6bc",
+	"spine": "3.8.72",
+	"x": 9,
+	"y": -50,
+	"width": 44,
+	"height": 36,
+	"images": "./images/",
+	"audio": "C:/Users/kinga/Desktop/flowers"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root", "length": 20.91, "rotation": 56.41, "x": 26.81, "y": -37.91 },
+	{ "name": "bone2", "parent": "root", "length": 17.38, "rotation": 62.86, "x": 29.41, "y": -45.84 },
+	{ "name": "bone3", "parent": "root", "length": 11.93, "rotation": 60.64, "x": 39.29, "y": -40.51 },
+	{ "name": "bone4", "parent": "root", "length": 17.35, "rotation": 57.86, "x": 16.15, "y": -45.84 },
+	{ "name": "bone5", "parent": "root", "length": 14.42, "rotation": 64.36, "x": 16.28, "y": -38.43 },
+	{ "name": "bone6", "parent": "root", "length": 12.25, "rotation": 70.8, "x": 11.47, "y": -40.12 }
+],
+"slots": [
+	{ "name": "Background", "bone": "root" },
+	{ "name": "flowerb2", "bone": "bone", "attachment": "flower2" },
+	{ "name": "flower2", "bone": "root" },
+	{ "name": "flowerb3", "bone": "bone2", "attachment": "flower3" },
+	{ "name": "flower3", "bone": "root" },
+	{ "name": "flowerb4", "bone": "bone5", "attachment": "flower4" },
+	{ "name": "flower4", "bone": "root" },
+	{ "name": "flowerb5", "bone": "bone3", "attachment": "flower5" },
+	{ "name": "flower5", "bone": "root" },
+	{ "name": "flowerb6", "bone": "bone6", "attachment": "flower6" },
+	{ "name": "flower6", "bone": "root" },
+	{ "name": "flowerb1", "bone": "bone4", "attachment": "flower1" },
+	{ "name": "flower1", "bone": "root" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Background": {
+				"Background": { "x": 29.5, "y": -31.5, "width": 61, "height": 65 }
+			},
+			"flowerb1": {
+				"flower1": { "x": 15.27, "y": -2.04, "rotation": -57.86, "width": 26, "height": 32 }
+			},
+			"flowerb2": {
+				"flower2": { "x": 11.55, "y": -0.37, "rotation": -56.41, "width": 23, "height": 29 }
+			},
+			"flowerb3": {
+				"flower3": { "x": 11.77, "y": -1.38, "rotation": -62.86, "width": 20, "height": 28 }
+			},
+			"flowerb4": {
+				"flower4": { "x": 9.41, "y": -1.28, "rotation": -64.36, "width": 17, "height": 27 }
+			},
+			"flowerb5": {
+				"flower5": { "x": 8.86, "y": -0.43, "rotation": -60.64, "width": 18, "height": 22 }
+			},
+			"flowerb6": {
+				"flower6": { "x": 8.83, "y": -0.67, "rotation": -70.8, "width": 12, "height": 22 }
+			}
+		}
+	}
+],
+"animations": {
+	"idle": {
+		"bones": {
+			"bone3": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": 7.87 },
+					{ "time": 0.6667, "angle": -4.98 },
+					{ "time": 1, "angle": 7.87 },
+					{ "time": 1.3333 }
+				]
+			},
+			"bone2": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": 7.87 },
+					{ "time": 0.6667, "angle": -4.98 },
+					{ "time": 1, "angle": 7.87 },
+					{ "time": 1.3333 }
+				]
+			},
+			"bone": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": 7.87 },
+					{ "time": 0.6667, "angle": -4.98 },
+					{ "time": 1, "angle": 7.87 },
+					{ "time": 1.3333 }
+				]
+			},
+			"bone4": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": 7.87 },
+					{ "time": 0.6667, "angle": -4.98 },
+					{ "time": 1, "angle": 7.87 },
+					{ "time": 1.3333 }
+				]
+			},
+			"bone5": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": 7.87 },
+					{ "time": 0.6667, "angle": -4.98 },
+					{ "time": 1, "angle": 7.87 },
+					{ "time": 1.3333 }
+				]
+			},
+			"bone6": {
+				"rotate": [
+					{},
+					{ "time": 0.3333, "angle": 7.87 },
+					{ "time": 0.6667, "angle": -4.98 },
+					{ "time": 1, "angle": 7.87 },
+					{ "time": 1.3333 }
+				]
+			}
+		}
+	}
+}
+}
