@@ -858,17 +858,15 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 
 			// Check if River Splash
-			if (!this.bridgeOpen) {
-				let x = this.map.worldToTileX(this.player.getX())
-				let y = this.map.worldToTileY(this.player.getY())
+			let x = this.map.worldToTileX(this.player.getX())
+			let y = this.map.worldToTileY(this.player.getY())
 
-				this.tile = this.riverLayer.getTileAt(x, y)
+			this.tile = this.riverLayer.getTileAt(x, y)
 
-				if (this.tile !== null) {
-					if (this.tile.index === RIVER.TILE) {
-						// Reached River
-						this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
-					}
+			if (this.tile !== null) {
+				if (this.tile.index === RIVER.TILE) {
+					// Reached River
+					this.player.getState().handleInput(INPUT_TYPES.SPLASH, time, delta, this.player)
 				}
 			}
 
@@ -916,6 +914,15 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 
 		if (this.newTick) {
+			
+			// Cannonball collisions
+			for (let i = 0; i < this.cannonball.length; i++) {
+				if (this.trufflesAABB(this.cannonball[i])) {
+					this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
+					this.addPoints(POINTS.CANNON_BALL_COLLISION)
+				}
+			}
+
 			for (let i = 0; i < this.divers.length; i++) {
 				this.divers[i].y += this.diverMove[i]
 				const x = this.map.worldToTileX(this.divers[i].x)
@@ -936,6 +943,12 @@ export default class LEVEL_01 extends Phaser.Scene {
 					this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
 					this.addPoints(POINTS.DIVER_COLLISION)
 				}
+				for(let j = 0; j < this.fruit.length; j++) {
+					this.sortLayers(this.divers[i], this.fruit[j])
+				}
+				for(let j = 0; j < this.cannonball.length; j++) {
+					this.sortLayers(this.divers[i], this.cannonball[j])
+				}
 			}
 
 			// Handle Push
@@ -948,13 +961,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				this.truffles.setPosition(this.player.getX(), this.player.getY())
 			}
 
-			// Cannonball collisions
-			for (let i = 0; i < this.cannonball.length; i++) {
-				if (this.trufflesAABB(this.cannonball[i])) {
-					this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
-					this.addPoints(POINTS.CANNON_BALL_COLLISION)
-				}
-			}
+			
 		}
 
 		// Updates the Player State See PlayerStateMachine*/
@@ -1017,7 +1024,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.wall1Layer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.wall2Layer = this.map.createLayer('map/castle/walls/walls_depth_03', this.tileset, 0, 0);
-		this.wall2Layer.setDepth(3);
+		this.wall2Layer.setDepth(8);
 
 		this.churchLayer = this.map.createLayer('map/buildings/foreground/church_depth_01/church_01', this.tileset, 0, 0);
 		this.churchLayer.setDepth(-9); //SET DEPTH 1 TO -9
@@ -1032,36 +1039,36 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.wallTop1Layer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.wallTop2Layer = this.map.createLayer('map/castle/walls/wall_top_depth_04', this.tileset, 0, 0);
-		this.wallTop2Layer.setDepth(4);
+		this.wallTop2Layer.setDepth(9);
 
 		this.house2RoofLayer = this.map.createLayer('map/buildings/background/house_roof_depth_03/house_roof_layer_2', this.tileset, 0, 0);
-		this.house2RoofLayer.setDepth(3);
+		this.house2RoofLayer.setDepth(8);
 
 		this.houseRoofLayer = this.map.createLayer('map/buildings/background/house_roof_depth_03/house_roof_layer_1', this.tileset, 0, 0);
-		this.houseRoofLayer.setDepth(3);
+		this.houseRoofLayer.setDepth(8);
 
 		this.towerTop1Layer = this.map.createLayer('map/castle/tower/tower_top_depth_01', this.tileset, 0, 0);
 		this.towerTop1Layer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.towerTop2Layer = this.map.createLayer('map/castle/tower/tower_top_depth_04', this.tileset, 0, 0);
-		this.towerTop2Layer.setDepth(4);
+		this.towerTop2Layer.setDepth(9);
 
 		this.churchRoofLayer = this.map.createLayer('map/buildings/background/church_depth_03/church_roof_03', this.tileset, 0, 0);
 		this.churchRoofLayer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.castleRoofLayer = this.map.createLayer('map/castle/castle/castle_roof_depth_02', this.tileset, 0, 0);
-		this.castleRoofLayer.setDepth(2);
+		this.castleRoofLayer.setDepth(7);
 
 		this.animatedTrees = this.map.createLayer('map/environment_objects/animated/tree_01', this.tileset, 0, 0);
 		this.animatedTrees.setDepth(-9); //SET DEPTH 1 TO -9
 		this.animatedTrees.setVisible(false)
 
 		this.miscTop2Layer = this.map.createLayer('map/environment_objects/tree_top_04', this.tileset, 0, 0);
-		this.miscTop2Layer.setDepth(4);
+		this.miscTop2Layer.setDepth(9);
 		this.miscTop2Layer.setVisible(false)
 
 		this.collisionLayer = this.map.createLayer('map/environment_collision/collide_depth_02', this.tileset, 0, 0);
-		this.collisionLayer.setDepth(2)
+		this.collisionLayer.setDepth(7)
 		this.collisionLayer.setVisible(false)
 
 		this.keyLayer = this.map.createLayer('map/environment_objects/animated/key', this.tileset, 0, 0);
@@ -1110,14 +1117,14 @@ export default class LEVEL_01 extends Phaser.Scene {
 			this.diverLayer = this.map.createLayer('map/patrol/level1', this.tileset, 0, 0);
 		}
 
-		this.candyLayer.setDepth(2);
+		this.candyLayer.setDepth(7);
 		this.candyLayer.setVisible(false)
 
-		this.diverLayer.setDepth(2)
+		this.diverLayer.setDepth(7)
 		this.diverLayer.setVisible(false)
 
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
-		this.goalLayer.setDepth(2)
+		this.goalLayer.setDepth(7)
 		this.goalLayer.setVisible(true)
 
 		this.bridgeLayer = this.map.createLayer('map/environment_objects/animated/drawbridge_01', this.tileset, 0, 0);
@@ -1173,6 +1180,18 @@ export default class LEVEL_01 extends Phaser.Scene {
 		return collision
 	}
 
+	private sortLayers(object1: SpineGameObject, object2: SpineGameObject) {
+		if(Math.abs(object1.x - object2.x) < object1.scaleX * object1.width && 
+			Math.abs(object1.y - object2.y) < object1.scaleY * object1.height){
+			if(object1.y < object2.y + object2.height * object2.scaleY) {
+				object2.setDepth(object1.depth + 1)
+			}
+			else {
+				object2.setDepth(object1.depth - 1)
+			}
+		}
+	}
+
 	// Truffles Enemy Collisions
 	private trufflesEnemyCollision(enemy: SpineGameObject, index: number) {
 
@@ -1192,9 +1211,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 			})
 		}
 		if (enemy.y > this.player.getY()) {
-			enemy.setDepth(1)
+			enemy.setDepth(2)
 		} else {
-			enemy.setDepth(-1)
+			enemy.setDepth(-2)
 		}
 
 		return collision
