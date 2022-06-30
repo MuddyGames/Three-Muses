@@ -55,7 +55,7 @@ const TREE_KEY = 'tree'
 const APPLE_KEY = 'apple'
 const FISH_KEY = 'fish'
 const FLOWERS_KEY = 'flowers'
-const FLAGS_KEY = 'flags'
+const FLAGS_KEY = 'flag'
 
 
 
@@ -152,7 +152,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private apple: SpineGameObject[] = []
 
 	// Fish
-	private fish: SpineGameObject
+	private fish: SpineGameObject[] = []
 
 	// Flowers 
 	private flowers: SpineGameObject[] = []
@@ -227,6 +227,11 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private bridgeLayer!: Phaser.Tilemaps.TilemapLayer
 	private riverLayer!: Phaser.Tilemaps.TilemapLayer
 	private keyLayer!: Phaser.Tilemaps.TilemapLayer
+	private fishLayer!: Phaser.Tilemaps.TilemapLayer
+	private flowersLayer!: Phaser.Tilemaps.TilemapLayer
+	private flagTopLayer!: Phaser.Tilemaps.TilemapLayer
+	private flagLowLayer!: Phaser.Tilemaps.TilemapLayer
+	private animatedAppleTrees!: Phaser.Tilemaps.TilemapLayer
 
 	// Player Data
 	private playerState!: PlayerState
@@ -279,7 +284,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.load.spine(APPLE_KEY,'appletree/tree2.json', 'appletree/tree2.atlas') 
 		this.load.spine(FISH_KEY,'fish/fish.json','fish/fish.atlas')
 		this.load.spine(FLOWERS_KEY,'flowers/flowers.json','flowers/flowers.atlas')
-		this.load.spine(FLAGS_KEY,'flags/flags.json', 'flags/flags.atlas')
+		this.load.spine(FLAGS_KEY,'flag/flag.json', 'flag/flag.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -534,6 +539,90 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 		}
+		// Setup Tree's Depth
+		for (let i = 0; i < this.tree.length; i++){
+			this.tree[i].setDepth(-1)
+		}
+
+		// Setup Fish
+		for (let i = 0; i < tilesHigh; i++){
+			for(let j = 0; j <tilesWide; j++){
+				var tile = this.fishLayer.getTileAt(j, i)
+				if (tile != null){
+					if (tile.index === 657){
+						this.fish.push(this.createSpineObject(IDLE_KEY, FISH_KEY ,j * this.tileSize, i * this.tileSize - 40, 1, 1))
+					}
+				}
+			}
+		}
+		// Setup Fish's Depth
+		for (let i = 0; i < this.fish.length; i++){
+			this.fish[i].setDepth(4)
+		}
+
+			// Setup Flowers
+			for (let i = 0; i < tilesHigh; i++){
+				for(let j = 0; j <tilesWide; j++){
+					var tile = this.flowersLayer.getTileAt(j, i)
+					if (tile != null){
+						if (tile.index === 604){
+							this.flowers.push(this.createSpineObject(IDLE_KEY, FLOWERS_KEY ,j * this.tileSize - 10, i * this.tileSize - 15, 1, 1))
+							//this.flowers[0].setDepth(9)
+						}
+					}
+				}
+			}
+			// Setup Flowers Depth
+			for (let i = 0; i < this.flowers.length; i++){
+				this.flowers[i].setDepth(-1)
+			}
+
+			// Setup Flag TOP
+			for (let i = 0; i < tilesHigh; i++){
+				for(let j = 0; j <tilesWide; j++){
+					var tile = this.flagTopLayer.getTileAt(j, i)
+					if (tile != null){
+						if (tile.index === 447){
+							this.flags.push(this.createSpineObject(IDLE_KEY, FLAGS_KEY ,j * this.tileSize + 4, i * this.tileSize + 2 , 1, 1))
+							
+						}
+					}
+				} 
+			}
+            // Setup Flag LOW
+			for (let i = 0; i < tilesHigh; i++){
+				for(let j = 0; j <tilesWide; j++){
+					var tile = this.flagLowLayer.getTileAt(j, i)
+					if (tile != null){
+						if (tile.index === 447){
+							this.flags.push(this.createSpineObject(IDLE_KEY, FLAGS_KEY ,j * this.tileSize , i * this.tileSize , 1, 1))
+							
+						}
+					}
+				} 
+			}
+			//Setup Flowers Depth
+			for (let i = 0; i < this.flags.length; i++){
+				this.flags[i].setDepth(-9)
+			}
+			
+			// Setup Apple Trees
+			for (let i = 0; i < tilesHigh; i++){
+			for(let j = 0; j <tilesWide; j++){
+				var tile = this.animatedAppleTrees.getTileAt(j, i)
+				if (tile != null){
+					if (tile.index === 344){
+						console.log('Tree Found')
+						this.apple.push(this.createSpineObject(IDLE_KEY, APPLE_KEY ,j * this.tileSize - 61, i * this.tileSize - 84 , 0.5, 0.5))
+					}
+				}
+			}
+		}
+		// Setup Apple Tree's Depth
+		for (let i = 0; i < this.apple.length; i++){
+			this.apple[i].setDepth(-1)
+		}
+
 
 		// Mute button
 		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.022, this.screenY * 0.014, 1, 1)
@@ -963,13 +1052,13 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.castleRoofLayer = this.map.createLayer('map/castle/castle/castle_roof_depth_02', this.tileset, 0, 0);
 		this.castleRoofLayer.setDepth(2);
 
-		this.animatedTrees = this.map.createLayer('map/environment_objects/tree_01', this.tileset, 0, 0);
+		this.animatedTrees = this.map.createLayer('map/environment_objects/animated/tree_01', this.tileset, 0, 0);
 		this.animatedTrees.setDepth(-9); //SET DEPTH 1 TO -9
-		this.animatedTrees.setVisible(true)
+		this.animatedTrees.setVisible(false)
 
 		this.miscTop2Layer = this.map.createLayer('map/environment_objects/tree_top_04', this.tileset, 0, 0);
 		this.miscTop2Layer.setDepth(4);
-		this.miscTop2Layer.setVisible(true)
+		this.miscTop2Layer.setVisible(false)
 
 		this.collisionLayer = this.map.createLayer('map/environment_collision/collide_depth_02', this.tileset, 0, 0);
 		this.collisionLayer.setDepth(2)
@@ -978,6 +1067,27 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.keyLayer = this.map.createLayer('map/environment_objects/animated/key', this.tileset, 0, 0);
 		this.keyLayer.setDepth(9)
 		this.keyLayer.setVisible(false)
+
+		this.fishLayer = this.map.createLayer('map/environment_objects/animated/fish_01', this.tileset, 0, 0);
+		this.fishLayer.setVisible(false)
+
+		this.flowersLayer = this.map.createLayer('map/environment_objects/animated/flower_01', this.tileset, 0, 0);
+		this.flowersLayer.setDepth(-9)
+		this.flowersLayer.setVisible(false)
+
+		this.flagTopLayer = this.map.createLayer('map/environment_objects/animated/flag_top_01', this.tileset, 0, 0);
+		this.flagTopLayer.setVisible(false)
+
+		this.flagLowLayer = this.map.createLayer('map/environment_objects/animated/flag_low_03', this.tileset, 0, 0);
+		this.flagLowLayer.setVisible(false)
+
+		this.animatedAppleTrees = this.map.createLayer('map/environment_objects/animated/tree_apple_01', this.tileset, 0, 0);
+		this.animatedAppleTrees.setVisible(false)
+
+		
+
+
+		
 
 		// Check the levels to load
 		let current_level = this.sys.settings.key
