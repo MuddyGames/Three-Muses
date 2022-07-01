@@ -384,6 +384,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.churchBells = this.sound.add('church_bells', {
 			volume: 0.5
 		})
+
 		this.time.addEvent({
 			delay: 6000,
 			loop: true,
@@ -570,6 +571,14 @@ export default class LEVEL_01 extends Phaser.Scene {
 		for (let i = 0; i < this.apple.length; i++) {
 			this.apple[i].setDepth(-18)
 		}
+
+		// Animate Trees
+		this.time.addEvent({
+			delay: 6000,
+			loop: true,
+			callback: this.treeAnimations,
+			callbackScope: this
+		});
 
 		// Setup Fish
 		for (let i = 0; i < tilesHigh; i++) {
@@ -853,7 +862,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 		}
 
-		// Tree Animations
+		/* // Tree Animations
 
 		for (let i = 0; i < this.tree.length; i++) {
 			this.time.addEvent({
@@ -862,7 +871,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				callbackScope: this,
 				args: [i, time, delta]
 			})
-		}
+		} */
 
 		//check bridge
 		if (this.fruitRemaining <= 0 && !this.bridgeOpen) {
@@ -1204,13 +1213,30 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	// Tree Animations
 	private treeAnimations(index: number, time: number, delta: number) {
-		console.log(this.treeAnimationNames)
-		this.changeAnimation(this.tree[index], this.treeAnimationNames, 1)
-	}
-	
-	// Apple Tree Animations
-	private appleTreeAnimations(index: number, time: number, delta: number) {
-		this.changeAnimation(this.apple[index], this.fruitAnimationNames, 2)
+		let chance = Phaser.Math.Between(0, 24)
+		for(let i = 0; i < this.tree.length; i++){
+			if (chance === 18 || chance === 15 || chance === 12 || chance === 9 || chance === 6 || chance === 3) {
+				if(this.tree[i].getCurrentAnimation().name !== 'leaf'){
+					this.tree[i].play('leaf', true)
+				}
+			}else{
+				if(this.tree[i].getCurrentAnimation().name !== 'idle'){
+					this.tree[i].play('idle', true)
+				}
+			}
+		}
+
+		for(let i = 0; i < this.apple.length; i++){
+			if (chance === 22 || chance === 20 || chance === 16 || chance === 8 || chance === 4 || chance === 2) {
+				if(this.apple[i].getCurrentAnimation().name !== 'leaf'){
+					this.apple[i].play('leaf', true)
+				}
+			}else{
+				if(this.apple[i].getCurrentAnimation().name !== 'idle'){
+					this.apple[i].play('idle', true)
+				}
+			}
+		}
 	}
 
 	// Delete fruits
