@@ -53,6 +53,10 @@ export enum TREE {
     TILE = 656 // Tile ID on level json
 }
 
+export enum APPLE_TREE {
+    TILE = 344 // Tile ID on level json
+}
+
 export enum FRUITS {
     ORANGE = 0,
     ORANGE_TILE = 555, // Tile ID on level json
