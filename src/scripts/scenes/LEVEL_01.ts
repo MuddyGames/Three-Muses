@@ -422,7 +422,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		// Setup Cannon ball animations
 		for (let i = 0; i < this.cannonball.length; i++) {
 			this.initializeAnimationsState(this.cannonball[i], this.cannonballAnimationNames)
-			this.cannonball[i].setDepth(-5)
+			this.cannonball[i].setDepth(-21)
 		}
 
 		// setup drawbridge
@@ -534,7 +534,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 				let tile = this.animatedTrees.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === TREE.TILE) {
-						console.log('Tree Found')
 						this.tree.push(this.createSpineObject(IDLE_KEY, TREE_KEY, j * this.tileSize - 33, i * this.tileSize - 84, 0.5, 0.5))
 					}
 				}
@@ -542,7 +541,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		}
 		// Setup Tree's Depth
 		for (let i = 0; i < this.tree.length; i++) {
-			this.tree[i].setDepth(-1)
+			this.tree[i].setDepth(8)
 		}
 
 		// Setup Fish
@@ -789,12 +788,12 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 			}
 
-			// Check is Goal Reached
-			// Check if River Splash
+			// Check players position
 			let x = this.map.worldToTileX(this.player.getX())
 			let y = this.map.worldToTileY(this.player.getY())
 
-			this.tile = this.riverLayer.getTileAt(x, y)
+			// Check is Goal Reached
+			this.tile = this.goalLayer.getTileAt(x, y)
 
 			if (this.tile !== null) {
 				if (this.tile.index === GOAL.TILE) {
@@ -804,6 +803,9 @@ export default class LEVEL_01 extends Phaser.Scene {
 					this.gsmUpdate(time, delta)
 				}
 			}
+
+			// Check if River Splash
+			this.tile = this.riverLayer.getTileAt(x, y)
 
 			if (this.tile !== null) {
 				if (this.tile.index === RIVER.TILE) {

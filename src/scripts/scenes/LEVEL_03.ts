@@ -28,7 +28,8 @@ import {
 	HUD_ANIMATIONS_TIME,
 	DPAD,
 	DPAD_ANIMS,
-	TREE
+	TREE,
+	APPLE_TREE
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -279,12 +280,12 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.load.spine(KEYS_KEY[1], 'keys/yellow/yellow_key.json', 'keys/yellow/yellow_key.atlas')
 		this.load.spine(KEYS_KEY[2], 'keys/green/green_key.json', 'keys/green/green_key.atlas')
 		this.load.spine(KEYS_KEY[3], 'keys/pink/pink_key.json', 'keys/pink/pink_key.atlas')
-		this.load.spine(TREE_KEY,'tree/tree.json', 'tree/tree.atlas')
+		this.load.spine(TREE_KEY, 'tree/tree.json', 'tree/tree.atlas')
 		this.load.spine(DPAD_KEY, 'dpad/DPad_Final_merge.json', 'dpad/DPad_Final_merge.atlas')
-		this.load.spine(APPLE_KEY,'appletree/tree2.json', 'appletree/tree2.atlas') 
-		this.load.spine(FISH_KEY,'fish/fish.json','fish/fish.atlas')
-		this.load.spine(FLOWERS_KEY,'flowers/flowers.json','flowers/flowers.atlas')
-		this.load.spine(FLAGS_KEY,'flag/flag.json', 'flag/flag.atlas')
+		this.load.spine(APPLE_KEY, 'appletree/tree2.json', 'appletree/tree2.atlas')
+		this.load.spine(FISH_KEY, 'fish/fish.json', 'fish/fish.atlas')
+		this.load.spine(FLOWERS_KEY, 'flowers/flowers.json', 'flowers/flowers.atlas')
+		this.load.spine(FLAGS_KEY, 'flag/flag.json', 'flag/flag.atlas')
 	}
 
 	create(time: number, delta: number): void {
@@ -300,13 +301,13 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.vinnette = this.add.image(width / 2, height / 2, 'vinnette')
 		this.vinnette.setDisplaySize(width, height);
 		this.vinnette.setOrigin(0.5, 0.5)
-		this.vinnette.setDepth(10)
+		this.vinnette.setDepth(20)
 
 		// Hud Background
 		this.hud_background = this.add.image(width / 2, height * 0.04, 'hud_background')
 		this.vinnette.setDisplaySize(width, height);
 		this.vinnette.setOrigin(0.5, 0.5)
-		this.vinnette.setDepth(9)
+		this.vinnette.setDepth(19)
 
 		//Setup the Player
 		// The X Y needs to come from tiles spawn points
@@ -327,29 +328,29 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.currentScoreText.setShadow(3, 3)
 		this.currentScoreText.setStroke('#fff', 12);
 		this.currentScoreText.setShadow(2, 2, "#333333", 2, true, true);
-		this.currentScoreText.setDepth(10)
+		this.currentScoreText.setDepth(21)
 		// Elapsed Time
 		this.elapsedTimeText = new HudText(this)
 		this.elapsedTimeText.setShadow(3, 3)
 		this.elapsedTimeText.setStroke('#fff', 12);
 		this.elapsedTimeText.setShadow(2, 2, "#333333", 2, true, true);
-		this.elapsedTimeText.setDepth(10)
+		this.elapsedTimeText.setDepth(21)
 		// Record Time
 		this.recordTimeText = new HudText(this)
 		this.recordTimeText.setShadow(3, 3)
 		this.recordTimeText.setStroke('#fff', 12);
 		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
-		this.recordTimeText.setDepth(10)
+		this.recordTimeText.setDepth(21)
 
 		// TODO : Remove magic numbers
 		this.hudTimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
-		this.hudTimer.setDepth(10)
+		this.hudTimer.setDepth(21)
 		this.hudTimer.setScale(0.75, 0.75)
 		this.hudTimerAnimationNames = this.hudTimer.getAnimationList()
 		this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Run Timer
 
 		this.hudRecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.46, this.screenY * 0.001, 1, 1)
-		this.hudRecord.setDepth(10)
+		this.hudRecord.setDepth(21)
 		this.hudRecord.setScale(0.75, 0.74)
 		this.hudRecordAnimationNames = this.hudRecord.getAnimationList()
 
@@ -365,8 +366,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 		//Setup Map Data
 		this.setupMap()
-		var tilesWide = this.map.width
-		var tilesHigh = this.map.height
+		let tilesWide = this.map.width
+		let tilesHigh = this.map.height
 
 		// Background Music
 		this.backingMusic = this.sound.add('level_backing_track', {
@@ -397,7 +398,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		// Setup Divers
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
-				var tile = this.diverLayer.getTileAt(j, i)
+				let tile = this.diverLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === DIVER.START) {
 						this.divers.push(this.createSpineObject(DIVER_ANIM.WALK_DOWN, DIVER_KEY,
@@ -421,13 +422,13 @@ export default class LEVEL_03 extends Phaser.Scene {
 		// Setup Cannon ball animations
 		for (let i = 0; i < this.cannonball.length; i++) {
 			this.initializeAnimationsState(this.cannonball[i], this.cannonballAnimationNames)
-			this.cannonball[i].setDepth(-1)
+			this.cannonball[i].setDepth(-21)
 		}
 
 		// setup drawbridge
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
-				var tile = this.bridgeLayer.getTileAt(j, i)
+				let tile = this.bridgeLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index == BRIDGE.PLACE) {
 						this.bridge = this.createSpineObject(IDLE_KEY, BRIDGE_KEY, j * this.tileSize + BRIDGE.OFFSETX,
@@ -459,13 +460,13 @@ export default class LEVEL_03 extends Phaser.Scene {
 			this.input.addPointer(2);
 			this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, this.tileSize * DPAD.X_TILES,
 				this.tileSize * DPAD.Y_TILES, DPAD.SCALE, DPAD.SCALE)
-			this.dpad.setDepth(10)
+			this.dpad.setDepth(21)
 		}
 
 		// Setup Fruits
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
-				var tile = this.candyLayer.getTileAt(j, i)
+				let tile = this.candyLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === FRUITS.ORANGE_TILE) {
 						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
@@ -488,10 +489,10 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.artifact[2] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[2], this.screenX * 0.24, this.screenY * 0.04, 0.6, 0.6)
 		this.artifact[3] = this.createSpineObject(IDLE_KEY, ARTIFACTS_KEY[3], this.screenX * 0.295, this.screenY * 0.05, 0.6, 0.6)
 
-		this.artifact[0].setDepth(10)
-		this.artifact[1].setDepth(10)
-		this.artifact[2].setDepth(10)
-		this.artifact[3].setDepth(10)
+		this.artifact[0].setDepth(21)
+		this.artifact[1].setDepth(21)
+		this.artifact[2].setDepth(21)
+		this.artifact[3].setDepth(21)
 
 		// Init fruit animations
 		for (let o = 0; o < this.fruit.length; o++) {
@@ -504,7 +505,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		// Key Animations Init
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
-				var tile = this.keyLayer.getTileAt(j, i)
+				let tile = this.keyLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === 395) {
 						if (level === LEVELS.LEVEL_01) {
@@ -528,114 +529,115 @@ export default class LEVEL_03 extends Phaser.Scene {
 		}
 
 		// Setup Trees
-		for (let i = 0; i < tilesHigh; i++){
-			for(let j = 0; j <tilesWide; j++){
-				var tile = this.animatedTrees.getTileAt(j, i)
-				if (tile != null){
-					if (tile.index === TREE.TILE){
-						console.log('Tree Found')
-						this.tree.push(this.createSpineObject(IDLE_KEY, TREE_KEY ,j * this.tileSize - 33, i * this.tileSize - 84 , 0.5, 0.5))
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				let tile = this.animatedTrees.getTileAt(j, i)
+				if (tile != null) {
+					if (tile.index === TREE.TILE) {
+						this.tree.push(this.createSpineObject(IDLE_KEY, TREE_KEY, j * this.tileSize - 33, i * this.tileSize - 84, 0.5, 0.5))
 					}
 				}
 			}
 		}
 		// Setup Tree's Depth
-		for (let i = 0; i < this.tree.length; i++){
-			this.tree[i].setDepth(-1)
+		for (let i = 0; i < this.tree.length; i++) {
+			this.tree[i].setDepth(8)
 		}
 
 		// Setup Fish
-		for (let i = 0; i < tilesHigh; i++){
-			for(let j = 0; j <tilesWide; j++){
-				var tile = this.fishLayer.getTileAt(j, i)
-				if (tile != null){
-					if (tile.index === 657){
-						this.fish.push(this.createSpineObject(IDLE_KEY, FISH_KEY ,j * this.tileSize, i * this.tileSize - 40, 1, 1))
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				let tile = this.fishLayer.getTileAt(j, i)
+				if (tile != null) {
+					if (tile.index === 657) {
+						this.fish.push(this.createSpineObject(IDLE_KEY, FISH_KEY, j * this.tileSize, i * this.tileSize - 40, 1, 1))
 					}
 				}
 			}
 		}
 		// Setup Fish's Depth
-		for (let i = 0; i < this.fish.length; i++){
-			this.fish[i].setDepth(4)
+		for (let i = 0; i < this.fish.length; i++) {
+			this.fish[i].setDepth(19)
 		}
 
-			// Setup Flowers
-			for (let i = 0; i < tilesHigh; i++){
-				for(let j = 0; j <tilesWide; j++){
-					var tile = this.flowersLayer.getTileAt(j, i)
-					if (tile != null){
-						if (tile.index === 604){
-							this.flowers.push(this.createSpineObject(IDLE_KEY, FLOWERS_KEY ,j * this.tileSize - 10, i * this.tileSize - 15, 1, 1))
-							//this.flowers[0].setDepth(9)
-						}
+		// Setup Flowers
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				let tile = this.flowersLayer.getTileAt(j, i)
+				if (tile != null) {
+					if (tile.index === 604) {
+						this.flowers.push(this.createSpineObject(IDLE_KEY, FLOWERS_KEY, j * this.tileSize - 10, i * this.tileSize - 15, 1, 1))
 					}
 				}
 			}
-			// Setup Flowers Depth
-			for (let i = 0; i < this.flowers.length; i++){
-				this.flowers[i].setDepth(-1)
-			}
+		}
+		
+		// Setup Flowers Depth
+		for (let i = 0; i < this.flowers.length; i++) {
+			this.flowers[i].setDepth(-1)
+		}
 
-			// Setup Flag TOP
-			for (let i = 0; i < tilesHigh; i++){
-				for(let j = 0; j <tilesWide; j++){
-					var tile = this.flagTopLayer.getTileAt(j, i)
-					if (tile != null){
-						if (tile.index === 447){
-							this.flags.push(this.createSpineObject(IDLE_KEY, FLAGS_KEY ,j * this.tileSize + 4, i * this.tileSize + 2 , 1, 1))
-							
-						}
+		// Setup Flag TOP
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				let tile = this.flagTopLayer.getTileAt(j, i)
+				if (tile != null) {
+					if (tile.index === 447) {
+						this.flags.push(this.createSpineObject(IDLE_KEY, FLAGS_KEY, j * this.tileSize + 4, i * this.tileSize + 2, 1, 1))
+
 					}
-				} 
+				}
 			}
-            // Setup Flag LOW
-			for (let i = 0; i < tilesHigh; i++){
-				for(let j = 0; j <tilesWide; j++){
-					var tile = this.flagLowLayer.getTileAt(j, i)
-					if (tile != null){
-						if (tile.index === 447){
-							this.flags.push(this.createSpineObject(IDLE_KEY, FLAGS_KEY ,j * this.tileSize , i * this.tileSize , 1, 1))
-							
-						}
+		}
+		// Setup Flag LOW
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				let tile = this.flagLowLayer.getTileAt(j, i)
+				if (tile != null) {
+					if (tile.index === 447) {
+						this.flags.push(this.createSpineObject(IDLE_KEY, FLAGS_KEY, j * this.tileSize, i * this.tileSize, 1, 1))
+
 					}
-				} 
+				}
 			}
-			//Setup Flowers Depth
-			for (let i = 0; i < this.flags.length; i++){
-				this.flags[i].setDepth(-9)
-			}
-			
-			// Setup Apple Trees
-			for (let i = 0; i < tilesHigh; i++){
-			for(let j = 0; j <tilesWide; j++){
-				var tile = this.animatedAppleTrees.getTileAt(j, i)
-				if (tile != null){
-					if (tile.index === 344){
-						console.log('Tree Found')
-						this.apple.push(this.createSpineObject(IDLE_KEY, APPLE_KEY ,j * this.tileSize - 61, i * this.tileSize - 84 , 0.5, 0.5))
+		}
+		//Setup Flags Depth
+		for (let i = 0; i < this.flags.length; i++) {
+			this.flags[i].setDepth(-9)
+		}
+
+		// Setup Apple Trees
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				let tile = this.animatedAppleTrees.getTileAt(j, i)
+				if (tile != null) {
+					if (tile.index === APPLE_TREE.TILE) {
+						this.apple.push(this.createSpineObject(IDLE_KEY, APPLE_KEY, j * this.tileSize - 61, i * this.tileSize - 84, 0.5, 0.5))
 					}
 				}
 			}
 		}
 		// Setup Apple Tree's Depth
-		for (let i = 0; i < this.apple.length; i++){
-			this.apple[i].setDepth(-1)
+		for (let i = 0; i < this.apple.length; i++) {
+			this.apple[i].setDepth(-18)
 		}
 
 
 		// Mute button
 		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.022, this.screenY * 0.014, 1, 1)
-			.setScale(0.8, 0.8)
-			.setDepth(10)
-			.setInteractive()
+		this.soundMuteUnmuteButton.setScale(0.8, 0.8)
+		this.soundMuteUnmuteButton.setDepth(21)
+		this.soundMuteUnmuteButton.setInteractive()
+
 		let soundStates = this.soundMuteUnmuteButton.getAnimationList()
 		let savedSoundState = window.localStorage.getItem('soundState')
 		let soundState = true
+
 		if (window.localStorage.getItem('soundState') === "false") {
 			this.game.sound.mute = true
 			this.soundMuteUnmuteButton.play(soundStates[1], true)
 		}
+
 		this.soundMuteUnmuteButton.on('pointerdown', () => {
 			if (soundState == true) {
 				soundState = false
@@ -725,24 +727,13 @@ export default class LEVEL_03 extends Phaser.Scene {
 		const size = this.trufflesAnimationNames.length
 
 		// Handles input
-		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
+		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!) || Phaser.Input.Keyboard.JustDown(this.key_d!)) {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
-		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!) || Phaser.Input.Keyboard.JustDown(this.key_a!)) {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
-		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!) || Phaser.Input.Keyboard.JustDown(this.key_w!)) {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
-		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
-		}
-
-		// Todo multiple hits on Key
-		if (Phaser.Input.Keyboard.JustDown(this.key_d!)) {
-			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
-		} else if (this.key_a.isDown) {
-			this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
-		} else if (this.key_w.isDown) {
-			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
-		} else if (this.key_s.isDown) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!) || Phaser.Input.Keyboard.JustDown(this.key_s!)) {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
 		}
 
@@ -758,21 +749,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 					this.player.moveRight()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
-
-				// Check is Goal Reached
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
-
-				this.tile = this.goalLayer.getTileAt(x, y)
-
-				if (this.tile !== null) {
-					if (this.tile.index === GOAL.TILE) {
-						// Reached Goal
-						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
-						this.addPoints(POINTS.REACHED_GOAL)
-						this.gsmUpdate(time, delta)
-					}
-				}
 			}
 
 			if (this.cursors.left.isDown || this.key_a.isDown || this.dpad_left) {
@@ -785,21 +761,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 					this.player.moveLeft()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
-
-				// Check is Goal Reached
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
-
-				this.tile = this.goalLayer.getTileAt(x, y)
-
-				if (this.tile !== null) {
-					if (this.tile.index === GOAL.TILE) {
-						// Reached Goal
-						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
-						this.addPoints(POINTS.REACHED_GOAL)
-						this.gsmUpdate(time, delta)
-					}
-				}
 			}
 
 			if (this.cursors.up.isDown || this.key_w.isDown || this.dpad_up) {
@@ -811,21 +772,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 				if (this.tile == null) {
 					this.player.moveUp()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
-				}
-
-				// Check is Goal Reached
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
-
-				this.tile = this.goalLayer.getTileAt(x, y)
-
-				if (this.tile !== null) {
-					if (this.tile.index === GOAL.TILE) {
-						// Reached Goal
-						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
-						this.addPoints(POINTS.REACHED_GOAL)
-						this.gsmUpdate(time, delta)
-					}
 				}
 			}
 
@@ -840,27 +786,25 @@ export default class LEVEL_03 extends Phaser.Scene {
 					this.player.moveDown()
 					this.truffles.setPosition(this.player.getX(), this.player.getY())
 				}
+			}
 
-				// Check is Goal Reached
-				x = this.map.worldToTileX(this.player.getX())
-				y = this.map.worldToTileY(this.player.getY())
+			// Check players position
+			let x = this.map.worldToTileX(this.player.getX())
+			let y = this.map.worldToTileY(this.player.getY())
 
-				this.tile = this.goalLayer.getTileAt(x, y)
+			// Check is Goal Reached
+			this.tile = this.goalLayer.getTileAt(x, y)
 
-				if (this.tile !== null) {
-					if (this.tile.index === GOAL.TILE) {
-						// Reached Goal
-						this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
-						this.addPoints(POINTS.REACHED_GOAL)
-						this.gsmUpdate(time, delta)
-					}
+			if (this.tile !== null) {
+				if (this.tile.index === GOAL.TILE) {
+					// Reached Goal
+					this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
+					this.addPoints(POINTS.REACHED_GOAL)
+					this.gsmUpdate(time, delta)
 				}
 			}
 
 			// Check if River Splash
-			let x = this.map.worldToTileX(this.player.getX())
-			let y = this.map.worldToTileY(this.player.getY())
-
 			this.tile = this.riverLayer.getTileAt(x, y)
 
 			if (this.tile !== null) {
@@ -881,7 +825,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 						this.changeAnimation(this.fruit[i], this.fruitAnimationNames, 1)
 						this.time.addEvent({
 							delay: ANIMATION_DELAY.FRUIT,
-							callback: this.fruitAnimate,
+							callback: this.fruitAnimations,
 							callbackScope: this,
 							args: [i, time, delta]
 						})
@@ -898,6 +842,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				}
 			}
 		}
+
 		//check bridge
 		if (this.fruitRemaining <= 0 && !this.bridgeOpen) {
 			this.bridge.play(BRIDGE_ANIMS.TRANSITIONING, false)
@@ -905,7 +850,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 			this.bridgeOpening.play()
 			for (let i = 0; i < this.map.height; i++) {
 				for (let j = 0; j < this.map.width; j++) {
-					var tile = this.bridgeLayer.getTileAt(j, i)
+					let tile = this.bridgeLayer.getTileAt(j, i)
 					if (tile != null) {
 						this.riverLayer.removeTileAt(j, i)
 					}
@@ -914,7 +859,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		}
 
 		if (this.newTick) {
-			
+
 			// Cannonball collisions
 			for (let i = 0; i < this.cannonball.length; i++) {
 				if (this.trufflesAABB(this.cannonball[i])) {
@@ -939,14 +884,14 @@ export default class LEVEL_03 extends Phaser.Scene {
 				}
 
 				// Diver Collision
-				if (this.trufflesEnemyCollision(this.divers[i], i)) {
+				if (this.trufflesDiverCollision(this.divers[i], i)) {
 					this.player.getState().handleInput(INPUT_TYPES.EXPIRED, time, delta, this.player)
 					this.addPoints(POINTS.DIVER_COLLISION)
 				}
-				for(let j = 0; j < this.fruit.length; j++) {
+				for (let j = 0; j < this.fruit.length; j++) {
 					this.sortLayers(this.divers[i], this.fruit[j])
 				}
-				for(let j = 0; j < this.cannonball.length; j++) {
+				for (let j = 0; j < this.cannonball.length; j++) {
 					this.sortLayers(this.divers[i], this.cannonball[j])
 				}
 			}
@@ -960,24 +905,22 @@ export default class LEVEL_03 extends Phaser.Scene {
 				this.player.push()
 				this.truffles.setPosition(this.player.getX(), this.player.getY())
 			}
-
-			
 		}
 
-		// Updates the Player State See PlayerStateMachine*/
+		// Updates the Player State See PlayerStateMachine
 		this.player.getState().getState() ?.update(time, delta, this.player)
 
 		// Display Updated HUD
 		this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.048)
 		this.currentScoreText.update()
 		this.currentScoreText.setText(' ' + this.levelScore + ' ')
-		this.currentScoreText.setDepth(10)
+		this.currentScoreText.setDepth(21)
 		this.currentScoreText.setFontSize(40)
 
 		this.elapsedTimeText.setPosition(this.screenX * 0.76, this.screenY * 0.048)
 		this.elapsedTimeText.update()
 		this.elapsedTimeText.setText(' ' + Math.round((this.elapsedLevelTime * 0.001)) + ' ')
-		this.elapsedTimeText.setDepth(10)
+		this.elapsedTimeText.setDepth(21)
 		this.elapsedTimeText.setFontSize(40)
 
 		this.recordTimeText.setPosition(this.screenX * 0.55, this.screenY * 0.048)
@@ -987,7 +930,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		} else {
 			this.recordTimeText.setText(' ' + '--:--' + ' ')
 		}
-		this.recordTimeText.setDepth(10)
+		this.recordTimeText.setDepth(21)
 		this.recordTimeText.setFontSize(40)
 
 		this.newTick = false
@@ -1004,24 +947,24 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.tileset = this.map.addTilesetImage("truffles_level_1_tileset", 'tileset');
 
 		this.waterLayer = this.map.createLayer('map/water/water_depth_00', this.tileset, 0, 0);
-		this.waterLayer.setDepth(-10); //SET DEPTH 00 TO -10
+		this.waterLayer.setDepth(-21); //SET DEPTH 00 TO -10
 
 		this.groundLayer = this.map.createLayer('map/ground/ground_depth_00', this.tileset, 0, 0);
-		this.groundLayer.setDepth(-10); //SET DEPTH 00 TO -10
+		this.groundLayer.setDepth(-20); //SET DEPTH 00 TO -10
 		//this.groundLayer.setVisible(false) // TODO  Special Game of Thrones Level
 
 		this.ground2Layer = this.map.createLayer('map/shadow/shadow_depth_01', this.tileset, 0, 0);
-		this.ground2Layer.setDepth(-9); //SET DEPTH 1 TO -9
+		this.ground2Layer.setDepth(-19); //SET DEPTH 1 TO -9
 		//this.groundLayer.setVisible(false) // TODO  Special Game of Thrones Level
 
 		this.house2Layer = this.map.createLayer('map/buildings/foreground/house_depth_01/house_layer_2', this.tileset, 0, 0);
-		this.house2Layer.setDepth(-9); //SET DEPTH 1 TO -9
+		this.house2Layer.setDepth(-19); //SET DEPTH 1 TO -9
 
 		this.house1Layer = this.map.createLayer('map/buildings/foreground/house_depth_01/house_layer_1', this.tileset, 0, 0);
-		this.house1Layer.setDepth(-9); //SET DEPTH 1 TO -9
+		this.house1Layer.setDepth(-19); //SET DEPTH 1 TO -9
 
 		this.wall1Layer = this.map.createLayer('map/castle/walls/walls_depth_01', this.tileset, 0, 0);
-		this.wall1Layer.setDepth(-9); //SET DEPTH 1 TO -9
+		this.wall1Layer.setDepth(-19); //SET DEPTH 1 TO -9
 
 		this.wall2Layer = this.map.createLayer('map/castle/walls/walls_depth_03', this.tileset, 0, 0);
 		this.wall2Layer.setDepth(8);
@@ -1091,10 +1034,11 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.animatedAppleTrees = this.map.createLayer('map/environment_objects/animated/tree_apple_01', this.tileset, 0, 0);
 		this.animatedAppleTrees.setVisible(false)
 
-		
+		this.bridgeLayer = this.map.createLayer('map/environment_objects/animated/drawbridge_01', this.tileset, 0, 0);
+		this.bridgeLayer.setVisible(false)
 
-
-		
+		this.riverLayer = this.map.createLayer('map/water/river_00', this.tileset, 0, 0);
+		this.riverLayer.setVisible(false)
 
 		// Check the levels to load
 		let current_level = this.sys.settings.key
@@ -1126,12 +1070,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(7)
 		this.goalLayer.setVisible(true)
-
-		this.bridgeLayer = this.map.createLayer('map/environment_objects/animated/drawbridge_01', this.tileset, 0, 0);
-		this.bridgeLayer.setVisible(false)
-
-		this.riverLayer = this.map.createLayer('map/water/river_00', this.tileset, 0, 0);
-		this.riverLayer.setVisible(false)
 	}
 
 	// Create Spine Objects
@@ -1163,7 +1101,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 	//Truffles to Object Collision
 	private trufflesAABB(collidable: SpineGameObject) {
 
-		var collision = false;
+		let collision = false;
 
 		if (this.player.getX() - this.tileSize / 2 < collidable.x + collidable.scaleX * collidable.width &&
 			this.player.getX() + this.tileSize / 2 > collidable.x &&
@@ -1181,46 +1119,45 @@ export default class LEVEL_03 extends Phaser.Scene {
 	}
 
 	private sortLayers(object1: SpineGameObject, object2: SpineGameObject) {
-		if(Math.abs(object1.x - object2.x) < object1.scaleX * object1.width && 
-			Math.abs(object1.y - object2.y) < object1.scaleY * object1.height){
-			if(object1.y < object2.y + object2.height * object2.scaleY) {
+		if (Math.abs(object1.x - object2.x) < object1.scaleX * object1.width &&
+			Math.abs(object1.y - object2.y) < object1.scaleY * object1.height) {
+			if (object1.y < object2.y + object2.height * object2.scaleY) {
 				object2.setDepth(object1.depth + 1)
-			}
-			else {
+			} else {
 				object2.setDepth(object1.depth - 1)
 			}
 		}
 	}
 
 	// Truffles Enemy Collisions
-	private trufflesEnemyCollision(enemy: SpineGameObject, index: number) {
+	private trufflesDiverCollision(diver: SpineGameObject, index: number) {
 
-		var collision = false;
+		let collision = false;
 
-		if ((this.map.worldToTileX(this.player.getX()) == this.map.worldToTileX(enemy.x) ||
-				this.map.worldToTileX(this.player.getX()) == this.map.worldToTileX(enemy.x) - 1) &&
-			this.map.worldToTileY(this.player.getY()) == this.map.worldToTileY(enemy.y)) {
+		if ((this.map.worldToTileX(this.player.getX()) == this.map.worldToTileX(diver.x) ||
+				this.map.worldToTileX(this.player.getX()) == this.map.worldToTileX(diver.x) - 1) &&
+			this.map.worldToTileY(this.player.getY()) == this.map.worldToTileY(diver.y)) {
 			collision = true;
-			enemy.play(DIVER_ANIM.PUSH, false)
+			diver.play(DIVER_ANIM.PUSH, false)
 			this.player.setPushSpeed(DIVER.PUSH_SPEED)
 			this.time.addEvent({
 				delay: 800,
-				callback: this.resetDiverAnim,
+				callback: this.resetDiverAnimations,
 				callbackScope: this,
 				args: [index]
 			})
 		}
-		if (enemy.y > this.player.getY()) {
-			enemy.setDepth(2)
+		if (diver.y > this.player.getY()) {
+			diver.setDepth(2)
 		} else {
-			enemy.setDepth(-2)
+			diver.setDepth(-2)
 		}
 
 		return collision
 	}
 
 	// Reset Diver
-	private resetDiverAnim(index: number) {
+	private resetDiverAnimations(index: number) {
 		if (this.diverMove[index] > 0) {
 			this.divers[index].play(DIVER_ANIM.WALK_DOWN, true)
 		} else {
@@ -1238,7 +1175,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 	}
 
 	// Fruit Animations
-	private fruitAnimate(index: number, time: number, delta: number) {
+	private fruitAnimations(index: number, time: number, delta: number) {
 		this.changeAnimation(this.fruit[index], this.fruitAnimationNames, 2)
 		this.time.addEvent({
 			delay: 1000,
@@ -1386,14 +1323,16 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 	}
 	private handleDPad(time: number, delta: number) {
-		var pointer = this.input.activePointer;
+		let pointer = this.input.activePointer;
 		if (pointer.isDown) {
-			var touchX = pointer.x;
-			var touchY = pointer.y;
-			var dpadX = this.dpad.x
-			var dpadWidth = this.dpad.width
-			var dpadY = this.dpad.y
-			var dpadHeight = this.dpad.height
+
+			let touchX = pointer.x;
+			let touchY = pointer.y;
+			let dpadX = this.dpad.x
+			let dpadWidth = this.dpad.width
+			let dpadY = this.dpad.y
+			let dpadHeight = this.dpad.height
+
 			this.dpad_down = false
 			this.dpad_up = false
 			this.dpad_left = false
