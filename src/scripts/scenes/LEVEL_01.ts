@@ -728,24 +728,13 @@ export default class LEVEL_01 extends Phaser.Scene {
 		const size = this.trufflesAnimationNames.length
 
 		// Handles input
-		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!)) {
+		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!) || Phaser.Input.Keyboard.JustDown(this.key_d!)) {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
-		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!)) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.left!) || Phaser.Input.Keyboard.JustDown(this.key_a!)) {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
-		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!)) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.up!) || Phaser.Input.Keyboard.JustDown(this.key_w!)) {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
-		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!)) {
-			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
-		}
-
-		// Todo multiple hits on Key
-		if (Phaser.Input.Keyboard.JustDown(this.key_d!)) {
-			this.player.getState().handleInput(INPUT_TYPES.WALK_RIGHT, time, delta, this.player)
-		} else if (this.key_a.isDown!) {
-			this.player.getState().handleInput(INPUT_TYPES.WALK_LEFT, time, delta, this.player)
-		} else if (this.key_w.isDown!) {
-			this.player.getState().handleInput(INPUT_TYPES.WALK_UP, time, delta, this.player)
-		} else if (this.key_s.isDown!) {
+		} else if (Phaser.Input.Keyboard.JustDown(this.cursors.down!) || Phaser.Input.Keyboard.JustDown(this.key_s!)) {
 			this.player.getState().handleInput(INPUT_TYPES.WALK_DOWN, time, delta, this.player)
 		}
 
