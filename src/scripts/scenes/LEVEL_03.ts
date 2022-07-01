@@ -148,18 +148,23 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 	// Tree
 	private tree: SpineGameObject[] = []
+	private treeAnimationNames: string[] = []
 
 	// Appple Tree
 	private apple: SpineGameObject[] = []
+	private appleAnimationNames: string[] = []
 
 	// Fish
 	private fish: SpineGameObject[] = []
+	private fishAnimationNames: string[] = []
 
 	// Flowers 
 	private flowers: SpineGameObject[] = []
+	private flowersAnimationNames: string[] = []
 
 	// FLAGS
 	private flags: SpineGameObject[] = []
+	private flagsAnimationNames: string[] = []
 
 	// Input Cursors
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -379,6 +384,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.churchBells = this.sound.add('church_bells', {
 			volume: 0.5
 		})
+
 		this.time.addEvent({
 			delay: 6000,
 			loop: true,
@@ -541,8 +547,38 @@ export default class LEVEL_03 extends Phaser.Scene {
 		}
 		// Setup Tree's Depth
 		for (let i = 0; i < this.tree.length; i++) {
-			this.tree[i].setDepth(8)
+			this.tree[i].setDepth(-1)
+			this.tree[i].play('idle', true)
 		}
+
+		// Setup Tree Animations Names
+		for (let i = 0; i < this.tree.length; i++) {
+			this.treeAnimationNames = this.tree[i].getAnimationList()
+		}
+
+		// Setup Apple Trees
+		for (let i = 0; i < tilesHigh; i++) {
+			for (let j = 0; j < tilesWide; j++) {
+				let tile = this.animatedAppleTrees.getTileAt(j, i)
+				if (tile != null) {
+					if (tile.index === APPLE_TREE.TILE) {
+						this.apple.push(this.createSpineObject(IDLE_KEY, APPLE_KEY, j * this.tileSize - 61, i * this.tileSize - 84, 0.5, 0.5))
+					}
+				}
+			}
+		}
+		// Setup Apple Tree's Depth
+		for (let i = 0; i < this.apple.length; i++) {
+			this.apple[i].setDepth(-18)
+		}
+
+		// Animate Trees
+		this.time.addEvent({
+			delay: 6000,
+			loop: true,
+			callback: this.treeAnimations,
+			callbackScope: this
+		});
 
 		// Setup Fish
 		for (let i = 0; i < tilesHigh; i++) {
@@ -605,23 +641,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 		for (let i = 0; i < this.flags.length; i++) {
 			this.flags[i].setDepth(-9)
 		}
-
-		// Setup Apple Trees
-		for (let i = 0; i < tilesHigh; i++) {
-			for (let j = 0; j < tilesWide; j++) {
-				let tile = this.animatedAppleTrees.getTileAt(j, i)
-				if (tile != null) {
-					if (tile.index === APPLE_TREE.TILE) {
-						this.apple.push(this.createSpineObject(IDLE_KEY, APPLE_KEY, j * this.tileSize - 61, i * this.tileSize - 84, 0.5, 0.5))
-					}
-				}
-			}
-		}
-		// Setup Apple Tree's Depth
-		for (let i = 0; i < this.apple.length; i++) {
-			this.apple[i].setDepth(-18)
-		}
-
 
 		// Mute button
 		this.soundMuteUnmuteButton = this.createSpineObject(IDLE_KEY, SOUND_KEY, this.screenX * 0.022, this.screenY * 0.014, 1, 1)
@@ -1082,14 +1101,10 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 	// Init Animations
 	private initializeAnimationsState(spine: SpineGameObject, animationNames: string[]) {
-		const startAnim = spine.getCurrentAnimation().name
-
-		spine.getAnimationList().forEach((name, idx) => {
-			animationNames.push(name)
-			if (name === startAnim) {
-				this.trufflesAnimationIndex = idx
-			}
-		})
+		let animations = spine.getAnimationList()
+		for(let i = 0; i < animations.length; i++){
+			animationNames.push(animations[i])
+		}
 	}
 
 	// Change Animations
@@ -1183,6 +1198,34 @@ export default class LEVEL_03 extends Phaser.Scene {
 			callbackScope: this,
 			args: [index, time, delta]
 		})
+	}
+
+	// Tree Animations
+	private treeAnimations(index: number, time: number, delta: number) {
+		let chance = Phaser.Math.Between(0, 24)
+		for(let i = 0; i < this.tree.length; i++){
+			if (chance === 18 || chance === 15 || chance === 12 || chance === 9 || chance === 6 || chance === 3) {
+				if(this.tree[i].getCurrentAnimation().name !== 'leaf'){
+					this.tree[i].play('leaf', true)
+				}
+			}else{
+				if(this.tree[i].getCurrentAnimation().name !== 'idle'){
+					this.tree[i].play('idle', true)
+				}
+			}
+		}
+
+		for(let i = 0; i < this.apple.length; i++){
+			if (chance === 22 || chance === 20 || chance === 16 || chance === 8 || chance === 4 || chance === 2) {
+				if(this.apple[i].getCurrentAnimation().name !== 'leaf'){
+					this.apple[i].play('leaf', true)
+				}
+			}else{
+				if(this.apple[i].getCurrentAnimation().name !== 'idle'){
+					this.apple[i].play('idle', true)
+				}
+			}
+		}
 	}
 
 	// Delete fruits

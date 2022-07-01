@@ -862,17 +862,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 			}
 		}
 
-		/* // Tree Animations
-
-		for (let i = 0; i < this.tree.length; i++) {
-			this.time.addEvent({
-			delay: ANIMATION_DELAY.FRUIT,
-				callback: this.treeAnimations,
-				callbackScope: this,
-				args: [i, time, delta]
-			})
-		} */
-
 		//check bridge
 		if (this.fruitRemaining <= 0 && !this.bridgeOpen) {
 			this.bridge.play(BRIDGE_ANIMS.TRANSITIONING, false)
