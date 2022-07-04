@@ -586,7 +586,7 @@ export class EatingLeft extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.idiomSound = this.scene.sound.add('well_kid')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
             case 2:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -598,7 +598,7 @@ export class EatingLeft extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 5:
-                this.idiomSound = this.scene.sound.add('well_kid')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
             case 6:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -610,13 +610,13 @@ export class EatingLeft extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.idiomSound = this.scene.sound.add('well_kid')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break;
             case 10:
                 this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
         }
         this.spine.play(INPUT_TYPES.EATING_LEFT, true)
@@ -688,7 +688,7 @@ export class MunchingLeft extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('unreal')
                 break;
             case 8:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('decent')
                 break
             case 9:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -697,7 +697,7 @@ export class MunchingLeft extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('decent')
                 break
         }
         this.rewardSound = this.scene.sound.add('reward',{volume:0.5})
@@ -750,7 +750,7 @@ export class EatingRight extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
             case 2:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -765,7 +765,7 @@ export class EatingRight extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 6:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
             case 7:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -780,7 +780,7 @@ export class EatingRight extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
         }
         this.spine.play(INPUT_TYPES.EATING_RIGHT, true)
@@ -831,7 +831,7 @@ export class MunchingRight extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('decent')
                 break
             case 2:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -852,7 +852,7 @@ export class MunchingRight extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break;
             case 8:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('decent')
                 break
             case 9:
                 this.idiomSound = this.scene.sound.add('unreal')
@@ -861,7 +861,7 @@ export class MunchingRight extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('decent')
                 break
         }
         this.rewardSound = this.scene.sound.add('reward',{volume:0.5})
@@ -913,7 +913,7 @@ export class EatingUp extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
             case 2:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -928,7 +928,7 @@ export class EatingUp extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 6:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
             case 7:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -943,7 +943,7 @@ export class EatingUp extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
         }
         this.spine.play(INPUT_TYPES.EATING_UP, true)
@@ -1000,7 +1000,7 @@ export class MunchingUp extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 3:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
             case 4:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -1018,13 +1018,13 @@ export class MunchingUp extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break;
             case 10:
                 this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.idiomSound = this.scene.sound.add('decent')
+                this.idiomSound = this.scene.sound.add('unreal')
                 break
         }
         this.rewardSound = this.scene.sound.add('reward',{volume:0.5})
@@ -1100,13 +1100,13 @@ export class EatingDown extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 9:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break;
             case 10:
                 this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('come_here_i_want_ya')
                 break
         }
         this.spine.play(INPUT_TYPES.EATING_DOWN, true)
@@ -1157,7 +1157,7 @@ export class MunchingDown extends PlayerStateMachine {
         let selection = Phaser.Math.Between(0, 20)
         switch (selection) {
             case 1:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('decent')
                 break
             case 2:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -1175,7 +1175,7 @@ export class MunchingDown extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break
             case 7:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('decent')
                 break;
             case 8:
                 this.idiomSound = this.scene.sound.add('silent')
@@ -1187,7 +1187,7 @@ export class MunchingDown extends PlayerStateMachine {
                 this.idiomSound = this.scene.sound.add('silent')
                 break;
             default:
-                this.idiomSound = this.scene.sound.add('silent')
+                this.idiomSound = this.scene.sound.add('decent')
                 break
         }
         this.rewardSound = this.scene.sound.add('reward',{volume:0.5})

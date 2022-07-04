@@ -341,7 +341,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.hudRecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.46, this.screenY * 0.001, 1, 1)
 		this.hudRecord.setDepth(21)
 		this.hudRecord.setScale(0.75, 0.74)
-		this.hudRecordAnimationNames = this.hudRecord.getAnimationList()
+		this.initializeAnimationsState(this.hudRecord, this.hudRecordAnimationNames)
 
 		// Update Score Frequency
 		this.time.addEvent({
@@ -700,10 +700,10 @@ export default class LEVEL_01 extends Phaser.Scene {
 			//Store Record Time
 			if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
 				this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
-				this.hudRecord.play(this.hudRecordAnimationNames[1], true) // No Record Set
+				this.changeAnimation(this.hudRecord, this.hudRecordAnimationNames, 1)
 			} else {
 				this.newRecordTime = this.bestRecordedTime
-				this.hudRecord.play(this.hudRecordAnimationNames[2], true) // No Record Set
+				this.changeAnimation(this.hudRecord, this.hudRecordAnimationNames, 0)
 			}
 
 			this.time.addEvent({
