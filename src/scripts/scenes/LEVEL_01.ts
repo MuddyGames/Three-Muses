@@ -131,8 +131,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 	// Artifacts
 	private artifact: SpineGameObject[] = []
-	private artifacts: number = 4
-	private artifactAnimationNames: [][]
 
 	// Windmill
 	private windmill!: SpineGameObject
@@ -196,8 +194,8 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private ground2Layer!: Phaser.Tilemaps.TilemapLayer
 	private house2Layer!: Phaser.Tilemaps.TilemapLayer
 	private house1Layer!: Phaser.Tilemaps.TilemapLayer
-	private wall1Layer!: Phaser.Tilemaps.TilemapLayer
-	private wall2Layer!: Phaser.Tilemaps.TilemapLayer
+	private castleWallTopOfMap!: Phaser.Tilemaps.TilemapLayer
+	private castleWallBottomOfMap!: Phaser.Tilemaps.TilemapLayer
 	private churchLayer!: Phaser.Tilemaps.TilemapLayer
 	private castleLayer!: Phaser.Tilemaps.TilemapLayer
 	private miscLayer!: Phaser.Tilemaps.TilemapLayer
@@ -344,8 +342,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.hudRecord.setDepth(21)
 		this.hudRecord.setScale(0.75, 0.74)
 		this.hudRecordAnimationNames = this.hudRecord.getAnimationList()
-
-		this.hudRecord.play(this.hudRecordAnimationNames[0], true) // No Record Set
 
 		// Update Score Frequency
 		this.time.addEvent({
@@ -707,6 +703,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 				this.hudRecord.play(this.hudRecordAnimationNames[1], true) // No Record Set
 			} else {
 				this.newRecordTime = this.bestRecordedTime
+				this.hudRecord.play(this.hudRecordAnimationNames[2], true) // No Record Set
 			}
 
 			this.time.addEvent({
@@ -720,9 +717,6 @@ export default class LEVEL_01 extends Phaser.Scene {
 		if (this.game.device.input.touch) {
 			this.handleDPad(time, delta)
 		}
-
-		// Cannon Ball Movement
-		this.cannonballMove()
 
 		// Handles input
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!) || Phaser.Input.Keyboard.JustDown(this.key_d!)) {
@@ -888,10 +882,16 @@ export default class LEVEL_01 extends Phaser.Scene {
 				}
 				for (let j = 0; j < this.fruit.length; j++) {
 					this.sortLayers(this.divers[i], this.fruit[j])
+					for (let k = 0; k < this.cannonball.length; k++) {
+						this.sortLayers(this.cannonball[k], this.fruit[j])
+					}
 				}
 				for (let j = 0; j < this.cannonball.length; j++) {
 					this.sortLayers(this.divers[i], this.cannonball[j])
 				}
+
+				// Cannon Ball Movement
+				this.cannonballMove()
 			}
 
 			// Handle Push
@@ -961,17 +961,20 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.house1Layer = this.map.createLayer('map/buildings/foreground/house_depth_01/house_layer_1', this.tileset, 0, 0);
 		this.house1Layer.setDepth(-19); //SET DEPTH 1 TO -9
 
-		this.wall1Layer = this.map.createLayer('map/castle/walls/walls_depth_01', this.tileset, 0, 0);
-		this.wall1Layer.setDepth(-19); //SET DEPTH 1 TO -9
+		this.castleWallTopOfMap = this.map.createLayer('map/castle/walls/walls_depth_01', this.tileset, 0, 0);
+		this.castleWallTopOfMap.setDepth(-19); //SET DEPTH 1 TO -9
+		this.castleWallTopOfMap.setVisible(true)
 
-		this.wall2Layer = this.map.createLayer('map/castle/walls/walls_depth_03', this.tileset, 0, 0);
-		this.wall2Layer.setDepth(8);
+		this.castleWallBottomOfMap = this.map.createLayer('map/castle/walls/walls_depth_03', this.tileset, 0, 0);
+		this.castleWallBottomOfMap.setDepth(8);
+		this.castleWallBottomOfMap.setVisible(true)
 
 		this.churchLayer = this.map.createLayer('map/buildings/foreground/church_depth_01/church_01', this.tileset, 0, 0);
 		this.churchLayer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.castleLayer = this.map.createLayer('map/castle/castle/castle_depth_01', this.tileset, 0, 0);
 		this.castleLayer.setDepth(-9); //SET DEPTH 1 TO -9
+		this.castleLayer.setVisible(true)
 
 		this.miscLayer = this.map.createLayer('map/environment_objects/miscellaneous_depth_01', this.tileset, 0, 0);
 		this.miscLayer.setDepth(-9); //SET DEPTH 1 TO -9
@@ -999,6 +1002,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 		this.castleRoofLayer = this.map.createLayer('map/castle/castle/castle_roof_depth_02', this.tileset, 0, 0);
 		this.castleRoofLayer.setDepth(7);
+		this.castleRoofLayer.setVisible(false)
 
 		this.animatedTrees = this.map.createLayer('map/environment_objects/animated/tree_01', this.tileset, 0, 0);
 		this.animatedTrees.setDepth(-9); //SET DEPTH 1 TO -9
@@ -1039,7 +1043,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 		this.riverLayer.setVisible(false)
 
 		this.doorExitCannonBallLayer = this.map.createLayer('map/castle/walls/walls_doors_depth_03', this.tileset, 0, 0);
-		this.doorExitCannonBallLayer.setVisible(true)
+		this.doorExitCannonBallLayer.setVisible(false)
 
 		// Check the levels to load
 		let current_level = this.sys.settings.key
@@ -1240,22 +1244,19 @@ export default class LEVEL_01 extends Phaser.Scene {
 
 				// Check players position
 				let x = this.map.worldToTileX(this.cannonball[i].x)
-				let y = this.map.worldToTileY(this.cannonball[i].y - TILE.SIZE / 2)
+				let y = this.map.worldToTileY(this.cannonball[i].y + (TILE.SIZE / 2))
 
 				// Check is Exit Door Reached
 				let tile = this.doorExitCannonBallLayer.getTileAt(x, y)
 
 				if (tile !== null) {
 					if (tile.index === EXIT_DOOR.TILE) {
-						// Reached Goal
-						console.log('EXIT!!!!!')
+						// Reached Door
 						this.cannonball[i].setDepth(21)
 					}else{
 						this.cannonball[i].setDepth(-21)
 					}
 				}
-
-
 			}
 			if (this.cannonballPosY[i] >= 655) {
 				this.time.addEvent({

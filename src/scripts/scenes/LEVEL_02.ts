@@ -29,7 +29,8 @@ import {
 	DPAD,
 	DPAD_ANIMS,
 	TREE,
-	APPLE_TREE
+	APPLE_TREE,
+	EXIT_DOOR
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -97,13 +98,9 @@ export default class LEVEL_02 extends Phaser.Scene {
 
 	private hudTimer!: SpineGameObject
 	private hudTimerAnimationNames: string[] = []
-	private hudTimerAnimationIndex = 0
-	private currentHudTimerTime
-	private elapsedHudTimerTime
 
 	private hudRecord!: SpineGameObject
 	private hudRecordAnimationNames: string[] = []
-	private hudRecordAnimationIndex = 0
 
 	// Level Music
 	private backingMusic!: Phaser.Sound.BaseSound
@@ -118,12 +115,10 @@ export default class LEVEL_02 extends Phaser.Scene {
 	// Truffles
 	private truffles!: SpineGameObject
 	private trufflesAnimationNames: string[] = []
-	private trufflesAnimationIndex = 0 // TODO : Remove this magic num of 0
 
 	// Cannon Balls
 	private cannonball: SpineGameObject[] = []
 	private cannonballAnimationNames: string[] = []
-	private cannonballAnimationIndex = 0
 	private cannonballPosX: number[] = [269, 525, 781]
 	private cannonballPosY: number[] = [60, 60, 60]
 	private cannonballSpeed = 2
@@ -136,43 +131,33 @@ export default class LEVEL_02 extends Phaser.Scene {
 
 	// Artifacts
 	private artifact: SpineGameObject[] = []
-	private artifacts: number = 4
-	private artifactAnimationNames: [][]
 
 	// Windmill
 	private windmill!: SpineGameObject
 
 	// Keys
 	private key: SpineGameObject[] = []
-	private keyAnimationNames: string[] = []
 
 	// Tree
 	private tree: SpineGameObject[] = []
-	private treeAnimationNames: string[] = []
 
 	// Appple Tree
 	private apple: SpineGameObject[] = []
-	private appleAnimationNames: string[] = []
 
 	// Fish
 	private fish: SpineGameObject[] = []
-	private fishAnimationNames: string[] = []
 
 	// Flowers 
 	private flowers: SpineGameObject[] = []
-	private flowersAnimationNames: string[] = []
 
 	// FLAGS
 	private flags: SpineGameObject[] = []
-	private flagsAnimationNames: string[] = []
 
 	// Input Cursors
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 
 	// Input D-Pad
 	private dpad!: SpineGameObject
-	private dpadAnimationIndex = 0
-	private dpadAnimationNames = []
 	private dpad_up: boolean = false
 	private dpad_down: boolean = false
 	private dpad_left: boolean = false
@@ -183,14 +168,12 @@ export default class LEVEL_02 extends Phaser.Scene {
 	private key_a!: Phaser.Input.Keyboard.Key
 	private key_s!: Phaser.Input.Keyboard.Key
 	private key_d!: Phaser.Input.Keyboard.Key
-	private key_g!: Phaser.Input.Keyboard.Key
 
 	private fruit: SpineGameObject[] = []
 
 	// Diver
 	private divers: SpineGameObject[] = []
 	private diverAnimationNames: string[] = []
-	private diverAnimationIndex = 0 // TODO : Remove this magic num of 0
 	private diverMove: number[] = []
 
 	// Bridge
@@ -211,13 +194,14 @@ export default class LEVEL_02 extends Phaser.Scene {
 	private ground2Layer!: Phaser.Tilemaps.TilemapLayer
 	private house2Layer!: Phaser.Tilemaps.TilemapLayer
 	private house1Layer!: Phaser.Tilemaps.TilemapLayer
-	private wall1Layer!: Phaser.Tilemaps.TilemapLayer
-	private wall2Layer!: Phaser.Tilemaps.TilemapLayer
+	private castleWallTopOfMap!: Phaser.Tilemaps.TilemapLayer
+	private castleWallBottomOfMap!: Phaser.Tilemaps.TilemapLayer
 	private churchLayer!: Phaser.Tilemaps.TilemapLayer
 	private castleLayer!: Phaser.Tilemaps.TilemapLayer
 	private miscLayer!: Phaser.Tilemaps.TilemapLayer
 	private wallTop1Layer!: Phaser.Tilemaps.TilemapLayer
 	private wallTop2Layer!: Phaser.Tilemaps.TilemapLayer
+	private doorExitCannonBallLayer!: Phaser.Tilemaps.TilemapLayer
 	private house2RoofLayer!: Phaser.Tilemaps.TilemapLayer
 	private houseRoofLayer!: Phaser.Tilemaps.TilemapLayer
 	private towerTop1Layer!: Phaser.Tilemaps.TilemapLayer
@@ -310,9 +294,8 @@ export default class LEVEL_02 extends Phaser.Scene {
 
 		// Hud Background
 		this.hud_background = this.add.image(width / 2, height * 0.04, 'hud_background')
-		this.vinnette.setDisplaySize(width, height);
-		this.vinnette.setOrigin(0.5, 0.5)
-		this.vinnette.setDepth(19)
+		this.hud_background.setOrigin(0.5, 0.5)
+		this.hud_background.setDepth(19)
 
 		//Setup the Player
 		// The X Y needs to come from tiles spawn points
@@ -347,19 +330,18 @@ export default class LEVEL_02 extends Phaser.Scene {
 		this.recordTimeText.setShadow(2, 2, "#333333", 2, true, true);
 		this.recordTimeText.setDepth(21)
 
-		// TODO : Remove magic numbers
+		// Hud Timer
 		this.hudTimer = this.createSpineObject(IDLE_KEY, TIMER_KEY, this.screenX * 0.67, this.screenY * 0.001, 1, 1)
 		this.hudTimer.setDepth(21)
 		this.hudTimer.setScale(0.75, 0.75)
 		this.hudTimerAnimationNames = this.hudTimer.getAnimationList()
 		this.hudTimer.play(this.hudTimerAnimationNames[1], true) // Run Timer
 
+		// Hud Record
 		this.hudRecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.46, this.screenY * 0.001, 1, 1)
 		this.hudRecord.setDepth(21)
 		this.hudRecord.setScale(0.75, 0.74)
 		this.hudRecordAnimationNames = this.hudRecord.getAnimationList()
-
-		this.hudRecord.play(this.hudRecordAnimationNames[0], true) // No Record Set
 
 		// Update Score Frequency
 		this.time.addEvent({
@@ -459,7 +441,6 @@ export default class LEVEL_02 extends Phaser.Scene {
 		this.key_a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
 		this.key_s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
 		this.key_d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-		this.key_g = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G)
 
 		//Multitouch: the below sets the amount of concurrent touches can happen
 		if (this.game.device.input.touch) {
@@ -551,11 +532,6 @@ export default class LEVEL_02 extends Phaser.Scene {
 			this.tree[i].play('idle', true)
 		}
 
-		// Setup Tree Animations Names
-		for (let i = 0; i < this.tree.length; i++) {
-			this.treeAnimationNames = this.tree[i].getAnimationList()
-		}
-
 		// Setup Apple Trees
 		for (let i = 0; i < tilesHigh; i++) {
 			for (let j = 0; j < tilesWide; j++) {
@@ -570,6 +546,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 		// Setup Apple Tree's Depth
 		for (let i = 0; i < this.apple.length; i++) {
 			this.apple[i].setDepth(-18)
+			this.apple[i].play('idle', true)
 		}
 
 		// Animate Trees
@@ -607,7 +584,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 				}
 			}
 		}
-		
+
 		// Setup Flowers Depth
 		for (let i = 0; i < this.flowers.length; i++) {
 			this.flowers[i].setDepth(-1)
@@ -649,7 +626,6 @@ export default class LEVEL_02 extends Phaser.Scene {
 		this.soundMuteUnmuteButton.setInteractive()
 
 		let soundStates = this.soundMuteUnmuteButton.getAnimationList()
-		let savedSoundState = window.localStorage.getItem('soundState')
 		let soundState = true
 
 		if (window.localStorage.getItem('soundState') === "false") {
@@ -676,7 +652,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 
 		// Initialise Player State
 		this.playerState = new PlayerState(this, this.truffles, 0, 0)
-		this.playerState.getState() ?.enter(0, 0, this.player) // Activate Idle
+		this.playerState.getState()?.enter(0, 0, this.player) // Activate Idle
 		this.player.setState(this.playerState)
 
 		if (level === LEVELS.LEVEL_01) {
@@ -724,8 +700,10 @@ export default class LEVEL_02 extends Phaser.Scene {
 			//Store Record Time
 			if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
 				this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
+				this.hudRecord.play(this.hudRecordAnimationNames[2], true) // No Record Set
 			} else {
 				this.newRecordTime = this.bestRecordedTime
+				this.hudRecord.play(this.hudRecordAnimationNames[1], true) // No Record Set
 			}
 
 			this.time.addEvent({
@@ -739,11 +717,6 @@ export default class LEVEL_02 extends Phaser.Scene {
 		if (this.game.device.input.touch) {
 			this.handleDPad(time, delta)
 		}
-
-		// Cannon Ball Movement
-		this.cannonballMove()
-
-		const size = this.trufflesAnimationNames.length
 
 		// Handles input
 		if (Phaser.Input.Keyboard.JustDown(this.cursors.right!) || Phaser.Input.Keyboard.JustDown(this.key_d!)) {
@@ -862,7 +835,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 			}
 		}
 
-		//check bridge
+		// Check Bridge
 		if (this.fruitRemaining <= 0 && !this.bridgeOpen) {
 			this.bridge.play(BRIDGE_ANIMS.TRANSITIONING, false)
 			this.bridgeOpen = true
@@ -889,8 +862,8 @@ export default class LEVEL_02 extends Phaser.Scene {
 
 			for (let i = 0; i < this.divers.length; i++) {
 				this.divers[i].y += this.diverMove[i]
-				const x = this.map.worldToTileX(this.divers[i].x)
-				const y = this.map.worldToTileY(this.divers[i].y)
+				let x = this.map.worldToTileX(this.divers[i].x)
+				let y = this.map.worldToTileY(this.divers[i].y)
 
 				this.tile = this.diverLayer.getTileAt(x, y)
 
@@ -909,10 +882,16 @@ export default class LEVEL_02 extends Phaser.Scene {
 				}
 				for (let j = 0; j < this.fruit.length; j++) {
 					this.sortLayers(this.divers[i], this.fruit[j])
+					for (let k = 0; k < this.cannonball.length; k++) {
+						this.sortLayers(this.cannonball[k], this.fruit[j])
+					}
 				}
 				for (let j = 0; j < this.cannonball.length; j++) {
 					this.sortLayers(this.divers[i], this.cannonball[j])
 				}
+
+				// Cannon Ball Movement
+				this.cannonballMove()
 			}
 
 			// Handle Push
@@ -927,7 +906,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 		}
 
 		// Updates the Player State See PlayerStateMachine
-		this.player.getState().getState() ?.update(time, delta, this.player)
+		this.player.getState().getState()?.update(time, delta, this.player)
 
 		// Display Updated HUD
 		this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.048)
@@ -956,7 +935,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	//Setup Map Data
-	private setupMap() {
+	private setupMap(): void {
 
 		this.map = this.make.tilemap({
 			key: 'level',
@@ -982,17 +961,20 @@ export default class LEVEL_02 extends Phaser.Scene {
 		this.house1Layer = this.map.createLayer('map/buildings/foreground/house_depth_01/house_layer_1', this.tileset, 0, 0);
 		this.house1Layer.setDepth(-19); //SET DEPTH 1 TO -9
 
-		this.wall1Layer = this.map.createLayer('map/castle/walls/walls_depth_01', this.tileset, 0, 0);
-		this.wall1Layer.setDepth(-19); //SET DEPTH 1 TO -9
+		this.castleWallTopOfMap = this.map.createLayer('map/castle/walls/walls_depth_01', this.tileset, 0, 0);
+		this.castleWallTopOfMap.setDepth(-19); //SET DEPTH 1 TO -9
+		this.castleWallTopOfMap.setVisible(true)
 
-		this.wall2Layer = this.map.createLayer('map/castle/walls/walls_depth_03', this.tileset, 0, 0);
-		this.wall2Layer.setDepth(8);
+		this.castleWallBottomOfMap = this.map.createLayer('map/castle/walls/walls_depth_03', this.tileset, 0, 0);
+		this.castleWallBottomOfMap.setDepth(8);
+		this.castleWallBottomOfMap.setVisible(true)
 
 		this.churchLayer = this.map.createLayer('map/buildings/foreground/church_depth_01/church_01', this.tileset, 0, 0);
 		this.churchLayer.setDepth(-9); //SET DEPTH 1 TO -9
 
 		this.castleLayer = this.map.createLayer('map/castle/castle/castle_depth_01', this.tileset, 0, 0);
 		this.castleLayer.setDepth(-9); //SET DEPTH 1 TO -9
+		this.castleLayer.setVisible(true)
 
 		this.miscLayer = this.map.createLayer('map/environment_objects/miscellaneous_depth_01', this.tileset, 0, 0);
 		this.miscLayer.setDepth(-9); //SET DEPTH 1 TO -9
@@ -1020,6 +1002,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 
 		this.castleRoofLayer = this.map.createLayer('map/castle/castle/castle_roof_depth_02', this.tileset, 0, 0);
 		this.castleRoofLayer.setDepth(7);
+		this.castleRoofLayer.setVisible(false)
 
 		this.animatedTrees = this.map.createLayer('map/environment_objects/animated/tree_01', this.tileset, 0, 0);
 		this.animatedTrees.setDepth(-9); //SET DEPTH 1 TO -9
@@ -1059,6 +1042,9 @@ export default class LEVEL_02 extends Phaser.Scene {
 		this.riverLayer = this.map.createLayer('map/water/river_00', this.tileset, 0, 0);
 		this.riverLayer.setVisible(false)
 
+		this.doorExitCannonBallLayer = this.map.createLayer('map/castle/walls/walls_doors_depth_03', this.tileset, 0, 0);
+		this.doorExitCannonBallLayer.setVisible(false)
+
 		// Check the levels to load
 		let current_level = this.sys.settings.key
 
@@ -1092,7 +1078,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Create Spine Objects
-	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number) {
+	private createSpineObject(startAnim: string, key: string, x: number, y: number, scaleX: number, scaleY: number): SpineGameObject {
 		let object = this.add.spine(x, y, key, startAnim, true)
 		object.scaleX = scaleX
 		object.scaleY = scaleY
@@ -1100,21 +1086,21 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Init Animations
-	private initializeAnimationsState(spine: SpineGameObject, animationNames: string[]) {
+	private initializeAnimationsState(spine: SpineGameObject, animationNames: string[]): void {
 		let animations = spine.getAnimationList()
-		for(let i = 0; i < animations.length; i++){
+		for (let i = 0; i < animations.length; i++) {
 			animationNames.push(animations[i])
 		}
 	}
 
 	// Change Animations
-	private changeAnimation(spine: SpineGameObject, animationNames: string[], index: number) {
-		const animation = animationNames[index]
+	private changeAnimation(spine: SpineGameObject, animationNames: string[], index: number): void {
+		let animation = animationNames[index]
 		spine.play(animation, true)
 	}
 
 	//Truffles to Object Collision
-	private trufflesAABB(collidable: SpineGameObject) {
+	private trufflesAABB(collidable: SpineGameObject): boolean {
 
 		let collision = false;
 
@@ -1133,7 +1119,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 		return collision
 	}
 
-	private sortLayers(object1: SpineGameObject, object2: SpineGameObject) {
+	private sortLayers(object1: SpineGameObject, object2: SpineGameObject): void {
 		if (Math.abs(object1.x - object2.x) < object1.scaleX * object1.width &&
 			Math.abs(object1.y - object2.y) < object1.scaleY * object1.height) {
 			if (object1.y < object2.y + object2.height * object2.scaleY) {
@@ -1145,7 +1131,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Truffles Enemy Collisions
-	private trufflesDiverCollision(diver: SpineGameObject, index: number) {
+	private trufflesDiverCollision(diver: SpineGameObject, index: number): boolean {
 
 		let collision = false;
 
@@ -1172,7 +1158,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Reset Diver
-	private resetDiverAnimations(index: number) {
+	private resetDiverAnimations(index: number): void {
 		if (this.diverMove[index] > 0) {
 			this.divers[index].play(DIVER_ANIM.WALK_DOWN, true)
 		} else {
@@ -1182,7 +1168,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Play Church Bells
-	private playChurchBells(index: number, time: number, delta: number) {
+	private playChurchBells(index: number, time: number, delta: number): void {
 		let chance = Phaser.Math.Between(0, 24)
 		if (chance === 12 || chance === 6) {
 			this.churchBells.play()
@@ -1190,7 +1176,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Fruit Animations
-	private fruitAnimations(index: number, time: number, delta: number) {
+	private fruitAnimations(index: number, time: number, delta: number): void {
 		this.changeAnimation(this.fruit[index], this.fruitAnimationNames, 2)
 		this.time.addEvent({
 			delay: 1000,
@@ -1201,27 +1187,27 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Tree Animations
-	private treeAnimations(index: number, time: number, delta: number) {
+	private treeAnimations(index: number, time: number, delta: number): void {
 		let chance = Phaser.Math.Between(0, 24)
-		for(let i = 0; i < this.tree.length; i++){
+		for (let i = 0; i < this.tree.length; i++) {
 			if (chance === 18 || chance === 15 || chance === 12 || chance === 9 || chance === 6 || chance === 3) {
-				if(this.tree[i].getCurrentAnimation().name !== 'leaf'){
+				if (this.tree[i].getCurrentAnimation().name !== 'leaf') {
 					this.tree[i].play('leaf', true)
 				}
-			}else{
-				if(this.tree[i].getCurrentAnimation().name !== 'idle'){
+			} else {
+				if (this.tree[i].getCurrentAnimation().name !== 'idle') {
 					this.tree[i].play('idle', true)
 				}
 			}
 		}
 
-		for(let i = 0; i < this.apple.length; i++){
+		for (let i = 0; i < this.apple.length; i++) {
 			if (chance === 22 || chance === 20 || chance === 16 || chance === 8 || chance === 4 || chance === 2) {
-				if(this.apple[i].getCurrentAnimation().name !== 'leaf'){
+				if (this.apple[i].getCurrentAnimation().name !== 'leaf') {
 					this.apple[i].play('leaf', true)
 				}
-			}else{
-				if(this.apple[i].getCurrentAnimation().name !== 'idle'){
+			} else {
+				if (this.apple[i].getCurrentAnimation().name !== 'idle') {
 					this.apple[i].play('idle', true)
 				}
 			}
@@ -1229,9 +1215,9 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Delete fruits
-	private fruitDelete(index: number, time: number, delta: number) {
-		const x = this.map.worldToTileX(this.fruit[index].x)
-		const y = this.map.worldToTileY(this.fruit[index].y)
+	private fruitDelete(index: number, time: number, delta: number): void {
+		let x = this.map.worldToTileX(this.fruit[index].x)
+		let y = this.map.worldToTileY(this.fruit[index].y)
 
 		this.tile = this.candyLayer.getTileAt(x, y)
 		this.map.removeTile(this.tile)
@@ -1240,20 +1226,37 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Reset Cannon Balls
-	private cannonballReset(index: number) {
+	private cannonballReset(index: number): void {
 		this.cannonball[index].setPosition(this.cannonballPosX[index], this.cannonballPosY[index] = 40)
 		this.changeAnimation(this.cannonball[index], this.cannonballAnimationNames, 1)
 		this.cannonballMoving[index] = true
-
+		this.cannonball[index].setVisible(true)
+		this.cannonball[index].setDepth(-21)
 	}
 
 	// Move Cannon Balls
-	private cannonballMove() {
+	private cannonballMove(): void {
 
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.cannonballMoving[i]) {
 				this.cannonballPosY[i] += this.cannonballSpeed;
 				this.cannonball[i].setPosition(this.cannonballPosX[i], this.cannonballPosY[i])
+
+				// Check players position
+				let x = this.map.worldToTileX(this.cannonball[i].x)
+				let y = this.map.worldToTileY(this.cannonball[i].y + (TILE.SIZE / 2))
+
+				// Check is Exit Door Reached
+				let tile = this.doorExitCannonBallLayer.getTileAt(x, y)
+
+				if (tile !== null) {
+					if (tile.index === EXIT_DOOR.TILE) {
+						// Reached Door
+						this.cannonball[i].setDepth(21)
+					}else{
+						this.cannonball[i].setDepth(-21)
+					}
+				}
 			}
 			if (this.cannonballPosY[i] >= 655) {
 				this.time.addEvent({
@@ -1271,21 +1274,20 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Set Record Time
-	private setRecord(time: number) {
+	private setRecord(time: number): void {
 		this.newRecordTime = time
-		this.hudRecord.play(this.hudRecordAnimationNames[1], true) // Spin Record Clock
 		this.fetchRecordedTime()
 	}
 
 	// Add Points
-	private addPoints(points: number) {
+	private addPoints(points: number): void {
 		if (points > 0) {
 			this.collectablePoints += points
 		}
 	}
 
 	// Fetch Recorded Time
-	private fetchRecordedTime() {
+	private fetchRecordedTime(): void {
 		let temp = window.localStorage.getItem('time_' + this.sys.settings.key)
 		if (temp !== null) {
 			this.bestRecordedTime = parseInt(temp) || 0
@@ -1304,7 +1306,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Fetch Recorded Score
-	private fetchRecordedScore() {
+	private fetchRecordedScore(): void {
 		let temp = window.localStorage.getItem('score_' + this.sys.settings.key)
 		if (temp !== null) {
 			this.levelScore = parseInt(temp) || 0
@@ -1345,7 +1347,7 @@ export default class LEVEL_02 extends Phaser.Scene {
 	}
 
 	// Complete Level
-	private levelComplete() {
+	private levelComplete(): void {
 		// Change Levels
 		this.backingMusic.stop()
 
@@ -1365,7 +1367,9 @@ export default class LEVEL_02 extends Phaser.Scene {
 		// ENDS: Change Levels
 
 	}
-	private handleDPad(time: number, delta: number) {
+
+	// Process D-Pad input
+	private handleDPad(time: number, delta: number): void {
 		let pointer = this.input.activePointer;
 		if (pointer.isDown) {
 
