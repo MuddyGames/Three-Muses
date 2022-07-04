@@ -26,13 +26,13 @@ const prod = {
   },
   plugins: [
     // disabled by default (uncomment to active)
-    //new WebpackObfuscator({
-    //    rotateStringArray: true,
-    //    stringArray: true,
-    //    stringArrayThreshold: 0.75
-    //  },
-    //  ['vendors.*.js', 'sw.js']
-    //),
+    new WebpackObfuscator({
+        rotateStringArray: true,
+        stringArray: true,
+        stringArrayThreshold: 0.75
+      },
+      ['vendors.*.js', 'sw.js']
+    ),
     new InjectManifest({
       swSrc: path.resolve(__dirname, '../pwa/sw.js'),
       swDest: 'sw.js'

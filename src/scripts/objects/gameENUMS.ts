@@ -73,9 +73,16 @@ export enum FRUITS {
 export enum DIVER {
     START = 500,
     END = 552,
-    SPEED = 0.5,
+    SPEED = (100 / 2) / 1000, // Fixed Step
     SCALE = 0.2,
     PUSH_SPEED = 1
+}
+
+export enum CANNONBALL {
+    START = 501,
+    END = 605,
+    SPEED = (300 / 2) / 1000, // Fixed Step
+    SCALE = 1.1
 }
 
 export enum DIVER_ANIM {

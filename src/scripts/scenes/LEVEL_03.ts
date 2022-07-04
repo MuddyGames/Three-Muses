@@ -30,7 +30,8 @@ import {
 	DPAD_ANIMS,
 	TREE,
 	APPLE_TREE,
-	EXIT_DOOR
+	EXIT_DOOR,
+	CANNONBALL
 } from '../objects/gameENUMS'
 
 // Player holds player data
@@ -69,6 +70,11 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 	// Game State Management
 	private gameState!: GSM
+
+	// Paricles
+	private halo: Phaser.Geom.Circle
+	private particles: Phaser.GameObjects.Particles.ParticleEmitterManager
+	private emitter: Phaser.GameObjects.Particles.ParticleEmitter
 
 	// Screen vinnette
 	private vinnette!: Phaser.GameObjects.Image
@@ -119,9 +125,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 	// Cannon Balls
 	private cannonball: SpineGameObject[] = []
 	private cannonballAnimationNames: string[] = []
-	private cannonballPosX: number[] = [269, 525, 781]
-	private cannonballPosY: number[] = [60, 60, 60]
-	private cannonballSpeed = 2
+	//private cannonballPosX: number[] = [269, 525, 781]
+	//private cannonballPosY: number[] = [60, 60, 60]
 	private cannonballMoving: boolean[] = [true, true, true]
 
 	// Fruit
@@ -180,9 +185,6 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private bridgeOpen!: boolean
 	private bridge!: SpineGameObject
 
-	// Tile Size
-	private tileSize: number = TILE.SIZE
-
 	// TileMap Data
 	private map!: Phaser.Tilemaps.Tilemap
 	private tile!: Phaser.Tilemaps.Tile
@@ -201,6 +203,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private miscLayer!: Phaser.Tilemaps.TilemapLayer
 	private wallTop1Layer!: Phaser.Tilemaps.TilemapLayer
 	private wallTop2Layer!: Phaser.Tilemaps.TilemapLayer
+	private cannonBallLayer!: Phaser.Tilemaps.TilemapLayer
 	private doorExitCannonBallLayer!: Phaser.Tilemaps.TilemapLayer
 	private house2RoofLayer!: Phaser.Tilemaps.TilemapLayer
 	private houseRoofLayer!: Phaser.Tilemaps.TilemapLayer
@@ -248,6 +251,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.load.image('tileset', 'assets/level/truffles_level_1_tileset.png');
 		this.load.tilemapTiledJSON('level', 'assets/level/truffles_level_1.json');
 
+		this.load.atlas('fruits', 'assets/particles/fruits.png', 'assets/particles/fruits.json')
+
 		this.load.setPath('assets/spine/')
 		this.load.spine(TRUFFLES_KEY, 'truffles/truffles_all.json', 'truffles/truffles_all.atlas')
 		this.load.spine(DIVER_KEY, 'diver/diver.json', 'diver/diver.atlas')
@@ -291,6 +296,10 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.vinnette.setDisplaySize(width, height);
 		this.vinnette.setOrigin(0.5, 0.5)
 		this.vinnette.setDepth(20)
+
+		// Particles
+		this.halo = new Phaser.Geom.Circle(0, 0, 60);
+		this.particles = this.add.particles('fruits');
 
 		// Hud Background
 		this.hud_background = this.add.image(width / 2, height * 0.04, 'hud_background')
@@ -341,7 +350,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.hudRecord = this.createSpineObject(IDLE_KEY, RECORD_KEY, this.screenX * 0.46, this.screenY * 0.001, 1, 1)
 		this.hudRecord.setDepth(21)
 		this.hudRecord.setScale(0.75, 0.74)
-		this.hudRecordAnimationNames = this.hudRecord.getAnimationList()
+		this.initializeAnimationsState(this.hudRecord, this.hudRecordAnimationNames)
 
 		// Update Score Frequency
 		this.time.addEvent({
@@ -390,7 +399,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				if (tile != null) {
 					if (tile.index === DIVER.START) {
 						this.divers.push(this.createSpineObject(DIVER_ANIM.WALK_DOWN, DIVER_KEY,
-							j * this.tileSize, i * this.tileSize + (this.tileSize - 1), DIVER.SCALE, DIVER.SCALE))
+							j * TILE.SIZE, i * TILE.SIZE + (TILE.SIZE - 1), DIVER.SCALE, DIVER.SCALE))
 						this.diverMove.push(DIVER.SPEED)
 					}
 				}
@@ -403,13 +412,21 @@ export default class LEVEL_03 extends Phaser.Scene {
 		}
 
 		// Cannon Ball Setup
-		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[0], this.cannonballPosY[0], 1.2, 1.2))
-		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[1], this.cannonballPosY[1], 1.2, 1.2))
-		this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY, this.cannonballPosX[2], this.cannonballPosY[2], 1.2, 1.2))
-
-		// Setup Cannon ball animations
+		for (let y_i = 0; y_i < tilesHigh; y_i++) {
+			for (let x_j = 0; x_j < tilesWide; x_j++) {
+				let tile = this.cannonBallLayer.getTileAt(x_j, y_i)
+				if (tile != null) {
+					if (tile.index === CANNONBALL.START) {
+						this.cannonball.push(this.createSpineObject(IDLE_KEY, CANNONBALL_KEY,
+							x_j * TILE.SIZE, y_i * TILE.SIZE + (TILE.SIZE - 1), CANNONBALL.SCALE, CANNONBALL.SCALE))
+					}
+				}
+			}
+		}
+		// Init diver animations
 		for (let i = 0; i < this.cannonball.length; i++) {
 			this.initializeAnimationsState(this.cannonball[i], this.cannonballAnimationNames)
+			this.cannonball[i].x -= (TILE.SIZE / 2) // + (this.cannonball[i].getBounds().size.x / 2) // Offset on X Axis
 			this.cannonball[i].setDepth(-21)
 		}
 
@@ -419,8 +436,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 				let tile = this.bridgeLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index == BRIDGE.PLACE) {
-						this.bridge = this.createSpineObject(IDLE_KEY, BRIDGE_KEY, j * this.tileSize + BRIDGE.OFFSETX,
-							i * this.tileSize + BRIDGE.OFFSETY, BRIDGE.scaleX, BRIDGE.scaleY)
+						this.bridge = this.createSpineObject(IDLE_KEY, BRIDGE_KEY, j * TILE.SIZE + BRIDGE.OFFSETX,
+							i * TILE.SIZE + BRIDGE.OFFSETY, BRIDGE.scaleX, BRIDGE.scaleY)
 					}
 				}
 			}
@@ -445,8 +462,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 		//Multitouch: the below sets the amount of concurrent touches can happen
 		if (this.game.device.input.touch) {
 			this.input.addPointer(2);
-			this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, this.tileSize * DPAD.X_TILES,
-				this.tileSize * DPAD.Y_TILES, DPAD.SCALE, DPAD.SCALE)
+			this.dpad = this.createSpineObject(IDLE_KEY, DPAD_KEY, TILE.SIZE * DPAD.X_TILES,
+				TILE.SIZE * DPAD.Y_TILES, DPAD.SCALE, DPAD.SCALE)
 			this.dpad.setDepth(21)
 		}
 
@@ -456,13 +473,13 @@ export default class LEVEL_03 extends Phaser.Scene {
 				let tile = this.candyLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === FRUITS.ORANGE_TILE) {
-						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * TILE.SIZE, i * TILE.SIZE, 0.7, 0.7))
 						this.fruitMarked.push(false)
 					} else if (tile.index === FRUITS.LEMON_TILE) {
-						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * TILE.SIZE, i * TILE.SIZE, 0.7, 0.7))
 						this.fruitMarked.push(false)
 					} else if (tile.index === FRUITS.GRAPE_TILE) {
-						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[2], j * this.tileSize, i * this.tileSize, 0.7, 0.7))
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[2], j * TILE.SIZE, i * TILE.SIZE, 0.7, 0.7))
 						this.fruitMarked.push(false)
 					}
 				}
@@ -496,16 +513,16 @@ export default class LEVEL_03 extends Phaser.Scene {
 				if (tile != null) {
 					if (tile.index === 395) {
 						if (level === LEVELS.LEVEL_01) {
-							this.key[0] = this.createSpineObject(IDLE_KEY, KEYS_KEY[0], j * this.tileSize - 80, i * this.tileSize - 60, 0.8, 0.8)
+							this.key[0] = this.createSpineObject(IDLE_KEY, KEYS_KEY[0], j * TILE.SIZE - 80, i * TILE.SIZE - 60, 0.8, 0.8)
 							this.key[0].setDepth(10)
 						} else if (level === LEVELS.LEVEL_02) {
-							this.key[1] = this.createSpineObject(IDLE_KEY, KEYS_KEY[1], j * this.tileSize - 80, i * this.tileSize - 60, 0.8, 0.8)
+							this.key[1] = this.createSpineObject(IDLE_KEY, KEYS_KEY[1], j * TILE.SIZE - 80, i * TILE.SIZE - 60, 0.8, 0.8)
 							this.key[1].setDepth(10)
 						} else if (level === LEVELS.LEVEL_03) {
-							this.key[2] = this.createSpineObject(IDLE_KEY, KEYS_KEY[2], j * this.tileSize - 80, i * this.tileSize - 60, 0.8, 0.8)
+							this.key[2] = this.createSpineObject(IDLE_KEY, KEYS_KEY[2], j * TILE.SIZE - 80, i * TILE.SIZE - 60, 0.8, 0.8)
 							this.key[2].setDepth(10)
 						} else if (level === LEVELS.LEVEL_04) {
-							this.key[3] = this.createSpineObject(IDLE_KEY, KEYS_KEY[3], j * this.tileSize - 80, i * this.tileSize - 60, 0.8, 0.8)
+							this.key[3] = this.createSpineObject(IDLE_KEY, KEYS_KEY[3], j * TILE.SIZE - 80, i * TILE.SIZE - 60, 0.8, 0.8)
 							this.key[3].setDepth(10)
 						} else if (level === LEVELS.CREDITS) {
 							// No Artifact Animations
@@ -521,7 +538,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				let tile = this.animatedTrees.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === TREE.TILE) {
-						this.tree.push(this.createSpineObject(IDLE_KEY, TREE_KEY, j * this.tileSize - 33, i * this.tileSize - 84, 0.5, 0.5))
+						this.tree.push(this.createSpineObject(IDLE_KEY, TREE_KEY, j * TILE.SIZE - 33, i * TILE.SIZE - 84, 0.5, 0.5))
 					}
 				}
 			}
@@ -538,7 +555,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				let tile = this.animatedAppleTrees.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === APPLE_TREE.TILE) {
-						this.apple.push(this.createSpineObject(IDLE_KEY, APPLE_KEY, j * this.tileSize - 61, i * this.tileSize - 84, 0.5, 0.5))
+						this.apple.push(this.createSpineObject(IDLE_KEY, APPLE_KEY, j * TILE.SIZE - 61, i * TILE.SIZE - 84, 0.5, 0.5))
 					}
 				}
 			}
@@ -563,7 +580,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				let tile = this.fishLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === 657) {
-						this.fish.push(this.createSpineObject(IDLE_KEY, FISH_KEY, j * this.tileSize, i * this.tileSize - 40, 1, 1))
+						this.fish.push(this.createSpineObject(IDLE_KEY, FISH_KEY, j * TILE.SIZE, i * TILE.SIZE - 40, 1, 1))
 					}
 				}
 			}
@@ -579,7 +596,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				let tile = this.flowersLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === 604) {
-						this.flowers.push(this.createSpineObject(IDLE_KEY, FLOWERS_KEY, j * this.tileSize - 10, i * this.tileSize - 15, 1, 1))
+						this.flowers.push(this.createSpineObject(IDLE_KEY, FLOWERS_KEY, j * TILE.SIZE - 10, i * TILE.SIZE - 15, 1, 1))
 					}
 				}
 			}
@@ -596,7 +613,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				let tile = this.flagTopLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === 447) {
-						this.flags.push(this.createSpineObject(IDLE_KEY, FLAGS_KEY, j * this.tileSize + 4, i * this.tileSize + 2, 1, 1))
+						this.flags.push(this.createSpineObject(IDLE_KEY, FLAGS_KEY, j * TILE.SIZE + 4, i * TILE.SIZE + 2, 1, 1))
 
 					}
 				}
@@ -608,7 +625,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				let tile = this.flagLowLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === 447) {
-						this.flags.push(this.createSpineObject(IDLE_KEY, FLAGS_KEY, j * this.tileSize, i * this.tileSize, 1, 1))
+						this.flags.push(this.createSpineObject(IDLE_KEY, FLAGS_KEY, j * TILE.SIZE, i * TILE.SIZE, 1, 1))
 
 					}
 				}
@@ -652,7 +669,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 		// Initialise Player State
 		this.playerState = new PlayerState(this, this.truffles, 0, 0)
-		this.playerState.getState()?.enter(0, 0, this.player) // Activate Idle
+		this.playerState.getState() ?.enter(0, 0, this.player) // Activate Idle
 		this.player.setState(this.playerState)
 
 		if (level === LEVELS.LEVEL_01) {
@@ -700,10 +717,10 @@ export default class LEVEL_03 extends Phaser.Scene {
 			//Store Record Time
 			if (Math.round((this.elapsedLevelTime * 0.001)) <= this.bestRecordedTime) {
 				this.setRecord(Math.round((this.elapsedLevelTime * 0.001)))
-				this.hudRecord.play(this.hudRecordAnimationNames[2], true) // No Record Set
+				this.changeAnimation(this.hudRecord, this.hudRecordAnimationNames, 1)
 			} else {
 				this.newRecordTime = this.bestRecordedTime
-				this.hudRecord.play(this.hudRecordAnimationNames[1], true) // No Record Set
+				this.changeAnimation(this.hudRecord, this.hudRecordAnimationNames, 0)
 			}
 
 			this.time.addEvent({
@@ -732,7 +749,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		// Can player move
 		if (this.player.getMove()) {
 			if (this.cursors.right.isDown || this.key_d.isDown || this.dpad_right) {
-				let x = this.map.worldToTileX(this.player.getX() - this.tileSize / 2)
+				let x = this.map.worldToTileX(this.player.getX() - TILE.SIZE / 2)
 				let y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.collisionLayer.getTileAt(x + 1, y)
@@ -744,7 +761,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 			}
 
 			if (this.cursors.left.isDown || this.key_a.isDown || this.dpad_left) {
-				let x = this.map.worldToTileX(this.player.getX() + this.tileSize / 2)
+				let x = this.map.worldToTileX(this.player.getX() + TILE.SIZE / 2)
 				let y = this.map.worldToTileY(this.player.getY())
 
 				this.tile = this.collisionLayer.getTileAt(x - 1, y)
@@ -757,7 +774,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 			if (this.cursors.up.isDown || this.key_w.isDown || this.dpad_up) {
 				let x = this.map.worldToTileX(this.player.getX())
-				let y = this.map.worldToTileY(this.player.getY() + this.tileSize / 4)
+				let y = this.map.worldToTileY(this.player.getY() + TILE.SIZE / 4)
 
 				this.tile = this.collisionLayer.getTileAt(x, y - 1)
 
@@ -793,6 +810,29 @@ export default class LEVEL_03 extends Phaser.Scene {
 					this.player.getState().handleInput(INPUT_TYPES.REACHED_GOAL, time, delta, this.player)
 					this.addPoints(POINTS.REACHED_GOAL)
 					this.gsmUpdate(time, delta)
+
+					// Show particles
+					this.emitter = this.particles.createEmitter(
+						{
+							frame: {
+								frames: ['red', 'green', 'blue'],
+								cycle: true
+							},
+							scale: {
+								start: 0.5,
+								end: 0
+							},
+							blendMode: 'ADD',
+							emitZone: {
+								type: 'edge',
+								source: this.halo,
+								quantity: 24,
+								yoyo: false
+							}
+						}
+					)
+					this.emitter.setPosition(this.player.getX(), this.player.getY())
+					this.particles.setDepth(this.truffles.depth - 1)
 				}
 			}
 
@@ -868,10 +908,10 @@ export default class LEVEL_03 extends Phaser.Scene {
 				this.tile = this.diverLayer.getTileAt(x, y)
 
 				if (this.tile.index == DIVER.START) {
-					this.diverMove[i] = DIVER.SPEED
+					this.diverMove[i] = DIVER.SPEED * delta
 					this.divers[i].play(DIVER_ANIM.WALK_DOWN, true)
 				} else if (this.tile.index == DIVER.END) {
-					this.diverMove[i] = -DIVER.SPEED
+					this.diverMove[i] = -DIVER.SPEED * delta
 					this.divers[i].play(DIVER_ANIM.WALK_UP, true)
 				}
 
@@ -891,7 +931,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 				}
 
 				// Cannon Ball Movement
-				this.cannonballMove()
+				this.cannonballMove(time, delta)
 			}
 
 			// Handle Push
@@ -906,7 +946,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 		}
 
 		// Updates the Player State See PlayerStateMachine
-		this.player.getState().getState()?.update(time, delta, this.player)
+		this.player.getState().getState() ?.update(time, delta, this.player)
 
 		// Display Updated HUD
 		this.currentScoreText.setPosition(this.screenX * 0.90, this.screenY * 0.048)
@@ -939,8 +979,8 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 		this.map = this.make.tilemap({
 			key: 'level',
-			tileWidth: this.tileSize,
-			tileHeight: this.tileSize
+			tileWidth: TILE.SIZE,
+			tileHeight: TILE.SIZE
 		});
 		this.tileset = this.map.addTilesetImage("truffles_level_1_tileset", 'tileset');
 
@@ -1042,6 +1082,9 @@ export default class LEVEL_03 extends Phaser.Scene {
 		this.riverLayer = this.map.createLayer('map/water/river_00', this.tileset, 0, 0);
 		this.riverLayer.setVisible(false)
 
+		this.cannonBallLayer = this.map.createLayer('map/cannonball/spawn_splash', this.tileset, 0, 0);
+		this.cannonBallLayer.setVisible(false)
+
 		this.doorExitCannonBallLayer = this.map.createLayer('map/castle/walls/walls_doors_depth_03', this.tileset, 0, 0);
 		this.doorExitCannonBallLayer.setVisible(false)
 
@@ -1104,9 +1147,9 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 		let collision = false;
 
-		if (this.player.getX() - this.tileSize / 2 < collidable.x + collidable.scaleX * collidable.width &&
-			this.player.getX() + this.tileSize / 2 > collidable.x &&
-			this.player.getY() - this.tileSize < collidable.y + collidable.scaleY * collidable.height &&
+		if (this.player.getX() - TILE.SIZE / 2 < collidable.x + collidable.scaleX * collidable.width &&
+			this.player.getX() + TILE.SIZE / 2 > collidable.x &&
+			this.player.getY() - TILE.SIZE < collidable.y + collidable.scaleY * collidable.height &&
 			this.player.getY() > collidable.y) {
 			collision = true;
 		}
@@ -1227,23 +1270,21 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 	// Reset Cannon Balls
 	private cannonballReset(index: number): void {
-		this.cannonball[index].setPosition(this.cannonballPosX[index], this.cannonballPosY[index] = 40)
+		this.cannonball[index].y = 40
 		this.changeAnimation(this.cannonball[index], this.cannonballAnimationNames, 1)
 		this.cannonballMoving[index] = true
-		this.cannonball[index].setVisible(true)
 		this.cannonball[index].setDepth(-21)
 	}
 
 	// Move Cannon Balls
-	private cannonballMove(): void {
+	private cannonballMove(time: number, delta: number): void {
 
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.cannonballMoving[i]) {
-				this.cannonballPosY[i] += this.cannonballSpeed;
-				this.cannonball[i].setPosition(this.cannonballPosX[i], this.cannonballPosY[i])
+				this.cannonball[i].y += CANNONBALL.SPEED * delta
 
-				// Check players position
-				let x = this.map.worldToTileX(this.cannonball[i].x)
+				// Check cannonballs position
+				let x = this.map.worldToTileX(this.cannonball[i].x + (TILE.SIZE / 2))
 				let y = this.map.worldToTileY(this.cannonball[i].y + (TILE.SIZE / 2))
 
 				// Check is Exit Door Reached
@@ -1253,22 +1294,33 @@ export default class LEVEL_03 extends Phaser.Scene {
 					if (tile.index === EXIT_DOOR.TILE) {
 						// Reached Door
 						this.cannonball[i].setDepth(21)
-					}else{
+					} else {
 						this.cannonball[i].setDepth(-21)
 					}
 				}
 			}
-			if (this.cannonballPosY[i] >= 655) {
-				this.time.addEvent({
-					delay: 600,
-					callback: this.cannonballReset,
-					callbackScope: this,
-					args: [i]
-				})
-				if (this.cannonballMoving[i]) {
-					this.changeAnimation(this.cannonball[i], this.cannonballAnimationNames, 2)
+
+			// Check cannonballs position
+			let x = this.map.worldToTileX(this.cannonball[i].x + (TILE.SIZE / 2))
+			let y = this.map.worldToTileY(this.cannonball[i].y + (TILE.SIZE / 2))
+
+			// Check is Exit Door Reached
+			let tile = this.cannonBallLayer.getTileAt(x, y)
+
+			if (tile !== null) {
+				if (tile.index === CANNONBALL.END) {
+					// Reached River
+					this.time.addEvent({
+						delay: 600,
+						callback: this.cannonballReset,
+						callbackScope: this,
+						args: [i]
+					})
+					if (this.cannonballMoving[i]) {
+						this.changeAnimation(this.cannonball[i], this.cannonballAnimationNames, 2)
+					}
+					this.cannonballMoving[i] = false
 				}
-				this.cannonballMoving[i] = false
 			}
 		}
 	}
