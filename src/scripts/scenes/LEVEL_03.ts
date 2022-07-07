@@ -1,5 +1,6 @@
 // Heads up display text
 import HudText from '../objects/hudText'
+import popupText from '../objects/popupText'
 
 // Player State
 import PlayerState from '../objects/PlayerState'
@@ -98,6 +99,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private newTick!: boolean
 	private delay!: number
 	private fps!: number
+	private popups: popupText[] = []
 
 	// Hud Animations
 	private soundMuteUnmuteButton!: SpineGameObject
@@ -175,6 +177,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 	private key_d!: Phaser.Input.Keyboard.Key
 
 	private fruit: SpineGameObject[] = []
+	private fruitNames: string[] = []
 
 	// Diver
 	private divers: SpineGameObject[] = []
@@ -473,13 +476,16 @@ export default class LEVEL_03 extends Phaser.Scene {
 				let tile = this.candyLayer.getTileAt(j, i)
 				if (tile != null) {
 					if (tile.index === FRUITS.ORANGE_TILE) {
-						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[0], j * TILE.SIZE, i * TILE.SIZE, 0.7, 0.7))
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[FRUITS.ORANGE], j * TILE.SIZE, i * TILE.SIZE, 0.7, 0.7))
+						this.fruitNames.push(KEYS[FRUITS.ORANGE])
 						this.fruitMarked.push(false)
 					} else if (tile.index === FRUITS.LEMON_TILE) {
-						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[1], j * TILE.SIZE, i * TILE.SIZE, 0.7, 0.7))
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[FRUITS.LEMON], j * TILE.SIZE, i * TILE.SIZE, 0.7, 0.7))
+						this.fruitNames.push(KEYS[FRUITS.LEMON])
 						this.fruitMarked.push(false)
 					} else if (tile.index === FRUITS.GRAPE_TILE) {
-						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[2], j * TILE.SIZE, i * TILE.SIZE, 0.7, 0.7))
+						this.fruit.push(this.createSpineObject(IDLE_KEY, KEYS[FRUITS.GRAPE], j * TILE.SIZE, i * TILE.SIZE, 0.7, 0.7))
+						this.fruitNames.push(KEYS[FRUITS.GRAPE])
 						this.fruitMarked.push(false)
 					}
 				}
@@ -862,11 +868,18 @@ export default class LEVEL_03 extends Phaser.Scene {
 							args: [i, time, delta]
 						})
 						this.fruitMarked[i] = true
-						if (i === 0) {
+						let type = this.fruitNames[i]
+						if (type === KEYS[FRUITS.ORANGE]) {
+							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y, 
+								POINTS.ORANGE, POINTS.ANIM_DELAY))
 							this.addPoints(POINTS.ORANGE)
-						} else if (i == 1) {
+						} else if (type === KEYS[FRUITS.LEMON]) {
+							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y, 
+								POINTS.LEMON, POINTS.ANIM_DELAY))
 							this.addPoints(POINTS.LEMON)
-						} else if (i === 2) {
+						} else if (type === KEYS[FRUITS.GRAPE]) {
+							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y, 
+								POINTS.GRAPE, POINTS.ANIM_DELAY))
 							this.addPoints(POINTS.GRAPE)
 						}
 						this.player.getState().handleInput(INPUT_TYPES.EATING, time, delta, this.player)
@@ -942,6 +955,14 @@ export default class LEVEL_03 extends Phaser.Scene {
 			if (this.tile == null) {
 				this.player.push()
 				this.truffles.setPosition(this.player.getX(), this.player.getY())
+			}
+
+			for(let i = 0; i < this.popups.length; i++) {
+				if(!this.popups[i].update()) {
+					this.popups[i].removeFromDisplayList()
+					this.popups.pop()
+					i--
+				}
 			}
 		}
 
