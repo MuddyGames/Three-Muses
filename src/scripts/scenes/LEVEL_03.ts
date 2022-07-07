@@ -1117,7 +1117,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 
 		this.goalLayer = this.map.createLayer('map/goal/goal_depth_02', this.tileset, 0, 0);
 		this.goalLayer.setDepth(7)
-		this.goalLayer.setVisible(true)
+		this.goalLayer.setVisible(false)
 	}
 
 	// Create Spine Objects
