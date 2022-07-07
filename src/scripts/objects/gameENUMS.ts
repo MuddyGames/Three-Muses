@@ -27,9 +27,9 @@ export enum ARTIFACTS{
 export enum POINTS{
     CANNON_BALL_COLLISION = -150,
     DIVER_COLLISION = -150,
-    FRUIT_0 = 250,
-    FRUIT_1 = 300,
-    FRUIT_2 = 350,
+    ORANGE = 250,
+    LEMON = 300,
+    GRAPE = 350,
     REACHED_GOAL = 1500
 }
 

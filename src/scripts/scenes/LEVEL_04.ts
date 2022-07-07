@@ -863,11 +863,11 @@ export default class LEVEL_04 extends Phaser.Scene {
 						})
 						this.fruitMarked[i] = true
 						if (i === 0) {
-							this.addPoints(POINTS.FRUIT_0)
+							this.addPoints(POINTS.ORANGE)
 						} else if (i == 1) {
-							this.addPoints(POINTS.FRUIT_1)
+							this.addPoints(POINTS.LEMON)
 						} else if (i === 2) {
-							this.addPoints(POINTS.FRUIT_2)
+							this.addPoints(POINTS.GRAPE)
 						}
 						this.player.getState().handleInput(INPUT_TYPES.EATING, time, delta, this.player)
 					}
