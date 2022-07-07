@@ -99,7 +99,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 	private newTick!: boolean
 	private delay!: number
 	private fps!: number
-	private popups!: popupText
+	private popups: popupText[] = []
 
 	// Hud Animations
 	private soundMuteUnmuteButton!: SpineGameObject
@@ -870,10 +870,16 @@ export default class LEVEL_01 extends Phaser.Scene {
 						this.fruitMarked[i] = true
 						let type = this.fruitNames[i]
 						if (type === KEYS[FRUITS.ORANGE]) {
+							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y, 
+								POINTS.ORANGE, POINTS.ANIM_DELAY))
 							this.addPoints(POINTS.ORANGE)
 						} else if (type === KEYS[FRUITS.LEMON]) {
+							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y, 
+								POINTS.LEMON, POINTS.ANIM_DELAY))
 							this.addPoints(POINTS.LEMON)
 						} else if (type === KEYS[FRUITS.GRAPE]) {
+							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y, 
+								POINTS.GRAPE, POINTS.ANIM_DELAY))
 							this.addPoints(POINTS.GRAPE)
 						}
 						this.player.getState().handleInput(INPUT_TYPES.EATING, time, delta, this.player)
@@ -949,6 +955,14 @@ export default class LEVEL_01 extends Phaser.Scene {
 			if (this.tile == null) {
 				this.player.push()
 				this.truffles.setPosition(this.player.getX(), this.player.getY())
+			}
+
+			for(let i = 0; i < this.popups.length; i++) {
+				if(!this.popups[i].update()) {
+					this.popups[i].removeFromDisplayList()
+					this.popups.pop()
+					i--
+				}
 			}
 		}
 

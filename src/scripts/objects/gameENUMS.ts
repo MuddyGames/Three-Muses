@@ -30,7 +30,8 @@ export enum POINTS{
     ORANGE = 250,
     LEMON = 300,
     GRAPE = 350,
-    REACHED_GOAL = 1500
+    REACHED_GOAL = 1500,
+    ANIM_DELAY = 60
 }
 
 export enum ANIMATION_DELAY{
