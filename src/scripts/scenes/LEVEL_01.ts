@@ -960,7 +960,7 @@ export default class LEVEL_01 extends Phaser.Scene {
 			for(let i = 0; i < this.popups.length; i++) {
 				if(!this.popups[i].update()) {
 					this.popups[i].removeFromDisplayList()
-					this.popups.pop()
+					this.popups.splice(i, 1)
 					i--
 				}
 			}
