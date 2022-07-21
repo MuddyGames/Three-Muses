@@ -35,7 +35,6 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio('level_backing_track', ['assets/audio/level/level_backing_track.mp3', 'assets/audio/level/level_backing_track.ogg']);
     this.load.audio('artifact_background', ['assets/audio/artifacts/artifact_background.mp3', 'assets/audio/artifacts/artifact_background.ogg']);
 
-
     //Rewards and Punishment
     this.load.audio('reward', ['assets/audio/level/reward.mp3', 'assets/audio/level/reward.ogg']);
     this.load.audio('punish_one', ['assets/audio/level/punish_one.mp3', 'assets/audio/level/punish_one.ogg']);
@@ -71,20 +70,5 @@ export default class PreloadScene extends Phaser.Scene {
 
   create() {
     this.scene.start('SplashScene')
-    //this.scene.start('LEVEL_01')
-  
-    /**
-     * This is how you would dynamically import the mainScene class (with code splitting),
-     * add the mainScene to the Scene Manager
-     * and start the scene.
-     * The name of the chunk would be 'mainScene.chunk.js
-     * Find more about code splitting here: https://webpack.js.org/guides/code-splitting/
-     */
-    // let someCondition = true
-    // if (someCondition)
-    //   import(/* webpackChunkName: "mainScene" */ './mainScene').then(mainScene => {
-    //     this.scene.add('MainScene', mainScene.default, true)
-    //   })
-    // else console.log('The mainScene class will not even be loaded by the browser')
   }
 }
