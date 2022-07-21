@@ -82,7 +82,10 @@ export enum DIVER {
 export enum CANNONBALL {
     START = 501,
     END = 605,
-    SPEED = (300 / 2) / 1000, // Fixed Step
+    SPEED_LEVEL_01 = (300 / 2) / 1000, // Fixed Step
+    SPEED_LEVEL_02 = (225 / 2) / 1000, // Fixed Step
+    SPEED_LEVEL_03 = (150 / 2) / 1000, // Fixed Step
+    SPEED_LEVEL_04 = (110 / 2) / 1000, // Fixed Step
     SCALE = 1.1
 }
 

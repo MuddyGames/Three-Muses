@@ -818,25 +818,23 @@ export default class LEVEL_02 extends Phaser.Scene {
 					this.gsmUpdate(time, delta)
 
 					// Show particles
-					this.emitter = this.particles.createEmitter(
-						{
-							frame: {
-								frames: ['red', 'green', 'blue'],
-								cycle: true
-							},
-							scale: {
-								start: 0.5,
-								end: 0
-							},
-							blendMode: 'ADD',
-							emitZone: {
-								type: 'edge',
-								source: this.halo,
-								quantity: 24,
-								yoyo: false
-							}
+					this.emitter = this.particles.createEmitter({
+						frame: {
+							frames: ['red', 'green', 'blue'],
+							cycle: true
+						},
+						scale: {
+							start: 0.5,
+							end: 0
+						},
+						blendMode: 'ADD',
+						emitZone: {
+							type: 'edge',
+							source: this.halo,
+							quantity: 24,
+							yoyo: false
 						}
-					)
+					})
 					this.emitter.setPosition(this.player.getX(), this.player.getY())
 					this.particles.setDepth(this.truffles.depth - 1)
 				}
@@ -870,15 +868,15 @@ export default class LEVEL_02 extends Phaser.Scene {
 						this.fruitMarked[i] = true
 						let type = this.fruitNames[i]
 						if (type === KEYS[FRUITS.ORANGE]) {
-							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y, 
+							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y,
 								POINTS.ORANGE, POINTS.ANIM_DELAY))
 							this.addPoints(POINTS.ORANGE)
 						} else if (type === KEYS[FRUITS.LEMON]) {
-							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y, 
+							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y,
 								POINTS.LEMON, POINTS.ANIM_DELAY))
 							this.addPoints(POINTS.LEMON)
 						} else if (type === KEYS[FRUITS.GRAPE]) {
-							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y, 
+							this.popups.push(new popupText(this, this.fruit[i].x, this.fruit[i].y,
 								POINTS.GRAPE, POINTS.ANIM_DELAY))
 							this.addPoints(POINTS.GRAPE)
 						}
@@ -957,8 +955,8 @@ export default class LEVEL_02 extends Phaser.Scene {
 				this.truffles.setPosition(this.player.getX(), this.player.getY())
 			}
 
-			for(let i = 0; i < this.popups.length; i++) {
-				if(!this.popups[i].update()) {
+			for (let i = 0; i < this.popups.length; i++) {
+				if (!this.popups[i].update()) {
 					this.popups[i].removeFromDisplayList()
 					this.popups.splice(i, 1)
 					i--
@@ -1302,7 +1300,19 @@ export default class LEVEL_02 extends Phaser.Scene {
 
 		for (let i = 0; i < this.cannonball.length; i++) {
 			if (this.cannonballMoving[i]) {
-				this.cannonball[i].y += CANNONBALL.SPEED * delta
+
+				// Play Artifact Animations
+				let level = this.sys.settings.key // Gets the name of the current scene
+
+				if (level === LEVELS.LEVEL_01) {
+					this.cannonball[i].y = this.cannonball[i].y + (CANNONBALL.SPEED_LEVEL_01 * delta)
+				} else if (level === LEVELS.LEVEL_02) {
+					this.cannonball[i].y = this.cannonball[i].y + (CANNONBALL.SPEED_LEVEL_02 * delta)
+				} else if (level === LEVELS.LEVEL_03) {
+					this.cannonball[i].y = this.cannonball[i].y + (CANNONBALL.SPEED_LEVEL_03 * delta)
+				} else if (level === LEVELS.LEVEL_04) {
+					this.cannonball[i].y = this.cannonball[i].y + (CANNONBALL.SPEED_LEVEL_04 * delta)
+				}
 
 				// Check cannonballs position
 				let x = this.map.worldToTileX(this.cannonball[i].x + (TILE.SIZE / 2))
