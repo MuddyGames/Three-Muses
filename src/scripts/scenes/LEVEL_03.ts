@@ -712,7 +712,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 			this.newTick = true
 		}
 
-		// TODO: BETTER Game State Management
+		// GameState
 
 		if (this.gameState === GSM.PLAY) {
 			this.elapsedLevelTime = time - this.startTime
@@ -865,6 +865,7 @@ export default class LEVEL_03 extends Phaser.Scene {
 							callbackScope: this,
 							args: [i, time, delta]
 						})
+						this.fruit[i].setDepth(this.truffles.depth + 1)
 						this.fruitMarked[i] = true
 						let type = this.fruitNames[i]
 						if (type === KEYS[FRUITS.ORANGE]) {
